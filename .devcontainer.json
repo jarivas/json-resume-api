@@ -1,0 +1,21 @@
+{
+	"name": "json-resume-api",
+
+	"dockerComposeFile": [
+		"docker-compose.yml"
+	],
+	"service": "dev",
+	"workspaceFolder": "/app",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.copilot-chat",
+				"DEVSENSE.phptools-vscode",
+				"laravel.vscode-laravel"
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "bash"
+			}
+		}
+	}
+}

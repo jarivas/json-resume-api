@@ -1,0 +1,11 @@
+services:
+    dev:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - .:/app
+        ports:
+            - 80
+            - 8000:8000
+        command: sh -c "while true; do sleep 3600; done"
