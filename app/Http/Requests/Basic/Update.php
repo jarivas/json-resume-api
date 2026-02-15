@@ -12,6 +12,7 @@ class Update extends FormRequest
             'name' => 'string',
             'label' => 'string',
             'email' => 'email',
+            'phone' => 'string',
             'url' => 'url',
             'summary' => 'string',
             'location' => 'array',
@@ -20,6 +21,10 @@ class Update extends FormRequest
             'location.city' => 'string',
             'location.countryCode' => 'string',
             'location.region' => 'string',
+            'profiles' => 'array',
+            'profiles.*.network' => 'string',
+            'profiles.*.username' => 'string',
+            'profiles.*.url'=> 'url',
         ];
     }
 }

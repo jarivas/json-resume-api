@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Education;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,8 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EducationFactory extends Factory
 {
-    protected $model = Education::class;
-
     public function definition(): array
     {
         $start = $this->faker->dateTimeBetween('-15 years', '-5 years');
