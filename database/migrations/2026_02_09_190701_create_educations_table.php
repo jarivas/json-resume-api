@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('educations', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->string('institution');
-            $table->string('url');
+            $table->string('url')->nullable()->default(null);
             $table->string('area');
             $table->string('studyType');
             $table->dateTime('startDate');
             $table->dateTime('endDate');
-            $table->string('score');
+            $table->string('score')->nullable()->default(null);
             $table->string('summary');
-            $table->json('courses');
+            $table->json('courses')->nullable()->default(null);
             $table->timestamps();
         });
 

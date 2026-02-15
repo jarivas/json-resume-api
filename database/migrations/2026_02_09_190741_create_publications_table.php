@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('publisher');
             $table->dateTime('releaseDate');
-            $table->string('url');
+            $table->string('url')->nullable()->default(null);
             $table->string('summary');
             $table->timestamps();
         });

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->dateTime('endDate');
             $table->string('description');
             $table->json('highlights');
-            $table->string('url');
+            $table->string('url')->nullable()->default(null);
             $table->timestamps();
         });
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->string('name');
             $table->string('position');
-            $table->string('url');
+            $table->string('url')->nullable()->default(null);
             $table->dateTime('startDate');
             $table->dateTime('endDate');
             $table->string('summary');
