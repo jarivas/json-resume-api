@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 
 class Delete extends Controller
 {
-    public function __invoke(Basic $model)
+    public function __invoke(Basic $basic)
     {
-        return $model->delete() ? response()->noContent() :
+        return $basic->delete() ? response()->noContent() :
             $this->getErrorResponse('error', 'Problem deleting the basic model');
     }
 }

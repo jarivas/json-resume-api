@@ -10,22 +10,22 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property string $id
- * @property string $name
+ * @property string $organization
  * @property string $position
  * @property string $url
  * @property Carbon $startDate
  * @property Carbon $endDate
  * @property string $summary
- * @property array $highlights
+ * @property string $highlights
  * @property-read \Illuminate\Support\Collection<Basic> $basics
  */
-class Work extends Model
+class Volunteer extends Model
 {
-    /** @use HasFactory<\Database\Factories\WorkFactory> */
+    /** @use HasFactory<\Database\Factories\VolunteerFactory> */
     use HasUuids, HasFactory;
     
     protected $fillable = [
-        'name',
+        'organization',
         'position',
         'url',
         'startDate',
@@ -37,7 +37,7 @@ class Work extends Model
     protected $casts = [
         'startDate' => 'datetime:Y-m-d',
         'endDate' => 'datetime:Y-m-d',
-        'highlights' => 'array'
+        'highlights' => 'array',
     ];
 
     public function basics(): BelongsToMany

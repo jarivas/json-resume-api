@@ -8,12 +8,12 @@ use App\Http\Requests\Basic\Update as Request;
 
 class Update extends Controller
 {
-    public function __invoke(Request $request, Basic $model)
+    public function __invoke(Request $request, Basic $basic)
     {
         $data = $request->validated();
 
-        $model->update($data);
+        $basic->update($data);
 
-        return response()->json($model);
+        return response()->json($basic);
     }
 }

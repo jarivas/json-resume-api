@@ -6,42 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Carbon;
 
 /**
  * @property string $id
  * @property string $name
- * @property string $position
- * @property string $url
- * @property Carbon $startDate
- * @property Carbon $endDate
- * @property string $summary
- * @property array $highlights
+ * @property array $keywords
  * @property-read \Illuminate\Support\Collection<Basic> $basics
  */
-class Work extends Model
+class Interest extends Model
 {
-    /** @use HasFactory<\Database\Factories\WorkFactory> */
+    /** @use HasFactory<\Database\Factories\InterestFactory> */
     use HasUuids, HasFactory;
     
     protected $fillable = [
         'name',
-        'position',
-        'url',
-        'startDate',
-        'endDate',
-        'summary',
-        'highlights',
-    ];
-
-    protected $casts = [
-        'startDate' => 'datetime:Y-m-d',
-        'endDate' => 'datetime:Y-m-d',
-        'highlights' => 'array'
+        'keywords',
     ];
 
     public function basics(): BelongsToMany
     {
         return $this->belongsToMany(Basic::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'keywords' => 'array',
+        ];
     }
 }

@@ -11,17 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('volunteer', function (Blueprint $table) {
+        Schema::create('works', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('organization');
+            $table->string('name');
             $table->string('position');
             $table->string('url');
             $table->dateTime('startDate');
             $table->dateTime('endDate');
             $table->string('summary');
             $table->json('highlights');
+            $table->timestamps();
+        });
+
+        Schema::create('basic_works', function (Blueprint $table) {
             $table->foreignUlid('basic_id')
                 ->references('id')->on('basics')
+                ->cascadeOnDelete();
+            $table->foreignUlid('work_id')
+                ->references('id')->on('works')
                 ->cascadeOnDelete();
             $table->timestamps();
         });
@@ -32,6 +39,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('volunteer');
+        Schema::dropIfExists('basic_works');
+        Schema::dropIfExists('works');
     }
 };

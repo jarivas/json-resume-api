@@ -5,39 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property string $id
- * @property string $name
- * @property string $position
- * @property string $url
- * @property Carbon $startDate
- * @property Carbon $endDate
+ * @property string $title
+ * @property Carbon $date
+ * @property string $awarder
  * @property string $summary
- * @property array $highlights
  * @property-read \Illuminate\Support\Collection<Basic> $basics
  */
-class Work extends Model
+class Award extends Model
 {
-    /** @use HasFactory<\Database\Factories\WorkFactory> */
+    /** @use HasFactory<\Database\Factories\AwardFactory> */
     use HasUuids, HasFactory;
     
     protected $fillable = [
-        'name',
-        'position',
-        'url',
-        'startDate',
-        'endDate',
+        'title',
+        'date',
+        'awarder',
         'summary',
-        'highlights',
     ];
 
     protected $casts = [
-        'startDate' => 'datetime:Y-m-d',
-        'endDate' => 'datetime:Y-m-d',
-        'highlights' => 'array'
+        'date' => 'datetime:Y-m-d',
     ];
 
     public function basics(): BelongsToMany

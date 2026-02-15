@@ -16,8 +16,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('level');
             $table->json('keywords');
+            $table->timestamps();
+        });
+
+        Schema::create('basic_skills', function (Blueprint $table) {
             $table->foreignUlid('basic_id')
                 ->references('id')->on('basics')
+                ->cascadeOnDelete();
+            $table->foreignUlid('skill_id')
+                ->references('id')->on('skills')
                 ->cascadeOnDelete();
             $table->timestamps();
         });
@@ -28,6 +35,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('basic_skills');
         Schema::dropIfExists('skills');
     }
 };

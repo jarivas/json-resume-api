@@ -11,17 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('work', function (Blueprint $table) {
+        Schema::create('educations', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('name');
-            $table->string('position');
+            $table->string('institution');
             $table->string('url');
+            $table->string('area');
+            $table->string('studyType');
             $table->dateTime('startDate');
             $table->dateTime('endDate');
+            $table->string('score');
             $table->string('summary');
-            $table->json('highlights');
+            $table->json('courses');
+            $table->timestamps();
+        });
+
+        Schema::create('basic_educations', function (Blueprint $table) {
             $table->foreignUlid('basic_id')
                 ->references('id')->on('basics')
+                ->cascadeOnDelete();
+            $table->foreignUlid('education_id')
+                ->references('id')->on('educations')
                 ->cascadeOnDelete();
             $table->timestamps();
         });
@@ -32,6 +41,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('work');
+        Schema::dropIfExists('basic_educations');
+        Schema::dropIfExists('educations');
     }
 };

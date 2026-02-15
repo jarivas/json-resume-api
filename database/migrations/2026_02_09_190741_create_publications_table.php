@@ -18,8 +18,15 @@ return new class extends Migration
             $table->dateTime('releaseDate');
             $table->string('url');
             $table->string('summary');
+            $table->timestamps();
+        });
+
+        Schema::create('basic_publications', function (Blueprint $table) {
             $table->foreignUlid('basic_id')
                 ->references('id')->on('basics')
+                ->cascadeOnDelete();
+            $table->foreignUlid('publication_id')
+                ->references('id')->on('publications')
                 ->cascadeOnDelete();
             $table->timestamps();
         });
@@ -30,6 +37,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('basic_publications');
         Schema::dropIfExists('publications');
     }
 };

@@ -11,33 +11,27 @@ use Illuminate\Support\Carbon;
 /**
  * @property string $id
  * @property string $name
- * @property string $position
+ * @property string $publisher
+ * @property Carbon $releaseDate
  * @property string $url
- * @property Carbon $startDate
- * @property Carbon $endDate
  * @property string $summary
- * @property array $highlights
  * @property-read \Illuminate\Support\Collection<Basic> $basics
  */
-class Work extends Model
+class Publication extends Model
 {
-    /** @use HasFactory<\Database\Factories\WorkFactory> */
+    /** @use HasFactory<\Database\Factories\PublicationFactory> */
     use HasUuids, HasFactory;
     
     protected $fillable = [
         'name',
-        'position',
+        'publisher',
+        'releaseDate',
         'url',
-        'startDate',
-        'endDate',
         'summary',
-        'highlights',
     ];
 
     protected $casts = [
-        'startDate' => 'datetime:Y-m-d',
-        'endDate' => 'datetime:Y-m-d',
-        'highlights' => 'array'
+        'releaseDate' => 'datetime:Y-m-d',
     ];
 
     public function basics(): BelongsToMany

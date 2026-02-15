@@ -4,9 +4,9 @@ namespace Tests\Feature\Basic;
 
 use App\Models\User;
 use App\Models\Basic;
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
 
 class CreateTest extends TestCase
 {

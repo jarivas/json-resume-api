@@ -2,42 +2,48 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
 /**
  * @property string $id
- * @property string $name
- * @property string $position
+ * @property string $institution
  * @property string $url
+ * @property string $area
+ * @property string $studyType
  * @property Carbon $startDate
  * @property Carbon $endDate
+ * @property string $score
  * @property string $summary
- * @property array $highlights
+ * @property array $courses
  * @property-read \Illuminate\Support\Collection<Basic> $basics
  */
-class Work extends Model
+class Education extends Model
 {
-    /** @use HasFactory<\Database\Factories\WorkFactory> */
-    use HasUuids, HasFactory;
-    
+    /** @use HasFactory<\Database\Factories\EducationFactory> */
+    use HasFactory, HasUuids;
+
+    protected $table = 'educations';
+
     protected $fillable = [
-        'name',
-        'position',
+        'institution',
         'url',
+        'area',
+        'studyType',
         'startDate',
         'endDate',
+        'score',
         'summary',
-        'highlights',
+        'courses',
     ];
 
     protected $casts = [
         'startDate' => 'datetime:Y-m-d',
         'endDate' => 'datetime:Y-m-d',
-        'highlights' => 'array'
+        'courses' => 'array',
     ];
 
     public function basics(): BelongsToMany
