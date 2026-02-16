@@ -13,6 +13,8 @@ class Update extends FormRequest
             'level' => 'string',
             'keywords' => 'array',
             'keywords.*' => 'string',
+            'basics' => 'array',
+            'basics.*' => 'ulid|exists:basics,id',
         ];
     }
 }

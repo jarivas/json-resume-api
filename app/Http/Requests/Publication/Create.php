@@ -14,6 +14,8 @@ class Create extends FormRequest
             'releaseDate' => 'required|date:Y-m-d',
             'url' => 'url',
             'summary' => 'required|string',
+            'basics' => 'array',
+            'basics.*' => 'ulid|exists:basics,id',
         ];
     }
 }

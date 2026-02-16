@@ -19,6 +19,8 @@ class Create extends FormRequest
             'summary' => 'required|string',
             'courses' => 'array',
             'courses.*' => 'string',
+            'basics' => 'array',
+            'basics.*' => 'ulid|exists:basics,id',
         ];
     }
 }

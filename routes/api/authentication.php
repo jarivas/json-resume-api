@@ -2,10 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Authentication\Login;
+use App\Http\Controllers\Authentication\Logout;
+use App\Http\Controllers\Authentication\Recovery;
+use App\Http\Controllers\Authentication\ChangePassword;
+
 Route::prefix('authentication')->group(function () {
-    Route::post('/login', \App\Http\Controllers\Authentication\Login::class);
-    Route::post('/recovery', \App\Http\Controllers\Authentication\Recovery::class);
-    Route::post('/change-password', \App\Http\Controllers\Authentication\ChangePassword::class);
+    Route::post('/login', Login::class);
+    Route::post('/recovery', Recovery::class);
+    Route::post('/change-password', ChangePassword::class);
     Route::middleware('auth:sanctum')
-    ->post('/logout', \App\Http\Controllers\Authentication\Logout::class);
+        ->post('/logout', Logout::class);
 });

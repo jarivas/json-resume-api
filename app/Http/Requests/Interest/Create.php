@@ -12,6 +12,8 @@ class Create extends FormRequest
             'name' => 'required|string',
             'keywords' => 'required|array',
             'keywords.*' => 'required|string',
+            'basics' => 'array',
+            'basics.*' => 'ulid|exists:basics,id',
         ];
     }
 }

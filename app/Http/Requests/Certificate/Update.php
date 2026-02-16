@@ -13,6 +13,8 @@ class Update extends FormRequest
             'date' => 'date:Y-m-d',
             'issuer' => 'string',
             'url' => 'url',
+            'basics' => 'array',
+            'basics.*' => 'ulid|exists:basics,id',
         ];
     }
 }

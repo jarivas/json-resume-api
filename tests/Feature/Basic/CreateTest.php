@@ -92,4 +92,12 @@ class CreateTest extends TestCase
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['phone']);
     }
+
+    public function test_basic_create_unauthenticated()
+    {
+        $data = Basic::factory()->make()->toArray();
+        $url = '/api/basic';
+        $response = $this->postJson($url, $data);
+        $response->assertUnauthorized();
+    }
 }

@@ -155,4 +155,29 @@ class ReadOneTest extends TestCase
                 ->etc()
         );
     }
+
+    public function test_basic_read_one_not_found()
+    {
+        $user = User::factory()->create();
+        $url = "/api/basic/999";
+        $response = $this->actingAs($user)->getJson($url);
+        $response->assertNotFound();
+    }
+
+    public function test_basic_read_one_not_found_ulid()
+    {
+        $user = User::factory()->create();
+        $ulid = '01FZ1GZ5K9XQZ7Z8X9Y0A1B2C3';
+        $url = "/api/basic/{$ulid}";
+        $response = $this->actingAs($user)->getJson($url);
+        $response->assertNotFound();
+    } 
+
+    public function test_basic_read_one_unauthenticated()
+    {
+        $basic = Basic::factory()->create();
+        $url = "/api/basic/{$basic->id}";
+        $response = $this->getJson($url);
+        $response->assertUnauthorized();
+    }
 }

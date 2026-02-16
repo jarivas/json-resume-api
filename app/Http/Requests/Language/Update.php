@@ -11,6 +11,8 @@ class Update extends FormRequest
         return [
             'language' => 'string',
             'fluency' => 'string',
+            'basics' => 'array',
+            'basics.*' => 'ulid|exists:basics,id',
         ];
     }
 }

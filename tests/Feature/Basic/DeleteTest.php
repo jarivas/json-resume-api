@@ -43,4 +43,13 @@ class DeleteTest extends TestCase
         $response = $this->actingAs($user)->deleteJson($url);
         $response->assertNotFound();
     }
+
+    public function test_basic_delete_unauthenticated()
+    {
+        $basic = Basic::factory()->create();
+
+        $url = "/api/basic/{$basic->id}";
+        $response = $this->deleteJson($url);
+        $response->assertUnauthorized();
+    }
 }

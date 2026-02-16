@@ -49,4 +49,11 @@ class ReadAllTest extends TestCase
             ->etc())
         );
     }
+
+    public function test_basic_read_all_unauthenticated()
+    {
+        $url = "/api/basic";
+        $response = $this->getJson($url);
+        $response->assertUnauthorized();
+    }
 }

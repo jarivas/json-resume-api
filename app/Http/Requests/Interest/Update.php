@@ -12,6 +12,8 @@ class Update extends FormRequest
             'name' => 'string',
             'keywords' => 'array',
             'keywords.*' => 'string',
+            'basics' => 'array',
+            'basics.*' => 'ulid|exists:basics,id',
         ];
     }
 }

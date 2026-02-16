@@ -11,6 +11,8 @@ class Update extends FormRequest
         return [
             'name' => 'string',
             'reference' => 'string',
+            'basics' => 'array',
+            'basics.*' => 'ulid|exists:basics,id',
         ];
     }
 }
