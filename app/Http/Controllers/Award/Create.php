@@ -13,6 +13,10 @@ class Create extends Controller
         $data = $request->validated();
 
         $award = Award::create($data);
+        
+        if ($request->has('basics')) {
+            $award->basics()->attach($request->get('basics'));
+        }
 
         return response()->json($award->toArray(), 201);
     }

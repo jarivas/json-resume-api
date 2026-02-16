@@ -14,6 +14,10 @@ class Update extends Controller
 
         $award->update($data);
 
+        if ($request->has('basics')) {
+            $award->basics()->sync($request->get('basics'));
+        }
+
         return response()->json($award);
     }
 }

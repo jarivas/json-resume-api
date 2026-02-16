@@ -3,6 +3,7 @@
 namespace Tests\Feature\Award;
 
 use App\Models\Award;
+use App\Models\Basic;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -16,7 +17,9 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $award = Award::factory()->create();
+        $basic = Basic::factory()->create();
         $data = Award::factory()->make()->toArray();
+        $data['basics'] = [$basic->id];
 
         $url = "/api/award/{$award->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -31,6 +34,11 @@ class UpdateTest extends TestCase
             ->etc());
 
         $this->assertDatabaseHas('awards', array_merge(['id' => $award->id], $data));
+
+        $this->assertDatabaseHas('basic_awards', [
+            'award_id' => $response->json('id'),
+            'basic_id' => $basic->id,
+        ]);
     }
 
     public function test_award_unauthenticated()

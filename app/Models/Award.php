@@ -34,6 +34,11 @@ class Award extends Model
 
     public function basics(): BelongsToMany
     {
-        return $this->belongsToMany(Basic::class);
+        return $this->belongsToMany(
+            Basic::class,
+            'basic_awards',
+            'award_id',
+            'basic_id',
+        );
     }
 }

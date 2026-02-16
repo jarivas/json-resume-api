@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
-use Throwable;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )->withMiddleware()->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->shouldRenderJsonWhen(fn (Request $request, Throwable $e) => true);
+        $exceptions->shouldRenderJsonWhen(fn () => true);
 
         // Render minimal JSON for HTTP exceptions (e.g. 404) without stack traces.
         $exceptions->renderable(function (HttpExceptionInterface $e, Request $request) {
