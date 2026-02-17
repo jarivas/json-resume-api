@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property string $id
@@ -19,8 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Award extends Model
 {
     /** @use HasFactory<\Database\Factories\AwardFactory> */
-    use HasUuids, HasFactory;
-    
+    use HasFactory, HasUlids;
+
     protected $fillable = [
         'title',
         'date',

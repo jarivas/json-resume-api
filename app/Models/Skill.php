@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Skill extends Model
 {
     /** @use HasFactory<\Database\Factories\SkillFactory> */
-    use HasUuids, HasFactory;
-    
+    use HasFactory, HasUlids;
+
     protected $fillable = [
         'name',
         'level',
@@ -31,6 +31,11 @@ class Skill extends Model
 
     public function basics(): BelongsToMany
     {
-        return $this->belongsToMany(Basic::class);
+        return $this->belongsToMany(
+            Basic::class,
+            'basic_skills',
+            'skill_id',
+            'basic_id'
+        );
     }
 }

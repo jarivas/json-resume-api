@@ -43,6 +43,11 @@ class Project extends Model
 
     public function basics(): BelongsToMany
     {
-        return $this->belongsToMany(Basic::class);
+        return $this->belongsToMany(
+            Basic::class,
+            'basic_projects',
+            'project_id',
+            'basic_id'
+        );
     }
 }

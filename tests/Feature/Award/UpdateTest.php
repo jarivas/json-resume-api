@@ -33,7 +33,9 @@ class UpdateTest extends TestCase
             ->where('summary', $data['summary'])
             ->etc());
 
-        $this->assertDatabaseHas('awards', array_merge(['id' => $award->id], $data));
+        unset($data['basics']);
+        $data = array_merge(['id' => $award->id], $data);
+        $this->assertDatabaseHas('awards', $data);
 
         $this->assertDatabaseHas('basic_awards', [
             'award_id' => $response->json('id'),

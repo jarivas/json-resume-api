@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
@@ -19,8 +19,8 @@ use Illuminate\Support\Carbon;
 class Certificate extends Model
 {
     /** @use HasFactory<\Database\Factories\CertificateFactory> */
-    use HasUuids, HasFactory;
-    
+    use HasFactory, HasUlids;
+
     protected $fillable = [
         'name',
         'date',
@@ -34,6 +34,11 @@ class Certificate extends Model
 
     public function basics(): BelongsToMany
     {
-        return $this->belongsToMany(Basic::class);
+        return $this->belongsToMany(
+            Basic::class,
+            'basic_certificates',
+            'certificate_id',
+            'basic_id'
+        );
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -24,7 +24,7 @@ use Illuminate\Support\Carbon;
 class Education extends Model
 {
     /** @use HasFactory<\Database\Factories\EducationFactory> */
-    use HasFactory, HasUuids;
+    use HasFactory, HasUlids;
 
     protected $table = 'educations';
 
@@ -48,6 +48,11 @@ class Education extends Model
 
     public function basics(): BelongsToMany
     {
-        return $this->belongsToMany(Basic::class);
+        return $this->belongsToMany(
+            Basic::class,
+            'basic_educations',
+            'education_id',
+            'basic_id'
+        );
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
@@ -22,8 +22,8 @@ use Illuminate\Support\Carbon;
 class Work extends Model
 {
     /** @use HasFactory<\Database\Factories\WorkFactory> */
-    use HasUuids, HasFactory;
-    
+    use HasFactory, HasUlids;
+
     protected $fillable = [
         'name',
         'position',
@@ -37,11 +37,16 @@ class Work extends Model
     protected $casts = [
         'startDate' => 'datetime:Y-m-d',
         'endDate' => 'datetime:Y-m-d',
-        'highlights' => 'array'
+        'highlights' => 'array',
     ];
 
     public function basics(): BelongsToMany
     {
-        return $this->belongsToMany(Basic::class);
+        return $this->belongsToMany(
+            Basic::class,
+            'basic_works',
+            'work_id',
+            'basic_id'
+        );
     }
 }

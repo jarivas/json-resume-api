@@ -25,6 +25,11 @@ class Language extends Model
 
     public function basics(): BelongsToMany
     {
-        return $this->belongsToMany(Basic::class);
+        return $this->belongsToMany(
+            Basic::class,
+            'basic_languages',
+            'language_id',
+            'basic_id'
+        );
     }
 }
