@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Work;
 
-use App\Http\Controllers\Controller;
 use App\Models\Work;
 
-class Read extends Controller
+class Read
 {
     public function __invoke()
     {

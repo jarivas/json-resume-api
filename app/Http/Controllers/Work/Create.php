@@ -12,7 +12,15 @@ class Create extends Controller
     {
         $data = $request->validated();
 
+        if (empty($data)) {
+            return response()->json(['message' => 'No data provided'], 400);
+        }
+
         $work = Work::create($data);
+
+        if ($request->has('basics')) {
+            $work->basics()->attach($request->get('basics'));
+        }
 
         return response()->json($work->toArray(), 201);
     }

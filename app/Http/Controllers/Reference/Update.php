@@ -12,7 +12,13 @@ class Update extends Controller
     {
         $data = $request->validated();
 
-        $reference->update($data);
+        if (!empty($data)) {
+            $reference->update($data);
+        }
+
+        if ($request->has('basics')) {
+            $reference->basics()->sync($request->get('basics'));
+        }
 
         return response()->json($reference);
     }

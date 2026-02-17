@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Language;
 
-use App\Http\Controllers\Controller;
 use App\Models\Language;
 
-class Read extends Controller
+class Read
 {
     public function __invoke()
     {

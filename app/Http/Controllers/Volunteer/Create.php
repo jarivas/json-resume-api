@@ -12,7 +12,15 @@ class Create extends Controller
     {
         $data = $request->validated();
 
+        if (empty($data)) {
+            return response()->json(['message' => 'No data provided'], 400);
+        }
+
         $volunteer = Volunteer::create($data);
+
+        if ($request->has('basics')) {
+            $volunteer->basics()->attach($request->get('basics'));
+        }
 
         return response()->json($volunteer->toArray(), 201);
     }

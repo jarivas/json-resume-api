@@ -12,7 +12,15 @@ class Update extends Controller
     {
         $data = $request->validated();
 
+        if (!empty($data)) {
+            $volunteer->update($data);
+        }
+
         $volunteer->update($data);
+
+        if ($request->has('basics')) {
+            $volunteer->basics()->sync($request->get('basics'));
+        }
 
         return response()->json($volunteer);
     }

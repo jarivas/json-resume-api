@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Certificate;
 
-use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 
-class Read extends Controller
+class Read
 {
     public function __invoke()
     {

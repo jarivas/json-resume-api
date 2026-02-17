@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Volunteer;
 
-use App\Http\Controllers\Controller;
 use App\Models\Volunteer;
 
-class Read extends Controller
+class Read
 {
     public function __invoke()
     {

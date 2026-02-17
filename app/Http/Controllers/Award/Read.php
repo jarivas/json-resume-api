@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Award;
 
-use App\Http\Controllers\Controller;
 use App\Models\Award;
 
-class Read extends Controller
+class Read
 {
     public function __invoke()
     {

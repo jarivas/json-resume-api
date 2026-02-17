@@ -12,7 +12,13 @@ class Update extends Controller
     {
         $data = $request->validated();
 
-        $education->update($data);
+        if (!empty($data)) {
+            $education->update($data);
+        }
+
+        if ($request->has('basics')) {
+            $education->basics()->sync($request->get('basics'));
+        }
 
         return response()->json($education);
     }

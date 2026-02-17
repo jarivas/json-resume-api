@@ -12,7 +12,13 @@ class Update extends Controller
     {
         $data = $request->validated();
 
-        $language->update($data);
+        if (!empty($data)) {
+            $language->update($data);
+        }
+
+        if ($request->has('basics')) {
+            $language->basics()->sync($request->get('basics'));
+        }
 
         return response()->json($language);
     }

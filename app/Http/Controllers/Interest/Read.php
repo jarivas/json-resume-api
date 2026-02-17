@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Interest;
 
-use App\Http\Controllers\Controller;
 use App\Models\Interest;
 
-class Read extends Controller
+class Read
 {
     public function __invoke()
     {
