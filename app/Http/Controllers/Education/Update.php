@@ -20,6 +20,8 @@ class Update extends Controller
             $education->basics()->sync($request->get('basics'));
         }
 
-        return response()->json($education);
+        $education->load('basics');
+
+        return response()->json($education->toArray());
     }
 }

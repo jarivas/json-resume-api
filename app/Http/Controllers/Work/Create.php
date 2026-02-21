@@ -22,6 +22,8 @@ class Create extends Controller
             $work->basics()->attach($request->get('basics'));
         }
 
+        $work->load('basics');
+
         return response()->json($work->toArray(), 201);
     }
 }

@@ -21,6 +21,8 @@ class Create
             $certificate->basics()->sync($request->get('basics'));
         }
 
+        $certificate->load('basics');
+
         return response()->json($certificate->toArray(), 201);
     }
 }

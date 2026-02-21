@@ -20,6 +20,8 @@ class Update extends Controller
             $reference->basics()->sync($request->get('basics'));
         }
 
-        return response()->json($reference);
+        $reference->load('basics');
+
+        return response()->json($reference->toArray());
     }
 }

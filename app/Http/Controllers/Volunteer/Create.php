@@ -22,6 +22,8 @@ class Create extends Controller
             $volunteer->basics()->attach($request->get('basics'));
         }
 
+        $volunteer->load('basics');
+
         return response()->json($volunteer->toArray(), 201);
     }
 }

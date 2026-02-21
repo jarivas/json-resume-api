@@ -26,6 +26,8 @@ class CreateTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
+            ->has('basics', 1)
+            ->where('basics.0.id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('interests', [

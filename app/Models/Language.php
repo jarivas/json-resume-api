@@ -32,4 +32,9 @@ class Language extends Model
             'basic_id'
         );
     }
+
+    /**
+     * Ensure relationships are lazy-loaded by default.
+     */
+    protected $with = ['basics'];
 }

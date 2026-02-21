@@ -29,6 +29,8 @@ class UpdateTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('language', $data['language'])
             ->where('fluency', $data['fluency'])
+            ->has('basics', 1)
+            ->where('basics.0.id', $basic->id)
             ->etc());
 
         $tmp = $data;

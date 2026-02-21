@@ -19,6 +19,8 @@ class Update
             $award->basics()->sync($request->get('basics'));
         }
 
+        $award->load('basics');
+
         return response()->json($award->toArray());
     }
 }

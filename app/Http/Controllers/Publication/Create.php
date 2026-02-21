@@ -21,6 +21,8 @@ class Create
             $publication->basics()->attach($request->get('basics'));
         }
 
+        $publication->load('basics');
+
         return response()->json($publication->toArray(), 201);
     }
 }

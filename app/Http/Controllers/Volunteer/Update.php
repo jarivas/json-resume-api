@@ -22,6 +22,8 @@ class Update extends Controller
             $volunteer->basics()->sync($request->get('basics'));
         }
 
-        return response()->json($volunteer);
+        $volunteer->load('basics');
+
+        return response()->json($volunteer->toArray());
     }
 }

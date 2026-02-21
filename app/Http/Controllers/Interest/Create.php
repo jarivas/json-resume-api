@@ -21,6 +21,8 @@ class Create
             $interest->basics()->attach($request->get('basics'));
         }
 
+        $interest->load('basics');
+
         return response()->json($interest->toArray(), 201);
     }
 }

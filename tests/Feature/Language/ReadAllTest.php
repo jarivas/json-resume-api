@@ -26,8 +26,9 @@ class ReadAllTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has($max)
             ->first(fn (AssertableJson $json) => $json->has('id')
-                ->where('language', $language->language)
-                ->where('fluency', $language->fluency)
+            ->where('language', $language->language)
+            ->where('fluency', $language->fluency)
+            ->has('basics')
                 ->etc())
         );
     }

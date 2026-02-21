@@ -21,6 +21,8 @@ class Create
             $award->basics()->attach($request->get('basics'));
         }
 
+        $award->load('basics');
+
         return response()->json($award->toArray(), 201);
     }
 }

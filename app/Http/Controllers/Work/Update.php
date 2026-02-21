@@ -19,6 +19,8 @@ class Update
             $work->basics()->sync($request->get('basics'));
         }
 
-        return response()->json($work);
+        $work->load('basics');
+
+        return response()->json($work->toArray());
     }
 }

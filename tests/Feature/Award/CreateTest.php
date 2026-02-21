@@ -29,6 +29,8 @@ class CreateTest extends TestCase
             ->where('date', $data['date'])
             ->where('awarder', $data['awarder'])
             ->where('summary', $data['summary'])
+            ->has('basics', 1)
+            ->where('basics.0.id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('awards', [

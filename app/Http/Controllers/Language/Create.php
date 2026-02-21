@@ -21,6 +21,8 @@ class Create
             $language->basics()->attach($request->get('basics'));
         }
 
+        $language->load('basics');
+
         return response()->json($language->toArray(), 201);
     }
 }

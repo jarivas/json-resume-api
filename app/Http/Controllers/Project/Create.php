@@ -21,6 +21,8 @@ class Create
             $project->basics()->attach($request->get('basics'));
         }
 
+        $project->load('basics');
+
         return response()->json($project->toArray(), 201);
     }
 }

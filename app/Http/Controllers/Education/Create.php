@@ -21,6 +21,8 @@ class Create
             $education->basics()->sync($request->get('basics'));
         }
 
+        $education->load('basics');
+
         return response()->json($education->toArray(), 201);
     }
 }

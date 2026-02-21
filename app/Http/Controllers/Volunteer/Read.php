@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Volunteer::all();
+        $items = Volunteer::with('basics')->get();
 
         return response()->json($items);
     }

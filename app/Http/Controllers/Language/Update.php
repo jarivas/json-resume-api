@@ -20,6 +20,8 @@ class Update extends Controller
             $language->basics()->sync($request->get('basics'));
         }
 
-        return response()->json($language);
+        $language->load('basics');
+
+        return response()->json($language->toArray());
     }
 }

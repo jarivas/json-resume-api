@@ -21,6 +21,8 @@ class Create
             $skill->basics()->attach($request->get('basics'));
         }
 
+        $skill->load('basics');
+
         return response()->json($skill->toArray(), 201);
     }
 }

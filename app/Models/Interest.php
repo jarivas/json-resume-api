@@ -33,10 +33,12 @@ class Interest extends Model
         );
     }
 
-    protected function casts(): array
-    {
-        return [
-            'keywords' => 'array',
-        ];
-    }
+    protected $casts = [
+        'keywords' => 'array',
+    ];
+
+    /**
+     * Ensure relationships are lazy-loaded by default.
+     */
+    protected $with = ['basics'];
 }

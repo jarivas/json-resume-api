@@ -17,6 +17,8 @@ class Update
             $certificate->basics()->sync($request->get('basics'));
         }
 
-        return response()->json($certificate);
+        $certificate->load('basics');
+
+        return response()->json($certificate->toArray());
     }
 }

@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Project::all();
+        $items = Project::with('basics')->get();
 
         return response()->json($items);
     }

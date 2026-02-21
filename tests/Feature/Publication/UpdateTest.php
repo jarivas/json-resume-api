@@ -30,6 +30,8 @@ class UpdateTest extends TestCase
             ->where('name', $data['name'])
             ->where('publisher', $data['publisher'])
             ->where('summary', $data['summary'])
+            ->has('basics', 1)
+            ->where('basics.0.id', $basic->id)
             ->etc());
 
         $tmp = $data;

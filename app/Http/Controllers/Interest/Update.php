@@ -19,6 +19,8 @@ class Update
             $interest->basics()->sync($request->get('basics'));
         }
 
-        return response()->json($interest);
+        $interest->load('basics');
+
+        return response()->json($interest->toArray());
     }
 }

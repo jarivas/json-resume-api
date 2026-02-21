@@ -34,6 +34,11 @@ class Publication extends Model
         'releaseDate' => 'datetime:Y-m-d',
     ];
 
+    /**
+     * Ensure relationships are lazy-loaded by default.
+     */
+    protected $with = ['basics'];
+
     public function basics(): BelongsToMany
     {
         return $this->belongsToMany(

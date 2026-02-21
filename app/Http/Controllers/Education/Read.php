@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Education::all();
+        $items = Education::with('basics')->get();
 
         return response()->json($items);
     }

@@ -19,6 +19,8 @@ class Update
             $skill->basics()->sync($request->get('basics'));
         }
 
-        return response()->json($skill);
+        $skill->load('basics');
+
+        return response()->json($skill->toArray());
     }
 }

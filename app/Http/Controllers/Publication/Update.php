@@ -19,6 +19,8 @@ class Update
             $publication->basics()->sync($request->get('basics'));
         }
 
-        return response()->json($publication);
+        $publication->load('basics');
+
+        return response()->json($publication->toArray());
     }
 }

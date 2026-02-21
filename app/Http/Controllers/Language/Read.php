@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Language::all();
+        $items = Language::with('basics')->get();
 
         return response()->json($items);
     }

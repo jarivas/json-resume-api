@@ -19,6 +19,8 @@ class Update
             $project->basics()->sync($request->get('basics'));
         }
 
-        return response()->json($project);
+        $project->load('basics');
+
+        return response()->json($project->toArray());
     }
 }

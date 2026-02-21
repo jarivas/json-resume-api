@@ -28,6 +28,7 @@ class ReadAllTest extends TestCase
             ->first(fn (AssertableJson $json) => $json->has('id')
                 ->where('name', $publication->name)
                 ->where('publisher', $publication->publisher)
+                ->has('basics')
                 ->etc())
         );
     }

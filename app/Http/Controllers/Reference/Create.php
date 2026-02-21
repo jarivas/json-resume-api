@@ -21,6 +21,8 @@ class Create
             $reference->basics()->attach($request->get('basics'));
         }
 
+        $reference->load('basics');
+
         return response()->json($reference->toArray(), 201);
     }
 }

@@ -46,6 +46,11 @@ class Education extends Model
         'courses' => 'array',
     ];
 
+    /**
+     * Ensure relationships are lazy-loaded by default.
+     */
+    protected $with = ['basics'];
+
     public function basics(): BelongsToMany
     {
         return $this->belongsToMany(

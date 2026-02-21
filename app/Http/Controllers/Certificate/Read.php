@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Certificate::all();
+        $items = Certificate::with('basics')->get();
 
         return response()->json($items);
     }
