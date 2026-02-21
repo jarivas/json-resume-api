@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $user = new User([
+            'name' => 'Resume',
             'email' => env('USER_EMAIL'),
             'password' => env('USER_PASSWORD'),
         ]);
