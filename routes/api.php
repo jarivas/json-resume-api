@@ -14,3 +14,4 @@ require 'api/skill.php';
 require 'api/volunteer.php';
 require 'api/work.php';
 require 'api/iso.php';
+require 'api/chat.php';

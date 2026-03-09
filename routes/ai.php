@@ -5,7 +5,7 @@ use Laravel\Mcp\Facades\Mcp;
 // Register MCP servers by module
 Mcp::web('/mcp/auth', \App\Mcp\Servers\AuthenticationServer::class);
 Mcp::web('/mcp/award', \App\Mcp\Servers\AwardServer::class);
-Mcp::web('/mcp/basic', \App\Mcp\Servers\basicerver::class);
+Mcp::web('/mcp/basic', \App\Mcp\Servers\BasicServer::class);
 Mcp::web('/mcp/certificate', \App\Mcp\Servers\CertificateServer::class);
 Mcp::web('/mcp/education', \App\Mcp\Servers\EducationServer::class);
 Mcp::web('/mcp/interest', \App\Mcp\Servers\InterestServer::class);
