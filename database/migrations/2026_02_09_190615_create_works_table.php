@@ -20,17 +20,13 @@ return new class extends Migration
             $table->dateTime('endDate');
             $table->string('summary');
             $table->json('highlights');
-            $table->timestamps();
-        });
 
-        Schema::create('basic_works', function (Blueprint $table) {
             $table->foreignUlid('basic_id')
-                ->references('id')->on('basics')
-                ->cascadeOnDelete();
-            $table->foreignUlid('work_id')
-                ->references('id')->on('works')
-                ->cascadeOnDelete();
+                ->nullable()->default(null)
+                ->references('id')->on('basics');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -39,7 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('basic_works');
         Schema::dropIfExists('works');
     }
 };

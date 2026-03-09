@@ -30,7 +30,7 @@ class ReadAllTest extends TestCase
             ->where('date', $award->date->format('Y-m-d'))
             ->where('awarder', $award->awarder)
             ->where('summary', $award->summary)
-            ->has('basics')
+            ->where('basic_id', $award->basic_id)
                 ->etc())
         );
     }

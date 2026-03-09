@@ -17,8 +17,7 @@ class CreateTest extends TestCase
     {
         $user = User::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Language::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Language::factory()->basic($basic->id)->make()->toArray();
 
         $url = '/api/language';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -27,18 +26,13 @@ class CreateTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('language', $data['language'])
             ->where('fluency', $data['fluency'])
-            ->has('basics', 1)
-            ->where('basics.0.id', $basic->id)
+            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('languages', [
             'id' => $response->json('id'),
             'language' => $data['language'],
             'fluency' => $data['fluency'],
-        ]);
-
-        $this->assertDatabaseHas('basic_languages', [
-            'language_id' => $response->json('id'),
             'basic_id' => $basic->id,
         ]);
     }

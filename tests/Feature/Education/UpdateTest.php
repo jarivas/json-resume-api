@@ -18,8 +18,7 @@ class UpdateTest extends TestCase
         $user = User::factory()->create();
         $education = Education::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Education::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Education::factory()->basic($basic->id)->make()->toArray();
 
         $url = "/api/education/{$education->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -28,27 +27,21 @@ class UpdateTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('institution', $data['institution'])
+            ->where('url', $data['url'])
             ->where('area', $data['area'])
             ->where('studyType', $data['studyType'])
             ->where('score', $data['score'])
             ->where('summary', $data['summary'])
+            ->has('courses')
+            ->where('basic_id', $basic->id)
             ->etc());
 
-        $tmp = $data;
-        unset($tmp['basics']);
-        if (array_key_exists('courses', $tmp)) {
-            unset($tmp['courses']);
-        }
-        $dbData = array_merge(['id' => $education->id], $tmp);
+        unset($data['courses']);
+        $dbData = array_merge(['id' => $education->id], $data);
         $this->assertDatabaseHas('educations', $dbData);
-
-        $this->assertDatabaseHas('basic_educations', [
-            'education_id' => $response->json('id'),
-            'basic_id' => $basic->id,
-        ]);
     }
 
-    public function test_education_unauthenticated()
+    public function test_education_update_unauthenticated()
     {
         $education = Education::factory()->create();
         $data = Education::factory()->make()->toArray();

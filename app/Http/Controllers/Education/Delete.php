@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Education;
 
-use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Education;
 
-class Delete extends Controller
+class Delete
 {
     public function __invoke(Education $education)
     {
-        return $education->delete() ? response()->noContent() :
-            $this->getErrorResponse('error', 'Problem deleting the Education model');
+        if (! $education->delete()) {
+            throw new HttpException(400, 'Problem deleting the Education model');
+        }
+
+        return response()->noContent();
     }
 }

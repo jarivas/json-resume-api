@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Skill;
 
-use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Skill;
 
-class Delete extends Controller
+class Delete
 {
     public function __invoke(Skill $skill)
     {
-        return $skill->delete() ? response()->noContent() :
-            $this->getErrorResponse('error', 'Problem deleting the Skill model');
+        if (! $skill->delete()) {
+            throw new HttpException(400, 'Problem deleting the Skill model');
+        }
+
+        return response()->noContent();
     }
 }

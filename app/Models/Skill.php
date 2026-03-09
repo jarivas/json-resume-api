@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property string $id
  * @property string $name
  * @property string $level
  * @property array $keywords
- * @property-read \Illuminate\Support\Collection<Basic> $basics
+ * @property string $basic_id
+ * @property-read Basic $basic
  */
 class Skill extends Model
 {
@@ -23,24 +24,17 @@ class Skill extends Model
         'name',
         'level',
         'keywords',
+        'basic_id',
     ];
 
     protected $casts = [
         'keywords' => 'array',
     ];
 
-    /**
-     * Ensure relationships are lazy-loaded by default.
-     */
-    protected $with = ['basics'];
-
-    public function basics(): BelongsToMany
+    public function basic(): BelongsTo
     {
-        return $this->belongsToMany(
+        return $this->belongsTo(
             Basic::class,
-            'basic_skills',
-            'skill_id',
-            'basic_id'
         );
     }
 }

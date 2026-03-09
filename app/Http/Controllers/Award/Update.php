@@ -15,12 +15,6 @@ class Update
             $award->update($data);
         }
 
-        if ($request->has('basics')) {
-            $award->basics()->sync($request->get('basics'));
-        }
-
-        $award->load('basics');
-
         return response()->json($award->toArray());
     }
 }

@@ -43,7 +43,7 @@ class LoginTest extends TestCase
         ];
         $response = $this->postJson($url, $data);
 
-        $response->assertBadRequest();
+        $response->assertNotFound();
     }
 
     public function test_authentication_login_wrong_email()
@@ -55,6 +55,6 @@ class LoginTest extends TestCase
         ];
         $response = $this->postJson($url, $data);
 
-        $response->assertBadRequest();
+        $response->assertNotFound();
     }
 }

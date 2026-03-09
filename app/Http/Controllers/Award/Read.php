@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Award::with('basics')->get();
+        $items = Award::get();
 
         return response()->json($items);
     }

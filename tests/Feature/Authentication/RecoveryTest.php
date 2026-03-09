@@ -23,8 +23,6 @@ class RecoveryTest extends TestCase
         $url = '/api/authentication/recovery';
         $response = $this->postJson($url);
 
-        $response->ddBody();
-
         $response->assertNoContent();
     }
 }

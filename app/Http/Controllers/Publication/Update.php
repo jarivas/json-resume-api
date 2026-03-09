@@ -15,12 +15,6 @@ class Update
             $publication->update($data);
         }
 
-        if ($request->has('basics')) {
-            $publication->basics()->sync($request->get('basics'));
-        }
-
-        $publication->load('basics');
-
         return response()->json($publication->toArray());
     }
 }

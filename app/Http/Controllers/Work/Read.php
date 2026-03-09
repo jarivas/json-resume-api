@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Work::with('basics')->get();
+        $items = Work::get();
 
         return response()->json($items);
     }

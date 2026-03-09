@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Language;
 
+use App\Models\Basic;
 use App\Models\Language;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +17,9 @@ class ReadAllTest extends TestCase
     {
         $user = User::factory()->create();
         $max = 5;
+        $basic = Basic::factory()->create();
 
-        Language::factory()->count($max)->create();
+        Language::factory($max)->basic($basic->id)->create();
         $language = Language::first();
 
         $url = '/api/language';
@@ -28,7 +30,7 @@ class ReadAllTest extends TestCase
             ->first(fn (AssertableJson $json) => $json->has('id')
             ->where('language', $language->language)
             ->where('fluency', $language->fluency)
-            ->has('basics')
+            ->where('basic_id', $language->basic_id)
                 ->etc())
         );
     }

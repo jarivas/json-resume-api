@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Work;
 
+use App\Models\Basic;
 use App\Models\User;
 use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,20 +15,19 @@ class UpdateTest extends TestCase
     public function test_work_update_ok()
     {
         $user = User::factory()->create();
-        $work = Work::factory()->create();
+        $basic = Basic::factory()->create();
+        $work = Work::factory()->basic($basic->id)->create();
 
-        $payload = Work::factory()->make()->toArray();
-        unset($payload['id']);
+        $data = Work::factory()->make()->toArray();
 
         $url = '/api/work/'.$work->id;
-        $response = $this->actingAs($user)->patchJson($url, $payload);
+        $response = $this->actingAs($user)->patchJson($url, $data);
         $response->assertOk();
 
-        $row = $payload;
-        unset($row['basics']);
-        unset($row['highlights']);
+        unset($data['highlights']);
+        $dbData = array_merge(['id' => $work->id], $data);
 
-        $this->assertDatabaseHas('works', $row);
+        $this->assertDatabaseHas('works', $dbData);
     }
 
     public function test_work_update_unauthenticated()

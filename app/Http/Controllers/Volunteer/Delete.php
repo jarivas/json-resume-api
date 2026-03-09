@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Volunteer;
 
-use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Volunteer;
 
-class Delete extends Controller
+class Delete
 {
     public function __invoke(Volunteer $volunteer)
     {
-        return $volunteer->delete() ? response()->noContent() :
-            $this->getErrorResponse('error', 'Problem deleting the Volunteer model');
+        if (! $volunteer->delete()) {
+            throw new HttpException(400, 'Problem deleting the Volunteer model');
+        }
+
+        return response()->noContent();
     }
 }

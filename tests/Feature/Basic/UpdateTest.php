@@ -47,6 +47,6 @@ class UpdateTest extends TestCase
 
         unset($data['location']);
         unset($data['profiles']);
-        $this->assertDatabaseHas('basics', array_merge(['id' => $basic->id], $data));
+        $this->assertDatabaseHas('basic', array_merge(['id' => $basic->id], $data));
     }
 }

@@ -17,8 +17,7 @@ class CreateTest extends TestCase
     {
         $user = User::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Skill::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Skill::factory()->basic($basic->id)->make()->toArray();
 
         $url = '/api/skill';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -26,17 +25,13 @@ class CreateTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
-            ->has('basics', 1)
-            ->where('basics.0.id', $basic->id)
+            ->where('basic_id', $basic->id)
+            ->has('keywords')
             ->etc());
 
         $this->assertDatabaseHas('skills', [
             'id' => $response->json('id'),
             'name' => $data['name'],
-        ]);
-
-        $this->assertDatabaseHas('basic_skills', [
-            'skill_id' => $response->json('id'),
             'basic_id' => $basic->id,
         ]);
     }
@@ -44,7 +39,8 @@ class CreateTest extends TestCase
     public function test_skill_create_no_name()
     {
         $user = User::factory()->create();
-        $data = Skill::factory()->make(['name' => null])->toArray();
+        $basic = Basic::factory()->create();
+        $data = Skill::factory()->basic($basic->id)->make(['name' => null])->toArray();
         $url = '/api/skill';
         $response = $this->actingAs($user)->postJson($url, $data);
         $response->assertUnprocessable();
@@ -52,7 +48,8 @@ class CreateTest extends TestCase
 
     public function test_skill_create_unauthenticated()
     {
-        $data = Skill::factory()->make()->toArray();
+        $basic = Basic::factory()->create();
+        $data = Skill::factory()->basic($basic->id)->make()->toArray();
         $url = '/api/skill';
         $response = $this->postJson($url, $data);
         $response->assertUnauthorized();

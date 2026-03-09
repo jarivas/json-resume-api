@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Project;
 
+use App\Models\Basic;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +17,9 @@ class ReadAllTest extends TestCase
     {
         $user = User::factory()->create();
         $max = 5;
+        $basic = Basic::factory()->create();
 
-        Project::factory()->count($max)->create();
+        Project::factory($max)->basic($basic->id)->create();
         $project = Project::first();
 
         $url = '/api/project';
@@ -28,7 +30,8 @@ class ReadAllTest extends TestCase
                 ->first(fn (AssertableJson $json) => $json->has('id')
                     ->where('name', $project->name)
                     ->where('description', $project->description)
-                    ->has('basics')
+                    ->where('basic_id', $project->basic_id)
+                    ->has('highlights')
                     ->etc())
         );
     }

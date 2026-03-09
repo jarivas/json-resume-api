@@ -17,8 +17,7 @@ class CreateTest extends TestCase
     {
         $user = User::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Award::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Award::factory()->basic($basic->id)->make()->toArray();
 
         $url = '/api/award';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -29,8 +28,7 @@ class CreateTest extends TestCase
             ->where('date', $data['date'])
             ->where('awarder', $data['awarder'])
             ->where('summary', $data['summary'])
-            ->has('basics', 1)
-            ->where('basics.0.id', $basic->id)
+            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('awards', [
@@ -39,10 +37,6 @@ class CreateTest extends TestCase
             'date' => $data['date'],
             'awarder' => $data['awarder'],
             'summary' => $data['summary'],
-        ]);
-
-        $this->assertDatabaseHas('basic_awards', [
-            'award_id' => $response->json('id'),
             'basic_id' => $basic->id,
         ]);
     }

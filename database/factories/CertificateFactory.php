@@ -18,4 +18,11 @@ class CertificateFactory extends Factory
             'url' => $this->faker->url(),
         ];
     }
+
+    public function basic(string $basicId): self
+    {
+        return $this->state([
+            'basic_id' => $basicId,
+        ]);
+    }
 }

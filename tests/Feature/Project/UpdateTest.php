@@ -18,8 +18,7 @@ class UpdateTest extends TestCase
         $user = User::factory()->create();
         $project = Project::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Project::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Project::factory()->basic($basic->id)->make()->toArray();
 
         $url = "/api/project/{$project->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -30,22 +29,12 @@ class UpdateTest extends TestCase
             ->where('name', $data['name'])
             ->where('description', $data['description'])
             ->where('url', $data['url'])
-            ->has('basics', 1)
-            ->where('basics.0.id', $basic->id)
+            ->where('basic_id', $basic->id)
             ->etc());
 
-        $tmp = $data;
-        unset($tmp['basics']);
-        if (array_key_exists('highlights', $tmp)) {
-            unset($tmp['highlights']);
-        }
-        $dbData = array_merge(['id' => $project->id], $tmp);
+        unset($data['highlights']);
+        $dbData = array_merge(['id' => $project->id], $data);
         $this->assertDatabaseHas('projects', $dbData);
-
-        $this->assertDatabaseHas('basic_projects', [
-            'project_id' => $response->json('id'),
-            'basic_id' => $basic->id,
-        ]);
     }
 
     public function test_project_unauthenticated()

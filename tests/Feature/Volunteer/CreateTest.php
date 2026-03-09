@@ -17,11 +17,7 @@ class CreateTest extends TestCase
     {
         $user = User::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Volunteer::factory()->make()->toArray();
-        if (empty($data['highlights'])) {
-            $data['highlights'] = ['Highlight example'];
-        }
-        $data['basics'] = [$basic->id];
+        $data = Volunteer::factory()->basic($basic->id)->make()->toArray();
 
         $url = '/api/volunteer';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -29,17 +25,20 @@ class CreateTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('organization', $data['organization'])
-            ->has('basics', 1)
-            ->where('basics.0.id', $basic->id)
+            ->where('position', $data['position'])
+            ->where('url', $data['url'])
+            ->where('startDate', $data['startDate'])
+            ->where('endDate', $data['endDate'])
+            ->where('summary', $data['summary'])
+            ->has('highlights')
+            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('volunteers', [
             'id' => $response->json('id'),
             'organization' => $data['organization'],
-        ]);
-
-        $this->assertDatabaseHas('basic_volunteers', [
-            'volunteer_id' => $response->json('id'),
+            'position' => $data['position'],
+            'url' => $data['url'],
             'basic_id' => $basic->id,
         ]);
     }
@@ -47,7 +46,8 @@ class CreateTest extends TestCase
     public function test_volunteer_create_no_organization()
     {
         $user = User::factory()->create();
-        $data = Volunteer::factory()->make(['organization' => null])->toArray();
+        $basic = Basic::factory()->create();
+        $data = Volunteer::factory()->basic($basic->id)->make(['organization' => null])->toArray();
         $url = '/api/volunteer';
         $response = $this->actingAs($user)->postJson($url, $data);
         $response->assertUnprocessable();
@@ -55,7 +55,8 @@ class CreateTest extends TestCase
 
     public function test_volunteer_create_unauthenticated()
     {
-        $data = Volunteer::factory()->make()->toArray();
+        $basic = Basic::factory()->create();
+        $data = Volunteer::factory()->basic($basic->id)->make()->toArray();
         $url = '/api/volunteer';
         $response = $this->postJson($url, $data);
         $response->assertUnauthorized();

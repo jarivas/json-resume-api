@@ -14,8 +14,7 @@ class Update extends FormRequest
             'releaseDate' => 'date:Y-m-d',
             'url' => 'url',
             'summary' => 'string',
-            'basics' => 'array',
-            'basics.*' => 'ulid|exists:basics,id',
+            'basic_id' => 'nullable|ulid|exists:basics,id',
         ];
     }
 }

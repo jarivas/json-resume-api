@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Education;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Education\Update as Request;
 use App\Models\Education;
 
-class Update extends Controller
+class Update extends BaseController
 {
     public function __invoke(Request $request, Education $education)
     {
@@ -15,12 +15,6 @@ class Update extends Controller
         if (!empty($data)) {
             $education->update($data);
         }
-
-        if ($request->has('basics')) {
-            $education->basics()->sync($request->get('basics'));
-        }
-
-        $education->load('basics');
 
         return response()->json($education->toArray());
     }

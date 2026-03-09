@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Award;
 
-use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Award;
 
-class Delete extends Controller
+class Delete
 {
     public function __invoke(Award $award)
     {
-        return $award->delete() ? response()->noContent() :
-            $this->getErrorResponse('error', 'Problem deleting the Award model');
+        if (!$award->delete()) {
+            throw new HttpException(400, 'Problem deleting the Award model');
+        }
+
+        return response()->noContent();
     }
 }

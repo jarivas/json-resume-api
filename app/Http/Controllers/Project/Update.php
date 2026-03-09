@@ -15,12 +15,6 @@ class Update
             $project->update($data);
         }
 
-        if ($request->has('basics')) {
-            $project->basics()->sync($request->get('basics'));
-        }
-
-        $project->load('basics');
-
         return response()->json($project->toArray());
     }
 }

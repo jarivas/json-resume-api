@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Basic;
 
-use App\Http\Controllers\Controller;
 use App\Models\Basic;
 
-class ReadOne extends Controller
+class ReadOne
 {
     public function __invoke(Basic $basic)
     {

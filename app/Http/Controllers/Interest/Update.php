@@ -14,12 +14,6 @@ class Update
         if (!empty($data)) {
             $interest->update($data);
         }
-        
-        if ($request->has('basics')) {
-            $interest->basics()->sync($request->get('basics'));
-        }
-
-        $interest->load('basics');
 
         return response()->json($interest->toArray());
     }

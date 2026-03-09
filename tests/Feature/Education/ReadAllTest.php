@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Education;
 
+use App\Models\Basic;
 use App\Models\Education;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,9 +16,10 @@ class ReadAllTest extends TestCase
     public function test_education_read_all_ok()
     {
         $user = User::factory()->create();
+        $basic = Basic::factory()->create();
         $max = 5;
 
-        Education::factory()->count($max)->create();
+        Education::factory($max)->basic($basic->id)->create();
         $education = Education::first();
 
         $url = '/api/education';
@@ -29,6 +31,7 @@ class ReadAllTest extends TestCase
                 ->where('institution', $education->institution)
                 ->where('area', $education->area)
                 ->where('studyType', $education->studyType)
+                ->where('basic_id', $education->basic_id)
                 ->etc())
         );
     }

@@ -17,8 +17,7 @@ class CreateTest extends TestCase
     {
         $user = User::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Education::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Education::factory()->basic($basic->id)->make()->toArray();
 
         $url = '/api/education';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -30,6 +29,8 @@ class CreateTest extends TestCase
             ->where('studyType', $data['studyType'])
             ->where('score', $data['score'])
             ->where('summary', $data['summary'])
+            ->where('basic_id', $basic->id)
+            ->has('courses')
             ->etc());
 
         $this->assertDatabaseHas('educations', [
@@ -39,10 +40,6 @@ class CreateTest extends TestCase
             'studyType' => $data['studyType'],
             'score' => $data['score'],
             'summary' => $data['summary'],
-        ]);
-
-        $this->assertDatabaseHas('basic_educations', [
-            'education_id' => $response->json('id'),
             'basic_id' => $basic->id,
         ]);
     }

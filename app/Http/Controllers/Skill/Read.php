@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Skill::with('basics')->get();
+        $items = Skill::get();
 
         return response()->json($items);
     }

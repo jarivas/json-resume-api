@@ -22,6 +22,7 @@ return new class extends Migration
             $table->json('location')->nullable()->default(null);
             $table->json('profiles')->nullable()->default(null);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class Logout extends Controller
+class Logout
 {
     public function __invoke()
     {

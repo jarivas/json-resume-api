@@ -18,8 +18,7 @@ class UpdateTest extends TestCase
         $user = User::factory()->create();
         $interest = Interest::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Interest::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Interest::factory()->basic($basic->id)->make()->toArray();
 
         $url = "/api/interest/{$interest->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -28,20 +27,13 @@ class UpdateTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
+            ->has('keywords')
             ->etc());
 
-        $tmp = $data;
-        unset($tmp['basics']);
-        if (array_key_exists('keywords', $tmp)) {
-            unset($tmp['keywords']);
-        }
-        $dbData = array_merge(['id' => $interest->id], $tmp);
-        $this->assertDatabaseHas('interests', $dbData);
+        unset($data['keywords']);
 
-        $this->assertDatabaseHas('basic_interests', [
-            'interest_id' => $response->json('id'),
-            'basic_id' => $basic->id,
-        ]);
+        $dbData = array_merge(['id' => $interest->id], $data);
+        $this->assertDatabaseHas('interests', $dbData);
     }
 
     public function test_interest_unauthenticated()

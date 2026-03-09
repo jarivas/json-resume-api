@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Reference::with('basics')->get();
+        $items = Reference::get();
 
         return response()->json($items);
     }

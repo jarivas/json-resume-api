@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Volunteer;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Volunteer\Update as Request;
 use App\Models\Volunteer;
 
-class Update extends Controller
+class Update extends BaseController
 {
     public function __invoke(Request $request, Volunteer $volunteer)
     {
@@ -17,12 +17,6 @@ class Update extends Controller
         }
 
         $volunteer->update($data);
-
-        if ($request->has('basics')) {
-            $volunteer->basics()->sync($request->get('basics'));
-        }
-
-        $volunteer->load('basics');
 
         return response()->json($volunteer->toArray());
     }

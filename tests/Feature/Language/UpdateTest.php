@@ -18,8 +18,7 @@ class UpdateTest extends TestCase
         $user = User::factory()->create();
         $language = Language::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Language::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Language::factory()->basic($basic->id)->make()->toArray();
 
         $url = "/api/language/{$language->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -29,19 +28,11 @@ class UpdateTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('language', $data['language'])
             ->where('fluency', $data['fluency'])
-            ->has('basics', 1)
-            ->where('basics.0.id', $basic->id)
+            ->where('basic_id', $basic->id)
             ->etc());
 
-        $tmp = $data;
-        unset($tmp['basics']);
-        $dbData = array_merge(['id' => $language->id], $tmp);
+        $dbData = array_merge(['id' => $language->id], $data);
         $this->assertDatabaseHas('languages', $dbData);
-
-        $this->assertDatabaseHas('basic_languages', [
-            'language_id' => $response->json('id'),
-            'basic_id' => $basic->id,
-        ]);
     }
 
     public function test_language_unauthenticated()

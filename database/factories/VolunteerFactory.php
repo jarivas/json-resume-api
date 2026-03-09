@@ -24,4 +24,11 @@ class VolunteerFactory extends Factory
             'highlights' => $this->faker->sentences($this->faker->numberBetween(0, 5)),
         ];
     }
+
+    public function basic(string $basicId): self
+    {
+        return $this->state([
+            'basic_id' => $basicId,
+        ]);
+    }
 }

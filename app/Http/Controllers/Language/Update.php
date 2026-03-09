@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Language;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Language\Update as Request;
 use App\Models\Language;
 
-class Update extends Controller
+class Update extends BaseController
 {
     public function __invoke(Request $request, Language $language)
     {
@@ -15,12 +15,6 @@ class Update extends Controller
         if (!empty($data)) {
             $language->update($data);
         }
-
-        if ($request->has('basics')) {
-            $language->basics()->sync($request->get('basics'));
-        }
-
-        $language->load('basics');
 
         return response()->json($language->toArray());
     }

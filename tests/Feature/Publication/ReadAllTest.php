@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Publication;
 
+use App\Models\Basic;
 use App\Models\Publication;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,9 +16,10 @@ class ReadAllTest extends TestCase
     public function test_publication_read_all_ok()
     {
         $user = User::factory()->create();
+        $basic = Basic::factory()->create();
         $max = 5;
 
-        Publication::factory()->count($max)->create();
+        Publication::factory($max)->basic($basic->id)->create();
         $publication = Publication::first();
 
         $url = '/api/publication';
@@ -28,7 +30,9 @@ class ReadAllTest extends TestCase
             ->first(fn (AssertableJson $json) => $json->has('id')
                 ->where('name', $publication->name)
                 ->where('publisher', $publication->publisher)
-                ->has('basics')
+                ->where('basic_id', $publication->basic_id)
+                ->where('url', $publication->url)
+                ->where('summary', $publication->summary)
                 ->etc())
         );
     }

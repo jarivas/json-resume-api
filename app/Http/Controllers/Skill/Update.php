@@ -15,12 +15,6 @@ class Update
             $skill->update($data);
         }
 
-        if ($request->has('basics')) {
-            $skill->basics()->sync($request->get('basics'));
-        }
-
-        $skill->load('basics');
-
         return response()->json($skill->toArray());
     }
 }

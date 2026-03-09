@@ -19,17 +19,13 @@ return new class extends Migration
             $table->string('description');
             $table->json('highlights');
             $table->string('url')->nullable()->default(null);
-            $table->timestamps();
-        });
 
-        Schema::create('basic_projects', function (Blueprint $table) {
             $table->foreignUlid('basic_id')
-                ->references('id')->on('basics')
-                ->cascadeOnDelete();
-            $table->foreignUlid('project_id')
-                ->references('id')->on('projects')
-                ->cascadeOnDelete();
+                ->nullable()->default(null)
+                ->references('id')->on('basics');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -38,7 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('basic_projects');
         Schema::dropIfExists('projects');
     }
 };

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Reference;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Reference\Update as Request;
 use App\Models\Reference;
 
-class Update extends Controller
+class Update extends BaseController
 {
     public function __invoke(Request $request, Reference $reference)
     {
@@ -15,12 +15,6 @@ class Update extends Controller
         if (!empty($data)) {
             $reference->update($data);
         }
-
-        if ($request->has('basics')) {
-            $reference->basics()->sync($request->get('basics'));
-        }
-
-        $reference->load('basics');
 
         return response()->json($reference->toArray());
     }

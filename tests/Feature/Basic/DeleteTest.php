@@ -20,7 +20,7 @@ class DeleteTest extends TestCase
         $response = $this->actingAs($user)->deleteJson($url);
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing('basics', [
+        $this->assertDatabaseMissing('basic', [
             'id' => $basic->id,
         ]);
     }

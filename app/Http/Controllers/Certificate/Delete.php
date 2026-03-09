@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Certificate;
 
-use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Certificate;
 
-class Delete extends Controller
+class Delete
 {
     public function __invoke(Certificate $certificate)
     {
-        return $certificate->delete() ? response()->noContent() :
-            $this->getErrorResponse('error', 'Problem deleting the Certificate model');
+        if (! $certificate->delete()) {
+            throw new HttpException(400, 'Problem deleting the Certificate model');
+        }
+
+        return response()->noContent();
     }
 }

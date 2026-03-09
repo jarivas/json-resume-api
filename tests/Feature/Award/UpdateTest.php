@@ -16,10 +16,9 @@ class UpdateTest extends TestCase
     public function test_award_update_ok()
     {
         $user = User::factory()->create();
-        $award = Award::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Award::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $award = Award::factory()->create();
+        $data = Award::factory()->basic($basic->id)->make()->toArray();
 
         $url = "/api/award/{$award->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -31,18 +30,11 @@ class UpdateTest extends TestCase
             ->where('date', $data['date'])
             ->where('awarder', $data['awarder'])
             ->where('summary', $data['summary'])
-            ->has('basics', 1)
-            ->where('basics.0.id', $basic->id)
+            ->where('basic_id', $basic->id)
             ->etc());
 
-        unset($data['basics']);
         $data = array_merge(['id' => $award->id], $data);
         $this->assertDatabaseHas('awards', $data);
-
-        $this->assertDatabaseHas('basic_awards', [
-            'award_id' => $response->json('id'),
-            'basic_id' => $basic->id,
-        ]);
     }
 
     public function test_award_unauthenticated()

@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Publication::with('basics')->get();
+        $items = Publication::get();
 
         return response()->json($items);
     }

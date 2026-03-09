@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Work;
 
-use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Work;
 
-class Delete extends Controller
+class Delete
 {
     public function __invoke(Work $work)
     {
-        return $work->delete() ? response()->noContent() :
-            $this->getErrorResponse('error', 'Problem deleting the Work model');
+        if (! $work->delete()) {
+            throw new HttpException(400, 'Problem deleting the Work model');
+        }
+
+        return response()->noContent();
     }
 }

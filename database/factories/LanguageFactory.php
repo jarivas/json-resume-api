@@ -16,4 +16,11 @@ class LanguageFactory extends Factory
             'fluency' => $this->faker->randomElement(['native', 'fluent', 'conversational', 'basic']),
         ];
     }
+
+    public function basic(string $basicId): self
+    {
+        return $this->state([
+            'basic_id' => $basicId,
+        ]);
+    }
 }

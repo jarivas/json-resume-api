@@ -2,27 +2,22 @@
 
 namespace App\Http\Controllers\Volunteer;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Volunteer\Create as Request;
 use App\Models\Volunteer;
 
-class Create extends Controller
+use Symfony\Component\HttpKernel\Exception\HttpException;
+class Create extends BaseController
 {
     public function __invoke(Request $request)
     {
         $data = $request->validated();
 
         if (empty($data)) {
-            return response()->json(['message' => 'No data provided'], 400);
+            throw new HttpException(400, 'No data provided');
         }
 
         $volunteer = Volunteer::create($data);
-
-        if ($request->has('basics')) {
-            $volunteer->basics()->attach($request->get('basics'));
-        }
-
-        $volunteer->load('basics');
 
         return response()->json($volunteer->toArray(), 201);
     }

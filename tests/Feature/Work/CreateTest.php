@@ -17,11 +17,7 @@ class CreateTest extends TestCase
     {
         $user = User::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Work::factory()->make()->toArray();
-        if (empty($data['highlights'])) {
-            $data['highlights'] = ['Highlight example'];
-        }
-        $data['basics'] = [$basic->id];
+        $data = Work::factory()->basic($basic->id)->make()->toArray();
 
         $url = '/api/work';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -29,17 +25,18 @@ class CreateTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
-            ->has('basics', 1)
-            ->where('basics.0.id', $basic->id)
+            ->where('position', $data['position'])
+            ->where('url', $data['url'])
+            ->where('startDate', $data['startDate'])
+            ->where('endDate', $data['endDate'])
+            ->where('summary', $data['summary'])
+            ->has('highlights')
+            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('works', [
             'id' => $response->json('id'),
             'name' => $data['name'],
-        ]);
-
-        $this->assertDatabaseHas('basic_works', [
-            'work_id' => $response->json('id'),
             'basic_id' => $basic->id,
         ]);
     }
@@ -47,7 +44,8 @@ class CreateTest extends TestCase
     public function test_work_create_no_name()
     {
         $user = User::factory()->create();
-        $data = Work::factory()->make(['name' => null])->toArray();
+        $basic = Basic::factory()->create();
+        $data = Work::factory()->basic($basic->id)->make(['name' => null])->toArray();
         $url = '/api/work';
         $response = $this->actingAs($user)->postJson($url, $data);
         $response->assertUnprocessable();
@@ -55,7 +53,8 @@ class CreateTest extends TestCase
 
     public function test_work_create_unauthenticated()
     {
-        $data = Work::factory()->make()->toArray();
+        $basic = Basic::factory()->create();
+        $data = Work::factory()->basic($basic->id)->make()->toArray();
         $url = '/api/work';
         $response = $this->postJson($url, $data);
         $response->assertUnauthorized();

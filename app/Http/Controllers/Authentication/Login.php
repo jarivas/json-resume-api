@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Authentication\Login as Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\Http\Controllers\Authentication\Login as LoginHelper;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class Login extends Controller
+class Login
 {
     use LoginHelper;
 
@@ -18,17 +18,20 @@ class Login extends Controller
         $exists = User::where('email', $email)->exists();
 
         if (!$exists) {
-            $message = 'The provided email does not exist.';
-            return $this->getErrorResponse('email', $message, 400);
+            $this->error();
         }
 
         $credentials = $request->only(['email', 'password']);
 
         if (!Auth::attempt($credentials, false)) {
-            $message = 'The provided password is incorrect.';
-            return $this->getErrorResponse('password', $message, 400);
+            $this->error();
         }
 
         return $this->responseOk();
+    }
+
+    protected function error(): void
+    {
+        throw new HttpException(404, 'Not found.');
     }
 }

@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Publication;
 
-use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Publication;
 
-class Delete extends Controller
+class Delete
 {
     public function __invoke(Publication $publication)
     {
-        return $publication->delete() ? response()->noContent() :
-            $this->getErrorResponse('error', 'Problem deleting the Publication model');
+        if (! $publication->delete()) {
+            throw new HttpException(400, 'Problem deleting the Publication model');
+        }
+
+        return response()->noContent();
     }
 }

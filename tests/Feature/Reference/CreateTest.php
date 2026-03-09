@@ -17,8 +17,7 @@ class CreateTest extends TestCase
     {
         $user = User::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Reference::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Reference::factory()->basic($basic->id)->make()->toArray();
 
         $url = '/api/reference';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -27,18 +26,13 @@ class CreateTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
             ->where('reference', $data['reference'])
-            ->has('basics', 1)
-            ->where('basics.0.id', $basic->id)
+            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('references', [
             'id' => $response->json('id'),
             'name' => $data['name'],
             'reference' => $data['reference'],
-        ]);
-
-        $this->assertDatabaseHas('basic_references', [
-            'reference_id' => $response->json('id'),
             'basic_id' => $basic->id,
         ]);
     }

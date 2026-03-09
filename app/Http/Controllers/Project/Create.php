@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Project;
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Project\Create as Request;
 use App\Models\Project;
 
@@ -12,16 +13,10 @@ class Create
         $data = $request->validated();
 
         if (empty($data)) {
-            return response()->json(['message' => 'No data provided'], 400);
+            throw new HttpException(400, 'No data provided');
         }
 
         $project = Project::create($data);
-        
-        if ($request->has('basics')) {
-            $project->basics()->attach($request->get('basics'));
-        }
-
-        $project->load('basics');
 
         return response()->json($project->toArray(), 201);
     }

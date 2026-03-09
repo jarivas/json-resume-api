@@ -7,7 +7,7 @@ use App\Helpers\Model\Profile;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property string $id
@@ -55,58 +55,58 @@ class Basic extends Model
         ];
     }
 
-    public function work(): BelongsToMany
+    public function work(): BelongsTo
     {
-        return $this->belongsToMany(Work::class, 'basic_works', 'basic_id', 'work_id');
+        return $this->BelongsTo(Work::class);
     }
 
-    public function volunteer(): BelongsToMany
+    public function volunteer(): BelongsTo
     {
-        return $this->belongsToMany(Volunteer::class, 'basic_volunteers', 'basic_id', 'volunteer_id');
+        return $this->BelongsTo(Volunteer::class);
     }
 
-    public function education(): BelongsToMany
+    public function education(): BelongsTo
     {
-        return $this->belongsToMany(Education::class, 'basic_educations', 'basic_id', 'education_id');
+        return $this->BelongsTo(Education::class);
     }
 
-    public function awards(): BelongsToMany
+    public function awards(): BelongsTo
     {
-        return $this->belongsToMany(Award::class, 'basic_awards', 'basic_id', 'award_id');
+        return $this->BelongsTo(Award::class);
     }
 
-    public function certificates(): BelongsToMany
+    public function certificates(): BelongsTo
     {
-        return $this->belongsToMany(Certificate::class, 'basic_certificates', 'basic_id', 'certificate_id');
+        return $this->BelongsTo(Certificate::class);
     }
 
-    public function publications(): BelongsToMany
+    public function publications(): BelongsTo
     {
-        return $this->belongsToMany(Publication::class, 'basic_publications', 'basic_id', 'publication_id');
+        return $this->BelongsTo(Publication::class);
     }
 
-    public function skills(): BelongsToMany
+    public function skills(): BelongsTo
     {
-        return $this->belongsToMany(Skill::class, 'basic_skills', 'basic_id', 'skill_id');
+        return $this->BelongsTo(Skill::class);
     }
 
-    public function languages(): BelongsToMany
+    public function languages(): BelongsTo
     {
-        return $this->belongsToMany(Language::class, 'basic_languages', 'basic_id', 'language_id');
+        return $this->BelongsTo(Language::class);
     }
 
-    public function interests(): BelongsToMany
+    public function interests(): BelongsTo
     {
-        return $this->belongsToMany(Interest::class, 'basic_interests', 'basic_id', 'interest_id');
+        return $this->BelongsTo(Interest::class);
     }
 
-    public function references(): BelongsToMany
+    public function references(): BelongsTo
     {
-        return $this->belongsToMany(Reference::class, 'basic_references', 'basic_id', 'reference_id');
+        return $this->BelongsTo(Reference::class);
     }
 
-    public function projects(): BelongsToMany
+    public function projects(): BelongsTo
     {
-        return $this->belongsToMany(Project::class, 'basic_projects', 'basic_id', 'project_id');
+        return $this->BelongsTo(Project::class);
     }
 }

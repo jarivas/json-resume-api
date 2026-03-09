@@ -17,17 +17,13 @@ return new class extends Migration
             $table->dateTime('date');
             $table->string('awarder');
             $table->string('summary');
-            $table->timestamps();
-        });
 
-        Schema::create('basic_awards', function (Blueprint $table) {
             $table->foreignUlid('basic_id')
-                ->references('id')->on('basics')
-                ->cascadeOnDelete();
-            $table->foreignUlid('award_id')
-                ->references('id')->on('awards')
-                ->cascadeOnDelete();
+                ->nullable()->default(null)
+                ->references('id')->on('basics');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -36,7 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('basic_awards');
         Schema::dropIfExists('awards');
     }
 };

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -17,7 +17,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon $endDate
  * @property string $summary
  * @property array $highlights
- * @property-read \Illuminate\Support\Collection<Basic> $basics
+ * @property string $basic_id
+ * @property-read Basic $basic
  */
 class Work extends Model
 {
@@ -32,6 +33,7 @@ class Work extends Model
         'endDate',
         'summary',
         'highlights',
+        'basic_id',
     ];
 
     protected $casts = [
@@ -40,18 +42,10 @@ class Work extends Model
         'highlights' => 'array',
     ];
 
-    /**
-     * Ensure relationships are lazy-loaded by default.
-     */
-    protected $with = ['basics'];
-
-    public function basics(): BelongsToMany
+    public function basic(): BelongsTo
     {
-        return $this->belongsToMany(
+        return $this->belongsTo(
             Basic::class,
-            'basic_works',
-            'work_id',
-            'basic_id'
         );
     }
 }

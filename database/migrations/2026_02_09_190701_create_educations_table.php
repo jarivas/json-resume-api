@@ -22,17 +22,13 @@ return new class extends Migration
             $table->string('score')->nullable()->default(null);
             $table->string('summary');
             $table->json('courses')->nullable()->default(null);
-            $table->timestamps();
-        });
 
-        Schema::create('basic_educations', function (Blueprint $table) {
             $table->foreignUlid('basic_id')
-                ->references('id')->on('basics')
-                ->cascadeOnDelete();
-            $table->foreignUlid('education_id')
-                ->references('id')->on('educations')
-                ->cascadeOnDelete();
+                ->nullable()->default(null)
+                ->references('id')->on('basics');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -41,7 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('basic_educations');
         Schema::dropIfExists('educations');
     }
 };

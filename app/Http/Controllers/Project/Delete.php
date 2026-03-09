@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Project;
 
-use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Project;
 
-class Delete extends Controller
+class Delete
 {
     public function __invoke(Project $project)
     {
-        return $project->delete() ? response()->noContent() :
-            $this->getErrorResponse('error', 'Problem deleting the Project model');
+        if (! $project->delete()) {
+            throw new HttpException(400, 'Problem deleting the Project model');
+        }
+
+        return response()->noContent();
     }
 }

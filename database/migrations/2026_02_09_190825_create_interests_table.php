@@ -15,17 +15,13 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->string('name');
             $table->json('keywords');
-            $table->timestamps();
-        });
 
-        Schema::create('basic_interests', function (Blueprint $table) {
             $table->foreignUlid('basic_id')
-                ->references('id')->on('basics')
-                ->cascadeOnDelete();
-            $table->foreignUlid('interest_id')
-                ->references('id')->on('interests')
-                ->cascadeOnDelete();
+                ->nullable()->default(null)
+                ->references('id')->on('basics');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -34,7 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('basic_interests');
         Schema::dropIfExists('interests');
     }
 };

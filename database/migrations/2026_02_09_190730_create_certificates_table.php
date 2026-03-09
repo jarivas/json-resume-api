@@ -17,17 +17,13 @@ return new class extends Migration
             $table->dateTime('date');
             $table->string('issuer');
             $table->string('url');
-            $table->timestamps();
-        });
 
-        Schema::create('basic_certificates', function (Blueprint $table) {
             $table->foreignUlid('basic_id')
-                ->references('id')->on('basics')
-                ->cascadeOnDelete();
-            $table->foreignUlid('certificate_id')
-                ->references('id')->on('certificates')
-                ->cascadeOnDelete();
+                ->nullable()->default(null)
+                ->references('id')->on('basics');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -36,7 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('basic_certificates');
         Schema::dropIfExists('certificates');
     }
 };

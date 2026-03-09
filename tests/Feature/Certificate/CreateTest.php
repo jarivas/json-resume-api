@@ -17,8 +17,7 @@ class CreateTest extends TestCase
     {
         $user = User::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Certificate::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Certificate::factory()->basic($basic->id)->make()->toArray();
 
         $url = '/api/certificate';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -29,6 +28,7 @@ class CreateTest extends TestCase
             ->where('date', $data['date'])
             ->where('issuer', $data['issuer'])
             ->where('url', $data['url'])
+            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('certificates', [
@@ -37,10 +37,6 @@ class CreateTest extends TestCase
             'date' => $data['date'],
             'issuer' => $data['issuer'],
             'url' => $data['url'],
-        ]);
-
-        $this->assertDatabaseHas('basic_certificates', [
-            'certificate_id' => $response->json('id'),
             'basic_id' => $basic->id,
         ]);
     }

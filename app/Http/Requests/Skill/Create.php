@@ -13,8 +13,7 @@ class Create extends FormRequest
             'level' => 'required|string',
             'keywords' => 'required|array',
             'keywords.*' => 'required|string',
-            'basics' => 'array',
-            'basics.*' => 'ulid|exists:basics,id',
+            'basic_id' => 'nullable|ulid|exists:basics,id',
         ];
     }
 }

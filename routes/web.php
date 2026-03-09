@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', fn ()=> redirect('/up'))
     ->name('health');
 
-Route::get('/basics', Read::class);
+Route::get('/basic', Read::class);
 
-Route::get('/basics/{id}', ReadOne::class)
+Route::get('/basic/{id}', ReadOne::class)
     ->whereUlid('id');

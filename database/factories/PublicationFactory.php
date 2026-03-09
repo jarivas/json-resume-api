@@ -19,4 +19,11 @@ class PublicationFactory extends Factory
             'summary' => $this->faker->paragraph(),
         ];
     }
+
+    public function basic(string $basicId): self
+    {
+        return $this->state([
+            'basic_id' => $basicId,
+        ]);
+    }
 }

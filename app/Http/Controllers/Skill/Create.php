@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Skill;
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Skill\Create as Request;
 use App\Models\Skill;
 
@@ -12,16 +13,10 @@ class Create
         $data = $request->validated();
 
         if (empty($data)) {
-            return response()->json(['message' => 'No data provided'], 400);
+            throw new HttpException(400, 'No data provided');
         }
 
         $skill = Skill::create($data);
-
-        if ($request->has('basics')) {
-            $skill->basics()->attach($request->get('basics'));
-        }
-
-        $skill->load('basics');
 
         return response()->json($skill->toArray(), 201);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Education;
 
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Education\Create as Request;
 use App\Models\Education;
 
@@ -12,16 +13,10 @@ class Create
         $data = $request->validated();
 
         if (empty($data)) {
-            return response()->json(['message' => 'No data provided'], 400);
+            throw new HttpException(400, 'No data provided');
         }
 
         $education = Education::create($data);
-
-        if ($request->has('basics')) {
-            $education->basics()->sync($request->get('basics'));
-        }
-
-        $education->load('basics');
 
         return response()->json($education->toArray(), 201);
     }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -15,7 +15,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon $releaseDate
  * @property string $url
  * @property string $summary
- * @property-read \Illuminate\Support\Collection<Basic> $basics
+ * @property string $basic_id
+ * @property-read Basic $basic
  */
 class Publication extends Model
 {
@@ -28,24 +29,17 @@ class Publication extends Model
         'releaseDate',
         'url',
         'summary',
+        'basic_id',
     ];
 
     protected $casts = [
         'releaseDate' => 'datetime:Y-m-d',
     ];
 
-    /**
-     * Ensure relationships are lazy-loaded by default.
-     */
-    protected $with = ['basics'];
-
-    public function basics(): BelongsToMany
+    public function basic(): BelongsTo
     {
-        return $this->belongsToMany(
+        return $this->belongsTo(
             Basic::class,
-            'basic_publications',
-            'publication_id',
-            'basic_id'
         );
     }
 }

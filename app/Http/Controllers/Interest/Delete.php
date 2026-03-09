@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Interest;
 
-use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Interest;
 
-class Delete extends Controller
+class Delete
 {
     public function __invoke(Interest $interest)
     {
-        return $interest->delete() ? response()->noContent() :
-            $this->getErrorResponse('error', 'Problem deleting the Interest model');
+        if (! $interest->delete()) {
+            throw new HttpException(400, 'Problem deleting the Interest model');
+        }
+
+        return response()->noContent();
     }
 }

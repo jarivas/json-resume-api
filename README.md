@@ -20,7 +20,7 @@
 **Relaciones**
 - La mayoría de las entidades tienen una relación many-to-many con `Basic`.
 - Convención de pivotes: `basic_{entity_plural}` (por ejemplo `basic_works`, `basic_awards`).
-- En los modelos se usan `belongsToMany(...)` y, en los controladores, las acciones de crear/actualizar usan `attach`/`sync` sobre la relación `basics`.
+- En los modelos se usan `BelongsTo(...)` y, en los controladores, las acciones de crear/actualizar usan `attach`/`sync` sobre la relación `basics`.
 
 **Dónde ver la documentación de la API**
 - Archivo estático generado: `public/docs` — puedes abrir directamente [public/docs/index.html](public/docs/index.html) si el servidor web sirve `public/`.

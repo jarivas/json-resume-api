@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Basic;
 
 use App\Models\Basic;
-use App\Http\Controllers\Controller;
 
-class Read extends Controller
+class Read
 {
     public function __invoke()
     {

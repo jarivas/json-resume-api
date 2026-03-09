@@ -17,8 +17,7 @@ class CreateTest extends TestCase
     {
         $user = User::factory()->create();
         $basic = Basic::factory()->create();
-        $data = Interest::factory()->make()->toArray();
-        $data['basics'] = [$basic->id];
+        $data = Interest::factory()->basic($basic->id)->make()->toArray();
 
         $url = '/api/interest';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -26,17 +25,13 @@ class CreateTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
-            ->has('basics', 1)
-            ->where('basics.0.id', $basic->id)
+            ->has('keywords')
+            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('interests', [
             'id' => $response->json('id'),
             'name' => $data['name'],
-        ]);
-
-        $this->assertDatabaseHas('basic_interests', [
-            'interest_id' => $response->json('id'),
             'basic_id' => $basic->id,
         ]);
     }

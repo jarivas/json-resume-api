@@ -18,4 +18,11 @@ class AwardFactory extends Factory
             'summary' => $this->faker->sentence(),
         ];
     }
+
+    public function basic(string $basicId): self
+    {
+        return $this->state([
+            'basic_id' => $basicId,
+        ]);
+    }
 }

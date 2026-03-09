@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Authentication\ChangePassword as Request;
 
-class ChangePassword extends Controller
+class ChangePassword
 {
     public function __invoke(Request $request)
     {

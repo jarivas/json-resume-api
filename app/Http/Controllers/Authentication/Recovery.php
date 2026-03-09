@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Authentication;
 
 use Illuminate\Support\Facades\Mail;
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Helpers\Http\Controllers\Authentication\Login as LoginHelper;
 
-class Recovery extends Controller
+class Recovery
 {
     use LoginHelper;
 

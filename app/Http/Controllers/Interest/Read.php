@@ -8,7 +8,7 @@ class Read
 {
     public function __invoke()
     {
-        $items = Interest::with('basics')->get();
+        $items = Interest::get();
 
         return response()->json($items);
     }

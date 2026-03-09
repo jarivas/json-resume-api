@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Reference;
 
+use App\Models\Basic;
 use App\Models\Reference;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,18 +16,17 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $reference = Reference::factory()->create();
+        $basic = Basic::factory()->create();
 
-        $payload = Reference::factory()->make()->toArray();
-        unset($payload['id']);
+        $payload = Reference::factory()->basic($basic->id)->make()->toArray();
 
-        $url = '/api/reference/'.$reference->id;
+        $url = "/api/reference/{$reference->id}";
         $response = $this->actingAs($user)->patchJson($url, $payload);
         $response->assertOk();
 
-        $row = $payload;
-        unset($row['basics']);
+        $dbData = array_merge(['id' => $reference->id], $payload);
 
-        $this->assertDatabaseHas('references', $row);
+        $this->assertDatabaseHas('references', $dbData);
     }
 
     public function test_reference_update_unauthenticated()
@@ -34,7 +34,7 @@ class UpdateTest extends TestCase
         $reference = Reference::factory()->create();
         $payload = Reference::factory()->make()->toArray();
 
-        $url = '/api/reference/'.$reference->id;
+        $url = "/api/reference/{$reference->id}";
         $response = $this->patchJson($url, $payload);
         $response->assertUnauthorized();
     }
