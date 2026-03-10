@@ -80,6 +80,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-authentication-change-password">
                                 <a href="#endpoints-POSTapi-authentication-change-password">POST api/authentication/change-password</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-authentication-refresh-token">
+                                <a href="#endpoints-POSTapi-authentication-refresh-token">POST api/authentication/refresh-token</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-authentication-logout">
                                 <a href="#endpoints-POSTapi-authentication-logout">POST api/authentication/logout</a>
                             </li>
@@ -239,6 +242,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-iso-currency">
                                 <a href="#endpoints-GETapi-iso-currency">GET api/iso/currency</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-chat">
+                                <a href="#endpoints-POSTapi-chat">POST api/chat</a>
+                            </li>
                                                                         </ul>
                             </ul>
             </div>
@@ -250,7 +256,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: March 9, 2026</li>
+        <li>Last updated: March 10, 2026</li>
     </ul>
 </div>
 
@@ -661,6 +667,117 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Example: <code>|]|{+-</code></p>
         </div>
         </form>
+
+                    <h2 id="endpoints-POSTapi-authentication-refresh-token">POST api/authentication/refresh-token</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-authentication-refresh-token">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://0.0.0.0:8000/api/authentication/refresh-token" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://0.0.0.0:8000/api/authentication/refresh-token"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-authentication-refresh-token">
+</span>
+<span id="execution-results-POSTapi-authentication-refresh-token" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-authentication-refresh-token"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-authentication-refresh-token"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-authentication-refresh-token" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-authentication-refresh-token">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-authentication-refresh-token" data-method="POST"
+      data-path="api/authentication/refresh-token"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-authentication-refresh-token', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-authentication-refresh-token"
+                    onclick="tryItOut('POSTapi-authentication-refresh-token');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-authentication-refresh-token"
+                    onclick="cancelTryOut('POSTapi-authentication-refresh-token');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-authentication-refresh-token"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/authentication/refresh-token</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-authentication-refresh-token"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-authentication-refresh-token"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
 
                     <h2 id="endpoints-POSTapi-authentication-logout">POST api/authentication/logout</h2>
 
@@ -1174,7 +1291,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;373c9c21-ab57-49e5-9fe9-a59fc6e5ed58&quot;
+    &quot;error_id&quot;: &quot;f15b43a9-283f-4e5c-ad7b-951aed04743d&quot;
 }</code>
  </pre>
     </span>
@@ -1264,14 +1381,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://0.0.0.0:8000/api/basic/01kj15ckpyx687jhck2skm2m4v" \
+    --get "http://0.0.0.0:8000/api/basic/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://0.0.0.0:8000/api/basic/01kj15ckpyx687jhck2skm2m4v"
+    "http://0.0.0.0:8000/api/basic/architecto"
 );
 
 const headers = {
@@ -1289,7 +1406,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-basic--basic_id-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1301,8 +1418,8 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;0612bbbe-60ec-47a1-af4f-c086b9767050&quot;
+    &quot;message&quot;: &quot;Not Found.&quot;,
+    &quot;error_id&quot;: &quot;f567b422-6b8d-48a4-a9ce-fa4d51f502e2&quot;
 }</code>
  </pre>
     </span>
@@ -1385,10 +1502,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="basic_id"                data-endpoint="GETapi-basic--basic_id-"
-               value="01kj15ckpyx687jhck2skm2m4v"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the basic. Example: <code>01kj15ckpyx687jhck2skm2m4v</code></p>
+<p>The ID of the basic. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -1405,7 +1522,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://0.0.0.0:8000/api/basic/01kj15ckpyx687jhck2skm2m4v" \
+    "http://0.0.0.0:8000/api/basic/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1435,7 +1552,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://0.0.0.0:8000/api/basic/01kj15ckpyx687jhck2skm2m4v"
+    "http://0.0.0.0:8000/api/basic/architecto"
 );
 
 const headers = {
@@ -1555,10 +1672,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="basic_id"                data-endpoint="PATCHapi-basic--basic_id-"
-               value="01kj15ckpyx687jhck2skm2m4v"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the basic. Example: <code>01kj15ckpyx687jhck2skm2m4v</code></p>
+<p>The ID of the basic. Example: <code>architecto</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -1922,14 +2039,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://0.0.0.0:8000/api/basic/01kj15ckpyx687jhck2skm2m4v" \
+    "http://0.0.0.0:8000/api/basic/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://0.0.0.0:8000/api/basic/01kj15ckpyx687jhck2skm2m4v"
+    "http://0.0.0.0:8000/api/basic/architecto"
 );
 
 const headers = {
@@ -2026,10 +2143,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="basic_id"                data-endpoint="DELETEapi-basic--basic_id-"
-               value="01kj15ckpyx687jhck2skm2m4v"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the basic. Example: <code>01kj15ckpyx687jhck2skm2m4v</code></p>
+<p>The ID of the basic. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -2051,7 +2168,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"title\": \"architecto\",
-    \"date\": \"2026-03-09T19:23:06\",
+    \"date\": \"2026-03-10T07:00:02\",
     \"awarder\": \"architecto\",
     \"summary\": \"architecto\"
 }"
@@ -2070,7 +2187,7 @@ const headers = {
 
 let body = {
     "title": "architecto",
-    "date": "2026-03-09T19:23:06",
+    "date": "2026-03-10T07:00:02",
     "awarder": "architecto",
     "summary": "architecto"
 };
@@ -2176,10 +2293,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="POSTapi-award"
-               value="2026-03-09T19:23:06"
+               value="2026-03-10T07:00:02"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:06</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:02</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>awarder</code></b>&nbsp;&nbsp;
@@ -2270,7 +2387,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;277b5cfb-adc2-4578-b730-51c97072adac&quot;
+    &quot;error_id&quot;: &quot;97e05ac2-0704-4ca0-89e8-a7a15d8ef2fd&quot;
 }</code>
  </pre>
     </span>
@@ -2365,7 +2482,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"title\": \"architecto\",
-    \"date\": \"2026-03-09T19:23:07\",
+    \"date\": \"2026-03-10T07:00:02\",
     \"awarder\": \"architecto\",
     \"summary\": \"architecto\"
 }"
@@ -2384,7 +2501,7 @@ const headers = {
 
 let body = {
     "title": "architecto",
-    "date": "2026-03-09T19:23:07",
+    "date": "2026-03-10T07:00:02",
     "awarder": "architecto",
     "summary": "architecto"
 };
@@ -2503,10 +2620,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="PATCHapi-award--award_id-"
-               value="2026-03-09T19:23:07"
+               value="2026-03-10T07:00:02"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:07</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:02</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>awarder</code></b>&nbsp;&nbsp;
@@ -2688,7 +2805,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"architecto\",
-    \"date\": \"2026-03-09T19:23:07\",
+    \"date\": \"2026-03-10T07:00:02\",
     \"issuer\": \"architecto\",
     \"url\": \"http:\\/\\/bailey.com\\/\"
 }"
@@ -2707,7 +2824,7 @@ const headers = {
 
 let body = {
     "name": "architecto",
-    "date": "2026-03-09T19:23:07",
+    "date": "2026-03-10T07:00:02",
     "issuer": "architecto",
     "url": "http:\/\/bailey.com\/"
 };
@@ -2813,10 +2930,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="POSTapi-certificate"
-               value="2026-03-09T19:23:07"
+               value="2026-03-10T07:00:02"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:07</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:02</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>issuer</code></b>&nbsp;&nbsp;
@@ -2907,7 +3024,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;63972974-e168-4b64-8ffc-099ee354028c&quot;
+    &quot;error_id&quot;: &quot;6a60fd06-4f22-4ea4-ba04-39ce5fc53ce0&quot;
 }</code>
  </pre>
     </span>
@@ -3002,7 +3119,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"architecto\",
-    \"date\": \"2026-03-09T19:23:07\",
+    \"date\": \"2026-03-10T07:00:02\",
     \"issuer\": \"architecto\",
     \"url\": \"http:\\/\\/bailey.com\\/\"
 }"
@@ -3021,7 +3138,7 @@ const headers = {
 
 let body = {
     "name": "architecto",
-    "date": "2026-03-09T19:23:07",
+    "date": "2026-03-10T07:00:02",
     "issuer": "architecto",
     "url": "http:\/\/bailey.com\/"
 };
@@ -3140,10 +3257,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="PATCHapi-certificate--certificate_id-"
-               value="2026-03-09T19:23:07"
+               value="2026-03-10T07:00:02"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:07</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:02</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>issuer</code></b>&nbsp;&nbsp;
@@ -3328,8 +3445,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"url\": \"http:\\/\\/bailey.com\\/\",
     \"area\": \"architecto\",
     \"studyType\": \"architecto\",
-    \"startDate\": \"2026-03-09T19:23:07\",
-    \"endDate\": \"2026-03-09T19:23:07\",
+    \"startDate\": \"2026-03-10T07:00:03\",
+    \"endDate\": \"2026-03-10T07:00:03\",
     \"score\": \"architecto\",
     \"summary\": \"architecto\",
     \"courses\": [
@@ -3354,8 +3471,8 @@ let body = {
     "url": "http:\/\/bailey.com\/",
     "area": "architecto",
     "studyType": "architecto",
-    "startDate": "2026-03-09T19:23:07",
-    "endDate": "2026-03-09T19:23:07",
+    "startDate": "2026-03-10T07:00:03",
+    "endDate": "2026-03-10T07:00:03",
     "score": "architecto",
     "summary": "architecto",
     "courses": [
@@ -3500,10 +3617,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="startDate"                data-endpoint="POSTapi-education"
-               value="2026-03-09T19:23:07"
+               value="2026-03-10T07:00:03"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:07</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>endDate</code></b>&nbsp;&nbsp;
@@ -3512,10 +3629,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="endDate"                data-endpoint="POSTapi-education"
-               value="2026-03-09T19:23:07"
+               value="2026-03-10T07:00:03"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:07</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>score</code></b>&nbsp;&nbsp;
@@ -3620,7 +3737,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;e138cd9a-d23b-4fbe-a427-12be301da946&quot;
+    &quot;error_id&quot;: &quot;e821231b-3cc6-4898-82bf-437779adddff&quot;
 }</code>
  </pre>
     </span>
@@ -3718,8 +3835,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"url\": \"http:\\/\\/bailey.com\\/\",
     \"area\": \"architecto\",
     \"studyType\": \"architecto\",
-    \"startDate\": \"2026-03-09T19:23:07\",
-    \"endDate\": \"2026-03-09T19:23:07\",
+    \"startDate\": \"2026-03-10T07:00:03\",
+    \"endDate\": \"2026-03-10T07:00:03\",
     \"score\": \"architecto\",
     \"summary\": \"architecto\",
     \"courses\": [
@@ -3744,8 +3861,8 @@ let body = {
     "url": "http:\/\/bailey.com\/",
     "area": "architecto",
     "studyType": "architecto",
-    "startDate": "2026-03-09T19:23:07",
-    "endDate": "2026-03-09T19:23:07",
+    "startDate": "2026-03-10T07:00:03",
+    "endDate": "2026-03-10T07:00:03",
     "score": "architecto",
     "summary": "architecto",
     "courses": [
@@ -3903,10 +4020,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="startDate"                data-endpoint="PATCHapi-education--education_id-"
-               value="2026-03-09T19:23:07"
+               value="2026-03-10T07:00:03"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:07</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>endDate</code></b>&nbsp;&nbsp;
@@ -3915,10 +4032,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="endDate"                data-endpoint="PATCHapi-education--education_id-"
-               value="2026-03-09T19:23:07"
+               value="2026-03-10T07:00:03"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:07</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>score</code></b>&nbsp;&nbsp;
@@ -4311,7 +4428,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;f54295d2-597c-4730-ad64-5549f3e4223d&quot;
+    &quot;error_id&quot;: &quot;dbed5be6-01cf-4995-8009-cbc2d2cfe323&quot;
 }</code>
  </pre>
     </span>
@@ -4898,7 +5015,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;77c6270a-2663-4270-8a0d-9f5d9f3b5ef5&quot;
+    &quot;error_id&quot;: &quot;4a7ce9d2-dad9-47c2-9c6e-0dcf27f2a50b&quot;
 }</code>
  </pre>
     </span>
@@ -5288,8 +5405,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"architecto\",
-    \"startDate\": \"2026-03-09T19:23:08\",
-    \"endDate\": \"2026-03-09T19:23:08\",
+    \"startDate\": \"2026-03-10T07:00:03\",
+    \"endDate\": \"2026-03-10T07:00:03\",
     \"description\": \"Eius et animi quos velit et.\",
     \"highlights\": [
         \"architecto\"
@@ -5311,8 +5428,8 @@ const headers = {
 
 let body = {
     "name": "architecto",
-    "startDate": "2026-03-09T19:23:08",
-    "endDate": "2026-03-09T19:23:08",
+    "startDate": "2026-03-10T07:00:03",
+    "endDate": "2026-03-10T07:00:03",
     "description": "Eius et animi quos velit et.",
     "highlights": [
         "architecto"
@@ -5421,10 +5538,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="startDate"                data-endpoint="POSTapi-project"
-               value="2026-03-09T19:23:08"
+               value="2026-03-10T07:00:03"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:08</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>endDate</code></b>&nbsp;&nbsp;
@@ -5433,10 +5550,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="endDate"                data-endpoint="POSTapi-project"
-               value="2026-03-09T19:23:08"
+               value="2026-03-10T07:00:03"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:08</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
@@ -5541,7 +5658,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;f71691ac-46fd-4ab7-bb3e-937d7e333e27&quot;
+    &quot;error_id&quot;: &quot;f38e1420-e4b5-46f7-8217-0f7407be0649&quot;
 }</code>
  </pre>
     </span>
@@ -5636,8 +5753,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"architecto\",
-    \"startDate\": \"2026-03-09T19:23:08\",
-    \"endDate\": \"2026-03-09T19:23:08\",
+    \"startDate\": \"2026-03-10T07:00:03\",
+    \"endDate\": \"2026-03-10T07:00:03\",
     \"description\": \"Eius et animi quos velit et.\",
     \"highlights\": [
         \"architecto\"
@@ -5659,8 +5776,8 @@ const headers = {
 
 let body = {
     "name": "architecto",
-    "startDate": "2026-03-09T19:23:08",
-    "endDate": "2026-03-09T19:23:08",
+    "startDate": "2026-03-10T07:00:03",
+    "endDate": "2026-03-10T07:00:03",
     "description": "Eius et animi quos velit et.",
     "highlights": [
         "architecto"
@@ -5782,10 +5899,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="startDate"                data-endpoint="PATCHapi-project--project_id-"
-               value="2026-03-09T19:23:08"
+               value="2026-03-10T07:00:03"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:08</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>endDate</code></b>&nbsp;&nbsp;
@@ -5794,10 +5911,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="endDate"                data-endpoint="PATCHapi-project--project_id-"
-               value="2026-03-09T19:23:08"
+               value="2026-03-10T07:00:03"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:08</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
@@ -5994,7 +6111,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"architecto\",
     \"publisher\": \"architecto\",
-    \"releaseDate\": \"2026-03-09T19:23:08\",
+    \"releaseDate\": \"2026-03-10T07:00:03\",
     \"url\": \"http:\\/\\/bailey.com\\/\",
     \"summary\": \"architecto\"
 }"
@@ -6014,7 +6131,7 @@ const headers = {
 let body = {
     "name": "architecto",
     "publisher": "architecto",
-    "releaseDate": "2026-03-09T19:23:08",
+    "releaseDate": "2026-03-10T07:00:03",
     "url": "http:\/\/bailey.com\/",
     "summary": "architecto"
 };
@@ -6132,10 +6249,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="releaseDate"                data-endpoint="POSTapi-publication"
-               value="2026-03-09T19:23:08"
+               value="2026-03-10T07:00:03"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:08</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:03</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>url</code></b>&nbsp;&nbsp;
@@ -6226,7 +6343,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;8ca6266e-4f3a-431f-8028-845884bcd58d&quot;
+    &quot;error_id&quot;: &quot;bec3460a-29bf-4ba9-8f03-8ff97347fbec&quot;
 }</code>
  </pre>
     </span>
@@ -6322,7 +6439,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"architecto\",
     \"publisher\": \"architecto\",
-    \"releaseDate\": \"2026-03-09T19:23:08\",
+    \"releaseDate\": \"2026-03-10T07:00:04\",
     \"url\": \"http:\\/\\/bailey.com\\/\",
     \"summary\": \"architecto\"
 }"
@@ -6342,7 +6459,7 @@ const headers = {
 let body = {
     "name": "architecto",
     "publisher": "architecto",
-    "releaseDate": "2026-03-09T19:23:08",
+    "releaseDate": "2026-03-10T07:00:04",
     "url": "http:\/\/bailey.com\/",
     "summary": "architecto"
 };
@@ -6473,10 +6590,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="releaseDate"                data-endpoint="PATCHapi-publication--publication_id-"
-               value="2026-03-09T19:23:08"
+               value="2026-03-10T07:00:04"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-03-09T19:23:08</code></p>
+<p>Must be a valid date. Example: <code>2026-03-10T07:00:04</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>url</code></b>&nbsp;&nbsp;
@@ -6849,7 +6966,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;1be5b55f-357e-448e-98e0-b27f40c53691&quot;
+    &quot;error_id&quot;: &quot;2224982a-1dbe-4cf3-9b73-011a46ed4622&quot;
 }</code>
  </pre>
     </span>
@@ -7450,7 +7567,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;d5503aae-6dfd-4b73-a171-f58ef13d7870&quot;
+    &quot;error_id&quot;: &quot;ff6af0e3-b9c8-4567-ae6c-43716877ad09&quot;
 }</code>
  </pre>
     </span>
@@ -8127,7 +8244,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;9f90bef0-afe2-4d37-9842-a37a28eef02e&quot;
+    &quot;error_id&quot;: &quot;6c295162-6356-4775-9246-83a6cdaf148f&quot;
 }</code>
  </pre>
     </span>
@@ -8860,7 +8977,7 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Unauthenticated.&quot;,
-    &quot;error_id&quot;: &quot;580b1c50-da29-413a-b232-df308aae30de&quot;
+    &quot;error_id&quot;: &quot;ec512fc9-eb89-4d3e-b940-0dc6bf1456a3&quot;
 }</code>
  </pre>
     </span>
@@ -21448,6 +21565,164 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Example: <code>application/json</code></p>
             </div>
                         </form>
+
+                    <h2 id="endpoints-POSTapi-chat">POST api/chat</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-chat">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://0.0.0.0:8000/api/chat" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"message\": \"architecto\",
+    \"session_id\": \"architecto\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://0.0.0.0:8000/api/chat"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "message": "architecto",
+    "session_id": "architecto"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-chat">
+</span>
+<span id="execution-results-POSTapi-chat" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-chat"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-chat"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-chat" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-chat">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-chat" data-method="POST"
+      data-path="api/chat"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-chat', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-chat"
+                    onclick="tryItOut('POSTapi-chat');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-chat"
+                    onclick="cancelTryOut('POSTapi-chat');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-chat"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/chat</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-chat"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-chat"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="message"                data-endpoint="POSTapi-chat"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>session_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="session_id"                data-endpoint="POSTapi-chat"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>metadata</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="metadata"                data-endpoint="POSTapi-chat"
+               value=""
+               data-component="body">
+    <br>
+
+        </div>
+        </form>
 
             
 

@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API Documentation",
-        "_postman_id": "c7031705-5d80-4029-83f2-b5bc948819cf",
+        "_postman_id": "160f5aec-0723-4dab-9711-8db5d184cbbc",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -102,6 +102,34 @@
                             "mode": "raw",
                             "raw": "{\"password\":\"|]|{+-\"}"
                         },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/authentication\/refresh-token",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/authentication\/refresh-token",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/authentication\/refresh-token"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
                         "description": "",
                         "auth": {
                             "type": "noauth"
@@ -211,7 +239,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"373c9c21-ab57-49e5-9fe9-a59fc6e5ed58\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"f15b43a9-283f-4e5c-ad7b-951aed04743d\"}",
                             "name": ""
                         }
                     ]
@@ -228,7 +256,7 @@
                                 {
                                     "id": "basic_id",
                                     "key": "basic_id",
-                                    "value": "01kj15ckpyx687jhck2skm2m4v",
+                                    "value": "architecto",
                                     "description": "The ID of the basic."
                                 }
                             ]
@@ -266,8 +294,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"0612bbbe-60ec-47a1-af4f-c086b9767050\"}",
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"f567b422-6b8d-48a4-a9ce-fa4d51f502e2\"}",
                             "name": ""
                         }
                     ]
@@ -284,7 +312,7 @@
                                 {
                                     "id": "basic_id",
                                     "key": "basic_id",
-                                    "value": "01kj15ckpyx687jhck2skm2m4v",
+                                    "value": "architecto",
                                     "description": "The ID of the basic."
                                 }
                             ]
@@ -323,7 +351,7 @@
                                 {
                                     "id": "basic_id",
                                     "key": "basic_id",
-                                    "value": "01kj15ckpyx687jhck2skm2m4v",
+                                    "value": "architecto",
                                     "description": "The ID of the basic."
                                 }
                             ]
@@ -369,7 +397,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"architecto\",\"date\":\"2026-03-09T19:23:06\",\"awarder\":\"architecto\",\"summary\":\"architecto\"}"
+                            "raw": "{\"title\":\"architecto\",\"date\":\"2026-03-10T07:00:02\",\"awarder\":\"architecto\",\"summary\":\"architecto\"}"
                         },
                         "description": "",
                         "auth": {
@@ -421,7 +449,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"277b5cfb-adc2-4578-b730-51c97072adac\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"97e05ac2-0704-4ca0-89e8-a7a15d8ef2fd\"}",
                             "name": ""
                         }
                     ]
@@ -456,7 +484,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"architecto\",\"date\":\"2026-03-09T19:23:07\",\"awarder\":\"architecto\",\"summary\":\"architecto\"}"
+                            "raw": "{\"title\":\"architecto\",\"date\":\"2026-03-10T07:00:02\",\"awarder\":\"architecto\",\"summary\":\"architecto\"}"
                         },
                         "description": "",
                         "auth": {
@@ -523,7 +551,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"date\":\"2026-03-09T19:23:07\",\"issuer\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"architecto\",\"date\":\"2026-03-10T07:00:02\",\"issuer\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
                         },
                         "description": "",
                         "auth": {
@@ -575,7 +603,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"63972974-e168-4b64-8ffc-099ee354028c\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"6a60fd06-4f22-4ea4-ba04-39ce5fc53ce0\"}",
                             "name": ""
                         }
                     ]
@@ -610,7 +638,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"date\":\"2026-03-09T19:23:07\",\"issuer\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"architecto\",\"date\":\"2026-03-10T07:00:02\",\"issuer\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
                         },
                         "description": "",
                         "auth": {
@@ -677,7 +705,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"institution\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"area\":\"architecto\",\"studyType\":\"architecto\",\"startDate\":\"2026-03-09T19:23:07\",\"endDate\":\"2026-03-09T19:23:07\",\"score\":\"architecto\",\"summary\":\"architecto\",\"courses\":[\"architecto\"]}"
+                            "raw": "{\"institution\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"area\":\"architecto\",\"studyType\":\"architecto\",\"startDate\":\"2026-03-10T07:00:03\",\"endDate\":\"2026-03-10T07:00:03\",\"score\":\"architecto\",\"summary\":\"architecto\",\"courses\":[\"architecto\"]}"
                         },
                         "description": "",
                         "auth": {
@@ -729,7 +757,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"e138cd9a-d23b-4fbe-a427-12be301da946\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"e821231b-3cc6-4898-82bf-437779adddff\"}",
                             "name": ""
                         }
                     ]
@@ -764,7 +792,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"institution\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"area\":\"architecto\",\"studyType\":\"architecto\",\"startDate\":\"2026-03-09T19:23:07\",\"endDate\":\"2026-03-09T19:23:07\",\"score\":\"architecto\",\"summary\":\"architecto\",\"courses\":[\"architecto\"]}"
+                            "raw": "{\"institution\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"area\":\"architecto\",\"studyType\":\"architecto\",\"startDate\":\"2026-03-10T07:00:03\",\"endDate\":\"2026-03-10T07:00:03\",\"score\":\"architecto\",\"summary\":\"architecto\",\"courses\":[\"architecto\"]}"
                         },
                         "description": "",
                         "auth": {
@@ -883,7 +911,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"f54295d2-597c-4730-ad64-5549f3e4223d\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"dbed5be6-01cf-4995-8009-cbc2d2cfe323\"}",
                             "name": ""
                         }
                     ]
@@ -1037,7 +1065,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"77c6270a-2663-4270-8a0d-9f5d9f3b5ef5\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"4a7ce9d2-dad9-47c2-9c6e-0dcf27f2a50b\"}",
                             "name": ""
                         }
                     ]
@@ -1139,7 +1167,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"startDate\":\"2026-03-09T19:23:08\",\"endDate\":\"2026-03-09T19:23:08\",\"description\":\"Eius et animi quos velit et.\",\"highlights\":[\"architecto\"],\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"architecto\",\"startDate\":\"2026-03-10T07:00:03\",\"endDate\":\"2026-03-10T07:00:03\",\"description\":\"Eius et animi quos velit et.\",\"highlights\":[\"architecto\"],\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
                         },
                         "description": "",
                         "auth": {
@@ -1191,7 +1219,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"f71691ac-46fd-4ab7-bb3e-937d7e333e27\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"f38e1420-e4b5-46f7-8217-0f7407be0649\"}",
                             "name": ""
                         }
                     ]
@@ -1226,7 +1254,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"startDate\":\"2026-03-09T19:23:08\",\"endDate\":\"2026-03-09T19:23:08\",\"description\":\"Eius et animi quos velit et.\",\"highlights\":[\"architecto\"],\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"architecto\",\"startDate\":\"2026-03-10T07:00:03\",\"endDate\":\"2026-03-10T07:00:03\",\"description\":\"Eius et animi quos velit et.\",\"highlights\":[\"architecto\"],\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
                         },
                         "description": "",
                         "auth": {
@@ -1293,7 +1321,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"publisher\":\"architecto\",\"releaseDate\":\"2026-03-09T19:23:08\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\"}"
+                            "raw": "{\"name\":\"architecto\",\"publisher\":\"architecto\",\"releaseDate\":\"2026-03-10T07:00:03\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\"}"
                         },
                         "description": "",
                         "auth": {
@@ -1345,7 +1373,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"8ca6266e-4f3a-431f-8028-845884bcd58d\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"bec3460a-29bf-4ba9-8f03-8ff97347fbec\"}",
                             "name": ""
                         }
                     ]
@@ -1380,7 +1408,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"publisher\":\"architecto\",\"releaseDate\":\"2026-03-09T19:23:08\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\"}"
+                            "raw": "{\"name\":\"architecto\",\"publisher\":\"architecto\",\"releaseDate\":\"2026-03-10T07:00:04\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\"}"
                         },
                         "description": "",
                         "auth": {
@@ -1499,7 +1527,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"1be5b55f-357e-448e-98e0-b27f40c53691\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"2224982a-1dbe-4cf3-9b73-011a46ed4622\"}",
                             "name": ""
                         }
                     ]
@@ -1653,7 +1681,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"d5503aae-6dfd-4b73-a171-f58ef13d7870\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"ff6af0e3-b9c8-4567-ae6c-43716877ad09\"}",
                             "name": ""
                         }
                     ]
@@ -1807,7 +1835,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"9f90bef0-afe2-4d37-9842-a37a28eef02e\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"6c295162-6356-4775-9246-83a6cdaf148f\"}",
                             "name": ""
                         }
                     ]
@@ -1961,7 +1989,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"580b1c50-da29-413a-b232-df308aae30de\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"ec512fc9-eb89-4d3e-b940-0dc6bf1456a3\"}",
                             "name": ""
                         }
                     ]
@@ -2184,6 +2212,37 @@
                             "name": ""
                         }
                     ]
+                },
+                {
+                    "name": "POST api\/chat",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/chat",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/chat"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"message\":\"architecto\",\"session_id\":\"architecto\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
                 }
             ]
         }

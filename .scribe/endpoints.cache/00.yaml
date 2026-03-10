@@ -136,6 +136,37 @@ endpoints:
     custom: []
     httpMethods:
       - POST
+    uri: api/authentication/refresh-token
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
     uri: api/authentication/logout
     metadata:
       custom: []
@@ -416,7 +447,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"373c9c21-ab57-49e5-9fe9-a59fc6e5ed58"}'
+        content: '{"message":"Unauthenticated.","error_id":"f15b43a9-283f-4e5c-ad7b-951aed04743d"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -451,14 +482,14 @@ endpoints:
         name: basic_id
         description: 'The ID of the basic.'
         required: true
-        example: 01kj15ckpyx687jhck2skm2m4v
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      basic_id: 01kj15ckpyx687jhck2skm2m4v
+      basic_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -467,8 +498,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"0612bbbe-60ec-47a1-af4f-c086b9767050"}'
+        status: 404
+        content: '{"message":"Not Found.","error_id":"f567b422-6b8d-48a4-a9ce-fa4d51f502e2"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -503,14 +534,14 @@ endpoints:
         name: basic_id
         description: 'The ID of the basic.'
         required: true
-        example: 01kj15ckpyx687jhck2skm2m4v
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      basic_id: 01kj15ckpyx687jhck2skm2m4v
+      basic_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -860,14 +891,14 @@ endpoints:
         name: basic_id
         description: 'The ID of the basic.'
         required: true
-        example: 01kj15ckpyx687jhck2skm2m4v
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      basic_id: 01kj15ckpyx687jhck2skm2m4v
+      basic_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -918,7 +949,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-09T19:23:06'
+        example: '2026-03-10T07:00:02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -959,7 +990,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       title: architecto
-      date: '2026-03-09T19:23:06'
+      date: '2026-03-10T07:00:02'
       awarder: architecto
       summary: architecto
     fileParameters: []
@@ -998,7 +1029,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"277b5cfb-adc2-4578-b730-51c97072adac"}'
+        content: '{"message":"Unauthenticated.","error_id":"97e05ac2-0704-4ca0-89e8-a7a15d8ef2fd"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -1060,7 +1091,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-09T19:23:07'
+        example: '2026-03-10T07:00:02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1101,7 +1132,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       title: architecto
-      date: '2026-03-09T19:23:07'
+      date: '2026-03-10T07:00:02'
       awarder: architecto
       summary: architecto
     fileParameters: []
@@ -1193,7 +1224,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-09T19:23:07'
+        example: '2026-03-10T07:00:02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1234,7 +1265,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: architecto
-      date: '2026-03-09T19:23:07'
+      date: '2026-03-10T07:00:02'
       issuer: architecto
       url: 'http://bailey.com/'
     fileParameters: []
@@ -1273,7 +1304,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"63972974-e168-4b64-8ffc-099ee354028c"}'
+        content: '{"message":"Unauthenticated.","error_id":"6a60fd06-4f22-4ea4-ba04-39ce5fc53ce0"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -1335,7 +1366,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-09T19:23:07'
+        example: '2026-03-10T07:00:02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1376,7 +1407,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: architecto
-      date: '2026-03-09T19:23:07'
+      date: '2026-03-10T07:00:02'
       issuer: architecto
       url: 'http://bailey.com/'
     fileParameters: []
@@ -1501,7 +1532,7 @@ endpoints:
         name: startDate
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-09T19:23:07'
+        example: '2026-03-10T07:00:03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1512,7 +1543,7 @@ endpoints:
         name: endDate
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-09T19:23:07'
+        example: '2026-03-10T07:00:03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1568,8 +1599,8 @@ endpoints:
       url: 'http://bailey.com/'
       area: architecto
       studyType: architecto
-      startDate: '2026-03-09T19:23:07'
-      endDate: '2026-03-09T19:23:07'
+      startDate: '2026-03-10T07:00:03'
+      endDate: '2026-03-10T07:00:03'
       score: architecto
       summary: architecto
       courses:
@@ -1610,7 +1641,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"e138cd9a-d23b-4fbe-a427-12be301da946"}'
+        content: '{"message":"Unauthenticated.","error_id":"e821231b-3cc6-4898-82bf-437779adddff"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -1705,7 +1736,7 @@ endpoints:
         name: startDate
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-09T19:23:07'
+        example: '2026-03-10T07:00:03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1716,7 +1747,7 @@ endpoints:
         name: endDate
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-09T19:23:07'
+        example: '2026-03-10T07:00:03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1772,8 +1803,8 @@ endpoints:
       url: 'http://bailey.com/'
       area: architecto
       studyType: architecto
-      startDate: '2026-03-09T19:23:07'
-      endDate: '2026-03-09T19:23:07'
+      startDate: '2026-03-10T07:00:03'
+      endDate: '2026-03-10T07:00:03'
       score: architecto
       summary: architecto
       courses:
@@ -1925,7 +1956,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"f54295d2-597c-4730-ad64-5549f3e4223d"}'
+        content: '{"message":"Unauthenticated.","error_id":"dbed5be6-01cf-4995-8009-cbc2d2cfe323"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -2154,7 +2185,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"77c6270a-2663-4270-8a0d-9f5d9f3b5ef5"}'
+        content: '{"message":"Unauthenticated.","error_id":"4a7ce9d2-dad9-47c2-9c6e-0dcf27f2a50b"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -2325,7 +2356,7 @@ endpoints:
         name: startDate
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-09T19:23:08'
+        example: '2026-03-10T07:00:03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2336,7 +2367,7 @@ endpoints:
         name: endDate
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-09T19:23:08'
+        example: '2026-03-10T07:00:03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2389,8 +2420,8 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: architecto
-      startDate: '2026-03-09T19:23:08'
-      endDate: '2026-03-09T19:23:08'
+      startDate: '2026-03-10T07:00:03'
+      endDate: '2026-03-10T07:00:03'
       description: 'Eius et animi quos velit et.'
       highlights:
         - architecto
@@ -2431,7 +2462,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"f71691ac-46fd-4ab7-bb3e-937d7e333e27"}'
+        content: '{"message":"Unauthenticated.","error_id":"f38e1420-e4b5-46f7-8217-0f7407be0649"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -2493,7 +2524,7 @@ endpoints:
         name: startDate
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-09T19:23:08'
+        example: '2026-03-10T07:00:03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2504,7 +2535,7 @@ endpoints:
         name: endDate
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-09T19:23:08'
+        example: '2026-03-10T07:00:03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2557,8 +2588,8 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       name: architecto
-      startDate: '2026-03-09T19:23:08'
-      endDate: '2026-03-09T19:23:08'
+      startDate: '2026-03-10T07:00:03'
+      endDate: '2026-03-10T07:00:03'
       description: 'Eius et animi quos velit et.'
       highlights:
         - architecto
@@ -2663,7 +2694,7 @@ endpoints:
         name: releaseDate
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-09T19:23:08'
+        example: '2026-03-10T07:00:03'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2705,7 +2736,7 @@ endpoints:
     cleanBodyParameters:
       name: architecto
       publisher: architecto
-      releaseDate: '2026-03-09T19:23:08'
+      releaseDate: '2026-03-10T07:00:03'
       url: 'http://bailey.com/'
       summary: architecto
     fileParameters: []
@@ -2744,7 +2775,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"8ca6266e-4f3a-431f-8028-845884bcd58d"}'
+        content: '{"message":"Unauthenticated.","error_id":"bec3460a-29bf-4ba9-8f03-8ff97347fbec"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -2817,7 +2848,7 @@ endpoints:
         name: releaseDate
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-09T19:23:08'
+        example: '2026-03-10T07:00:04'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2859,7 +2890,7 @@ endpoints:
     cleanBodyParameters:
       name: architecto
       publisher: architecto
-      releaseDate: '2026-03-09T19:23:08'
+      releaseDate: '2026-03-10T07:00:04'
       url: 'http://bailey.com/'
       summary: architecto
     fileParameters: []
@@ -3007,7 +3038,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"1be5b55f-357e-448e-98e0-b27f40c53691"}'
+        content: '{"message":"Unauthenticated.","error_id":"2224982a-1dbe-4cf3-9b73-011a46ed4622"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -3248,7 +3279,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"d5503aae-6dfd-4b73-a171-f58ef13d7870"}'
+        content: '{"message":"Unauthenticated.","error_id":"ff6af0e3-b9c8-4567-ae6c-43716877ad09"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -3551,7 +3582,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"9f90bef0-afe2-4d37-9842-a37a28eef02e"}'
+        content: '{"message":"Unauthenticated.","error_id":"6c295162-6356-4775-9246-83a6cdaf148f"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -3902,7 +3933,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"580b1c50-da29-413a-b232-df308aae30de"}'
+        content: '{"message":"Unauthenticated.","error_id":"ec512fc9-eb89-4d3e-b940-0dc6bf1456a3"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -4211,6 +4242,72 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: '*'
         description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/chat
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      message:
+        custom: []
+        name: message
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      session_id:
+        custom: []
+        name: session_id
+        description: ''
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      metadata:
+        custom: []
+        name: metadata
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      message: architecto
+      session_id: architecto
+    fileParameters: []
+    responses: []
     responseFields: []
     auth: []
     controller: null
