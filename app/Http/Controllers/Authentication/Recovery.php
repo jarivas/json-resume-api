@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use Illuminate\Support\Facades\Mail;
-use App\Models\User;
-use App\Helpers\Http\Controllers\Authentication\Login as LoginHelper;
+use App\Helpers\Http\Controllers\Authentication\Authentication;
+use RuntimeException;
 
 class Recovery
 {
-    use LoginHelper;
+    use Authentication;
 
     public function __invoke()
     {
-        $user = User::first();
+        $success = $this->recoveryHelper();
 
-        $data = $this->getToken($user);
-        
-        Mail::send('mail.recovery', $data, fn ($message) =>
-            $message->to($user->email)->subject('Recovery Instructions')
-        );
+        if (!$success) {
+            throw new RuntimeException('Failed to send recovery email. Please try again later.');
+        }
 
         return response()->noContent();
     }

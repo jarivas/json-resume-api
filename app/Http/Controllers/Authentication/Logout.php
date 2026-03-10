@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use Illuminate\Support\Facades\Auth;
+use App\Helpers\Http\Controllers\Authentication\Authentication;
 
 class Logout
 {
+    use Authentication;
+
     public function __invoke()
     {
-        $user = Auth::user();
-
-        $user->tokens()->delete();
+        $this->logoutHelper();
 
         return response()->noContent();
     }

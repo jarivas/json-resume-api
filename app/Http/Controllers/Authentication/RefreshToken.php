@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use App\Http\Requests\Authentication\Login as Request;
 use App\Helpers\Http\Controllers\Authentication\Authentication;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class Login
+class RefreshToken
 {
     use Authentication;
 
-    public function __invoke(Request $request)
+    public function __invoke()
     {
-        $credentials = $request->only(['email', 'password']);
-
-        $result = $this->loginHelper($credentials);
+        $result = $this->refreshTokenHelper();
 
         if ($result === false) {
             throw new HttpException(404, 'Not found.');

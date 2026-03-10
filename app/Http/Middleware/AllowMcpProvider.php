@@ -4,70 +4,57 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AllowMcpProvider
 {
     /**
-     * Allow access only if request includes the configured provider header.
-     * Header checked: `X-MCP-PROVIDER` (case-insensitive).
+     * Allow access only when request IP matches configured whitelist rules.
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
-        // Allow if remote IP is in the configured MCP whitelist
         $allowed = config('mcp.allowed_ips', []);
-        $remoteIp = $request->ip();
+        $remoteIp = (string) $request->ip();
 
-        if (! empty($allowed)) {
-            foreach ($allowed as $rule) {
-                $rule = trim($rule);
-                if ($rule === '') {
-                    continue;
-                }
+        if ($remoteIp === '' || empty($allowed)) {
+            return response()->json(['message' => 'Unauthorized.'], 403);
+        }
 
-                // exact match
-                if ($rule === $remoteIp) {
+        foreach ($allowed as $rule) {
+            $rule = trim((string) $rule);
+
+            if ($rule === '') {
+                continue;
+            }
+
+            if ($rule === $remoteIp) {
+                return $next($request);
+            }
+
+            if (str_ends_with($rule, '*')) {
+                $prefix = rtrim($rule, '*');
+
+                if (str_starts_with($remoteIp, $prefix)) {
                     return $next($request);
                 }
 
-                // wildcard suffix e.g. 192.168.1.*
-                if (str_ends_with($rule, '*')) {
-                    $prefix = rtrim($rule, '*');
-                    if (str_starts_with($remoteIp, $prefix)) {
-                        return $next($request);
-                    }
-                    continue;
-                }
-
-                // CIDR notation
-                if (str_contains($rule, '/')) {
-                    if ($this->ipInRange($remoteIp, $rule)) {
-                        return $next($request);
-                    }
-                    continue;
-                }
+                continue;
             }
-            // If whitelist is present and none matched, deny immediately
-            return response()->json(['message' => 'Unauthorized.'], 403);
+
+            if (str_contains($rule, '/')) {
+                if ($this->ipInRange($remoteIp, $rule)) {
+                    return $next($request);
+                }
+
+                continue;
+            }
         }
 
-        // Fallback: require header matching configured provider
-        $expected = config('ai.default');
-        $header = $request->header('X-MCP-PROVIDER') ?: $request->header('X-Provider');
-
-        if (empty($expected) || $header === null) {
-            return response()->json(['message' => 'Unauthorized.'], 403);
-        }
-
-        if (! hash_equals((string) $expected, (string) $header)) {
-            return response()->json(['message' => 'Unauthorized.'], 403);
-        }
-
-        return $next($request);
+        return response()->json(['message' => 'Unauthorized.'], 403);
     }
 
     /**
      * Check if an IPv4 address is within a CIDR range.
-     * Returns false for invalid inputs or IPv6 addresses.
      */
     protected function ipInRange(string $ip, string $cidr): bool
     {
@@ -76,6 +63,7 @@ class AllowMcpProvider
         }
 
         $parts = explode('/', $cidr);
+
         if (count($parts) !== 2) {
             return false;
         }
@@ -87,6 +75,7 @@ class AllowMcpProvider
         }
 
         $bits = (int) $bits;
+
         if ($bits < 0 || $bits > 32) {
             return false;
         }
