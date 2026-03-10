@@ -1,0 +1,215 @@
+{
+  "basics": {
+    "name": "José Antonio Rivas Fernández",
+    "label": "Team Lead / Head of Development",
+    "image": "",
+    "email": "me@jarivas.work",
+    "phone": "(+34) 655010958",
+    "url": "https://me.jarivas.work",
+    "summary": "Líder tecnológico y desarrollador Full Stack con amplia experiencia en la creación de arquitecturas escalables y gestión de equipos. Especializado en el ecosistema PHP (Laravel, Symfony) y con una sólida formación reciente en Inteligencia Artificial, Big Data, Ciberseguridad y Ciencia de Datos aplicada.",
+    "location": {
+      "city": "Málaga",
+      "countryCode": "ES",
+      "region": "Andalucía"
+    },
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "jarivas",
+        "url": "https://github.com/jarivas"
+      },
+      {
+        "network": "Credly",
+        "username": "jose-antonio-rivas-fernandez",
+        "url": "https://www.credly.com/users/jose-antonio-rivas-fernandez"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "InOne",
+      "position": "Head of Development",
+      "url": "https://www.inone.es/",
+      "startDate": "2025-06-01",
+      "summary": "Plataforma integral de Marketing Digital y Gestión para la industria del golf, enfocada en la automatización de procesos y Business Data.",
+      "highlights": [
+        "Diseño y desarrollo de un nuevo CRM basado en APIs REST utilizando Laravel 12.",
+        "Gestión de tareas del equipo técnico y liderazgo de proyectos.",
+        "Redacción de documentación técnica exhaustiva y mentoría de desarrolladores junior/middle.",
+        "Stack: PHP 8, Laravel 11/12, MySQL, AWS (EC2, S3, SNS, SES), Docker."
+      ]
+    },
+    {
+      "name": "Libnova",
+      "position": "Full Stack Developer",
+      "url": "https://es.libnova.com",
+      "startDate": "2023-09-01",
+      "endDate": "2024-06-01",
+      "summary": "Especialistas en soluciones de preservación digital y gestión documental.",
+      "highlights": [
+        "Desarrollo de un servicio de indexación de archivos a medida.",
+        "Documentación de arquitecturas de microservicios y diseño de la evolución del codebase legacy.",
+        "Implementación de extensiones back-office para la integración con sistemas de gestión de proyectos.",
+        "Stack: PHP 7/8, Phalcon, CodeIgniter 3/4, Elastic Search, .Net Core 8, Vue 3, Docker."
+      ]
+    },
+    {
+      "name": "Multisafepay",
+      "position": "Team Leader",
+      "url": "https://www.multisafepay.com/es_es",
+      "startDate": "2021-08-01",
+      "endDate": "2023-09-01",
+      "summary": "Fintech especializada en soluciones de pago online.",
+      "highlights": [
+        "Liderazgo del desarrollo backend de un nuevo producto monolítico.",
+        "Implementación de pipelines de CI/CD, herramientas de calidad de código y gestión de entornos.",
+        "Stack: PHP 7/8, MariaDB 10, PostgreSQL 15, Docker."
+      ]
+    },
+    {
+      "name": "Lineten",
+      "position": "Full Stack Developer",
+      "url": "https://www.lineten.com",
+      "startDate": "2019-03-01",
+      "endDate": "2021-06-01",
+      "summary": "Soluciones tecnológicas para el sector Foodservice y QSR.",
+      "highlights": [
+        "Desarrollo del front-end del back-office y de una aplicación móvil para repartidores.",
+        "Construcción de microservicios de integración con proveedores logísticos externos.",
+        "Stack: PHP 7, Go, MariaDB 8, Vue 2, Vuetify, Google Maps, Open Street Maps, Cordoba."
+      ]
+    },
+    {
+      "name": "Lionline",
+      "position": "Full Stack Developer",
+      "url": "https://www.lapalingo.com/en",
+      "startDate": "2015-12-01",
+      "endDate": "2018-12-01",
+      "summary": "Desarrollo de plataformas de alto rendimiento para la industria del juego online.",
+      "highlights": [
+        "Mantenimiento y desarrollo de APIs REST críticas para el negocio.",
+        "Mejoras en el front-end y expansión de funcionalidades en el back-office.",
+        "Stack: PHP 5/7, Symfony 1.4/2.0, Slim PHP 3, Material Design Lite."
+      ]
+    },
+    {
+      "name": "Source works / Quellwerke",
+      "position": "Full Stack Developer",
+      "url": "https://www.quellwerke.de",
+      "startDate": "2013-07-01",
+      "endDate": "2015-12-01",
+      "summary": "Consultoría de transformación digital y desarrollo de software a medida.",
+      "highlights": [
+        "Desarrollo integral del proyecto Phoenix Webmall (equipo de 3 personas durante 9 meses).",
+        "Creación de la aplicación Alexander Maier para Windows Phone.",
+        "Gestión autónoma de proyectos basados en CMS (Typo3, Wordpress, Pimcore).",
+        "Stack: PHP 5, Zend Framework, Windows Phone 8, ExtJs, Joomla."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universitat Oberta de Catalunya (UOC)",
+      "url": "https://www.uoc.edu",
+      "area": "Grado en Ciencia de Datos Aplicada",
+      "studyType": "Grado",
+      "startDate": "2025-01-01"
+    },
+    {
+      "institution": "IES Jesús Marín",
+      "area": "Desarrollo de Aplicaciones Informáticas (DAI)",
+      "studyType": "Técnico Superior",
+      "startDate": "2005-01-01",
+      "endDate": "2007-01-01"
+    }
+  ],
+  "certificates": [
+    {
+      "name": "IFCD99 - Programación en Inteligencia Artificial y Big Data en entornos 5G",
+      "issuer": "Integra Conocimiento / Junta de Andalucía",
+      "date": "2024-01-01",
+      "url": "https://jarivas.work/IFCD99.pdf"
+    },
+    {
+      "name": "IFCD97 - Programación para soluciones de IoT y Smart City en entornos 5G",
+      "issuer": "Integra Conocimiento / Junta de Andalucía",
+      "date": "2025-01-01",
+      "url": "https://jarivas.work/IFCD97.pdf"
+    },
+    {
+      "name": "Google Data Analytics Professional Certificate",
+      "issuer": "Google",
+      "date": "2025-01-01",
+      "url": "https://www.credly.com/badges/51475cf5-65c3-4227-8d07-cf4c7b8230b0/public_url"
+    },
+    {
+      "name": "Google Cybersecurity Professional Certificate",
+      "issuer": "Google",
+      "date": "2025-01-01",
+      "url": "https://www.credly.com/badges/652d9902-24b2-4820-9b43-0cff2e2af1f4/public_url"
+    },
+    {
+      "name": "IBM Artificial Intelligence Fundamentals",
+      "issuer": "IBM",
+      "date": "2025-01-01",
+      "url": "https://www.credly.com/badges/eecb07b1-c709-4bdb-8efe-0a055abb15c0/public_url"
+    },
+    {
+      "name": "IBM Web Development with Python",
+      "issuer": "IBM",
+      "date": "2025-01-01",
+      "url": "https://www.credly.com/badges/4fc8c8d5-692d-4b12-9c73-64d5d1e3b92b/public_url"
+    },
+    {
+      "name": "Neo4j Fundamentals",
+      "issuer": "Neo4j",
+      "date": "2024-01-01",
+      "url": "https://graphacademy.neo4j.com/c/dbfd1741-bae7-4ff5-989b-aeaec36c403c/"
+    },
+    {
+      "name": "SSCE0110 - Docencia de la formación profesional para el empleo",
+      "issuer": "Alce Training Group",
+      "date": "2025-01-01"
+    },
+    {
+      "name": "Sun Certified Programmer for the Java Platform, SE 5.0 (SCJP)",
+      "issuer": "Sun Microsystems",
+      "date": "2009-01-01",
+      "url": "https://certifications.jarivas.work/SCJP.jpg"
+    },
+    {
+      "name": "MCTS: .NET Framework 2.0 - Windows-based Client Development (70-526)",
+      "issuer": "Microsoft",
+      "date": "2008-01-01",
+      "url": "https://certifications.jarivas.work/MCTS%20Windows%20Application.jpg"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Backend Development",
+      "keywords": ["PHP 8", "Laravel", "Symfony", "Go", ".Net Core", "Java", "Python", "API REST"]
+    },
+    {
+      "name": "Frontend & Mobile",
+      "keywords": ["Vue.js", "JavaScript", "Vuetify", "Bootstrap", "Android", "Cordova"]
+    },
+    {
+      "name": "Data & AI",
+      "keywords": ["SQL", "NoSQL (Neo4j)", "Big Data", "Machine Learning", "Data Cleaning", "Tableau", "R"]
+    },
+    {
+      "name": "Infrastructure & Devops",
+      "keywords": ["Docker", "AWS (EC2, S3)", "CI/CD Pipelines", "Linux", "Cybersecurity"]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Español",
+      "fluency": "Nativo"
+    },
+    {
+      "language": "Inglés",
+      "fluency": "Profesional"
+    }
+  ]
+}
