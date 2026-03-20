@@ -4,7 +4,6 @@ namespace App\Mcp\Servers\Traits;
 
 trait ReadServerTrait
 {
-
     public function readIndex(array $query = []): array
     {
         if (empty($this->model)) {
@@ -15,9 +14,9 @@ trait ReadServerTrait
         $builder = $modelClass::query();
 
         // Full-text style search across fillable fields
-        if (!empty($query['q'])) {
+        if (! empty($query['q'])) {
             $q = $query['q'];
-            $instance = new $modelClass();
+            $instance = new $modelClass;
             $fields = $instance->getFillable();
 
             $builder->where(function ($b) use ($fields, $q) {
@@ -44,6 +43,7 @@ trait ReadServerTrait
                 }
 
                 $this->applyRelationFilter($builder, $relation, $field, $op, $v);
+
                 continue;
             }
 

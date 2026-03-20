@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Volunteer;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Volunteer;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Delete
 {

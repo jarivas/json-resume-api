@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Award;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Award\Create as Request;
 use App\Models\Award;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Create
 {

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Mcp;
 
+use App\Mcp\Servers\BasicServer;
 use App\Models\Basic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,7 +15,7 @@ class BasicServerTest extends TestCase
     {
         $basic = Basic::factory()->create();
 
-        $ref = new \ReflectionClass(\App\Mcp\Servers\BasicServer::class);
+        $ref = new \ReflectionClass(BasicServer::class);
         $srv = $ref->newInstanceWithoutConstructor();
 
         $result = $srv->index(['per_page' => 10, 'page' => 1]);
@@ -38,7 +39,7 @@ class BasicServerTest extends TestCase
     {
         $basic = Basic::factory()->create();
 
-        $ref = new \ReflectionClass(\App\Mcp\Servers\BasicServer::class);
+        $ref = new \ReflectionClass(BasicServer::class);
         $srv = $ref->newInstanceWithoutConstructor();
 
         $result = $srv->show($basic->id);

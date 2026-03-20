@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\VolunteerFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,7 @@ use Illuminate\Support\Carbon;
  */
 class Volunteer extends Model
 {
-    /** @use HasFactory<\Database\Factories\VolunteerFactory> */
+    /** @use HasFactory<VolunteerFactory> */
     use HasFactory, HasUlids;
 
     protected $fillable = [

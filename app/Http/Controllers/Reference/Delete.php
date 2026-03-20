@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Reference;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Reference;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Delete
 {

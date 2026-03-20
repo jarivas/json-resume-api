@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Authentication\ChangePassword;
 use App\Http\Controllers\Authentication\Login;
 use App\Http\Controllers\Authentication\Logout;
 use App\Http\Controllers\Authentication\Recovery;
-use App\Http\Controllers\Authentication\ChangePassword;
 use App\Http\Controllers\Authentication\RefreshToken;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('authentication')->group(function () {
     Route::post('/login', Login::class);

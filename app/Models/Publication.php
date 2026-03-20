@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\PublicationFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,7 @@ use Illuminate\Support\Carbon;
  */
 class Publication extends Model
 {
-    /** @use HasFactory<\Database\Factories\PublicationFactory> */
+    /** @use HasFactory<PublicationFactory> */
     use HasFactory, HasUlids;
 
     protected $fillable = [

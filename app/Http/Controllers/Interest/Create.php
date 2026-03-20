@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Interest;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Interest\Create as Request;
 use App\Models\Interest;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Create
 {

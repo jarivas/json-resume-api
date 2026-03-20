@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Certificate;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Certificate;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Delete
 {

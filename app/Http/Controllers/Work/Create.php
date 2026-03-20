@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Work;
 
-use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Work\Create as Request;
 use App\Models\Work;
+use Illuminate\Routing\Controller as BaseController;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Create extends BaseController

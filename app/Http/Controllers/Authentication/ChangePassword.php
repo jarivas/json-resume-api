@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Http\Requests\Authentication\ChangePassword as Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\User;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ChangePassword
 {
@@ -16,7 +16,7 @@ class ChangePassword
             throw new HttpException(404, 'Not found.');
         }
 
-        $user->password = $request->input("password");
+        $user->password = $request->input('password');
         $user->save();
 
         return response()->noContent();

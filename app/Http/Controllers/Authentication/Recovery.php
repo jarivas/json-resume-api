@@ -13,7 +13,7 @@ class Recovery
     {
         $success = $this->recoveryHelper();
 
-        if (!$success) {
+        if (! $success) {
             throw new RuntimeException('Failed to send recovery email. Please try again later.');
         }
 

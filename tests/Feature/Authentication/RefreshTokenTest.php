@@ -3,9 +3,8 @@
 namespace Tests\Feature\Authentication;
 
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
+use Tests\TestCase;
 
 class RefreshTokenTest extends TestCase
 {

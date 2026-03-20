@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Language;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Language;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Delete
 {

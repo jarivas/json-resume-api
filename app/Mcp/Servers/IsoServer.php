@@ -13,17 +13,21 @@ use Laravel\Mcp\Server\Attributes\Version;
 class IsoServer extends Server
 {
     protected array $tools = [];
+
     protected array $resources = [];
+
     protected array $prompts = [];
 
     public function countries(array $query = []): array
     {
         return [];
     }
+
     public function currencies(array $query = []): array
     {
         return [];
     }
+
     public function languages(array $query = []): array
     {
         return [];

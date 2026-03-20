@@ -18,20 +18,16 @@ class ExcepcionHandler
         $exceptions->shouldRenderJsonWhen(fn () => true);
 
         // Render minimal JSON for HTTP exceptions (e.g. 404) without stack traces.
-        $exceptions->renderable(fn (HttpExceptionInterface $e, Request $request) 
-            => $this->handleHttpException($e, $request));
+        $exceptions->renderable(fn (HttpExceptionInterface $e, Request $request) => $this->handleHttpException($e, $request));
 
         // Render validation exceptions with structured 422 responses.
-        $exceptions->renderable(fn (ValidationException $e, Request $request) 
-            => $this->handleValidationException($e, $request));
+        $exceptions->renderable(fn (ValidationException $e, Request $request) => $this->handleValidationException($e, $request));
 
         // Render authentication exceptions as 401 responses.
-        $exceptions->renderable(fn (AuthenticationException $e, Request $request) 
-            => $this->handleAuthenticationException($e, $request));
+        $exceptions->renderable(fn (AuthenticationException $e, Request $request) => $this->handleAuthenticationException($e, $request));
 
         // Generic handler for other exceptions — use helper to log and render.
-        $exceptions->renderable(fn (Throwable $e, Request $request) 
-            => $this->handleThrowable($e, $request));
+        $exceptions->renderable(fn (Throwable $e, Request $request) => $this->handleThrowable($e, $request));
     }
 
     protected function handleHttpException(HttpExceptionInterface $e, Request $request)

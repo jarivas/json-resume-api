@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use App\Http\Requests\Authentication\Login as Request;
 use App\Helpers\Http\Controllers\Authentication\Authentication;
+use App\Http\Requests\Authentication\Login as Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Login

@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Authentication;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Testing\Fluent\AssertableJson;
-use App\Models\User;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
@@ -24,10 +24,9 @@ class LoginTest extends TestCase
 
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) =>
-            $json->has('token')
-                ->has('expiresAt'));
-        
+        $response->assertJson(fn (AssertableJson $json) => $json->has('token')
+            ->has('expiresAt'));
+
         $expiresAt = Carbon::parse($response->json('expiresAt'));
 
         $this->assertTrue($expiresAt->isFuture());

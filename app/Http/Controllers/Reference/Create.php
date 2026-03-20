@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Reference;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Reference\Create as Request;
 use App\Models\Reference;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Create
 {

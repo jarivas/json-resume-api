@@ -5,9 +5,14 @@
     "guidelines": true,
     "herd_mcp": false,
     "mcp": true,
+    "nightwatch_mcp": false,
+    "packages": [
+        "laravel/ai"
+    ],
     "sail": false,
     "skills": [
         "mcp-development",
-        "wayfinder-development"
+        "wayfinder-development",
+        "ai-sdk-development"
     ]
 }

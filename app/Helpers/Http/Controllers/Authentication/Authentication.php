@@ -3,8 +3,8 @@
 namespace App\Helpers\Http\Controllers\Authentication;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 trait Authentication
 {
@@ -36,7 +36,7 @@ trait Authentication
 
         return [
             'token' => $token,
-            'expiresAt' => $expiresAt->format('Y-m-d H:i:s')
+            'expiresAt' => $expiresAt->format('Y-m-d H:i:s'),
         ];
     }
 
@@ -71,9 +71,8 @@ trait Authentication
         }
 
         $data = $this->getToken($user);
-        
-        Mail::send('mail.recovery', $data, fn ($message) =>
-            $message->to($user->email)->subject('Recovery Instructions')
+
+        Mail::send('mail.recovery', $data, fn ($message) => $message->to($user->email)->subject('Recovery Instructions')
         );
 
         return true;

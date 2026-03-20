@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Iso\Country;
-use App\Http\Controllers\Iso\Language;
 use App\Http\Controllers\Iso\Currency;
+use App\Http\Controllers\Iso\Language;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('iso')->group(function () {

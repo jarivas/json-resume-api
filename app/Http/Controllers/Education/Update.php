@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Education;
 
-use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Education\Update as Request;
 use App\Models\Education;
+use Illuminate\Routing\Controller as BaseController;
 
 class Update extends BaseController
 {
@@ -12,7 +12,7 @@ class Update extends BaseController
     {
         $data = $request->validated();
 
-        if (!empty($data)) {
+        if (! empty($data)) {
             $education->update($data);
         }
 

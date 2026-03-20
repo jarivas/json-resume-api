@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Certificate;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Certificate\Create as Request;
 use App\Models\Certificate;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Create
 {

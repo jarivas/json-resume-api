@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Basic;
 
-use App\Models\User;
 use App\Models\Basic;
-use Tests\TestCase;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
+use Tests\TestCase;
 
 class CreateTest extends TestCase
 {
@@ -16,28 +16,25 @@ class CreateTest extends TestCase
     {
         $user = User::factory()->create();
         $data = Basic::factory()->make()->toArray();
-        $location = $data["location"];
-        $profile = $data["profiles"][0];
+        $location = $data['location'];
+        $profile = $data['profiles'][0];
 
         $url = '/api/basic';
         $response = $this->actingAs($user)->postJson($url, $data);
         $response->assertCreated();
 
-        $response->assertJson(fn (AssertableJson $json) =>
-            $json->has('id')
+        $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
             ->where('label', $data['label'])
             ->where('email', $data['email'])
             ->where('phone', $data['phone'])
             ->where('url', $data['url'])
             ->where('summary', $data['summary'])
-            ->has('location', fn (AssertableJson $json) =>
-                $json->where('address', $location['address'])
+            ->has('location', fn (AssertableJson $json) => $json->where('address', $location['address'])
                 ->where('postalCode', $location['postalCode'])
                 ->where('city', $location['city'])
                 ->where('countryCode', $location['countryCode']))
-            ->has('profiles', 1, fn (AssertableJson $json) =>
-                $json->where('network', $profile['network'])
+            ->has('profiles', 1, fn (AssertableJson $json) => $json->where('network', $profile['network'])
                 ->where('username', $profile['username'])
                 ->where('url', $profile['url'])
             )

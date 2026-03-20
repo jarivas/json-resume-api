@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Helpers\Model\Location;
 use App\Helpers\Model\Profile;
+use App\Models\Basic;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Basic>
+ * @extends Factory<Basic>
  */
 class BasicFactory extends Factory
 {
@@ -22,7 +23,7 @@ class BasicFactory extends Factory
             'address' => $this->faker->address,
             'postalCode' => $this->faker->postcode,
             'city' => $this->faker->city,
-            'countryCode' => $this->faker->countryCode
+            'countryCode' => $this->faker->countryCode,
         ]);
 
         $profile = new Profile([
@@ -35,7 +36,7 @@ class BasicFactory extends Factory
             'name' => $this->faker->name,
             'label' => $this->faker->word,
             'email' => $this->faker->safeEmail,
-            'phone'=> $this->faker->phoneNumber,
+            'phone' => $this->faker->phoneNumber,
             'url' => $this->faker->url,
             'summary' => $this->faker->sentence,
             'location' => $location,

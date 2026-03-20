@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\AwardFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ use Illuminate\Support\Carbon;
  */
 class Award extends Model
 {
-    /** @use HasFactory<\Database\Factories\AwardFactory> */
+    /** @use HasFactory<AwardFactory> */
     use HasFactory, HasUlids;
 
     protected $fillable = [

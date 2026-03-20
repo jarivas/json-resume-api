@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Authentication;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Helpers\Http\Requests\Authentication\Password as PasswordHelper;
+use Illuminate\Foundation\Http\FormRequest;
 
 class Login extends FormRequest
 {

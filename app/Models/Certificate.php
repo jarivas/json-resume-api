@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\CertificateFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ use Illuminate\Support\Carbon;
  */
 class Certificate extends Model
 {
-    /** @use HasFactory<\Database\Factories\CertificateFactory> */
+    /** @use HasFactory<CertificateFactory> */
     use HasFactory, HasUlids;
 
     protected $fillable = [

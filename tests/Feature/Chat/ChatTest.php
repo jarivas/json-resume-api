@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Chat;
 
+use App\Ai\Agents\ResumeAgent;
 use App\Models\Basic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Ai\Agents\ResumeAgent;
 use Tests\TestCase;
 
 class ChatTest extends TestCase

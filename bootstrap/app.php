@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use App\Helpers\Bootstrap\ExcepcionHandler;
+use Illuminate\Foundation\Application;
 
-$exceptionHandler = new ExcepcionHandler();
+$exceptionHandler = new ExcepcionHandler;
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',

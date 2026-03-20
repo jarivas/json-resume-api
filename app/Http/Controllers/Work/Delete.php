@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Work;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Work;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Delete
 {

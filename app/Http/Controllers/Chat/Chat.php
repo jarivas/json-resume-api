@@ -8,9 +8,7 @@ use Illuminate\Http\JsonResponse;
 
 class Chat
 {
-    public function __construct(protected ChatService $chatService)
-    {
-    }
+    public function __construct(protected ChatService $chatService) {}
 
     public function __invoke(Request $request): JsonResponse
     {

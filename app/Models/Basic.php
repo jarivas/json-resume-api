@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Helpers\Model\Location;
 use App\Helpers\Model\Profile;
+use Database\Factories\BasicFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * @property string $id
@@ -17,11 +19,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $url
  * @property string $summary
  * @property Location $location
- * @property \Illuminate\Support\Collection<Profile> $profiles
+ * @property Collection<Profile> $profiles
  */
 class Basic extends Model
 {
-    /** @use HasFactory<\Database\Factories\BasicFactory> */
+    /** @use HasFactory<BasicFactory> */
     use HasFactory, HasUlids;
 
     protected $fillable = [

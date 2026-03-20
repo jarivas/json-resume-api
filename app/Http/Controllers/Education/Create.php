@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Education;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Education\Create as Request;
 use App\Models\Education;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Create
 {

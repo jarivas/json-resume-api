@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
+use App\Services\Chat\LlmClientInterface;
+use App\Services\Chat\SdkLlmClient;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
-use App\Services\Chat\LlmClientInterface;
-use App\Services\Chat\SdkLlmClient;
 
 class AppServiceProvider extends ServiceProvider
 {

@@ -2,6 +2,8 @@
 
 namespace App\Mcp\Servers;
 
+use App\Mcp\Methods\ReadResource;
+use App\Mcp\Resources\BasicResource;
 use App\Mcp\Servers\Traits\ReadServerTrait;
 use App\Models\Basic;
 use Laravel\Mcp\Server;
@@ -18,6 +20,22 @@ class BasicServer extends Server
     use ReadServerTrait;
 
     protected string $model = Basic::class;
+
+    /**
+     * @var array<int, class-string<\\Laravel\\Mcp\\Server\\Resource>>
+     */
+    protected array $resources = [
+        BasicResource::class,
+    ];
+
+    /**
+     * Override methods to use app-level ReadResource so structuredContent is propagated.
+     *
+     * @var array<string, class-string>
+     */
+    protected array $methods = [
+        'resources/read' => ReadResource::class,
+    ];
 
     public function index(array $query = []): array
     {

@@ -6,7 +6,8 @@ class StubLlmClient implements LlmClientInterface
 {
     public function generateReply(string $context, string $message, ?array $metadata = null, ?string $sessionId = null): array
     {
-        $reply = "echo: " . $message;
+        $reply = 'echo: '.$message;
+
         return [
             'reply' => $reply,
             'sources' => [],

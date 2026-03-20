@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Volunteer;
 
-use Illuminate\Routing\Controller as BaseController;
 use App\Http\Requests\Volunteer\Update as Request;
 use App\Models\Volunteer;
+use Illuminate\Routing\Controller as BaseController;
 
 class Update extends BaseController
 {
@@ -12,7 +12,7 @@ class Update extends BaseController
     {
         $data = $request->validated();
 
-        if (!empty($data)) {
+        if (! empty($data)) {
             $volunteer->update($data);
         }
 

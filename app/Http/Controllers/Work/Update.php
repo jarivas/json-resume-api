@@ -11,7 +11,7 @@ class Update
     {
         $data = $request->validated();
 
-        if (!empty($data)) {
+        if (! empty($data)) {
             $work->update($data);
         }
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Basic;
 
-use App\Models\Basic;
 use App\Http\Requests\Basic\Create as Request;
+use App\Models\Basic;
 
 class Create
 {

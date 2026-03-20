@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\ReferenceFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Reference extends Model
 {
-    /** @use HasFactory<\Database\Factories\ReferenceFactory> */
+    /** @use HasFactory<ReferenceFactory> */
     use HasFactory, HasUlids;
 
     protected $fillable = [

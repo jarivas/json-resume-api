@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\SkillFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Skill extends Model
 {
-    /** @use HasFactory<\Database\Factories\SkillFactory> */
+    /** @use HasFactory<SkillFactory> */
     use HasFactory, HasUlids;
 
     protected $fillable = [

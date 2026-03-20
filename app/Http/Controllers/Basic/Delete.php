@@ -9,7 +9,7 @@ class Delete
 {
     public function __invoke(Basic $basic)
     {
-        if (!$basic->delete()) {
+        if (! $basic->delete()) {
             throw new HttpException(400, 'Problem deleting the basic model');
         }
 

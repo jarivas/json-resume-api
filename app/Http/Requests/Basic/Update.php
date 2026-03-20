@@ -24,7 +24,7 @@ class Update extends FormRequest
             'profiles' => 'array',
             'profiles.*.network' => 'string',
             'profiles.*.username' => 'string',
-            'profiles.*.url'=> 'url',
+            'profiles.*.url' => 'url',
             'awards' => 'array',
             'awards.*' => 'ulid|exists:awards,id',
             'certificates' => 'array',

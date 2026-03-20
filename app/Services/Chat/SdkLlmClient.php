@@ -14,7 +14,7 @@ class SdkLlmClient implements LlmClientInterface
 
         $model = $provider->defaultTextModel();
 
-        $messages = [new UserMessage($context ? ($context . "\n\n" . $message) : $message)];
+        $messages = [new UserMessage($context ? ($context."\n\n".$message) : $message)];
 
         $temperature = $metadata['temperature'] ?? null;
         $maxTokens = $metadata['max_tokens'] ?? $metadata['maxTokens'] ?? null;

@@ -8,9 +8,7 @@ use App\Models\Basic;
 
 class ChatService
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function reply(string $message, ?string $sessionId = null, ?array $metadata = null): array
     {
@@ -18,11 +16,11 @@ class ChatService
 
         $contextParts = [];
         if ($basic) {
-            if (!empty($basic->summary)) {
-                $contextParts[] = "Summary: " . $basic->summary;
+            if (! empty($basic->summary)) {
+                $contextParts[] = 'Summary: '.$basic->summary;
             }
-            if (!empty($basic->name)) {
-                $contextParts[] = "Name: " . $basic->name;
+            if (! empty($basic->name)) {
+                $contextParts[] = 'Name: '.$basic->name;
             }
         }
 
@@ -64,7 +62,7 @@ class ChatService
         }
 
         // Assemble user prompt including context
-        $userPrompt = ($context ? ($context . "\n\n") : '') . $message;
+        $userPrompt = ($context ? ($context."\n\n") : '').$message;
 
         $response = $agent->prompt($userPrompt);
 
@@ -126,6 +124,7 @@ class ChatService
             foreach ($value as $k => $v) {
                 $out[$k] = $this->maskValue($v);
             }
+
             return $out;
         }
 

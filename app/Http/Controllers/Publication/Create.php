@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Publication;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Publication\Create as Request;
 use App\Models\Publication;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Create
 {

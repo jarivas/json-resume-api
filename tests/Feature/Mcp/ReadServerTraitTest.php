@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Mcp;
 
+use App\Mcp\Servers\Traits\ReadServerTrait;
 use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -21,7 +22,7 @@ class ReadServerTraitTest extends TestCase
                 $this->model = $model;
             }
 
-            use \App\Mcp\Servers\Traits\ReadServerTrait;
+            use ReadServerTrait;
         };
     }
 

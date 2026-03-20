@@ -18,12 +18,11 @@ class ResumeAgent implements Agent, Conversational, HasTools
      */
     public function __construct(
         public string $instructions = "You are a helpful assistant that ONLY answers questions about the user's resume (CV)."
-            . " Use the provided resume context when relevant. If the user asks anything not related to the resume,"
-            . " reply with a short refusal: 'Lo siento, sólo puedo responder preguntas relacionadas con el CV.'",
+            .' Use the provided resume context when relevant. If the user asks anything not related to the resume,'
+            ." reply with a short refusal: 'Lo siento, sólo puedo responder preguntas relacionadas con el CV.'",
         public iterable $messages = [],
         public iterable $tools = []
-    ) {
-    }
+    ) {}
 
     public function instructions(): string
     {
@@ -54,7 +53,7 @@ class ResumeAgent implements Agent, Conversational, HasTools
             'experiencia', 'experience', 'education', 'formación', 'estudios',
             'habilidades', 'skills', 'skill', 'proyecto', 'proyectos', 'projects',
             'publicación', 'publications', 'certificado', 'certificate', 'award', 'premio',
-            'referencia', 'references', 'idioma', 'languages', 'contacto', 'contact', 'perfil', 'summary'
+            'referencia', 'references', 'idioma', 'languages', 'contacto', 'contact', 'perfil', 'summary',
         ];
 
         foreach ($keywords as $kw) {

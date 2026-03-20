@@ -24,7 +24,7 @@ class Create extends FormRequest
             'profiles' => 'array',
             'profiles.*.network' => 'string',
             'profiles.*.username' => 'string',
-            'profiles.*.url'=> 'url',
+            'profiles.*.url' => 'url',
         ];
     }
 }

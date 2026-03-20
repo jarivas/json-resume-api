@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use App\Enums\SearchOperator;
-use App\Enums\RelationOperator;
 use App\Enums\ConditionOperator;
+use App\Enums\RelationOperator;
+use App\Enums\SearchOperator;
+use Illuminate\Foundation\Http\FormRequest;
 
 class BaseSearch extends FormRequest
 {

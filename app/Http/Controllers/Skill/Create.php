@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Skill;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Http\Requests\Skill\Create as Request;
 use App\Models\Skill;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class Create 
+class Create
 {
     public function __invoke(Request $request)
     {
