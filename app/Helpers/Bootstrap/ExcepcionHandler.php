@@ -4,6 +4,7 @@ namespace App\Helpers\Bootstrap;
 
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -30,7 +31,7 @@ class ExcepcionHandler
         $exceptions->renderable(fn (Throwable $e, Request $request) => $this->handleThrowable($e, $request));
     }
 
-    protected function handleHttpException(HttpExceptionInterface $e, Request $request)
+    protected function handleHttpException(HttpExceptionInterface $e, Request $request): JsonResponse
     {
         $status = $e->getStatusCode();
         $message = $status === 404 ? 'Not Found.' : 'Error.';
@@ -40,14 +41,18 @@ class ExcepcionHandler
         return response()->json(['message' => $message, 'error_id' => $errorId], $status);
     }
 
-    protected function handleThrowable(Throwable $e, Request $request)
+    protected function handleThrowable(Throwable $e, Request $request): JsonResponse
     {
+        if ($e instanceof HttpExceptionInterface) {
+            return $this->handleHttpException($e, $request);
+        }
+
         $errorId = $this->logException('Unhandled exception', $e, $request);
 
         return response()->json(['message' => 'Server Error.', 'error_id' => $errorId], 500);
     }
 
-    protected function handleValidationException(ValidationException $e, Request $request)
+    protected function handleValidationException(ValidationException $e, Request $request): JsonResponse
     {
         $errorId = $this->logException('Validation exception', $e, $request);
 
@@ -58,7 +63,7 @@ class ExcepcionHandler
         ], 422);
     }
 
-    protected function handleAuthenticationException(AuthenticationException $e, Request $request)
+    protected function handleAuthenticationException(AuthenticationException $e, Request $request): JsonResponse
     {
         $errorId = $this->logException('Authentication exception', $e, $request);
 
