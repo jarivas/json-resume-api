@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Work;
 
-use App\Models\Basic;
 use App\Models\User;
 use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +15,7 @@ class CreateTest extends TestCase
     public function test_work_create_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Work::factory()->basic($basic->id)->make()->toArray();
+        $data = Work::factory()->make()->toArray();
 
         $url = '/api/work';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -31,21 +29,18 @@ class CreateTest extends TestCase
             ->where('endDate', $data['endDate'])
             ->where('summary', $data['summary'])
             ->has('highlights')
-            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('works', [
             'id' => $response->json('id'),
             'name' => $data['name'],
-            'basic_id' => $basic->id,
         ]);
     }
 
     public function test_work_create_no_name()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Work::factory()->basic($basic->id)->make(['name' => null])->toArray();
+        $data = Work::factory()->make(['name' => null])->toArray();
         $url = '/api/work';
         $response = $this->actingAs($user)->postJson($url, $data);
         $response->assertUnprocessable();
@@ -53,8 +48,7 @@ class CreateTest extends TestCase
 
     public function test_work_create_unauthenticated()
     {
-        $basic = Basic::factory()->create();
-        $data = Work::factory()->basic($basic->id)->make()->toArray();
+        $data = Work::factory()->make()->toArray();
         $url = '/api/work';
         $response = $this->postJson($url, $data);
         $response->assertUnauthorized();

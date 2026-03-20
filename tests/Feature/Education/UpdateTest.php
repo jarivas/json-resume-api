@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Education;
 
-use App\Models\Basic;
 use App\Models\Education;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,8 +16,7 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $education = Education::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Education::factory()->basic($basic->id)->make()->toArray();
+        $data = Education::factory()->make()->toArray();
 
         $url = "/api/education/{$education->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -33,7 +31,6 @@ class UpdateTest extends TestCase
             ->where('score', $data['score'])
             ->where('summary', $data['summary'])
             ->has('courses')
-            ->where('basic_id', $basic->id)
             ->etc());
 
         unset($data['courses']);

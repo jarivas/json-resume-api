@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Project;
 
-use App\Models\Basic;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +15,7 @@ class CreateTest extends TestCase
     public function test_project_create_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Project::factory()->basic($basic->id)->make()->toArray();
+        $data = Project::factory()->make()->toArray();
 
         $url = '/api/project';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -27,7 +25,6 @@ class CreateTest extends TestCase
             ->where('name', $data['name'])
             ->where('description', $data['description'])
             ->where('url', $data['url'])
-            ->where('basic_id', $basic->id)
             ->has('highlights')
             ->etc());
 
@@ -36,7 +33,6 @@ class CreateTest extends TestCase
             'name' => $data['name'],
             'description' => $data['description'],
             'url' => $data['url'],
-            'basic_id' => $basic->id,
         ]);
     }
 

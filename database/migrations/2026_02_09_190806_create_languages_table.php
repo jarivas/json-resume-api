@@ -16,10 +16,6 @@ return new class extends Migration
             $table->string('language');
             $table->string('fluency');
 
-            $table->foreignUlid('basic_id')
-                ->nullable()->default(null)
-                ->references('id')->on('basics');
-
             $table->timestamps();
             $table->softDeletes();
         });

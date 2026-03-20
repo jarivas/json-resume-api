@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Publication;
 
-use App\Models\Basic;
 use App\Models\Publication;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,8 +16,7 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $publication = Publication::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Publication::factory()->basic($basic->id)->make()->toArray();
+        $data = Publication::factory()->make()->toArray();
 
         $url = "/api/publication/{$publication->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -30,7 +28,6 @@ class UpdateTest extends TestCase
             ->where('publisher', $data['publisher'])
             ->where('summary', $data['summary'])
             ->where('url', $data['url'])
-            ->where('basic_id', $basic->id)
             ->etc());
 
         $dbData = array_merge(['id' => $publication->id], $data);

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Reference;
 
-use App\Models\Basic;
 use App\Models\Reference;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,9 +15,8 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $reference = Reference::factory()->create();
-        $basic = Basic::factory()->create();
 
-        $payload = Reference::factory()->basic($basic->id)->make()->toArray();
+        $payload = Reference::factory()->make()->toArray();
 
         $url = "/api/reference/{$reference->id}";
         $response = $this->actingAs($user)->patchJson($url, $payload);

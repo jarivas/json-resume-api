@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Interest;
 
-use App\Models\Basic;
 use App\Models\Interest;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,9 +16,8 @@ class ReadAllTest extends TestCase
     {
         $user = User::factory()->create();
         $max = 5;
-        $basic = Basic::factory()->create();
 
-        Interest::factory($max)->basic($basic->id)->create();
+        Interest::factory()->count($max)->create();
         $interest = Interest::first();
 
         $url = '/api/interest';
@@ -29,7 +27,6 @@ class ReadAllTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->has($max)
             ->first(fn (AssertableJson $json) => $json->has('id')
                 ->where('name', $interest->name)
-                ->where('basic_id', $interest->basic_id)
                 ->etc())
         );
     }

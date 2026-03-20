@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Interest;
 
-use App\Models\Basic;
 use App\Models\Interest;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +15,7 @@ class CreateTest extends TestCase
     public function test_interest_create_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Interest::factory()->basic($basic->id)->make()->toArray();
+        $data = Interest::factory()->make()->toArray();
 
         $url = '/api/interest';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -26,13 +24,11 @@ class CreateTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
             ->has('keywords')
-            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('interests', [
             'id' => $response->json('id'),
             'name' => $data['name'],
-            'basic_id' => $basic->id,
         ]);
     }
 

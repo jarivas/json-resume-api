@@ -18,10 +18,6 @@ return new class extends Migration
             $table->string('issuer');
             $table->string('url');
 
-            $table->foreignUlid('basic_id')
-                ->nullable()->default(null)
-                ->references('id')->on('basics');
-
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Certificate;
 
-use App\Models\Basic;
 use App\Models\Certificate;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,9 +16,8 @@ class ReadAllTest extends TestCase
     {
         $user = User::factory()->create();
         $max = 5;
-        $basic = Basic::factory()->create();
-        
-        Certificate::factory($max)->basic($basic->id)->create();
+
+        Certificate::factory()->count($max)->create();
         $certificate = Certificate::first();
 
         $url = '/api/certificate';
@@ -32,7 +30,6 @@ class ReadAllTest extends TestCase
                 ->where('date', $certificate->date->format('Y-m-d'))
                 ->where('issuer', $certificate->issuer)
                 ->where('url', $certificate->url)
-                ->where('basic_id', $certificate->basic_id)
                 ->etc())
         );
     }

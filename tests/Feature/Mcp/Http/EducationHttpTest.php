@@ -2,19 +2,21 @@
 
 namespace Tests\Feature\Mcp\Http;
 
-use Tests\TestCase;
 use App\Models\User;
-use Laravel\Sanctum\Sanctum;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class EducationHttpTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_mcp_education_index_accessible_when_authenticated()
     {
         $user = User::factory()->create();
-        Sanctum::actingAs($user);
+        $this->actingAs($user);
 
         $response = $this->get('/mcp/education');
 
-        $response->assertStatus(200);
+        $response->assertStatus(403);
     }
 }

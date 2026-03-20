@@ -13,7 +13,6 @@ class Create extends FormRequest
             'date' => 'required|date:Y-m-d',
             'awarder' => 'required|string',
             'summary' => 'required|string',
-            'basic_id' => 'nullable|ulid|exists:basics,id',
         ];
     }
 }

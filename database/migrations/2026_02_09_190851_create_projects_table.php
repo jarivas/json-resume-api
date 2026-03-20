@@ -20,10 +20,6 @@ return new class extends Migration
             $table->json('highlights');
             $table->string('url')->nullable()->default(null);
 
-            $table->foreignUlid('basic_id')
-                ->nullable()->default(null)
-                ->references('id')->on('basics');
-
             $table->timestamps();
             $table->softDeletes();
         });

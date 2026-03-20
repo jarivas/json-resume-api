@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -19,8 +18,6 @@ use Illuminate\Support\Carbon;
  * @property string $score
  * @property string $summary
  * @property array $courses
- * @property string $basic_id
- * @property-read Basic $basic
  */
 class Education extends Model
 {
@@ -39,7 +36,6 @@ class Education extends Model
         'score',
         'summary',
         'courses',
-        'basic_id',
     ];
 
     protected $casts = [
@@ -47,11 +43,4 @@ class Education extends Model
         'endDate' => 'datetime:Y-m-d',
         'courses' => 'array',
     ];
-
-    public function basic(): BelongsTo
-    {
-        return $this->belongsTo(
-            Basic::class,
-        );
-    }
 }

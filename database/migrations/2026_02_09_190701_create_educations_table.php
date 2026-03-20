@@ -23,10 +23,6 @@ return new class extends Migration
             $table->string('summary');
             $table->json('courses')->nullable()->default(null);
 
-            $table->foreignUlid('basic_id')
-                ->nullable()->default(null)
-                ->references('id')->on('basics');
-
             $table->timestamps();
             $table->softDeletes();
         });

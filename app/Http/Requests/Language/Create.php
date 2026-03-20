@@ -11,7 +11,6 @@ class Create extends FormRequest
         return [
             'language' => 'required|string',
             'fluency' => 'required|string',
-            'basic_id' => 'nullable|ulid|exists:basics,id',
         ];
     }
 }

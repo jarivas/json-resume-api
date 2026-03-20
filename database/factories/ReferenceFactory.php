@@ -16,11 +16,4 @@ class ReferenceFactory extends Factory
             'reference' => $this->faker->sentence(),
         ];
     }
-
-    public function basic(string $basicId): self
-    {
-        return $this->state([
-            'basic_id' => $basicId,
-        ]);
-    }
 }

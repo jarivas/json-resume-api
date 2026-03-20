@@ -192,7 +192,6 @@ class ImportJsonData extends Command
     {
         DB::transaction(function () use ($payload) {
             $basic = $this->createBasic($payload);
-            $basicId = $basic?->id;
 
             foreach (Arr::get($payload, 'work', []) as $item) {
                 Work::create([
@@ -203,7 +202,6 @@ class ImportJsonData extends Command
                     'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
                     'summary' => (string) Arr::get($item, 'summary', ''),
                     'highlights' => Arr::get($item, 'highlights', []),
-                    'basic_id' => $basicId,
                 ]);
             }
 
@@ -216,7 +214,6 @@ class ImportJsonData extends Command
                     'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
                     'summary' => (string) Arr::get($item, 'summary', ''),
                     'highlights' => Arr::get($item, 'highlights', []),
-                    'basic_id' => $basicId,
                 ]);
             }
 
@@ -231,7 +228,6 @@ class ImportJsonData extends Command
                     'score' => Arr::get($item, 'score'),
                     'summary' => (string) Arr::get($item, 'summary', ''),
                     'courses' => Arr::get($item, 'courses', []),
-                    'basic_id' => $basicId,
                 ]);
             }
 
@@ -241,7 +237,6 @@ class ImportJsonData extends Command
                     'date' => $this->normalizeIsoDate(Arr::get($item, 'date')),
                     'awarder' => (string) Arr::get($item, 'awarder', ''),
                     'summary' => (string) Arr::get($item, 'summary', ''),
-                    'basic_id' => $basicId,
                 ]);
             }
 
@@ -251,7 +246,6 @@ class ImportJsonData extends Command
                     'date' => $this->normalizeIsoDate(Arr::get($item, 'date')),
                     'issuer' => (string) Arr::get($item, 'issuer', ''),
                     'url' => (string) Arr::get($item, 'url', ''),
-                    'basic_id' => $basicId,
                 ]);
             }
 
@@ -262,7 +256,6 @@ class ImportJsonData extends Command
                     'releaseDate' => $this->normalizeIsoDate(Arr::get($item, 'releaseDate')),
                     'url' => Arr::get($item, 'url'),
                     'summary' => (string) Arr::get($item, 'summary', ''),
-                    'basic_id' => $basicId,
                 ]);
             }
 
@@ -271,7 +264,6 @@ class ImportJsonData extends Command
                     'name' => (string) Arr::get($item, 'name', ''),
                     'level' => (string) Arr::get($item, 'level', ''),
                     'keywords' => Arr::get($item, 'keywords', []),
-                    'basic_id' => $basicId,
                 ]);
             }
 
@@ -279,7 +271,6 @@ class ImportJsonData extends Command
                 Language::create([
                     'language' => (string) Arr::get($item, 'language', ''),
                     'fluency' => (string) Arr::get($item, 'fluency', ''),
-                    'basic_id' => $basicId,
                 ]);
             }
 
@@ -287,7 +278,6 @@ class ImportJsonData extends Command
                 Interest::create([
                     'name' => (string) Arr::get($item, 'name', ''),
                     'keywords' => Arr::get($item, 'keywords', []),
-                    'basic_id' => $basicId,
                 ]);
             }
 
@@ -295,7 +285,6 @@ class ImportJsonData extends Command
                 Reference::create([
                     'name' => (string) Arr::get($item, 'name', ''),
                     'reference' => (string) Arr::get($item, 'reference', ''),
-                    'basic_id' => $basicId,
                 ]);
             }
 
@@ -307,7 +296,6 @@ class ImportJsonData extends Command
                     'description' => (string) Arr::get($item, 'description', ''),
                     'highlights' => Arr::get($item, 'highlights', []),
                     'url' => Arr::get($item, 'url'),
-                    'basic_id' => $basicId,
                 ]);
             }
         });

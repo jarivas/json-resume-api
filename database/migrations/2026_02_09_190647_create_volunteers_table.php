@@ -21,10 +21,6 @@ return new class extends Migration
             $table->string('summary');
             $table->json('highlights');
 
-            $table->foreignUlid('basic_id')
-                ->nullable()->default(null)
-                ->references('id')->on('basics');
-
             $table->timestamps();
             $table->softDeletes();
         });

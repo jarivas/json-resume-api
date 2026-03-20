@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Education;
 
-use App\Models\Basic;
 use App\Models\Education;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +15,7 @@ class CreateTest extends TestCase
     public function test_education_create_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Education::factory()->basic($basic->id)->make()->toArray();
+        $data = Education::factory()->make()->toArray();
 
         $url = '/api/education';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -29,7 +27,6 @@ class CreateTest extends TestCase
             ->where('studyType', $data['studyType'])
             ->where('score', $data['score'])
             ->where('summary', $data['summary'])
-            ->where('basic_id', $basic->id)
             ->has('courses')
             ->etc());
 
@@ -40,7 +37,6 @@ class CreateTest extends TestCase
             'studyType' => $data['studyType'],
             'score' => $data['score'],
             'summary' => $data['summary'],
-            'basic_id' => $basic->id,
         ]);
     }
 

@@ -11,7 +11,6 @@ class Update extends FormRequest
         return [
             'name' => 'string',
             'reference' => 'string',
-            'basic_id' => 'nullable|ulid|exists:basics,id',
         ];
     }
 }

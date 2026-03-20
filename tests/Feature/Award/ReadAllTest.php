@@ -26,11 +26,10 @@ class ReadAllTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has($max)
             ->first(fn (AssertableJson $json) => $json->has('id')
-            ->where('title', $award->title)
-            ->where('date', $award->date->format('Y-m-d'))
-            ->where('awarder', $award->awarder)
-            ->where('summary', $award->summary)
-            ->where('basic_id', $award->basic_id)
+                ->where('title', $award->title)
+                ->where('date', $award->date->format('Y-m-d'))
+                ->where('awarder', $award->awarder)
+                ->where('summary', $award->summary)
                 ->etc())
         );
     }

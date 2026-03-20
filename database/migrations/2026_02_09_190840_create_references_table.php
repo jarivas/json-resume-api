@@ -16,10 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('reference');
 
-            $table->foreignUlid('basic_id')
-                ->nullable()->default(null)
-                ->references('id')->on('basics');
-
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Volunteer;
 
-use App\Models\Basic;
 use App\Models\User;
 use App\Models\Volunteer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,10 +15,9 @@ class ReadAllTest extends TestCase
     public function test_volunteer_read_all_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
         $max = 5;
 
-        Volunteer::factory($max)->basic($basic->id)->create();
+        Volunteer::factory()->count($max)->create();
         $volunteer = Volunteer::first();
 
         $url = '/api/volunteer';
@@ -35,7 +33,6 @@ class ReadAllTest extends TestCase
                 ->where('endDate', $volunteer->endDate->format('Y-m-d'))
                 ->where('summary', $volunteer->summary)
                 ->has('highlights')
-                ->where('basic_id', $basic->id)
                 ->etc())
         );
     }

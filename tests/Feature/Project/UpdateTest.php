@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Project;
 
-use App\Models\Basic;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,8 +16,7 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $project = Project::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Project::factory()->basic($basic->id)->make()->toArray();
+        $data = Project::factory()->make()->toArray();
 
         $url = "/api/project/{$project->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -29,7 +27,6 @@ class UpdateTest extends TestCase
             ->where('name', $data['name'])
             ->where('description', $data['description'])
             ->where('url', $data['url'])
-            ->where('basic_id', $basic->id)
             ->etc());
 
         unset($data['highlights']);

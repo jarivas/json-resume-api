@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class Create extends FormRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'institution' => 'required|string',
@@ -19,7 +19,6 @@ class Create extends FormRequest
             'summary' => 'required|string',
             'courses' => 'array',
             'courses.*' => 'string',
-            'basic_id' => 'nullable|ulid|exists:basics,id',
         ];
     }
 }

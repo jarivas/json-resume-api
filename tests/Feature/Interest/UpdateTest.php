@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Interest;
 
-use App\Models\Basic;
 use App\Models\Interest;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,8 +16,7 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $interest = Interest::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Interest::factory()->basic($basic->id)->make()->toArray();
+        $data = Interest::factory()->make()->toArray();
 
         $url = "/api/interest/{$interest->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -36,7 +34,7 @@ class UpdateTest extends TestCase
         $this->assertDatabaseHas('interests', $dbData);
     }
 
-    public function test_interest_unauthenticated()
+    public function test_interest_update_unauthenticated()
     {
         $interest = Interest::factory()->create();
         $data = Interest::factory()->make()->toArray();

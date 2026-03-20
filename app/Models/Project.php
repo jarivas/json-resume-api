@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -16,8 +15,6 @@ use Illuminate\Support\Carbon;
  * @property string $description
  * @property array $highlights
  * @property string $url
- * @property string $basic_id
- * @property-read Basic $basic
  */
 class Project extends Model
 {
@@ -31,7 +28,6 @@ class Project extends Model
         'description',
         'highlights',
         'url',
-        'basic_id',
     ];
 
     protected function casts(): array
@@ -41,12 +37,5 @@ class Project extends Model
             'endDate' => 'datetime:Y-m-d',
             'highlights' => 'array',
         ];
-    }
-
-    public function basic(): BelongsTo
-    {
-        return $this->belongsTo(
-            Basic::class,
-        );
     }
 }

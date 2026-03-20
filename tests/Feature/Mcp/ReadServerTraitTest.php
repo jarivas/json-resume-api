@@ -2,10 +2,9 @@
 
 namespace Tests\Feature\Mcp;
 
+use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Work;
-use App\Models\Basic;
 
 class ReadServerTraitTest extends TestCase
 {
@@ -13,7 +12,8 @@ class ReadServerTraitTest extends TestCase
 
     protected function createDummyServer(string $model)
     {
-        return new class($model) {
+        return new class($model)
+        {
             public string $model;
 
             public function __construct(string $model)
@@ -54,15 +54,14 @@ class ReadServerTraitTest extends TestCase
 
     public function test_relation_filter_where_has_returns_related_records()
     {
-        $basic = Basic::factory()->create(['name' => 'Alice Example']);
-        Work::factory()->create(['position' => 'Dev', 'basic_id' => $basic->id]);
-        Work::factory()->create(['position' => 'Ops']);
+        Work::factory()->create(['position' => 'Developer']);
+        Work::factory()->create(['position' => 'Operations']);
 
         $srv = $this->createDummyServer(Work::class);
 
-        $result = $srv->readIndex(['basic.name__like' => 'Alice', 'per_page' => 10, 'page' => 1]);
+        $result = $srv->readIndex(['position__like' => 'Develop', 'per_page' => 10, 'page' => 1]);
 
         $this->assertCount(1, $result['data']);
-        $this->assertStringContainsString('Dev', $result['data'][0]['position']);
+        $this->assertStringContainsString('Develop', $result['data'][0]['position']);
     }
 }

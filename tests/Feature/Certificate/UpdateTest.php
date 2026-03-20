@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Certificate;
 
-use App\Models\Basic;
 use App\Models\Certificate;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,8 +16,7 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $certificate = Certificate::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Certificate::factory()->basic($basic->id)->make()->toArray();
+        $data = Certificate::factory()->make()->toArray();
 
         $url = "/api/certificate/{$certificate->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -30,7 +28,6 @@ class UpdateTest extends TestCase
             ->where('date', $data['date'])
             ->where('issuer', $data['issuer'])
             ->where('url', $data['url'])
-            ->where('basic_id', $basic->id)
             ->etc());
 
         $data = array_merge(['id' => $certificate->id], $data);
@@ -40,8 +37,7 @@ class UpdateTest extends TestCase
     public function test_certificate_update_unauthenticated()
     {
         $certificate = Certificate::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Certificate::factory()->basic($basic->id)->make()->toArray();
+        $data = Certificate::factory()->make()->toArray();
 
         $url = "/api/certificate/{$certificate->id}";
         $response = $this->patchJson($url, $data);

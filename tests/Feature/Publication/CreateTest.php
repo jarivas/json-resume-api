@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Publication;
 
-use App\Models\Basic;
 use App\Models\Publication;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +15,7 @@ class CreateTest extends TestCase
     public function test_publication_create_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Publication::factory()->basic($basic->id)->make()->toArray();
+        $data = Publication::factory()->make()->toArray();
 
         $url = '/api/publication';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -28,7 +26,6 @@ class CreateTest extends TestCase
             ->where('publisher', $data['publisher'])
             ->where('summary', $data['summary'])
             ->where('url', $data['url'])
-            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('publications', [
@@ -37,7 +34,6 @@ class CreateTest extends TestCase
             'publisher' => $data['publisher'],
             'summary' => $data['summary'],
             'url' => $data['url'],
-            'basic_id' => $basic->id,
         ]);
     }
 

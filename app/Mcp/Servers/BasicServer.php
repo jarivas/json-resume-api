@@ -2,12 +2,12 @@
 
 namespace App\Mcp\Servers;
 
+use App\Mcp\Servers\Traits\ReadServerTrait;
+use App\Models\Basic;
 use Laravel\Mcp\Server;
 use Laravel\Mcp\Server\Attributes\Instructions;
 use Laravel\Mcp\Server\Attributes\Name;
 use Laravel\Mcp\Server\Attributes\Version;
-use App\Mcp\Servers\Traits\ReadServerTrait;
-use App\Models\Basic;
 
 #[Name('Basic Server')]
 #[Version('0.0.1')]
@@ -28,7 +28,6 @@ class BasicServer extends Server
         $perPage = isset($query['per_page']) ? (int) $query['per_page'] : 20;
         $page = isset($query['page']) ? (int) $query['page'] : 1;
 
-        // Use model's $with to keep eager-loaded relations in a single source of truth
         $paginator = Basic::paginate($perPage, ['*'], 'page', $page);
 
         $data = $paginator->getCollection()->map(function ($basic) {

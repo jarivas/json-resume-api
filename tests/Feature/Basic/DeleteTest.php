@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Basic;
 
-use App\Models\User;
 use App\Models\Basic;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -20,7 +20,7 @@ class DeleteTest extends TestCase
         $response = $this->actingAs($user)->deleteJson($url);
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing('basic', [
+        $this->assertDatabaseMissing('basics', [
             'id' => $basic->id,
         ]);
     }
@@ -29,7 +29,7 @@ class DeleteTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $url = "/api/basic/9999";
+        $url = '/api/basic/9999';
         $response = $this->actingAs($user)->deleteJson($url);
         $response->assertNotFound();
     }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Volunteer;
 
-use App\Models\Basic;
 use App\Models\User;
 use App\Models\Volunteer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,8 +16,7 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $volunteer = Volunteer::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Volunteer::factory()->basic($basic->id)->make()->toArray();
+        $data = Volunteer::factory()->make()->toArray();
 
         $url = '/api/volunteer/'.$volunteer->id;
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -32,7 +30,6 @@ class UpdateTest extends TestCase
             ->where('endDate', $data['endDate'])
             ->where('summary', $data['summary'])
             ->has('highlights')
-            ->where('basic_id', $basic->id)
             ->etc());
 
         unset($data['highlights']);
@@ -44,8 +41,7 @@ class UpdateTest extends TestCase
     public function test_volunteer_update_unauthenticated()
     {
         $volunteer = Volunteer::factory()->create();
-        $basic = Basic::factory()->create();
-        $payload = Volunteer::factory()->basic($basic->id)->make()->toArray();
+        $payload = Volunteer::factory()->make()->toArray();
 
         $url = '/api/volunteer/'.$volunteer->id;
         $response = $this->patchJson($url, $payload);

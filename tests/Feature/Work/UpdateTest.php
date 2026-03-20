@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Work;
 
-use App\Models\Basic;
 use App\Models\User;
 use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,8 +14,7 @@ class UpdateTest extends TestCase
     public function test_work_update_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $work = Work::factory()->basic($basic->id)->create();
+        $work = Work::factory()->create();
 
         $data = Work::factory()->make()->toArray();
 

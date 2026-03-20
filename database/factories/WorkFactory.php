@@ -21,14 +21,7 @@ class WorkFactory extends Factory
             'startDate' => $start->format('Y-m-d H:i:s'),
             'endDate' => $end->format('Y-m-d H:i:s'),
             'summary' => $this->faker->paragraph(),
-            'highlights' => $this->faker->sentences($this->faker->numberBetween(0, 5)),
+            'highlights' => $this->faker->sentences($this->faker->numberBetween(1, 5)),
         ];
-    }
-
-    public function basic(string $basicId): self
-    {
-        return $this->state([
-            'basic_id' => $basicId,
-        ]);
     }
 }

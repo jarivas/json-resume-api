@@ -16,7 +16,6 @@ class Update extends FormRequest
             'highlights' => 'array',
             'highlights.*' => 'string',
             'url' => 'url',
-            'basic_id' => 'nullable|ulid|exists:basics,id',
         ];
     }
 }

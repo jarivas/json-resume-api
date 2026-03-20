@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Reference;
 
-use App\Models\Basic;
 use App\Models\Reference;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,10 +15,9 @@ class ReadAllTest extends TestCase
     public function test_reference_read_all_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
         $max = 5;
 
-        Reference::factory($max)->basic($basic->id)->create();
+        Reference::factory()->count($max)->create();
         $reference = Reference::first();
 
         $url = '/api/reference';
@@ -30,7 +28,6 @@ class ReadAllTest extends TestCase
             ->first(fn (AssertableJson $json) => $json->has('id')
                 ->where('name', $reference->name)
                 ->where('reference', $reference->reference)
-                ->where('basic_id', $basic->id)
                 ->etc())
         );
     }

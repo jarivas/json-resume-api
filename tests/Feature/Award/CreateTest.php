@@ -3,7 +3,6 @@
 namespace Tests\Feature\Award;
 
 use App\Models\Award;
-use App\Models\Basic;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -16,8 +15,7 @@ class CreateTest extends TestCase
     public function test_award_create_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Award::factory()->basic($basic->id)->make()->toArray();
+        $data = Award::factory()->make()->toArray();
 
         $url = '/api/award';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -28,7 +26,6 @@ class CreateTest extends TestCase
             ->where('date', $data['date'])
             ->where('awarder', $data['awarder'])
             ->where('summary', $data['summary'])
-            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('awards', [
@@ -37,7 +34,6 @@ class CreateTest extends TestCase
             'date' => $data['date'],
             'awarder' => $data['awarder'],
             'summary' => $data['summary'],
-            'basic_id' => $basic->id,
         ]);
     }
 

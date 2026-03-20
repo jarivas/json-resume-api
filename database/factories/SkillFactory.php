@@ -17,11 +17,4 @@ class SkillFactory extends Factory
             'keywords' => $this->faker->words($this->faker->numberBetween(3, 7)),
         ];
     }
-
-    public function basic(string $basicId): self
-    {
-        return $this->state([
-            'basic_id' => $basicId,
-        ]);
-    }
 }

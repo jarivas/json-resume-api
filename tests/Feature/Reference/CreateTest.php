@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Reference;
 
-use App\Models\Basic;
 use App\Models\Reference;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +15,7 @@ class CreateTest extends TestCase
     public function test_reference_create_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Reference::factory()->basic($basic->id)->make()->toArray();
+        $data = Reference::factory()->make()->toArray();
 
         $url = '/api/reference';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -26,14 +24,12 @@ class CreateTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
             ->where('reference', $data['reference'])
-            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('references', [
             'id' => $response->json('id'),
             'name' => $data['name'],
             'reference' => $data['reference'],
-            'basic_id' => $basic->id,
         ]);
     }
 

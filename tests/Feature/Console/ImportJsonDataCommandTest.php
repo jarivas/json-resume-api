@@ -141,24 +141,5 @@ class ImportJsonDataCommandTest extends TestCase
         $this->assertSame('me@jarivas.work', $basic->email);
         $this->assertSame('Málaga', data_get($basic->location, 'city'));
         $this->assertCount(2, $basic->profiles);
-
-        $this->assertCount(6, $basic->works);
-        $this->assertCount(2, $basic->educations);
-        $this->assertCount(10, $basic->certificates);
-        $this->assertCount(4, $basic->skills);
-        $this->assertCount(2, $basic->languages);
-        $this->assertCount(0, $basic->volunteers);
-        $this->assertCount(0, $basic->awards);
-        $this->assertCount(0, $basic->publications);
-        $this->assertCount(0, $basic->interests);
-        $this->assertCount(0, $basic->references);
-        $this->assertCount(0, $basic->projects);
-
-        $this->assertSame('InOne', $basic->works->first()->name);
-        $this->assertSame('Head of Development', $basic->works->first()->position);
-        $this->assertSame('Universitat Oberta de Catalunya (UOC)', $basic->educations->first()->institution);
-        $this->assertSame('Google', $basic->certificates->firstWhere('name', 'Google Data Analytics Professional Certificate')?->issuer);
-        $this->assertSame('Backend Development', $basic->skills->first()->name);
-        $this->assertSame('Nativo', $basic->languages->firstWhere('language', 'Español')?->fluency);
     }
 }

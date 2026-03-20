@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Language;
 
-use App\Models\Basic;
 use App\Models\Language;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +15,7 @@ class CreateTest extends TestCase
     public function test_language_create_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Language::factory()->basic($basic->id)->make()->toArray();
+        $data = Language::factory()->make()->toArray();
 
         $url = '/api/language';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -26,14 +24,12 @@ class CreateTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('language', $data['language'])
             ->where('fluency', $data['fluency'])
-            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('languages', [
             'id' => $response->json('id'),
             'language' => $data['language'],
             'fluency' => $data['fluency'],
-            'basic_id' => $basic->id,
         ]);
     }
 

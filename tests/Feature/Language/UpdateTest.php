@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Language;
 
-use App\Models\Basic;
 use App\Models\Language;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,8 +16,7 @@ class UpdateTest extends TestCase
     {
         $user = User::factory()->create();
         $language = Language::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Language::factory()->basic($basic->id)->make()->toArray();
+        $data = Language::factory()->make()->toArray();
 
         $url = "/api/language/{$language->id}";
         $response = $this->actingAs($user)->patchJson($url, $data);
@@ -28,7 +26,6 @@ class UpdateTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('language', $data['language'])
             ->where('fluency', $data['fluency'])
-            ->where('basic_id', $basic->id)
             ->etc());
 
         $dbData = array_merge(['id' => $language->id], $data);

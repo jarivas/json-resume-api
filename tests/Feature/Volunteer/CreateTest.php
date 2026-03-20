@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Volunteer;
 
-use App\Models\Basic;
 use App\Models\User;
 use App\Models\Volunteer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,8 +15,7 @@ class CreateTest extends TestCase
     public function test_volunteer_create_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Volunteer::factory()->basic($basic->id)->make()->toArray();
+        $data = Volunteer::factory()->make()->toArray();
 
         $url = '/api/volunteer';
         $response = $this->actingAs($user)->postJson($url, $data);
@@ -31,7 +29,6 @@ class CreateTest extends TestCase
             ->where('endDate', $data['endDate'])
             ->where('summary', $data['summary'])
             ->has('highlights')
-            ->where('basic_id', $basic->id)
             ->etc());
 
         $this->assertDatabaseHas('volunteers', [
@@ -39,15 +36,13 @@ class CreateTest extends TestCase
             'organization' => $data['organization'],
             'position' => $data['position'],
             'url' => $data['url'],
-            'basic_id' => $basic->id,
         ]);
     }
 
     public function test_volunteer_create_no_organization()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
-        $data = Volunteer::factory()->basic($basic->id)->make(['organization' => null])->toArray();
+        $data = Volunteer::factory()->make(['organization' => null])->toArray();
         $url = '/api/volunteer';
         $response = $this->actingAs($user)->postJson($url, $data);
         $response->assertUnprocessable();
@@ -55,8 +50,7 @@ class CreateTest extends TestCase
 
     public function test_volunteer_create_unauthenticated()
     {
-        $basic = Basic::factory()->create();
-        $data = Volunteer::factory()->basic($basic->id)->make()->toArray();
+        $data = Volunteer::factory()->make()->toArray();
         $url = '/api/volunteer';
         $response = $this->postJson($url, $data);
         $response->assertUnauthorized();

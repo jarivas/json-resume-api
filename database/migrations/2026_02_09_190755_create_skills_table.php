@@ -17,10 +17,6 @@ return new class extends Migration
             $table->string('level');
             $table->json('keywords');
 
-            $table->foreignUlid('basic_id')
-                ->nullable()->default(null)
-                ->references('id')->on('basics');
-
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Skill;
 
-use App\Models\Basic;
 use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,10 +15,9 @@ class ReadAllTest extends TestCase
     public function test_skill_read_all_ok()
     {
         $user = User::factory()->create();
-        $basic = Basic::factory()->create();
         $max = 5;
 
-        Skill::factory($max)->basic($basic->id)->create();
+        Skill::factory()->count($max)->create();
         $skill = Skill::first();
 
         $url = '/api/skill';
@@ -29,7 +27,6 @@ class ReadAllTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->has($max)
             ->first(fn (AssertableJson $json) => $json->has('id')
                 ->where('name', $skill->name)
-                ->where('basic_id', $basic->id)
                 ->has('keywords')
                 ->etc())
         );

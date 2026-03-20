@@ -26,11 +26,4 @@ class EducationFactory extends Factory
             'courses' => $this->faker->sentences($this->faker->numberBetween(2, 6)),
         ];
     }
-
-    public function basic(string $basicId): self
-    {
-        return $this->state([
-            'basic_id' => $basicId,
-        ]);
-    }
 }
