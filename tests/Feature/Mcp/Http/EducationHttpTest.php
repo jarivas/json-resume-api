@@ -10,13 +10,13 @@ class EducationHttpTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_mcp_education_index_accessible_when_authenticated()
+    public function test_mcp_education_get_is_not_forbidden_when_authenticated()
     {
         $user = User::factory()->create();
         $this->actingAs($user);
 
         $response = $this->get('/mcp/education');
 
-        $response->assertStatus(403);
+        $response->assertStatus(405);
     }
 }

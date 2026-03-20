@@ -29,7 +29,6 @@ php artisan migrate
 - `AI_PROVIDER` — proveedor por defecto (ej. `openai`).
 - `OPENAI_API_KEY` — clave API si usas OpenAI.
 - `OPENAI_MODEL` — modelo por defecto (ej. `gpt-3.5-turbo`).
-- `MCP_ALLOWED_IPS` — lista separada por comas con IPs/CIDR/wildcards permitidas.
 
 ## Endpoints
 
@@ -59,7 +58,7 @@ Rutas principales:
 
 ## MCP
 
-Los endpoints MCP exponen datos del CV en modo lectura y están protegidos por middleware para controlar el acceso de proveedores MCP.
+Los endpoints MCP exponen datos del CV en modo lectura.
 
 ## Arquitectura y archivos clave
 
@@ -67,8 +66,6 @@ Los endpoints MCP exponen datos del CV en modo lectura y están protegidos por m
 - `app/Mcp/Servers/Traits/ReadServerTrait.php` — lógica de lectura y filtros.
 - `app/Ai/Agents/ResumeAgent.php` — agente restringido a consultas del CV.
 - `app/Services/Chat/ChatService.php` — orquestación de chat y registro de solicitudes.
-- `app/Http/Middleware/AllowMcpProvider.php` — control de acceso para rutas MCP.
-- `config/mcp.php` — configuración MCP.
 
 ## Testing
 
