@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Chat;
 
+use App\Ai\Agents\ResumeAgent;
 use App\Http\Requests\Chat\Chat as Request;
 use App\Services\Chat\ChatService;
 use Illuminate\Http\JsonResponse;
@@ -39,7 +40,11 @@ class Chat
 
     protected function isAllowedMessage(string $message): bool
     {
-        return ! $this->containsRiskyInstruction($message);
+        if ($this->containsRiskyInstruction($message)) {
+            return false;
+        }
+
+        return (new ResumeAgent)->allowsQuery($message);
     }
 
     protected function containsRiskyInstruction(string $message): bool
