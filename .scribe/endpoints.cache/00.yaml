@@ -447,7 +447,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"f15b43a9-283f-4e5c-ad7b-951aed04743d"}'
+        content: '{"message":"Unauthenticated.","error_id":"4da58f4d-6bdd-4fcc-b46d-747cffe8a9d9"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -482,14 +482,14 @@ endpoints:
         name: basic_id
         description: 'The ID of the basic.'
         required: true
-        example: architecto
+        example: 01km69fetnjpgkt0ddh5frwkcd
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      basic_id: architecto
+      basic_id: 01km69fetnjpgkt0ddh5frwkcd
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -498,8 +498,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: '{"message":"Not Found.","error_id":"f567b422-6b8d-48a4-a9ce-fa4d51f502e2"}'
+        status: 401
+        content: '{"message":"Unauthenticated.","error_id":"7a5d9ef3-2d42-42f2-be39-b68157a5a7b9"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -534,14 +534,14 @@ endpoints:
         name: basic_id
         description: 'The ID of the basic.'
         required: true
-        example: architecto
+        example: 01km69fetnjpgkt0ddh5frwkcd
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      basic_id: architecto
+      basic_id: 01km69fetnjpgkt0ddh5frwkcd
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -891,14 +891,14 @@ endpoints:
         name: basic_id
         description: 'The ID of the basic.'
         required: true
-        example: architecto
+        example: 01km69fetnjpgkt0ddh5frwkcd
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      basic_id: architecto
+      basic_id: 01km69fetnjpgkt0ddh5frwkcd
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -949,7 +949,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-10T07:00:02'
+        example: '2026-03-20T23:00:51'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -977,20 +977,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       title: architecto
-      date: '2026-03-10T07:00:02'
+      date: '2026-03-20T23:00:51'
       awarder: architecto
       summary: architecto
     fileParameters: []
@@ -1029,7 +1018,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"97e05ac2-0704-4ca0-89e8-a7a15d8ef2fd"}'
+        content: '{"message":"Unauthenticated.","error_id":"97c17934-2d6f-4d48-99fd-cfb8c3f7207b"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -1064,14 +1053,14 @@ endpoints:
         name: award_id
         description: 'The ID of the award.'
         required: true
-        example: 01kj1aec30rde36rkgppphp0vv
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      award_id: 01kj1aec30rde36rkgppphp0vv
+      award_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1091,7 +1080,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-10T07:00:02'
+        example: '2026-03-20T23:00:51'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1119,20 +1108,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       title: architecto
-      date: '2026-03-10T07:00:02'
+      date: '2026-03-20T23:00:51'
       awarder: architecto
       summary: architecto
     fileParameters: []
@@ -1166,14 +1144,14 @@ endpoints:
         name: award_id
         description: 'The ID of the award.'
         required: true
-        example: 01kj1aec30rde36rkgppphp0vv
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      award_id: 01kj1aec30rde36rkgppphp0vv
+      award_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1224,7 +1202,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-10T07:00:02'
+        example: '2026-03-20T23:00:51'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1252,20 +1230,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
-      date: '2026-03-10T07:00:02'
+      date: '2026-03-20T23:00:51'
       issuer: architecto
       url: 'http://bailey.com/'
     fileParameters: []
@@ -1304,7 +1271,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"6a60fd06-4f22-4ea4-ba04-39ce5fc53ce0"}'
+        content: '{"message":"Unauthenticated.","error_id":"33ee1bf0-16a9-4f8c-b314-74f9c0de0ea1"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -1339,14 +1306,14 @@ endpoints:
         name: certificate_id
         description: 'The ID of the certificate.'
         required: true
-        example: 01kj15qqptkn5da80jdx1cqksz
+        example: 01km69fetwzeka5a9na2q72fhx
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      certificate_id: 01kj15qqptkn5da80jdx1cqksz
+      certificate_id: 01km69fetwzeka5a9na2q72fhx
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1366,7 +1333,7 @@ endpoints:
         name: date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-10T07:00:02'
+        example: '2026-03-20T23:00:51'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1394,20 +1361,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
-      date: '2026-03-10T07:00:02'
+      date: '2026-03-20T23:00:51'
       issuer: architecto
       url: 'http://bailey.com/'
     fileParameters: []
@@ -1441,14 +1397,14 @@ endpoints:
         name: certificate_id
         description: 'The ID of the certificate.'
         required: true
-        example: 01kj15qqptkn5da80jdx1cqksz
+        example: 01km69fetwzeka5a9na2q72fhx
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      certificate_id: 01kj15qqptkn5da80jdx1cqksz
+      certificate_id: 01km69fetwzeka5a9na2q72fhx
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1532,7 +1488,7 @@ endpoints:
         name: startDate
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-10T07:00:03'
+        example: '2026-03-20T23:00:51'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1543,7 +1499,7 @@ endpoints:
         name: endDate
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-10T07:00:03'
+        example: '2026-03-20T23:00:51'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1583,24 +1539,13 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       institution: architecto
       url: 'http://bailey.com/'
       area: architecto
       studyType: architecto
-      startDate: '2026-03-10T07:00:03'
-      endDate: '2026-03-10T07:00:03'
+      startDate: '2026-03-20T23:00:51'
+      endDate: '2026-03-20T23:00:51'
       score: architecto
       summary: architecto
       courses:
@@ -1641,7 +1586,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"e821231b-3cc6-4898-82bf-437779adddff"}'
+        content: '{"message":"Unauthenticated.","error_id":"0212abbb-2930-448b-9550-d803d8c7e71a"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -1676,14 +1621,14 @@ endpoints:
         name: education_id
         description: 'The ID of the education.'
         required: true
-        example: architecto
+        example: 01km69fetv18fwwavpr97a3gpk
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      education_id: architecto
+      education_id: 01km69fetv18fwwavpr97a3gpk
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1736,7 +1681,7 @@ endpoints:
         name: startDate
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-10T07:00:03'
+        example: '2026-03-20T23:00:51'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1747,7 +1692,7 @@ endpoints:
         name: endDate
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-10T07:00:03'
+        example: '2026-03-20T23:00:51'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1787,24 +1732,13 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       institution: architecto
       url: 'http://bailey.com/'
       area: architecto
       studyType: architecto
-      startDate: '2026-03-10T07:00:03'
-      endDate: '2026-03-10T07:00:03'
+      startDate: '2026-03-20T23:00:51'
+      endDate: '2026-03-20T23:00:51'
       score: architecto
       summary: architecto
       courses:
@@ -1840,14 +1774,14 @@ endpoints:
         name: education_id
         description: 'The ID of the education.'
         required: true
-        example: architecto
+        example: 01km69fetv18fwwavpr97a3gpk
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      education_id: architecto
+      education_id: 01km69fetv18fwwavpr97a3gpk
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1905,17 +1839,6 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
       keywords:
@@ -1956,7 +1879,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"dbed5be6-01cf-4995-8009-cbc2d2cfe323"}'
+        content: '{"message":"Unauthenticated.","error_id":"37b3b335-536c-4767-a3d5-2f2cef7d9dd5"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -2024,17 +1947,6 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
         deprecated: false
     cleanBodyParameters:
       name: architecto
@@ -2135,17 +2047,6 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       language: architecto
       fluency: architecto
@@ -2185,7 +2086,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"4a7ce9d2-dad9-47c2-9c6e-0dcf27f2a50b"}'
+        content: '{"message":"Unauthenticated.","error_id":"1baa8b90-4cf0-4304-b5a0-da07c0632797"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -2220,14 +2121,14 @@ endpoints:
         name: language_id
         description: 'The ID of the language.'
         required: true
-        example: architecto
+        example: 01km69fetztb7yp10ntasb8hkg
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      language_id: architecto
+      language_id: 01km69fetztb7yp10ntasb8hkg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -2252,17 +2153,6 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
         deprecated: false
     cleanBodyParameters:
       language: architecto
@@ -2298,14 +2188,14 @@ endpoints:
         name: language_id
         description: 'The ID of the language.'
         required: true
-        example: architecto
+        example: 01km69fetztb7yp10ntasb8hkg
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      language_id: architecto
+      language_id: 01km69fetztb7yp10ntasb8hkg
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -2356,7 +2246,7 @@ endpoints:
         name: startDate
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-10T07:00:03'
+        example: '2026-03-20T23:00:52'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2367,7 +2257,7 @@ endpoints:
         name: endDate
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-10T07:00:03'
+        example: '2026-03-20T23:00:52'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2407,21 +2297,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
-      startDate: '2026-03-10T07:00:03'
-      endDate: '2026-03-10T07:00:03'
+      startDate: '2026-03-20T23:00:52'
+      endDate: '2026-03-20T23:00:52'
       description: 'Eius et animi quos velit et.'
       highlights:
         - architecto
@@ -2462,7 +2341,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"f38e1420-e4b5-46f7-8217-0f7407be0649"}'
+        content: '{"message":"Unauthenticated.","error_id":"bc77c936-c883-4296-abf1-56f30522411b"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -2524,7 +2403,7 @@ endpoints:
         name: startDate
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-10T07:00:03'
+        example: '2026-03-20T23:00:52'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2535,7 +2414,7 @@ endpoints:
         name: endDate
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-10T07:00:03'
+        example: '2026-03-20T23:00:52'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2575,21 +2454,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
-      startDate: '2026-03-10T07:00:03'
-      endDate: '2026-03-10T07:00:03'
+      startDate: '2026-03-20T23:00:52'
+      endDate: '2026-03-20T23:00:52'
       description: 'Eius et animi quos velit et.'
       highlights:
         - architecto
@@ -2694,7 +2562,7 @@ endpoints:
         name: releaseDate
         description: 'Must be a valid date.'
         required: true
-        example: '2026-03-10T07:00:03'
+        example: '2026-03-20T23:00:52'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2722,21 +2590,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
       publisher: architecto
-      releaseDate: '2026-03-10T07:00:03'
+      releaseDate: '2026-03-20T23:00:52'
       url: 'http://bailey.com/'
       summary: architecto
     fileParameters: []
@@ -2775,7 +2632,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"bec3460a-29bf-4ba9-8f03-8ff97347fbec"}'
+        content: '{"message":"Unauthenticated.","error_id":"fc296712-63f2-4e4f-8e56-ea65b6ab099f"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -2848,7 +2705,7 @@ endpoints:
         name: releaseDate
         description: 'Must be a valid date.'
         required: false
-        example: '2026-03-10T07:00:04'
+        example: '2026-03-20T23:00:52'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2876,21 +2733,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
       publisher: architecto
-      releaseDate: '2026-03-10T07:00:04'
+      releaseDate: '2026-03-20T23:00:52'
       url: 'http://bailey.com/'
       summary: architecto
     fileParameters: []
@@ -2988,17 +2834,6 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
       reference: architecto
@@ -3038,7 +2873,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"2224982a-1dbe-4cf3-9b73-011a46ed4622"}'
+        content: '{"message":"Unauthenticated.","error_id":"5d3267d0-cafe-4f0f-a869-50f6876f2632"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -3105,17 +2940,6 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
         deprecated: false
     cleanBodyParameters:
       name: architecto
@@ -3227,17 +3051,6 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
       level: architecto
@@ -3279,7 +3092,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"ff6af0e3-b9c8-4567-ae6c-43716877ad09"}'
+        content: '{"message":"Unauthenticated.","error_id":"2d2c0c5a-f2c2-4ae7-b7ee-83a8c7c7d654"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -3314,14 +3127,14 @@ endpoints:
         name: skill_id
         description: 'The ID of the skill.'
         required: true
-        example: architecto
+        example: 01km69fetyq66h0qd96rtwjp32
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      skill_id: architecto
+      skill_id: 01km69fetyq66h0qd96rtwjp32
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -3359,17 +3172,6 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
       level: architecto
@@ -3406,14 +3208,14 @@ endpoints:
         name: skill_id
         description: 'The ID of the skill.'
         required: true
-        example: architecto
+        example: 01km69fetyq66h0qd96rtwjp32
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      skill_id: architecto
+      skill_id: 01km69fetyq66h0qd96rtwjp32
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -3526,17 +3328,6 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       organization: architecto
       position: architecto
@@ -3582,7 +3373,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"6c295162-6356-4775-9246-83a6cdaf148f"}'
+        content: '{"message":"Unauthenticated.","error_id":"ee2c00bd-f6ac-4dc1-9446-ac5ab6c88b45"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -3705,17 +3496,6 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
         deprecated: false
     cleanBodyParameters:
       organization: architecto
@@ -3877,17 +3657,6 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
       position: architecto
@@ -3933,7 +3702,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"message":"Unauthenticated.","error_id":"ec512fc9-eb89-4d3e-b940-0dc6bf1456a3"}'
+        content: '{"message":"Unauthenticated.","error_id":"435448cc-57c2-4f70-9f04-f3d1b3cd07a8"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -3968,14 +3737,14 @@ endpoints:
         name: work_id
         description: 'The ID of the work.'
         required: true
-        example: architecto
+        example: 01km69fetsfk0qah79mn8qmk6p
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      work_id: architecto
+      work_id: 01km69fetsfk0qah79mn8qmk6p
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -4057,17 +3826,6 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      basic_id:
-        custom: []
-        name: basic_id
-        description: 'The <code>id</code> of an existing record in the basics table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
     cleanBodyParameters:
       name: architecto
       position: architecto
@@ -4108,14 +3866,14 @@ endpoints:
         name: work_id
         description: 'The ID of the work.'
         required: true
-        example: architecto
+        example: 01km69fetsfk0qah79mn8qmk6p
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      work_id: architecto
+      work_id: 01km69fetsfk0qah79mn8qmk6p
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

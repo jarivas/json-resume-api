@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: 'Laravel API Documentation'
+  title: 'json-resume-api API Documentation'
   description: ''
   version: 1.0.0
 servers:
@@ -196,14 +196,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: f15b43a9-283f-4e5c-ad7b-951aed04743d
+                  error_id: 4da58f4d-6bdd-4fcc-b46d-747cffe8a9d9
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: f15b43a9-283f-4e5c-ad7b-951aed04743d
+                    example: 4da58f4d-6bdd-4fcc-b46d-747cffe8a9d9
       tags:
         - Endpoints
       security: []
@@ -214,22 +214,22 @@ paths:
       description: ''
       parameters: []
       responses:
-        404:
+        401:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: 'Not Found.'
-                  error_id: f567b422-6b8d-48a4-a9ce-fa4d51f502e2
+                  message: Unauthenticated.
+                  error_id: 7a5d9ef3-2d42-42f2-be39-b68157a5a7b9
                 properties:
                   message:
                     type: string
-                    example: 'Not Found.'
+                    example: Unauthenticated.
                   error_id:
                     type: string
-                    example: f567b422-6b8d-48a4-a9ce-fa4d51f502e2
+                    example: 7a5d9ef3-2d42-42f2-be39-b68157a5a7b9
       tags:
         - Endpoints
       security: []
@@ -397,7 +397,7 @@ paths:
         in: path
         name: basic_id
         description: 'The ID of the basic.'
-        example: architecto
+        example: 01km69fetnjpgkt0ddh5frwkcd
         required: true
         schema:
           type: string
@@ -424,7 +424,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:02'
+                  example: '2026-03-20T23:00:51'
                 awarder:
                   type: string
                   description: ''
@@ -433,11 +433,6 @@ paths:
                   type: string
                   description: ''
                   example: architecto
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - title
                 - date
@@ -458,14 +453,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 97e05ac2-0704-4ca0-89e8-a7a15d8ef2fd
+                  error_id: 97c17934-2d6f-4d48-99fd-cfb8c3f7207b
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 97e05ac2-0704-4ca0-89e8-a7a15d8ef2fd
+                    example: 97c17934-2d6f-4d48-99fd-cfb8c3f7207b
       tags:
         - Endpoints
       security: []
@@ -492,7 +487,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:02'
+                  example: '2026-03-20T23:00:51'
                 awarder:
                   type: string
                   description: ''
@@ -501,11 +496,6 @@ paths:
                   type: string
                   description: ''
                   example: architecto
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
       security: []
     delete:
       summary: ''
@@ -521,7 +511,7 @@ paths:
         in: path
         name: award_id
         description: 'The ID of the award.'
-        example: 01kj1aec30rde36rkgppphp0vv
+        example: architecto
         required: true
         schema:
           type: string
@@ -548,7 +538,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:02'
+                  example: '2026-03-20T23:00:51'
                 issuer:
                   type: string
                   description: ''
@@ -557,11 +547,6 @@ paths:
                   type: string
                   description: 'Must be a valid URL.'
                   example: 'http://bailey.com/'
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - name
                 - date
@@ -582,14 +567,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 6a60fd06-4f22-4ea4-ba04-39ce5fc53ce0
+                  error_id: 33ee1bf0-16a9-4f8c-b314-74f9c0de0ea1
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 6a60fd06-4f22-4ea4-ba04-39ce5fc53ce0
+                    example: 33ee1bf0-16a9-4f8c-b314-74f9c0de0ea1
       tags:
         - Endpoints
       security: []
@@ -616,7 +601,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:02'
+                  example: '2026-03-20T23:00:51'
                 issuer:
                   type: string
                   description: ''
@@ -625,11 +610,6 @@ paths:
                   type: string
                   description: 'Must be a valid URL.'
                   example: 'http://bailey.com/'
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
       security: []
     delete:
       summary: ''
@@ -645,7 +625,7 @@ paths:
         in: path
         name: certificate_id
         description: 'The ID of the certificate.'
-        example: 01kj15qqptkn5da80jdx1cqksz
+        example: 01km69fetwzeka5a9na2q72fhx
         required: true
         schema:
           type: string
@@ -684,11 +664,11 @@ paths:
                 startDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:03'
+                  example: '2026-03-20T23:00:51'
                 endDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:03'
+                  example: '2026-03-20T23:00:51'
                 score:
                   type: string
                   description: ''
@@ -704,11 +684,6 @@ paths:
                     - architecto
                   items:
                     type: string
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - institution
                 - area
@@ -731,14 +706,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: e821231b-3cc6-4898-82bf-437779adddff
+                  error_id: 0212abbb-2930-448b-9550-d803d8c7e71a
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: e821231b-3cc6-4898-82bf-437779adddff
+                    example: 0212abbb-2930-448b-9550-d803d8c7e71a
       tags:
         - Endpoints
       security: []
@@ -777,11 +752,11 @@ paths:
                 startDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:03'
+                  example: '2026-03-20T23:00:51'
                 endDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:03'
+                  example: '2026-03-20T23:00:51'
                 score:
                   type: string
                   description: ''
@@ -797,11 +772,6 @@ paths:
                     - architecto
                   items:
                     type: string
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
       security: []
     delete:
       summary: ''
@@ -817,7 +787,7 @@ paths:
         in: path
         name: education_id
         description: 'The ID of the education.'
-        example: architecto
+        example: 01km69fetv18fwwavpr97a3gpk
         required: true
         schema:
           type: string
@@ -848,11 +818,6 @@ paths:
                     - architecto
                   items:
                     type: string
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - name
                 - keywords
@@ -871,14 +836,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: dbed5be6-01cf-4995-8009-cbc2d2cfe323
+                  error_id: 37b3b335-536c-4767-a3d5-2f2cef7d9dd5
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: dbed5be6-01cf-4995-8009-cbc2d2cfe323
+                    example: 37b3b335-536c-4767-a3d5-2f2cef7d9dd5
       tags:
         - Endpoints
       security: []
@@ -909,11 +874,6 @@ paths:
                     - architecto
                   items:
                     type: string
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
       security: []
     delete:
       summary: ''
@@ -957,11 +917,6 @@ paths:
                   type: string
                   description: ''
                   example: architecto
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - language
                 - fluency
@@ -980,14 +935,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 4a7ce9d2-dad9-47c2-9c6e-0dcf27f2a50b
+                  error_id: 1baa8b90-4cf0-4304-b5a0-da07c0632797
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 4a7ce9d2-dad9-47c2-9c6e-0dcf27f2a50b
+                    example: 1baa8b90-4cf0-4304-b5a0-da07c0632797
       tags:
         - Endpoints
       security: []
@@ -1015,11 +970,6 @@ paths:
                   type: string
                   description: ''
                   example: architecto
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
       security: []
     delete:
       summary: ''
@@ -1035,7 +985,7 @@ paths:
         in: path
         name: language_id
         description: 'The ID of the language.'
-        example: architecto
+        example: 01km69fetztb7yp10ntasb8hkg
         required: true
         schema:
           type: string
@@ -1062,11 +1012,11 @@ paths:
                 startDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:03'
+                  example: '2026-03-20T23:00:52'
                 endDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:03'
+                  example: '2026-03-20T23:00:52'
                 description:
                   type: string
                   description: ''
@@ -1082,11 +1032,6 @@ paths:
                   type: string
                   description: 'Must be a valid URL.'
                   example: 'http://bailey.com/'
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - name
                 - startDate
@@ -1108,14 +1053,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: f38e1420-e4b5-46f7-8217-0f7407be0649
+                  error_id: bc77c936-c883-4296-abf1-56f30522411b
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: f38e1420-e4b5-46f7-8217-0f7407be0649
+                    example: bc77c936-c883-4296-abf1-56f30522411b
       tags:
         - Endpoints
       security: []
@@ -1142,11 +1087,11 @@ paths:
                 startDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:03'
+                  example: '2026-03-20T23:00:52'
                 endDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:03'
+                  example: '2026-03-20T23:00:52'
                 description:
                   type: string
                   description: ''
@@ -1162,11 +1107,6 @@ paths:
                   type: string
                   description: 'Must be a valid URL.'
                   example: 'http://bailey.com/'
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - name
       security: []
@@ -1215,7 +1155,7 @@ paths:
                 releaseDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:03'
+                  example: '2026-03-20T23:00:52'
                 url:
                   type: string
                   description: 'Must be a valid URL.'
@@ -1224,11 +1164,6 @@ paths:
                   type: string
                   description: ''
                   example: architecto
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - name
                 - publisher
@@ -1249,14 +1184,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: bec3460a-29bf-4ba9-8f03-8ff97347fbec
+                  error_id: fc296712-63f2-4e4f-8e56-ea65b6ab099f
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: bec3460a-29bf-4ba9-8f03-8ff97347fbec
+                    example: fc296712-63f2-4e4f-8e56-ea65b6ab099f
       tags:
         - Endpoints
       security: []
@@ -1287,7 +1222,7 @@ paths:
                 releaseDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-10T07:00:04'
+                  example: '2026-03-20T23:00:52'
                 url:
                   type: string
                   description: 'Must be a valid URL.'
@@ -1296,11 +1231,6 @@ paths:
                   type: string
                   description: ''
                   example: architecto
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
       security: []
     delete:
       summary: ''
@@ -1344,11 +1274,6 @@ paths:
                   type: string
                   description: ''
                   example: architecto
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - name
                 - reference
@@ -1367,14 +1292,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 2224982a-1dbe-4cf3-9b73-011a46ed4622
+                  error_id: 5d3267d0-cafe-4f0f-a869-50f6876f2632
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 2224982a-1dbe-4cf3-9b73-011a46ed4622
+                    example: 5d3267d0-cafe-4f0f-a869-50f6876f2632
       tags:
         - Endpoints
       security: []
@@ -1402,11 +1327,6 @@ paths:
                   type: string
                   description: ''
                   example: architecto
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
       security: []
     delete:
       summary: ''
@@ -1457,11 +1377,6 @@ paths:
                     - architecto
                   items:
                     type: string
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - name
                 - level
@@ -1481,14 +1396,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: ff6af0e3-b9c8-4567-ae6c-43716877ad09
+                  error_id: 2d2c0c5a-f2c2-4ae7-b7ee-83a8c7c7d654
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: ff6af0e3-b9c8-4567-ae6c-43716877ad09
+                    example: 2d2c0c5a-f2c2-4ae7-b7ee-83a8c7c7d654
       tags:
         - Endpoints
       security: []
@@ -1523,11 +1438,6 @@ paths:
                     - architecto
                   items:
                     type: string
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
       security: []
     delete:
       summary: ''
@@ -1543,7 +1453,7 @@ paths:
         in: path
         name: skill_id
         description: 'The ID of the skill.'
-        example: architecto
+        example: 01km69fetyq66h0qd96rtwjp32
         required: true
         schema:
           type: string
@@ -1594,11 +1504,6 @@ paths:
                     - architecto
                   items:
                     type: string
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - organization
                 - position
@@ -1621,14 +1526,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 6c295162-6356-4775-9246-83a6cdaf148f
+                  error_id: ee2c00bd-f6ac-4dc1-9446-ac5ab6c88b45
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 6c295162-6356-4775-9246-83a6cdaf148f
+                    example: ee2c00bd-f6ac-4dc1-9446-ac5ab6c88b45
       tags:
         - Endpoints
       security: []
@@ -1679,11 +1584,6 @@ paths:
                     - architecto
                   items:
                     type: string
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
       security: []
     delete:
       summary: ''
@@ -1750,11 +1650,6 @@ paths:
                     - architecto
                   items:
                     type: string
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
               required:
                 - name
                 - position
@@ -1777,14 +1672,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: ec512fc9-eb89-4d3e-b940-0dc6bf1456a3
+                  error_id: 435448cc-57c2-4f70-9f04-f3d1b3cd07a8
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: ec512fc9-eb89-4d3e-b940-0dc6bf1456a3
+                    example: 435448cc-57c2-4f70-9f04-f3d1b3cd07a8
       tags:
         - Endpoints
       security: []
@@ -1835,11 +1730,6 @@ paths:
                     - architecto
                   items:
                     type: string
-                basic_id:
-                  type: string
-                  description: 'The <code>id</code> of an existing record in the basics table.'
-                  example: null
-                  nullable: true
       security: []
     delete:
       summary: ''
@@ -1855,7 +1745,7 @@ paths:
         in: path
         name: work_id
         description: 'The ID of the work.'
-        example: architecto
+        example: 01km69fetsfk0qah79mn8qmk6p
         required: true
         schema:
           type: string
