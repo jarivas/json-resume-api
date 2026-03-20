@@ -39,15 +39,7 @@ class Chat
 
     protected function isAllowedMessage(string $message): bool
     {
-        return $this->isCurriculumRelatedMessage($message) && ! $this->containsRiskyInstruction($message);
-    }
-
-    protected function isCurriculumRelatedMessage(string $message): bool
-    {
-        return preg_match(
-            '/(curriculum|currículum|curriculum vitae|\bcv\b|resume|résumé|hoja de vida|perfil profesional|experiencia laboral|habilidades|aptitudes|formación|educación|carta de presentación|linkedin|portafolio|logros|trayectoria)/iu',
-            $message,
-        ) === 1;
+        return ! $this->containsRiskyInstruction($message);
     }
 
     protected function containsRiskyInstruction(string $message): bool
