@@ -2,13 +2,13 @@
 
 namespace App\Ai\Agents;
 
+use App\Models\ResumeKeyword;
+use App\Services\Ai\EmbeddingService;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Ai\Contracts\Agent;
 use Laravel\Ai\Contracts\Conversational;
 use Laravel\Ai\Contracts\HasTools;
 use Laravel\Ai\Promptable;
-use App\Services\Ai\EmbeddingService;
-use App\Models\ResumeKeyword;
-use Illuminate\Support\Facades\Cache;
 
 class ResumeAgent implements Agent, Conversational, HasTools
 {
@@ -49,8 +49,33 @@ class ResumeAgent implements Agent, Conversational, HasTools
      */
     public function allowsQuery(string $input): bool
     {
-        $input = mb_strtolower($input);
+        $input = $this->normalizeInput($input);
 
+        if ($this->containsAnyIndicator($input)) {
+            return true;
+        }
+
+        $genericKeywords = $this->getGenericKeywords();
+        $evaluationVerbs = $this->getEvaluationVerbs();
+
+        if ($this->containsAnyWithWhile($input, $genericKeywords)) {
+            return true;
+        }
+
+        if ($this->containsEvaluationCombination($input, $evaluationVerbs, $genericKeywords)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function normalizeInput(string $input): string
+    {
+        return mb_strtolower($input);
+    }
+
+    private function containsAnyIndicator(string $input): bool
+    {
         $keywords = [
             'cv', 'currículum', 'curriculum', 'curriculo', 'resumé', 'resume',
             'experiencia', 'experience', 'education', 'formación', 'estudios',
@@ -59,42 +84,53 @@ class ResumeAgent implements Agent, Conversational, HasTools
             'referencia', 'references', 'idioma', 'languages', 'contacto', 'contact', 'perfil', 'summary',
         ];
 
-        foreach ($keywords as $kw) {
-            if (str_contains($input, $kw)) {
+        return $this->containsAnyWithWhile($input, $keywords);
+    }
+
+    private function containsAnyWithWhile(string $input, array $keywords): bool
+    {
+        $i = 0;
+        $len = count($keywords);
+        while ($i < $len) {
+            if (str_contains($input, $keywords[$i])) {
                 return true;
             }
+            $i++;
         }
 
-        // Load generic resume keywords from DB (populated by observer) with a small cache.
-        $genericKeywords = Cache::remember('resume_keywords_generic', 60 * 60, function () {
-            return ResumeKeyword::where('category', 'resume')->pluck('keyword')->map(fn($k) => mb_strtolower($k))->toArray();
+        return false;
+    }
+
+    private function getGenericKeywords(): array
+    {
+        return Cache::remember('resume_keywords_generic', 60 * 60, function () {
+            return ResumeKeyword::where('category', 'resume')->pluck('keyword')->map(fn ($k) => mb_strtolower($k))->toArray();
         });
+    }
 
-        // Load evaluation verbs dynamically from DB (category 'verb')
-        $evaluationVerbs = Cache::remember('resume_keywords_verbs', 60 * 60, function () {
-            return ResumeKeyword::where('category', 'verb')->pluck('keyword')->map(fn($k) => mb_strtolower($k))->toArray();
+    private function getEvaluationVerbs(): array
+    {
+        return Cache::remember('resume_keywords_verbs', 60 * 60, function () {
+            return ResumeKeyword::where('category', 'verb')->pluck('keyword')->map(fn ($k) => mb_strtolower($k))->toArray();
         });
+    }
 
-        // If the input contains any generic resume keyword, allow.
-        foreach ($genericKeywords as $ak) {
-            if (str_contains($input, $ak)) {
-                return true;
-            }
-        }
-
-        // If the input contains an evaluation verb AND also contains any resume keyword or cv indicator, allow.
-        foreach ($evaluationVerbs as $v) {
+    private function containsEvaluationCombination(string $input, array $verbs, array $genericKeywords): bool
+    {
+        $i = 0;
+        $len = count($verbs);
+        while ($i < $len) {
+            $v = $verbs[$i];
             if (str_contains($input, $v)) {
-                // quick CV indicators
-                if (str_contains($input, 'cv') || str_contains($input, 'currículum') || str_contains($input, 'curriculum')) {
+                if ($this->containsAnyIndicator($input)) {
                     return true;
                 }
-                foreach ($genericKeywords as $ak) {
-                    if (str_contains($input, $ak)) {
-                        return true;
-                    }
+
+                if ($this->containsAnyWithWhile($input, $genericKeywords)) {
+                    return true;
                 }
             }
+            $i++;
         }
 
         return false;
@@ -106,7 +142,7 @@ class ResumeAgent implements Agent, Conversational, HasTools
      */
     public function semanticContext(string $query, int $limit = 3): string
     {
-        $svc = new EmbeddingService();
+        $svc = new EmbeddingService;
         $results = $svc->findMostSimilar($query, $limit);
 
         if (empty($results)) {
