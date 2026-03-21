@@ -7,6 +7,8 @@ use Laravel\Ai\Contracts\Conversational;
 use Laravel\Ai\Contracts\HasTools;
 use Laravel\Ai\Promptable;
 use App\Services\Ai\EmbeddingService;
+use App\Models\ResumeKeyword;
+use Illuminate\Support\Facades\Cache;
 
 class ResumeAgent implements Agent, Conversational, HasTools
 {
@@ -60,6 +62,38 @@ class ResumeAgent implements Agent, Conversational, HasTools
         foreach ($keywords as $kw) {
             if (str_contains($input, $kw)) {
                 return true;
+            }
+        }
+
+        // Load generic resume keywords from DB (populated by observer) with a small cache.
+        $genericKeywords = Cache::remember('resume_keywords_generic', 60 * 60, function () {
+            return ResumeKeyword::where('category', 'resume')->pluck('keyword')->map(fn($k) => mb_strtolower($k))->toArray();
+        });
+
+        // Load evaluation verbs dynamically from DB (category 'verb')
+        $evaluationVerbs = Cache::remember('resume_keywords_verbs', 60 * 60, function () {
+            return ResumeKeyword::where('category', 'verb')->pluck('keyword')->map(fn($k) => mb_strtolower($k))->toArray();
+        });
+
+        // If the input contains any generic resume keyword, allow.
+        foreach ($genericKeywords as $ak) {
+            if (str_contains($input, $ak)) {
+                return true;
+            }
+        }
+
+        // If the input contains an evaluation verb AND also contains any resume keyword or cv indicator, allow.
+        foreach ($evaluationVerbs as $v) {
+            if (str_contains($input, $v)) {
+                // quick CV indicators
+                if (str_contains($input, 'cv') || str_contains($input, 'currículum') || str_contains($input, 'curriculum')) {
+                    return true;
+                }
+                foreach ($genericKeywords as $ak) {
+                    if (str_contains($input, $ak)) {
+                        return true;
+                    }
+                }
             }
         }
 
