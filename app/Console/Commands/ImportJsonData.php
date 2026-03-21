@@ -17,11 +17,13 @@ use App\Models\Work;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use RuntimeException;
+use App\Observers\ResumeModelObserver;
 
 class ImportJsonData extends Command
 {
@@ -37,6 +39,8 @@ class ImportJsonData extends Command
         $source = (string) $this->argument('source');
         $disk = (string) $this->option('disk');
         $path = (string) $this->option('path');
+        // Reset resume-related tables before validating/importing the payload
+        $this->resetResumeTables();
 
         try {
             $content = $this->resolveContent($source);
@@ -62,6 +66,36 @@ class ImportJsonData extends Command
 
             return self::FAILURE;
         }
+    }
+
+    /**
+     * Truncate resume-related tables to ensure a clean import state.
+     */
+    protected function resetResumeTables(): void
+    {
+        $tables = [
+            'resume_embeddings',
+            'projects',
+            'references',
+            'interests',
+            'languages',
+            'skills',
+            'publications',
+            'certificates',
+            'awards',
+            'educations',
+            'volunteers',
+            'works',
+            'basics',
+        ];
+
+        Schema::disableForeignKeyConstraints();
+        foreach ($tables as $table) {
+            if (DB::getSchemaBuilder()->hasTable($table)) {
+                DB::table($table)->truncate();
+            }
+        }
+        Schema::enableForeignKeyConstraints();
     }
 
     protected function resolveContent(string $source): string
@@ -191,10 +225,15 @@ class ImportJsonData extends Command
     protected function persistResume(array $payload): void
     {
         DB::transaction(function () use ($payload) {
+            $observer = new ResumeModelObserver();
+
             $basic = $this->createBasic($payload);
+            if ($basic) {
+                $observer->saved($basic);
+            }
 
             foreach (Arr::get($payload, 'work', []) as $item) {
-                Work::create([
+                $w = Work::create([
                     'name' => (string) Arr::get($item, 'name', ''),
                     'position' => (string) Arr::get($item, 'position', ''),
                     'url' => Arr::get($item, 'url'),
@@ -203,10 +242,11 @@ class ImportJsonData extends Command
                     'summary' => (string) Arr::get($item, 'summary', ''),
                     'highlights' => Arr::get($item, 'highlights', []),
                 ]);
+                $observer->saved($w);
             }
 
             foreach (Arr::get($payload, 'volunteer', []) as $item) {
-                Volunteer::create([
+                $v = Volunteer::create([
                     'organization' => (string) Arr::get($item, 'organization', ''),
                     'position' => (string) Arr::get($item, 'position', ''),
                     'url' => Arr::get($item, 'url'),
@@ -215,10 +255,11 @@ class ImportJsonData extends Command
                     'summary' => (string) Arr::get($item, 'summary', ''),
                     'highlights' => Arr::get($item, 'highlights', []),
                 ]);
+                $observer->saved($v);
             }
 
             foreach (Arr::get($payload, 'education', []) as $item) {
-                Education::create([
+                $e = Education::create([
                     'institution' => (string) Arr::get($item, 'institution', ''),
                     'url' => Arr::get($item, 'url'),
                     'area' => (string) Arr::get($item, 'area', ''),
@@ -229,67 +270,75 @@ class ImportJsonData extends Command
                     'summary' => (string) Arr::get($item, 'summary', ''),
                     'courses' => Arr::get($item, 'courses', []),
                 ]);
+                $observer->saved($e);
             }
 
             foreach (Arr::get($payload, 'awards', []) as $item) {
-                Award::create([
+                $a = Award::create([
                     'title' => (string) Arr::get($item, 'title', ''),
                     'date' => $this->normalizeIsoDate(Arr::get($item, 'date')),
                     'awarder' => (string) Arr::get($item, 'awarder', ''),
                     'summary' => (string) Arr::get($item, 'summary', ''),
                 ]);
+                $observer->saved($a);
             }
 
             foreach (Arr::get($payload, 'certificates', []) as $item) {
-                Certificate::create([
+                $c = Certificate::create([
                     'name' => (string) Arr::get($item, 'name', ''),
                     'date' => $this->normalizeIsoDate(Arr::get($item, 'date')),
                     'issuer' => (string) Arr::get($item, 'issuer', ''),
                     'url' => (string) Arr::get($item, 'url', ''),
                 ]);
+                $observer->saved($c);
             }
 
             foreach (Arr::get($payload, 'publications', []) as $item) {
-                Publication::create([
+                $p = Publication::create([
                     'name' => (string) Arr::get($item, 'name', ''),
                     'publisher' => (string) Arr::get($item, 'publisher', ''),
                     'releaseDate' => $this->normalizeIsoDate(Arr::get($item, 'releaseDate')),
                     'url' => Arr::get($item, 'url'),
                     'summary' => (string) Arr::get($item, 'summary', ''),
                 ]);
+                $observer->saved($p);
             }
 
             foreach (Arr::get($payload, 'skills', []) as $item) {
-                Skill::create([
+                $s = Skill::create([
                     'name' => (string) Arr::get($item, 'name', ''),
                     'level' => (string) Arr::get($item, 'level', ''),
                     'keywords' => Arr::get($item, 'keywords', []),
                 ]);
+                $observer->saved($s);
             }
 
             foreach (Arr::get($payload, 'languages', []) as $item) {
-                Language::create([
+                $l = Language::create([
                     'language' => (string) Arr::get($item, 'language', ''),
                     'fluency' => (string) Arr::get($item, 'fluency', ''),
                 ]);
+                $observer->saved($l);
             }
 
             foreach (Arr::get($payload, 'interests', []) as $item) {
-                Interest::create([
+                $i = Interest::create([
                     'name' => (string) Arr::get($item, 'name', ''),
                     'keywords' => Arr::get($item, 'keywords', []),
                 ]);
+                $observer->saved($i);
             }
 
             foreach (Arr::get($payload, 'references', []) as $item) {
-                Reference::create([
+                $r = Reference::create([
                     'name' => (string) Arr::get($item, 'name', ''),
                     'reference' => (string) Arr::get($item, 'reference', ''),
                 ]);
+                $observer->saved($r);
             }
 
             foreach (Arr::get($payload, 'projects', []) as $item) {
-                Project::create([
+                $pr = Project::create([
                     'name' => (string) Arr::get($item, 'name', ''),
                     'startDate' => $this->normalizeIsoDate(Arr::get($item, 'startDate')),
                     'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
@@ -297,6 +346,7 @@ class ImportJsonData extends Command
                     'highlights' => Arr::get($item, 'highlights', []),
                     'url' => Arr::get($item, 'url'),
                 ]);
+                $observer->saved($pr);
             }
         });
     }

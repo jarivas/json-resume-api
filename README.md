@@ -73,3 +73,16 @@ Los endpoints MCP exponen datos del CV en modo lectura.
 php artisan test --compact
 php artisan test --filter ChatTest --compact
 ```
+
+## Embeddings and Semantic Search
+
+- The app persists resume fragments into `resume_embeddings` and stores vectors (JSON) plus metadata.
+- Embeddings are generated synchronously on model `saved` via `ResumeModelObserver` and on import.
+- Vectors are L2-normalized at write-time; similarity ranking uses dot-product on normalized vectors.
+
+To run only embedding-related tests:
+
+```bash
+php artisan test --filter EmbeddingServiceTest --compact
+php artisan test --filter ResumeQATest --compact
+```

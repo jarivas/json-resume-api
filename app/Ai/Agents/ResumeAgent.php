@@ -6,6 +6,7 @@ use Laravel\Ai\Contracts\Agent;
 use Laravel\Ai\Contracts\Conversational;
 use Laravel\Ai\Contracts\HasTools;
 use Laravel\Ai\Promptable;
+use App\Services\Ai\EmbeddingService;
 
 class ResumeAgent implements Agent, Conversational, HasTools
 {
@@ -63,5 +64,29 @@ class ResumeAgent implements Agent, Conversational, HasTools
         }
 
         return false;
+    }
+
+    /**
+     * Recover semantically relevant resume fragments for a given query.
+     * Returns a short formatted context string suitable to attach to a prompt.
+     */
+    public function semanticContext(string $query, int $limit = 3): string
+    {
+        $svc = new EmbeddingService();
+        $results = $svc->findMostSimilar($query, $limit);
+
+        if (empty($results)) {
+            return '';
+        }
+
+        $parts = [];
+        foreach ($results as $r) {
+            $rec = $r['record'];
+            $score = isset($r['score']) ? round((float) $r['score'], 4) : 0.0;
+            $content = trim(preg_replace('/\s+/', ' ', (string) ($rec->content ?? '')));
+            $parts[] = "[score: {$score}] {$content}";
+        }
+
+        return "Contexto del CV (más relevante primero):\n".implode("\n\n", $parts);
     }
 }

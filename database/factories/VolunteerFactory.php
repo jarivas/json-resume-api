@@ -22,7 +22,7 @@ class VolunteerFactory extends Factory
             'startDate' => $start->format('Y-m-d H:i:s'),
             'endDate' => $end->format('Y-m-d H:i:s'),
             'summary' => $this->faker->sentence(),
-            'highlights' => $this->faker->sentences($this->faker->numberBetween(0, 5)),
+            'highlights' => $this->faker->sentences($this->faker->numberBetween(1, 5)),
         ];
     }
 }

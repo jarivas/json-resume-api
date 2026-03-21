@@ -34,6 +34,8 @@ class ImportJsonDataCommandTest extends TestCase
 
         $this->assertSame('José Antonio Rivas Fernández', data_get($saved, 'basics.name'));
         $this->assertResumeWasPersisted();
+        // resume_embeddings should have been created for each persisted resume model
+        $this->assertDatabaseCount('resume_embeddings', 25);
     }
 
     public function test_it_imports_json_from_local_file_path(): void
@@ -56,6 +58,7 @@ class ImportJsonDataCommandTest extends TestCase
         $this->assertSame('Español', data_get($saved, 'languages.0.language'));
 
         $this->assertResumeWasPersisted();
+        $this->assertDatabaseCount('resume_embeddings', 25);
     }
 
     public function test_it_fails_when_json_resume_format_is_invalid(): void
