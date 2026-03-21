@@ -14,6 +14,8 @@ class ResumeAgent implements Agent, Conversational, HasTools
 {
     use Promptable;
 
+    protected const int CACHE_INTERVAL_SECONDS = 3600; // 1 hour
+
     /**
      * The agent receives strict instructions: only answer questions about the user's
      * curriculum vitae (resume). If the user asks anything outside that scope, the
@@ -56,17 +58,14 @@ class ResumeAgent implements Agent, Conversational, HasTools
         }
 
         $genericKeywords = $this->getGenericKeywords();
+
+        if ($this->containsAny($input, $genericKeywords)) {
+            return true;
+        }
+
         $evaluationVerbs = $this->getEvaluationVerbs();
 
-        if ($this->containsAnyWithWhile($input, $genericKeywords)) {
-            return true;
-        }
-
-        if ($this->containsEvaluationCombination($input, $evaluationVerbs, $genericKeywords)) {
-            return true;
-        }
-
-        return false;
+        return($this->containsEvaluationCombination($input, $evaluationVerbs, $genericKeywords);
     }
 
     private function normalizeInput(string $input): string
@@ -84,10 +83,10 @@ class ResumeAgent implements Agent, Conversational, HasTools
             'referencia', 'references', 'idioma', 'languages', 'contacto', 'contact', 'perfil', 'summary',
         ];
 
-        return $this->containsAnyWithWhile($input, $keywords);
+        return $this->containsAny($input, $keywords);
     }
 
-    private function containsAnyWithWhile(string $input, array $keywords): bool
+    private function containsAny(string $input, array $keywords): bool
     {
         $i = 0;
         $len = count($keywords);
@@ -103,14 +102,14 @@ class ResumeAgent implements Agent, Conversational, HasTools
 
     private function getGenericKeywords(): array
     {
-        return Cache::remember('resume_keywords_generic', 60 * 60, function () {
+        return Cache::remember('resume_keywords_generic', self::CACHE_INTERVAL_SECONDS, function () {
             return ResumeKeyword::where('category', 'resume')->pluck('keyword')->map(fn ($k) => mb_strtolower($k))->toArray();
         });
     }
 
     private function getEvaluationVerbs(): array
     {
-        return Cache::remember('resume_keywords_verbs', 60 * 60, function () {
+        return Cache::remember('resume_keywords_verbs', self::CACHE_INTERVAL_SECONDS, function () {
             return ResumeKeyword::where('category', 'verb')->pluck('keyword')->map(fn ($k) => mb_strtolower($k))->toArray();
         });
     }
@@ -126,7 +125,7 @@ class ResumeAgent implements Agent, Conversational, HasTools
                     return true;
                 }
 
-                if ($this->containsAnyWithWhile($input, $genericKeywords)) {
+                if ($this->containsAny($input, $genericKeywords)) {
                     return true;
                 }
             }

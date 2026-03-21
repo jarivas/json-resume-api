@@ -9,7 +9,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "io238/laravel-iso-countries": "^1.3",
         "jarivas/laravel-cast-json-models": "^1.3",
         "knuckleswtf/scribe": "^5.7",
@@ -103,6 +103,9 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        }
+        ,"platform": {
+            "php": "8.4.0"
         }
     },
     "minimum-stability": "stable",
