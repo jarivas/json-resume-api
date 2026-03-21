@@ -65,7 +65,7 @@ class ResumeAgent implements Agent, Conversational, HasTools
 
         $evaluationVerbs = $this->getEvaluationVerbs();
 
-        return($this->containsEvaluationCombination($input, $evaluationVerbs, $genericKeywords);
+        return $this->containsEvaluationCombination($input, $evaluationVerbs, $genericKeywords);
     }
 
     private function normalizeInput(string $input): string
