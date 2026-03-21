@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Chat;
 
-use App\Ai\Agents\ResumeAgent;
 use App\Http\Requests\Chat\Chat as Request;
 use App\Services\Chat\ChatService;
 use Illuminate\Http\JsonResponse;
@@ -18,17 +17,6 @@ class Chat
         $data = $request->validated();
         $message = $data['message'];
 
-        if (! $this->isAllowedMessage($message)) {
-            return response()->json([
-                'message' => 'Solo se permiten consultas relacionadas con el currículum.',
-                'errors' => [
-                    'message' => [
-                        self::POLICY_ERROR_MESSAGE,
-                    ],
-                ],
-            ], 422);
-        }
-
         $result = $this->chatService->reply(
             $message,
             $data['session_id'] ?? null,
@@ -36,23 +24,6 @@ class Chat
         );
 
         return response()->json($result);
-    }
-
-    protected function isAllowedMessage(string $message): bool
-    {
-        if ($this->containsRiskyInstruction($message)) {
-            return false;
-        }
-
-        return (new ResumeAgent)->allowsQuery($message);
-    }
-
-    protected function containsRiskyInstruction(string $message): bool
-    {
-        return preg_match(
-            '/(ignore|ignora|system prompt|prompt del sistema|developer message|mensaje del desarrollador|jailbreak|bypass|api key|token|password|contraseña|secret|secreto)/iu',
-            $message,
-        ) === 1;
     }
 
     /**
