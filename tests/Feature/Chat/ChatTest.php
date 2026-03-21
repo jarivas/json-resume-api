@@ -35,4 +35,85 @@ class ChatTest extends TestCase
             'message' => 'Tell me about Test User experience',
         ]);
     }
+
+    public function test_resume_agent_allows_query_logic_without_fake()
+    {
+        $agent = new ResumeAgent();
+
+        $this->assertTrue($agent->allowsQuery('Tell me about experience and projects'));
+        $this->assertFalse($agent->allowsQuery('Tell me a joke about developers'));
+    }
+
+    public function test_chat_endpoint_accepts_payload_with_session_and_metadata()
+    {
+        ResumeAgent::fake(['echo: Sí, tiene experiencia en PHP.']);
+
+        Basic::factory()->create([
+            'name' => 'Test User',
+            'summary' => 'Experienced PHP developer',
+        ]);
+
+        $payload = [
+            'message' => '¿tiene experiencia php?',
+            'session_id' => 'sess_2923c090cdc44b40',
+            'metadata' => [
+                'language' => 'es',
+                'locale' => 'es-ES',
+            ],
+        ];
+
+        $resp = $this->postJson('/api/chat', $payload);
+
+        $resp->assertStatus(200)
+            ->assertJsonStructure(['reply', 'sources', 'session_id']);
+
+        $this->assertStringStartsWith('echo: ', $resp->json('reply'));
+        $this->assertEquals('sess_2923c090cdc44b40', $resp->json('session_id'));
+
+        $this->assertDatabaseCount('ai_requests', 1);
+        $this->assertDatabaseHas('ai_requests', [
+            'message' => '¿tiene experiencia php?',
+        ]);
+    }
+
+    public function test_chat_endpoint_accepts_payload_with_session_and_metadata_without_fake()
+    {
+        // Do not fake the agent — exercise the real path using Gemini provider.
+        if (empty(env('GEMINI_API_KEY'))) {
+            $this->markTestSkipped('GEMINI_API_KEY not set; set AI_DEFAULT_PROVIDER=gemini and GEMINI_API_KEY to run this test.');
+        }
+
+        // Ensure the application uses Gemini as the default provider for this test.
+        putenv('AI_DEFAULT_PROVIDER=gemini');
+        config([
+            'ai.default' => 'gemini',
+            'ai.providers.gemini.key' => env('GEMINI_API_KEY'),
+        ]);
+        Basic::factory()->create([
+            'name' => 'Test User',
+            'summary' => 'Experienced PHP developer',
+        ]);
+
+        $payload = [
+            'message' => '¿tiene experiencia php?',
+            'session_id' => 'sess_2923c090cdc44b40',
+            'metadata' => [
+                'language' => 'es',
+                'locale' => 'es-ES',
+            ],
+        ];
+
+        $resp = $this->postJson('/api/chat', $payload);
+
+        $resp->assertStatus(200)
+            ->assertJsonStructure(['reply', 'sources', 'session_id']);
+
+        $this->assertEquals('sess_2923c090cdc44b40', $resp->json('session_id'));
+
+        $this->assertDatabaseCount('ai_requests', 1);
+        $this->assertDatabaseHas('ai_requests', [
+            'message' => '¿tiene experiencia php?',
+        ]);
+    }
+
 }
