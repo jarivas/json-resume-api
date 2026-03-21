@@ -5,6 +5,7 @@ namespace Tests\Feature\Chat;
 use App\Ai\Agents\ResumeAgent;
 use App\Models\Basic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Ai\Exceptions\RateLimitedException;
 use Tests\TestCase;
 
 class ChatTest extends TestCase
@@ -38,7 +39,7 @@ class ChatTest extends TestCase
 
     public function test_resume_agent_allows_query_logic_without_fake()
     {
-        $agent = new ResumeAgent();
+        $agent = new ResumeAgent;
 
         $this->assertTrue($agent->allowsQuery('Tell me about experience and projects'));
         $this->assertFalse($agent->allowsQuery('Tell me a joke about developers'));
@@ -116,4 +117,34 @@ class ChatTest extends TestCase
         ]);
     }
 
+    public function test_chat_endpoint_returns_fallback_reply_when_provider_is_rate_limited(): void
+    {
+        ResumeAgent::fake([
+            static fn () => throw RateLimitedException::forProvider('gemini'),
+        ]);
+
+        Basic::factory()->create([
+            'name' => 'Test User',
+            'summary' => 'Experienced developer',
+        ]);
+
+        $response = $this->postJson('/api/chat', [
+            'message' => 'Tell me about Test User experience',
+            'session_id' => 'sess_rate_limited',
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'reply' => 'El servicio de chat no esta disponible en este momento. Intenta nuevamente en unos minutos.',
+                'sources' => [],
+                'session_id' => 'sess_rate_limited',
+            ]);
+
+        $this->assertDatabaseCount('ai_requests', 1);
+        $this->assertDatabaseHas('ai_requests', [
+            'session_id' => 'sess_rate_limited',
+            'message' => 'Tell me about Test User experience',
+            'reply' => 'El servicio de chat no esta disponible en este momento. Intenta nuevamente en unos minutos.',
+        ]);
+    }
 }

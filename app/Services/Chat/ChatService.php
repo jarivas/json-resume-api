@@ -5,9 +5,25 @@ namespace App\Services\Chat;
 use App\Ai\Agents\ResumeAgent;
 use App\Models\AiRequest;
 use App\Models\Basic;
+use Laravel\Ai\Exceptions\RateLimitedException;
 
 class ChatService
 {
+    protected const string RATE_LIMIT_REPLY = 'El servicio de chat no esta disponible en este momento. Intenta nuevamente en unos minutos.';
+
+    protected const array TEXT_PROVIDER_CANDIDATES = [
+        'anthropic',
+        'azure',
+        'deepseek',
+        'gemini',
+        'groq',
+        'mistral',
+        'ollama',
+        'openai',
+        'openrouter',
+        'xai',
+    ];
+
     public function __construct() {}
 
     public function reply(string $message, ?string $sessionId = null, ?array $metadata = null): array
@@ -64,7 +80,31 @@ class ChatService
         // Assemble user prompt including context
         $userPrompt = ($context ? ($context."\n\n") : '').$message;
 
-        $response = $agent->prompt($userPrompt);
+        $promptProviders = $this->promptProviders();
+
+        try {
+            $response = $agent->prompt($userPrompt, provider: $promptProviders);
+        } catch (RateLimitedException $exception) {
+            $reply = self::RATE_LIMIT_REPLY;
+
+            AiRequest::create([
+                'session_id' => $sessionId,
+                'provider' => (string) $this->primaryPromptProvider($promptProviders),
+                'prompt' => $this->maskValue($context),
+                'message' => $this->maskValue($message),
+                'reply' => $this->maskValue($reply),
+                'metadata' => $this->maskValue(array_merge($metadata ?? [], [
+                    'rate_limited' => true,
+                    'providers' => array_values($promptProviders),
+                ])),
+            ]);
+
+            return [
+                'reply' => $reply,
+                'sources' => [],
+                'session_id' => $sessionId,
+            ];
+        }
 
         $replyText = (string) $response;
 
@@ -103,6 +143,41 @@ class ChatService
             'sources' => [],
             'session_id' => $sessionId,
         ];
+    }
+
+    protected function promptProviders(): array
+    {
+        $defaultProvider = (string) config('ai.default');
+        $configuredProviders = config('ai.providers', []);
+
+        $providers = [$defaultProvider];
+
+        foreach (self::TEXT_PROVIDER_CANDIDATES as $provider) {
+            if ($provider === $defaultProvider) {
+                continue;
+            }
+
+            $providerConfig = $configuredProviders[$provider] ?? null;
+
+            if (! is_array($providerConfig)) {
+                continue;
+            }
+
+            $key = $providerConfig['key'] ?? null;
+
+            if (! is_string($key) || trim($key) === '') {
+                continue;
+            }
+
+            $providers[] = $provider;
+        }
+
+        return array_values(array_unique($providers));
+    }
+
+    protected function primaryPromptProvider(array $providers): string
+    {
+        return $providers[0] ?? (string) config('ai.default');
     }
 
     /**
