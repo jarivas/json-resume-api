@@ -5,6 +5,7 @@ namespace App\Services\Chat;
 use App\Ai\Agents\ResumeAgent;
 use App\Models\AiRequest;
 use App\Models\Basic;
+use Illuminate\Support\Facades\Log;
 use Laravel\Ai\Exceptions\AiException;
 use Laravel\Ai\Exceptions\RateLimitedException;
 use Throwable;
@@ -28,8 +29,8 @@ class ChatService
 
         try {
             $response = $this->promptWithRecovery($agent, $userPrompt);
-        } catch (RateLimitedException) {
-            return $this->handleRateLimitedFailure($agent, $context, $message, $sessionId, $metadata);
+        } catch (RateLimitedException $exception) {
+            return $this->handleRateLimitedFailure($agent, $context, $message, $sessionId, $metadata, $exception);
         } catch (AiException $exception) {
             return $this->handleProviderErrorFailure($agent, $context, $message, $sessionId, $metadata, $exception);
         }
@@ -56,24 +57,44 @@ class ChatService
     {
         try {
             return $agent->prompt($userPrompt);
-        } catch (Throwable) {
+        } catch (Throwable $exception) {
+            Log::warning('Chat primary prompt failed. Trying model fallback.', [
+                'provider' => (string) config('ai.default'),
+                'models' => $this->safeModelCandidates($agent),
+                'exception_class' => $exception::class,
+                'exception_code' => $exception->getCode(),
+                'exception_message' => $exception->getMessage(),
+            ]);
+
             return $agent->promptWithModelFallback($userPrompt);
         }
     }
 
-    protected function handleRateLimitedFailure(ResumeAgent $agent, string $context, string $message, ?string $sessionId, ?array $metadata): array
+    protected function handleRateLimitedFailure(ResumeAgent $agent, string $context, string $message, ?string $sessionId, ?array $metadata, RateLimitedException $exception): array
     {
         $reply = self::RATE_LIMIT_REPLY;
+        $safeMetadata = array_merge($metadata ?? [], [
+            'rate_limited' => true,
+            'models' => $agent->textModelCandidates(),
+        ]);
+
+        Log::warning('Chat service rate limited.', [
+            'session_id' => $sessionId,
+            'provider' => (string) config('ai.default'),
+            'models' => $this->safeModelCandidates($agent),
+            'exception_class' => $exception::class,
+            'exception_code' => $exception->getCode(),
+            'exception_message' => $exception->getMessage(),
+            'message_preview' => $this->truncateForLog((string) $this->maskValue($message)),
+            'metadata' => $this->maskValue($safeMetadata),
+        ]);
 
         $this->storeFailureRequest(
             $context,
             $message,
             $reply,
             $sessionId,
-            array_merge($metadata ?? [], [
-                'rate_limited' => true,
-                'models' => $agent->textModelCandidates(),
-            ])
+            $safeMetadata
         );
 
         return [
@@ -86,18 +107,30 @@ class ChatService
     protected function handleProviderErrorFailure(ResumeAgent $agent, string $context, string $message, ?string $sessionId, ?array $metadata, AiException $exception): array
     {
         $reply = self::RATE_LIMIT_REPLY;
+        $safeMetadata = array_merge($metadata ?? [], [
+            'provider_error' => true,
+            'provider_error_code' => $exception->getCode(),
+            'provider_error_message' => $exception->getMessage(),
+            'models' => $agent->textModelCandidates(),
+        ]);
+
+        Log::error('Chat service provider error.', [
+            'session_id' => $sessionId,
+            'provider' => (string) config('ai.default'),
+            'models' => $this->safeModelCandidates($agent),
+            'exception_class' => $exception::class,
+            'exception_code' => $exception->getCode(),
+            'exception_message' => $exception->getMessage(),
+            'message_preview' => $this->truncateForLog((string) $this->maskValue($message)),
+            'metadata' => $this->maskValue($safeMetadata),
+        ]);
 
         $this->storeFailureRequest(
             $context,
             $message,
             $reply,
             $sessionId,
-            array_merge($metadata ?? [], [
-                'provider_error' => true,
-                'provider_error_code' => $exception->getCode(),
-                'provider_error_message' => $exception->getMessage(),
-                'models' => $agent->textModelCandidates(),
-            ])
+            $safeMetadata
         );
 
         return [
@@ -149,8 +182,14 @@ class ChatService
             if (method_exists($agent, 'allowsQuery')) {
                 return $agent->allowsQuery($message);
             }
-        } catch (Throwable) {
-            // If validation fails, allow the query
+        } catch (Throwable $exception) {
+            Log::warning('Chat query validation failed. Allowing query by default.', [
+                'provider' => (string) config('ai.default'),
+                'exception_class' => $exception::class,
+                'exception_code' => $exception->getCode(),
+                'exception_message' => $exception->getMessage(),
+                'message_preview' => $this->truncateForLog((string) $this->maskValue($message)),
+            ]);
         }
 
         return true;
@@ -257,5 +296,30 @@ class ChatService
         $s = preg_replace('/\+?\d[\d\s\-\(\)]{5,}\d/', '[REDACTED_PHONE]', $s);
 
         return $s;
+    }
+
+    protected function safeModelCandidates(ResumeAgent $agent): array
+    {
+        try {
+            return $agent->textModelCandidates();
+        } catch (Throwable $exception) {
+            Log::warning('Could not resolve chat model candidates for logging.', [
+                'provider' => (string) config('ai.default'),
+                'exception_class' => $exception::class,
+                'exception_code' => $exception->getCode(),
+                'exception_message' => $exception->getMessage(),
+            ]);
+
+            return [];
+        }
+    }
+
+    protected function truncateForLog(string $text, int $limit = 250): string
+    {
+        if (mb_strlen($text) <= $limit) {
+            return $text;
+        }
+
+        return mb_substr($text, 0, $limit).'...';
     }
 }
