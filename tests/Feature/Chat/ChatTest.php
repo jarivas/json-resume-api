@@ -203,6 +203,45 @@ class ChatTest extends TestCase
         ]);
     }
 
+    public function test_chat_endpoint_uses_model_fallback_after_initial_prompt_failure(): void
+    {
+        $calls = 0;
+
+        ResumeAgent::fake(static function () use (&$calls): string {
+            $calls++;
+
+            if ($calls === 1) {
+                throw new AiException('Primary prompt failed.', 500);
+            }
+
+            return 'echo: fallback model worked';
+        });
+
+        Basic::factory()->create([
+            'name' => 'Test User',
+            'summary' => 'Experienced developer',
+        ]);
+
+        $response = $this->postJson('/api/chat', [
+            'message' => 'Tell me about Test User experience',
+            'session_id' => 'sess_prompt_then_fallback',
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'reply' => 'echo: fallback model worked',
+                'sources' => [],
+                'session_id' => 'sess_prompt_then_fallback',
+            ]);
+
+        $this->assertDatabaseCount('ai_requests', 1);
+        $this->assertDatabaseHas('ai_requests', [
+            'session_id' => 'sess_prompt_then_fallback',
+            'message' => 'Tell me about Test User experience',
+            'reply' => 'echo: fallback model worked',
+        ]);
+    }
+
     public function test_resume_agent_retries_on_model_not_found_ai_exception(): void
     {
         ResumeAgent::fake(static function (string $prompt, $attachments, $provider, string $model): string {

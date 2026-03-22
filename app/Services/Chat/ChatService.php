@@ -7,6 +7,7 @@ use App\Models\AiRequest;
 use App\Models\Basic;
 use Laravel\Ai\Exceptions\AiException;
 use Laravel\Ai\Exceptions\RateLimitedException;
+use Throwable;
 
 class ChatService
 {
@@ -26,49 +27,11 @@ class ChatService
         $userPrompt = $this->assembleUserPrompt($context, $message);
 
         try {
-            $response = $agent->promptWithModelFallback($userPrompt);
+            $response = $this->promptWithRecovery($agent, $userPrompt);
         } catch (RateLimitedException) {
-            $reply = self::RATE_LIMIT_REPLY;
-
-            AiRequest::create([
-                'session_id' => $sessionId,
-                'provider' => (string) config('ai.default'),
-                'prompt' => $this->maskValue($context),
-                'message' => $this->maskValue($message),
-                'reply' => $this->maskValue($reply),
-                'metadata' => $this->maskValue(array_merge($metadata ?? [], [
-                    'rate_limited' => true,
-                    'models' => $agent->textModelCandidates(),
-                ])),
-            ]);
-
-            return [
-                'reply' => $reply,
-                'sources' => [],
-                'session_id' => $sessionId,
-            ];
+            return $this->handleRateLimitedFailure($agent, $context, $message, $sessionId, $metadata);
         } catch (AiException $exception) {
-            $reply = self::RATE_LIMIT_REPLY;
-
-            AiRequest::create([
-                'session_id' => $sessionId,
-                'provider' => (string) config('ai.default'),
-                'prompt' => $this->maskValue($context),
-                'message' => $this->maskValue($message),
-                'reply' => $this->maskValue($reply),
-                'metadata' => $this->maskValue(array_merge($metadata ?? [], [
-                    'provider_error' => true,
-                    'provider_error_code' => $exception->getCode(),
-                    'provider_error_message' => $exception->getMessage(),
-                    'models' => $agent->textModelCandidates(),
-                ])),
-            ]);
-
-            return [
-                'reply' => $reply,
-                'sources' => [],
-                'session_id' => $sessionId,
-            ];
+            return $this->handleProviderErrorFailure($agent, $context, $message, $sessionId, $metadata, $exception);
         }
 
         $replyText = (string) $response;
@@ -87,6 +50,73 @@ class ChatService
             'sources' => [],
             'session_id' => $sessionId,
         ];
+    }
+
+    protected function promptWithRecovery(ResumeAgent $agent, string $userPrompt): mixed
+    {
+        try {
+            return $agent->prompt($userPrompt);
+        } catch (Throwable) {
+            return $agent->promptWithModelFallback($userPrompt);
+        }
+    }
+
+    protected function handleRateLimitedFailure(ResumeAgent $agent, string $context, string $message, ?string $sessionId, ?array $metadata): array
+    {
+        $reply = self::RATE_LIMIT_REPLY;
+
+        $this->storeFailureRequest(
+            $context,
+            $message,
+            $reply,
+            $sessionId,
+            array_merge($metadata ?? [], [
+                'rate_limited' => true,
+                'models' => $agent->textModelCandidates(),
+            ])
+        );
+
+        return [
+            'reply' => $reply,
+            'sources' => [],
+            'session_id' => $sessionId,
+        ];
+    }
+
+    protected function handleProviderErrorFailure(ResumeAgent $agent, string $context, string $message, ?string $sessionId, ?array $metadata, AiException $exception): array
+    {
+        $reply = self::RATE_LIMIT_REPLY;
+
+        $this->storeFailureRequest(
+            $context,
+            $message,
+            $reply,
+            $sessionId,
+            array_merge($metadata ?? [], [
+                'provider_error' => true,
+                'provider_error_code' => $exception->getCode(),
+                'provider_error_message' => $exception->getMessage(),
+                'models' => $agent->textModelCandidates(),
+            ])
+        );
+
+        return [
+            'reply' => $reply,
+            'sources' => [],
+            'session_id' => $sessionId,
+        ];
+    }
+
+    protected function storeFailureRequest(string $context, string $message, string $reply, ?string $sessionId, array $metadata): void
+    {
+        AiRequest::create([
+            'session_id' => $sessionId,
+            'provider' => (string) config('ai.default'),
+            'prompt' => $this->maskValue($context),
+            'message' => $this->maskValue($message),
+            'reply' => $this->maskValue($reply),
+            'metadata' => $this->maskValue($metadata),
+        ]);
     }
 
     protected function buildContext(): string
@@ -119,7 +149,7 @@ class ChatService
             if (method_exists($agent, 'allowsQuery')) {
                 return $agent->allowsQuery($message);
             }
-        } catch (\Throwable) {
+        } catch (Throwable) {
             // If validation fails, allow the query
         }
 
@@ -162,7 +192,7 @@ class ChatService
                     'total_tokens' => $usageObj->total_tokens ?? null,
                 ];
             }
-        } catch (\Throwable) {
+        } catch (Throwable) {
             // If usage extraction fails, return null
         }
 

@@ -51,11 +51,7 @@ class ResumeAgent implements Agent, Conversational, HasTools
     {
         $provider = $this->providerName();
 
-        return (string) (
-            config("ai.providers.{$provider}.deployment")
-            ?? config("ai.providers.{$provider}.models.text.default")
-            ?? 'gpt-4o-mini'
-        );
+        return (string) config("ai.providers.{$provider}.deployment");
     }
 
     public function promptWithModelFallback(string $prompt): mixed
