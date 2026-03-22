@@ -36,9 +36,57 @@ class ExcepcionHandler
         $status = $e->getStatusCode();
         $message = $status === 404 ? 'Not Found.' : 'Error.';
 
-        $errorId = $this->logException('HTTP exception handled', $e, $request, ['status' => $status]);
+        $errorId = $this->logHttpException($e, $request);
 
         return response()->json(['message' => $message, 'error_id' => $errorId], $status);
+    }
+
+    protected function logHttpException(HttpExceptionInterface $e, Request $request): string
+    {
+        $status = $e->getStatusCode();
+        $path = trim(strtolower($request->path()), '/');
+        $isProbeRequest = $status === 404 && $this->isKnownProbePath($path);
+        $message = $isProbeRequest ? 'HTTP probe request not found' : 'HTTP exception handled';
+        $level = $this->resolveHttpExceptionLogLevel($status, $isProbeRequest);
+
+        return $this->logException($message, $e, $request, [
+            'status' => $status,
+            'probe' => $isProbeRequest,
+        ], $level);
+    }
+
+    protected function resolveHttpExceptionLogLevel(int $status, bool $isProbeRequest): string
+    {
+        if ($status >= 500) {
+            return 'error';
+        }
+
+        if ($isProbeRequest) {
+            return 'notice';
+        }
+
+        if ($status >= 400) {
+            return 'warning';
+        }
+
+        return 'error';
+    }
+
+    protected function isKnownProbePath(string $path): bool
+    {
+        return Str::is([
+            '.well-known/*',
+            'autodiscover/*',
+            'geoserver/*',
+            'logon/*',
+            'owa/*',
+            'remote/login',
+            'sdk/*',
+            'security.txt',
+            'vpn/*',
+            'webui',
+            '*/up\'',
+        ], $path);
     }
 
     protected function handleThrowable(Throwable $e, Request $request): JsonResponse
@@ -77,7 +125,7 @@ class ExcepcionHandler
      * Log an exception with a generated error id and return that id.
      * Extra context can be provided in the third parameter.
      */
-    protected function logException(string $message, Throwable $e, Request $request, array $extra = []): string
+    protected function logException(string $message, Throwable $e, Request $request, array $extra = [], string $level = 'error'): string
     {
         $errorId = (string) Str::uuid();
 
@@ -90,8 +138,7 @@ class ExcepcionHandler
             'user_id' => optional($request->user())->id,
         ], $extra);
 
-        // Keep log entry scalar-only to avoid serializing stack traces or objects.
-        Log::error($message, $payload);
+        Log::log($level, $message, $payload);
 
         return $errorId;
     }
