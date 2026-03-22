@@ -5,6 +5,7 @@ namespace App\Services\Chat;
 use App\Ai\Agents\ResumeAgent;
 use App\Models\AiRequest;
 use App\Models\Basic;
+use Laravel\Ai\Exceptions\AiException;
 use Laravel\Ai\Exceptions\RateLimitedException;
 
 class ChatService
@@ -37,6 +38,28 @@ class ChatService
                 'reply' => $this->maskValue($reply),
                 'metadata' => $this->maskValue(array_merge($metadata ?? [], [
                     'rate_limited' => true,
+                    'models' => $agent->textModelCandidates(),
+                ])),
+            ]);
+
+            return [
+                'reply' => $reply,
+                'sources' => [],
+                'session_id' => $sessionId,
+            ];
+        } catch (AiException $exception) {
+            $reply = self::RATE_LIMIT_REPLY;
+
+            AiRequest::create([
+                'session_id' => $sessionId,
+                'provider' => (string) config('ai.default'),
+                'prompt' => $this->maskValue($context),
+                'message' => $this->maskValue($message),
+                'reply' => $this->maskValue($reply),
+                'metadata' => $this->maskValue(array_merge($metadata ?? [], [
+                    'provider_error' => true,
+                    'provider_error_code' => $exception->getCode(),
+                    'provider_error_message' => $exception->getMessage(),
                     'models' => $agent->textModelCandidates(),
                 ])),
             ]);

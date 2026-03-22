@@ -172,6 +172,37 @@ class ChatTest extends TestCase
         ]);
     }
 
+    public function test_chat_endpoint_returns_fallback_reply_when_provider_model_is_not_found(): void
+    {
+        ResumeAgent::fake([
+            static fn () => throw new AiException('Gemini Error [404]: NOT_FOUND - models/gemini-1.5-flash is not found for API version v1beta.', 404),
+        ]);
+
+        Basic::factory()->create([
+            'name' => 'Test User',
+            'summary' => 'Experienced developer',
+        ]);
+
+        $response = $this->postJson('/api/chat', [
+            'message' => 'Tell me about Test User experience',
+            'session_id' => 'sess_model_not_found',
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'reply' => 'El servicio de chat no esta disponible en este momento. Intenta nuevamente en unos minutos.',
+                'sources' => [],
+                'session_id' => 'sess_model_not_found',
+            ]);
+
+        $this->assertDatabaseCount('ai_requests', 1);
+        $this->assertDatabaseHas('ai_requests', [
+            'session_id' => 'sess_model_not_found',
+            'message' => 'Tell me about Test User experience',
+            'reply' => 'El servicio de chat no esta disponible en este momento. Intenta nuevamente en unos minutos.',
+        ]);
+    }
+
     public function test_resume_agent_retries_on_model_not_found_ai_exception(): void
     {
         ResumeAgent::fake(static function (string $prompt, $attachments, $provider, string $model): string {

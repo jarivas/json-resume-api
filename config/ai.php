@@ -98,7 +98,7 @@ return [
             'key' => env('GEMINI_API_KEY'),
             'deployment' => env('GEMINI_DEPLOYMENT', 'gemini-2.0-flash'),
             'embedding_deployment' => env('GEMINI_EMBEDDING_DEPLOYMENT', 'gemini-embedding-001'),
-            'alternative_deployment' => explode(',', env('GEMINI_ALTERNATIVE_DEPLOYMENTS', env('GEMINI_EMBEDDING_ALTERNATIVE_DEPLOYMENTS', 'gemini-2.0-flash-lite,gemini-2.0-flash'))),
+            'alternative_deployment' => explode(',', env('GEMINI_ALTERNATIVE_DEPLOYMENTS', 'gemini-2.0-flash-lite,gemini-2.0-flash')),
         ],
 
         'groq' => [
