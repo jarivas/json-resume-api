@@ -56,25 +56,25 @@ class ResumeAgent implements Agent, Conversational, HasTools
 
     public function promptWithModelFallback(string $prompt): mixed
     {
-        $provider = $this->providerName();
-        $models = $this->textModelCandidates();
         $lastException = null;
 
-        foreach ($models as $candidateModel) {
-            try {
-                return $this->prompt($prompt, provider: $provider, model: $candidateModel);
-            } catch (FailoverableException $e) {
-                $lastException = $e;
-
-                continue;
-            } catch (AiException $e) {
-                if ($this->isModelNotFoundException($e)) {
+        foreach ($this->providerCandidates() as $provider) {
+            foreach ($this->textModelCandidates($provider) as $candidateModel) {
+                try {
+                    return $this->prompt($prompt, provider: $provider, model: $candidateModel);
+                } catch (FailoverableException $e) {
                     $lastException = $e;
 
-                    continue;
-                }
+                    continue 2;
+                } catch (AiException $e) {
+                    if ($this->isModelNotFoundException($e)) {
+                        $lastException = $e;
 
-                throw $e;
+                        continue;
+                    }
+
+                    throw $e;
+                }
             }
         }
 
@@ -82,7 +82,7 @@ class ResumeAgent implements Agent, Conversational, HasTools
             throw $lastException;
         }
 
-        return $this->prompt($prompt, provider: $provider, model: $this->model());
+        return $this->prompt($prompt, provider: $this->providerName(), model: $this->model());
     }
 
     protected function isModelNotFoundException(AiException $exception): bool
@@ -97,10 +97,10 @@ class ResumeAgent implements Agent, Conversational, HasTools
             || str_contains($message, 'model') && str_contains($message, 'not found');
     }
 
-    public function textModelCandidates(): array
+    public function textModelCandidates(?string $provider = null): array
     {
-        $provider = $this->providerName();
-        $primaryModel = $this->model();
+        $provider ??= $this->providerName();
+        $primaryModel = $this->modelForProvider($provider);
         $alternatives = config("ai.providers.{$provider}.alternative_deployment", []);
 
         if (is_string($alternatives) && trim($alternatives) !== '') {
@@ -119,6 +119,34 @@ class ResumeAgent implements Agent, Conversational, HasTools
         }
 
         return array_values(array_unique($candidates));
+    }
+
+    public function providerCandidates(): array
+    {
+        $primaryProvider = $this->providerName();
+        $fallbackProviders = config("ai.providers.{$primaryProvider}.fallback_providers", []);
+
+        if (is_string($fallbackProviders) && trim($fallbackProviders) !== '') {
+            $fallbackProviders = [$fallbackProviders];
+        }
+
+        if (! is_array($fallbackProviders)) {
+            $fallbackProviders = [];
+        }
+
+        $candidates = [$primaryProvider];
+        foreach ($fallbackProviders as $provider) {
+            if (is_string($provider) && trim($provider) !== '') {
+                $candidates[] = $provider;
+            }
+        }
+
+        return array_values(array_unique($candidates));
+    }
+
+    protected function modelForProvider(string $provider): string
+    {
+        return (string) config("ai.providers.{$provider}.deployment");
     }
 
     protected function providerName(): string

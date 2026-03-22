@@ -93,7 +93,7 @@ class ChatServiceLoggingTest extends TestCase
                         parent::__construct('Test instructions', []);
                     }
 
-                    public function textModelCandidates(): array
+                    public function textModelCandidates(?string $provider = null): array
                     {
                         return ['model-primary', 'model-fallback'];
                     }

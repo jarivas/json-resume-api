@@ -53,6 +53,7 @@ class ChatTest extends TestCase
             'ai.providers.openai.deployment' => 'chat-deployment-from-config',
             'ai.providers.openai.models.text.default' => 'chat-model-from-models',
             'ai.providers.openai.alternative_deployment' => ['chat-fallback-1', 'chat-fallback-2'],
+            'ai.providers.openai.fallback_providers' => ['anthropic', 'groq'],
         ]);
 
         $agent = new ResumeAgent;
@@ -62,6 +63,7 @@ class ChatTest extends TestCase
             ['chat-deployment-from-config', 'chat-fallback-1', 'chat-fallback-2'],
             $agent->textModelCandidates(),
         );
+        $this->assertSame(['openai', 'anthropic', 'groq'], $agent->providerCandidates());
     }
 
     public function test_chat_endpoint_accepts_payload_with_session_and_metadata()
@@ -263,5 +265,40 @@ class ChatTest extends TestCase
         $response = $agent->promptWithModelFallback('Tell me about resume experience');
 
         $this->assertSame('echo: fallback model worked', (string) $response);
+    }
+
+    public function test_resume_agent_uses_provider_failover_after_rate_limit(): void
+    {
+        $calls = [];
+
+        ResumeAgent::fake(static function (string $prompt, $attachments, $provider, string $model) use (&$calls): string {
+            $providerName = (string) $provider;
+            $calls[] = $providerName.':'.$model;
+
+            if ($providerName === 'gemini') {
+                throw RateLimitedException::forProvider('gemini');
+            }
+
+            return 'echo: provider fallback worked';
+        });
+
+        config([
+            'ai.default' => 'gemini',
+            'ai.providers.gemini.deployment' => 'gemini-2.5-flash',
+            'ai.providers.gemini.alternative_deployment' => ['gemini-2.0-flash-lite'],
+            'ai.providers.gemini.fallback_providers' => ['openai'],
+            'ai.providers.openai.deployment' => 'gpt-4o-mini',
+            'ai.providers.openai.alternative_deployment' => ['gpt-4o'],
+        ]);
+
+        $agent = new ResumeAgent;
+
+        $response = $agent->promptWithModelFallback('Tell me about resume experience');
+
+        $this->assertSame('echo: provider fallback worked', (string) $response);
+        $this->assertSame([
+            'gemini:gemini-2.5-flash',
+            'openai:gpt-4o-mini',
+        ], $calls);
     }
 }
