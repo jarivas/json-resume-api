@@ -5,6 +5,7 @@ namespace Tests\Feature\Chat;
 use App\Ai\Agents\ResumeAgent;
 use App\Models\Basic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Ai\Exceptions\AiException;
 use Laravel\Ai\Exceptions\RateLimitedException;
 use Tests\TestCase;
 
@@ -169,5 +170,28 @@ class ChatTest extends TestCase
             'message' => 'Tell me about Test User experience',
             'reply' => 'El servicio de chat no esta disponible en este momento. Intenta nuevamente en unos minutos.',
         ]);
+    }
+
+    public function test_resume_agent_retries_on_model_not_found_ai_exception(): void
+    {
+        ResumeAgent::fake(static function (string $prompt, $attachments, $provider, string $model): string {
+            if ($model === 'gemini-1.5-flash') {
+                throw new AiException('Gemini Error [404]: NOT_FOUND - models/gemini-1.5-flash is not found for API version v1beta.', 404);
+            }
+
+            return 'echo: fallback model worked';
+        });
+
+        config([
+            'ai.default' => 'gemini',
+            'ai.providers.gemini.deployment' => 'gemini-1.5-flash',
+            'ai.providers.gemini.alternative_deployment' => ['gemini-2.0-flash-lite'],
+        ]);
+
+        $agent = new ResumeAgent;
+
+        $response = $agent->promptWithModelFallback('Tell me about resume experience');
+
+        $this->assertSame('echo: fallback model worked', (string) $response);
     }
 }

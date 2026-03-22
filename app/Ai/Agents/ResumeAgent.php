@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Cache;
 use Laravel\Ai\Contracts\Agent;
 use Laravel\Ai\Contracts\Conversational;
 use Laravel\Ai\Contracts\HasTools;
-use Laravel\Ai\Exceptions\RateLimitedException;
+use Laravel\Ai\Exceptions\AiException;
+use Laravel\Ai\Exceptions\FailoverableException;
 use Laravel\Ai\Promptable;
+use Throwable;
 
 class ResumeAgent implements Agent, Conversational, HasTools
 {
@@ -65,18 +67,38 @@ class ResumeAgent implements Agent, Conversational, HasTools
         foreach ($models as $candidateModel) {
             try {
                 return $this->prompt($prompt, provider: $provider, model: $candidateModel);
-            } catch (RateLimitedException $e) {
+            } catch (FailoverableException $e) {
                 $lastException = $e;
 
                 continue;
+            } catch (AiException $e) {
+                if ($this->isModelNotFoundException($e)) {
+                    $lastException = $e;
+
+                    continue;
+                }
+
+                throw $e;
             }
         }
 
-        if ($lastException instanceof RateLimitedException) {
+        if ($lastException instanceof Throwable) {
             throw $lastException;
         }
 
         return $this->prompt($prompt, provider: $provider, model: $this->model());
+    }
+
+    protected function isModelNotFoundException(AiException $exception): bool
+    {
+        if ($exception->getCode() === 404) {
+            return true;
+        }
+
+        $message = mb_strtolower($exception->getMessage());
+
+        return str_contains($message, 'not_found')
+            || str_contains($message, 'model') && str_contains($message, 'not found');
     }
 
     public function textModelCandidates(): array
@@ -170,7 +192,7 @@ class ResumeAgent implements Agent, Conversational, HasTools
             return Cache::remember('resume_keywords_generic', self::CACHE_INTERVAL_SECONDS, function () {
                 return ResumeKeyword::where('category', 'resume')->pluck('keyword')->map(fn ($k) => mb_strtolower($k))->toArray();
             });
-        } catch (\Throwable) {
+        } catch (Throwable) {
             return [];
         }
     }
@@ -181,7 +203,7 @@ class ResumeAgent implements Agent, Conversational, HasTools
             return Cache::remember('resume_keywords_verbs', self::CACHE_INTERVAL_SECONDS, function () {
                 return ResumeKeyword::where('category', 'verb')->pluck('keyword')->map(fn ($k) => mb_strtolower($k))->toArray();
             });
-        } catch (\Throwable) {
+        } catch (Throwable) {
             return [];
         }
     }
