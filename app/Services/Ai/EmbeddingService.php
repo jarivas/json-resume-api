@@ -17,7 +17,7 @@ class EmbeddingService
         try {
             if (method_exists(Ai::class, 'embeddingsProvider')) {
                 $batch = $this->generateEmbeddings([$text]);
-                if (is_array($batch) && !empty($batch['vectors'][0])) {
+                if (is_array($batch) && ! empty($batch['vectors'][0])) {
                     return $batch['vectors'][0];
                 }
             }
@@ -39,7 +39,7 @@ class EmbeddingService
         try {
             if (method_exists(Ai::class, 'embeddingsProvider')) {
                 $provider = Ai::embeddingsProvider();
-                $model = $provider->defaultEmbeddingsModel();
+                $model = $this->resolveEmbeddingsModel($provider);
                 $response = $provider->embeddingsGateway()->embeddings($provider, $model, $texts);
 
                 $vectors = is_array($response) ? $response : (array) $response;
@@ -48,7 +48,7 @@ class EmbeddingService
                 $normalized = [];
                 foreach ($vectors as $v) {
                     if (is_array($v)) {
-                        $normalized[] = array_map(fn($x) => (float) $x, $v);
+                        $normalized[] = array_map(fn ($x) => (float) $x, $v);
                     } else {
                         $normalized[] = (array) $v;
                     }
@@ -63,6 +63,26 @@ class EmbeddingService
         }
 
         return null;
+    }
+
+    protected function resolveEmbeddingsModel(object $provider): string
+    {
+        $providerName = method_exists($provider, 'name')
+            ? (string) $provider->name()
+            : (string) config('ai.default_for_embeddings', config('ai.default', 'openai'));
+
+        $configuredModel = config("ai.providers.{$providerName}.embedding_deployment")
+            ?? config("ai.providers.{$providerName}.models.embeddings.default");
+
+        if (is_string($configuredModel) && trim($configuredModel) !== '') {
+            return $configuredModel;
+        }
+
+        if (method_exists($provider, 'defaultEmbeddingsModel')) {
+            return (string) $provider->defaultEmbeddingsModel();
+        }
+
+        return 'text-embedding-3-small';
     }
 
     /**
@@ -136,7 +156,7 @@ class EmbeddingService
             $scores[] = ['record' => $row, 'score' => $score];
         }
 
-        usort($scores, fn($a, $b) => $b['score'] <=> $a['score']);
+        usort($scores, fn ($a, $b) => $b['score'] <=> $a['score']);
 
         return array_slice($scores, 0, $limit);
     }
@@ -172,6 +192,7 @@ class EmbeddingService
         for ($i = 0, $len = count($a); $i < $len; $i++) {
             $dot += ((float) $a[$i]) * ((float) $b[$i]);
         }
+
         return $dot;
     }
 
@@ -184,11 +205,12 @@ class EmbeddingService
         }
 
         if ($sum <= 0.0) {
-            return array_map(fn($x) => (float) $x, $v);
+            return array_map(fn ($x) => (float) $x, $v);
         }
 
         $norm = sqrt($sum);
-        return array_map(fn($x) => ((float) $x) / $norm, $v);
+
+        return array_map(fn ($x) => ((float) $x) / $norm, $v);
     }
 
     protected function vectorsEqual(array $a, array $b, float $eps = 1e-6): bool
@@ -229,7 +251,8 @@ class EmbeddingService
         $text = mb_strtolower($text);
         $text = preg_replace('/[^\p{L}\p{N}]+/u', ' ', $text);
         $parts = array_filter(array_map('trim', explode(' ', $text)));
+
         // remove very short tokens
-        return array_values(array_filter($parts, fn($t) => mb_strlen($t) > 1));
+        return array_values(array_filter($parts, fn ($t) => mb_strlen($t) > 1));
     }
 }

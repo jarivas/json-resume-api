@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Laravel\Ai\Contracts\Agent;
 use Laravel\Ai\Contracts\Conversational;
 use Laravel\Ai\Contracts\HasTools;
+use Laravel\Ai\Exceptions\RateLimitedException;
 use Laravel\Ai\Promptable;
 
 class ResumeAgent implements Agent, Conversational, HasTools
@@ -42,6 +43,69 @@ class ResumeAgent implements Agent, Conversational, HasTools
     public function tools(): iterable
     {
         return $this->tools;
+    }
+
+    public function model(): string
+    {
+        $provider = $this->providerName();
+
+        return (string) (
+            config("ai.providers.{$provider}.deployment")
+            ?? config("ai.providers.{$provider}.models.text.default")
+            ?? 'gpt-4o-mini'
+        );
+    }
+
+    public function promptWithModelFallback(string $prompt): mixed
+    {
+        $provider = $this->providerName();
+        $models = $this->textModelCandidates();
+        $lastException = null;
+
+        foreach ($models as $candidateModel) {
+            try {
+                return $this->prompt($prompt, provider: $provider, model: $candidateModel);
+            } catch (RateLimitedException $e) {
+                $lastException = $e;
+
+                continue;
+            }
+        }
+
+        if ($lastException instanceof RateLimitedException) {
+            throw $lastException;
+        }
+
+        return $this->prompt($prompt, provider: $provider, model: $this->model());
+    }
+
+    public function textModelCandidates(): array
+    {
+        $provider = $this->providerName();
+        $primaryModel = $this->model();
+        $alternatives = config("ai.providers.{$provider}.alternative_deployment", []);
+
+        if (is_string($alternatives) && trim($alternatives) !== '') {
+            $alternatives = [$alternatives];
+        }
+
+        if (! is_array($alternatives)) {
+            $alternatives = [];
+        }
+
+        $candidates = [$primaryModel];
+        foreach ($alternatives as $model) {
+            if (is_string($model) && trim($model) !== '') {
+                $candidates[] = $model;
+            }
+        }
+
+        return array_values(array_unique($candidates));
+    }
+
+    protected function providerName(): string
+    {
+        return (string) config('ai.default', 'openai');
     }
 
     /**
@@ -102,16 +166,24 @@ class ResumeAgent implements Agent, Conversational, HasTools
 
     private function getGenericKeywords(): array
     {
-        return Cache::remember('resume_keywords_generic', self::CACHE_INTERVAL_SECONDS, function () {
-            return ResumeKeyword::where('category', 'resume')->pluck('keyword')->map(fn ($k) => mb_strtolower($k))->toArray();
-        });
+        try {
+            return Cache::remember('resume_keywords_generic', self::CACHE_INTERVAL_SECONDS, function () {
+                return ResumeKeyword::where('category', 'resume')->pluck('keyword')->map(fn ($k) => mb_strtolower($k))->toArray();
+            });
+        } catch (\Throwable) {
+            return [];
+        }
     }
 
     private function getEvaluationVerbs(): array
     {
-        return Cache::remember('resume_keywords_verbs', self::CACHE_INTERVAL_SECONDS, function () {
-            return ResumeKeyword::where('category', 'verb')->pluck('keyword')->map(fn ($k) => mb_strtolower($k))->toArray();
-        });
+        try {
+            return Cache::remember('resume_keywords_verbs', self::CACHE_INTERVAL_SECONDS, function () {
+                return ResumeKeyword::where('category', 'verb')->pluck('keyword')->map(fn ($k) => mb_strtolower($k))->toArray();
+            });
+        } catch (\Throwable) {
+            return [];
+        }
     }
 
     private function containsEvaluationCombination(string $input, array $verbs, array $genericKeywords): bool
