@@ -8,6 +8,12 @@ use Laravel\Ai\Embeddings;
 
 class EmbeddingService
 {
+    protected const int MAX_RETRY_ATTEMPTS = 3;
+
+    protected const int INITIAL_RETRY_DELAY_MS = 1000;
+
+    protected const int MAX_BATCH_SIZE = 5;
+
     /**
      * Generate embeddings for text using the configured AI provider.
      * Returns the vector (array) or null on failure.
@@ -29,9 +35,49 @@ class EmbeddingService
 
     /**
      * Generate embeddings for multiple texts in a single call when supported.
+     * Handles rate limiting with exponential backoff retry mechanism.
      * Returns ['vectors' => array, 'model' => string] or null on failure.
      */
     public function generateEmbeddings(array $texts): ?array
+    {
+        // Split large batches into smaller chunks to avoid rate limiting
+        if (count($texts) > self::MAX_BATCH_SIZE) {
+            return $this->generateEmbeddingsInChunks($texts);
+        }
+
+        return $this->generateEmbeddingsWithRetry($texts);
+    }
+
+    protected function generateEmbeddingsInChunks(array $texts): ?array
+    {
+        $allVectors = [];
+        $model = null;
+
+        foreach (array_chunk($texts, self::MAX_BATCH_SIZE) as $chunk) {
+            $result = $this->generateEmbeddingsWithRetry($chunk);
+
+            if ($result === null) {
+                Log::warning('Failed to generate embeddings for chunk, skipping remaining chunks');
+
+                return null;
+            }
+
+            $allVectors = array_merge($allVectors, $result['vectors']);
+            $model = $result['model'];
+
+            // Add delay between batches to avoid rate limiting (skip delay in tests).
+            if (! app()->runningUnitTests()) {
+                usleep(500000); // 500ms delay between batches
+            }
+        }
+
+        return [
+            'vectors' => $allVectors,
+            'model' => $model,
+        ];
+    }
+
+    protected function generateEmbeddingsWithRetry(array $texts, int $attempt = 1): ?array
     {
         try {
             $provider = $this->resolveEmbeddingsProvider();
@@ -49,7 +95,26 @@ class EmbeddingService
                 'model' => $response->meta->model,
             ];
         } catch (\Throwable $e) {
-            Log::error('Embedding batch generation failed: '.$e->getMessage());
+            $message = mb_strtolower($e->getMessage());
+            $isRateLimit = str_contains($message, 'rate') || str_contains($message, 'quota');
+            $maxRetryAttempts = app()->runningUnitTests() ? 1 : self::MAX_RETRY_ATTEMPTS;
+
+            if ($isRateLimit && $attempt < $maxRetryAttempts) {
+                $delayMs = self::INITIAL_RETRY_DELAY_MS * (2 ** ($attempt - 1));
+                Log::warning("Rate limited. Retrying in {$delayMs}ms (attempt {$attempt}/{$maxRetryAttempts})", [
+                    'error' => $e->getMessage(),
+                    'retry_in_ms' => $delayMs,
+                ]);
+
+                usleep($delayMs * 1000);
+
+                return $this->generateEmbeddingsWithRetry($texts, $attempt + 1);
+            }
+
+            Log::error('Embedding batch generation failed after retries: '.$e->getMessage(), [
+                'attempt' => $attempt,
+                'is_rate_limit' => $isRateLimit,
+            ]);
         }
 
         return null;
@@ -78,9 +143,13 @@ class EmbeddingService
 
     /**
      * Persist or update an embedding record for a model instance.
+     * Includes throttling to respect API rate limits.
      */
     public function upsertEmbeddingForModel(object $model, string $content): void
     {
+        // Apply throttling to prevent rate limiting when saving multiple models
+        $this->applyThrottle();
+
         $batch = $this->generateEmbeddings([$content]);
 
         $vector = null;
@@ -256,5 +325,21 @@ class EmbeddingService
         return array_values(array_filter($parts, function ($token) use ($stopWords) {
             return mb_strlen($token) > 2 && ! in_array($token, $stopWords, true);
         }));
+    }
+
+    /**
+     * Apply throttling delay to prevent API rate limiting.
+     * Uses a configurable delay from config or default 200ms.
+     */
+    protected function applyThrottle(): void
+    {
+        if (app()->runningUnitTests()) {
+            return;
+        }
+
+        $delayMs = (int) config('services.embeddings.throttle_delay_ms', 200);
+        if ($delayMs > 0) {
+            usleep($delayMs * 1000);
+        }
     }
 }
