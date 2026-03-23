@@ -4,9 +4,13 @@ namespace Tests\Feature\Console;
 
 use App\Models\Basic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Laravel\Ai\Embeddings;
 use Tests\TestCase;
 
 class ImportJsonDataCommandTest extends TestCase
@@ -15,55 +19,116 @@ class ImportJsonDataCommandTest extends TestCase
 
     public function test_it_imports_json_from_url(): void
     {
-        Storage::fake('local');
+        Embeddings::fake();
         ['path' => $fixturePath, 'content' => $fixtureContent, 'data' => $fixtureData] = $this->loadCvFixture();
 
         Http::fake([
             'https://example.test/resume.json' => Http::response($fixtureContent, 200),
         ]);
 
-        $storagePath = 'imports/resume-from-url.json';
+        $storagePath = 'imports/resume-from-url-'.Str::uuid().'.json';
 
-        $this->artisan('data:import', [
-            'source' => 'https://example.test/resume.json',
-            '--disk' => 'local',
-            '--path' => $storagePath,
-        ])->assertExitCode(0);
+        try {
+            Storage::disk('local')->delete($storagePath);
 
-        $saved = $this->assertImportedResumeStored($storagePath, $fixtureData);
+            $this->artisan('data:import', [
+                'source' => 'https://example.test/resume.json',
+                '--disk' => 'local',
+                '--path' => $storagePath,
+            ])->assertExitCode(0);
 
-        $this->assertSame('José Antonio Rivas Fernández', data_get($saved, 'basics.name'));
-        $this->assertResumeWasPersisted();
-        // resume_embeddings should have been created for each persisted resume model
-        $this->assertDatabaseCount('resume_embeddings', 25);
+            $saved = $this->assertImportedResumeStored($storagePath, $fixtureData);
+
+            $this->assertSame('José Antonio Rivas Fernández', data_get($saved, 'basics.name'));
+            $this->assertResumeWasPersisted();
+            $this->assertDatabaseCount('resume_embeddings', 25);
+        } finally {
+            Storage::disk('local')->delete($storagePath);
+        }
     }
 
     public function test_it_imports_json_from_local_file_path(): void
     {
-        Storage::fake('local');
+        Embeddings::fake();
         ['path' => $fixturePath, 'content' => $fixtureContent, 'data' => $fixtureData] = $this->loadCvFixture();
 
-        $storagePath = 'imports/cv.json';
+        $storagePath = 'imports/cv-'.Str::uuid().'.json';
 
-        $this->artisan('data:import', [
-            'source' => $fixturePath,
-            '--disk' => 'local',
-            '--path' => $storagePath,
-        ])->assertExitCode(0);
+        try {
+            Storage::disk('local')->delete($storagePath);
 
-        $saved = $this->assertImportedResumeStored($storagePath, $fixtureData);
+            $this->artisan('data:import', [
+                'source' => $fixturePath,
+                '--disk' => 'local',
+                '--path' => $storagePath,
+            ])->assertExitCode(0);
 
-        $this->assertSame('José Antonio Rivas Fernández', data_get($saved, 'basics.name'));
-        $this->assertSame('InOne', data_get($saved, 'work.0.name'));
-        $this->assertSame('Español', data_get($saved, 'languages.0.language'));
+            $saved = $this->assertImportedResumeStored($storagePath, $fixtureData);
 
-        $this->assertResumeWasPersisted();
-        $this->assertDatabaseCount('resume_embeddings', 25);
+            $this->assertSame('José Antonio Rivas Fernández', data_get($saved, 'basics.name'));
+            $this->assertSame('InOne', data_get($saved, 'work.0.name'));
+            $this->assertSame('Español', data_get($saved, 'languages.0.language'));
+
+            $this->assertResumeWasPersisted();
+            $this->assertDatabaseCount('resume_embeddings', 25);
+        } finally {
+            Storage::disk('local')->delete($storagePath);
+        }
+    }
+
+    public function test_it_clears_existing_local_embeddings_before_import(): void
+    {
+        Embeddings::fake();
+        Cache::put('resume_keywords_generic', ['stale']);
+        Cache::put('resume_keywords_verbs', ['stale']);
+
+        DB::table('resume_embeddings')->insert([
+            'id' => (string) Str::ulid(),
+            'model_type' => Basic::class,
+            'model_id' => 'legacy-basic-id',
+            'content' => 'stale embedding content',
+            'vector' => json_encode([0.1, 0.2, 0.3], JSON_THROW_ON_ERROR),
+            'vector_length' => 3,
+            'embedding_model' => 'legacy-model',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('resume_keywords')->insert([
+            'keyword' => 'stale-keyword-only-for-test',
+            'category' => 'resume',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        ['path' => $fixturePath] = $this->loadCvFixture();
+        $storagePath = 'imports/cv-clean-reset-'.Str::uuid().'.json';
+
+        try {
+            Storage::disk('local')->delete($storagePath);
+
+            $this->artisan('data:import', [
+                'source' => $fixturePath,
+                '--disk' => 'local',
+                '--path' => $storagePath,
+            ])->assertExitCode(0);
+
+            $this->assertDatabaseCount('resume_embeddings', 25);
+            $this->assertDatabaseMissing('resume_embeddings', [
+                'content' => 'stale embedding content',
+            ]);
+            $this->assertDatabaseMissing('resume_keywords', [
+                'keyword' => 'stale-keyword-only-for-test',
+            ]);
+            $this->assertFalse(Cache::has('resume_keywords_generic'));
+            $this->assertFalse(Cache::has('resume_keywords_verbs'));
+        } finally {
+            Storage::disk('local')->delete($storagePath);
+        }
     }
 
     public function test_it_fails_when_json_resume_format_is_invalid(): void
     {
-        Storage::fake('local');
         $fixturePath = storage_path('app/test-invalid-resume.json');
 
         File::put($fixturePath, json_encode([
@@ -74,6 +139,8 @@ class ImportJsonDataCommandTest extends TestCase
         ], JSON_THROW_ON_ERROR));
 
         try {
+            Storage::disk('local')->delete('imports/imported-data.json');
+
             $this->artisan('data:import', [
                 'source' => $fixturePath,
             ])->assertExitCode(1);
@@ -82,6 +149,7 @@ class ImportJsonDataCommandTest extends TestCase
             $this->assertDatabaseCount('basics', 0);
         } finally {
             File::delete($fixturePath);
+            Storage::disk('local')->delete('imports/imported-data.json');
         }
     }
 

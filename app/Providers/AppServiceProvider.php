@@ -2,6 +2,19 @@
 
 namespace App\Providers;
 
+use App\Models\Award;
+use App\Models\Basic;
+use App\Models\Certificate;
+use App\Models\Education;
+use App\Models\Interest;
+use App\Models\Language;
+use App\Models\Project;
+use App\Models\Publication;
+use App\Models\Reference;
+use App\Models\Skill;
+use App\Models\Volunteer;
+use App\Models\Work;
+use App\Observers\ResumeModelObserver;
 use App\Services\Chat\LlmClientInterface;
 use App\Services\Chat\SdkLlmClient;
 use Carbon\CarbonImmutable;
@@ -9,19 +22,6 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
-use App\Models\Work;
-use App\Models\Education;
-use App\Models\Skill;
-use App\Models\Project;
-use App\Models\Publication;
-use App\Models\Certificate;
-use App\Models\Award;
-use App\Models\Reference;
-use App\Models\Interest;
-use App\Models\Volunteer;
-use App\Models\Language;
-use App\Models\Basic;
-use App\Observers\ResumeModelObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,19 +39,32 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
-        // Register observer to update embeddings when resume-related models are saved.
-        Work::observe(ResumeModelObserver::class);
-        Education::observe(ResumeModelObserver::class);
-        Skill::observe(ResumeModelObserver::class);
-        Project::observe(ResumeModelObserver::class);
-        Publication::observe(ResumeModelObserver::class);
-        Certificate::observe(ResumeModelObserver::class);
-        Award::observe(ResumeModelObserver::class);
-        Reference::observe(ResumeModelObserver::class);
-        Interest::observe(ResumeModelObserver::class);
-        Volunteer::observe(ResumeModelObserver::class);
-        Language::observe(ResumeModelObserver::class);
-        Basic::observe(ResumeModelObserver::class);
+        $this->registerModelObservers();
+    }
+
+    /**
+     * Register model observers for resume data synchronization.
+     */
+    protected function registerModelObservers(): void
+    {
+        $models = [
+            Work::class,
+            Education::class,
+            Skill::class,
+            Project::class,
+            Publication::class,
+            Certificate::class,
+            Award::class,
+            Reference::class,
+            Interest::class,
+            Volunteer::class,
+            Language::class,
+            Basic::class,
+        ];
+
+        foreach ($models as $model) {
+            $model::observe(ResumeModelObserver::class);
+        }
     }
 
     /**

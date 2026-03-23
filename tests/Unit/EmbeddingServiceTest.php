@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Services\Ai\EmbeddingService;
+use Laravel\Ai\Embeddings;
 use Tests\TestCase;
 
 class EmbeddingServiceTest extends TestCase
@@ -58,25 +59,62 @@ class EmbeddingServiceTest extends TestCase
 
         $svc = new class extends EmbeddingService
         {
-            public function exposeResolveModel(object $provider): string
+            public function exposeResolveModel(string $provider): string
             {
                 return $this->resolveEmbeddingsModel($provider);
             }
         };
 
-        $provider = new class
-        {
-            public function name(): string
-            {
-                return 'openai';
-            }
+        $this->assertSame('embedding-from-config', $svc->exposeResolveModel('openai'));
+    }
 
-            public function defaultEmbeddingsModel(): string
-            {
-                return 'provider-default';
-            }
-        };
+    public function test_generate_embeddings_uses_sdk_api_with_configured_provider_and_model(): void
+    {
+        config([
+            'ai.default' => 'openai',
+            'ai.default_for_embeddings' => 'gemini',
+            'ai.providers.openai.embedding_deployment' => 'openai-embedding-3-small',
+            'ai.providers.gemini.embedding_deployment' => 'gemini-embedding-001',
+        ]);
 
-        $this->assertSame('embedding-from-config', $svc->exposeResolveModel($provider));
+        Embeddings::fake([
+            [[0.1, 0.2, 0.3]],
+        ]);
+
+        $result = (new EmbeddingService)->generateEmbeddings(['Laravel resume']);
+
+        $this->assertSame([[0.1, 0.2, 0.3]], $result['vectors']);
+        $this->assertSame('gemini-embedding-001', $result['model']);
+
+        Embeddings::assertGenerated(function ($prompt): bool {
+            return $prompt->provider->name() === 'gemini'
+                && $prompt->model === 'gemini-embedding-001'
+                && $prompt->inputs === ['Laravel resume'];
+        });
+    }
+
+    public function test_generate_embeddings_prefers_default_embeddings_provider_over_default_text_provider(): void
+    {
+        config([
+            'ai.default' => 'openai',
+            'ai.default_for_embeddings' => 'azure',
+            'ai.providers.openai.embedding_deployment' => 'openai-embedding-3-small',
+            'ai.providers.azure.embedding_deployment' => 'azure-embedding-deployment',
+        ]);
+
+        Embeddings::fake([
+            [[0.4, 0.5, 0.6]],
+        ]);
+
+        $result = (new EmbeddingService)->generateEmbeddings(['Vector check']);
+
+        $this->assertSame([[0.4, 0.5, 0.6]], $result['vectors']);
+        $this->assertSame('azure-embedding-deployment', $result['model']);
+
+        Embeddings::assertGenerated(function ($prompt): bool {
+            return $prompt->provider->name() === 'azure'
+                && $prompt->model === 'azure-embedding-deployment'
+                && $prompt->inputs === ['Vector check'];
+        });
     }
 }

@@ -79,7 +79,7 @@ class ChatServiceLoggingTest extends TestCase
                 parent::__construct();
             }
 
-            protected function buildContext(): string
+            protected function buildContext(string $message, ResumeAgent $agent): string
             {
                 return 'Summary: Backend engineer profile';
             }

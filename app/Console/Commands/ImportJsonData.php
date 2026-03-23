@@ -14,16 +14,17 @@ use App\Models\Reference;
 use App\Models\Skill;
 use App\Models\Volunteer;
 use App\Models\Work;
+use App\Observers\ResumeModelObserver;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use RuntimeException;
-use App\Observers\ResumeModelObserver;
 
 class ImportJsonData extends Command
 {
@@ -39,8 +40,8 @@ class ImportJsonData extends Command
         $source = (string) $this->argument('source');
         $disk = (string) $this->option('disk');
         $path = (string) $this->option('path');
-        // Reset resume-related tables before validating/importing the payload
-        $this->resetResumeTables();
+        // Reset local resume embedding state before importing the payload.
+        $this->resetResumeState();
 
         try {
             $content = $this->resolveContent($source);
@@ -69,12 +70,22 @@ class ImportJsonData extends Command
     }
 
     /**
+     * Reset local embedding state before importing a resume.
+     */
+    protected function resetResumeState(): void
+    {
+        $this->clearResumeCaches();
+        $this->truncateResumeTables();
+    }
+
+    /**
      * Truncate resume-related tables to ensure a clean import state.
      */
-    protected function resetResumeTables(): void
+    protected function truncateResumeTables(): void
     {
         $tables = [
             'resume_embeddings',
+            'resume_keywords',
             'projects',
             'references',
             'interests',
@@ -96,6 +107,12 @@ class ImportJsonData extends Command
             }
         }
         Schema::enableForeignKeyConstraints();
+    }
+
+    protected function clearResumeCaches(): void
+    {
+        Cache::forget('resume_keywords_generic');
+        Cache::forget('resume_keywords_verbs');
     }
 
     protected function resolveContent(string $source): string
@@ -225,130 +242,179 @@ class ImportJsonData extends Command
     protected function persistResume(array $payload): void
     {
         DB::transaction(function () use ($payload) {
-            $observer = new ResumeModelObserver();
+            $observer = new ResumeModelObserver;
 
-            $basic = $this->createBasic($payload);
-            if ($basic) {
-                $observer->saved($basic);
-            }
-
-            foreach (Arr::get($payload, 'work', []) as $item) {
-                $w = Work::create([
-                    'name' => (string) Arr::get($item, 'name', ''),
-                    'position' => (string) Arr::get($item, 'position', ''),
-                    'url' => Arr::get($item, 'url'),
-                    'startDate' => $this->normalizeIsoDate(Arr::get($item, 'startDate')),
-                    'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
-                    'summary' => (string) Arr::get($item, 'summary', ''),
-                    'highlights' => Arr::get($item, 'highlights', []),
-                ]);
-                $observer->saved($w);
-            }
-
-            foreach (Arr::get($payload, 'volunteer', []) as $item) {
-                $v = Volunteer::create([
-                    'organization' => (string) Arr::get($item, 'organization', ''),
-                    'position' => (string) Arr::get($item, 'position', ''),
-                    'url' => Arr::get($item, 'url'),
-                    'startDate' => $this->normalizeIsoDate(Arr::get($item, 'startDate')),
-                    'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
-                    'summary' => (string) Arr::get($item, 'summary', ''),
-                    'highlights' => Arr::get($item, 'highlights', []),
-                ]);
-                $observer->saved($v);
-            }
-
-            foreach (Arr::get($payload, 'education', []) as $item) {
-                $e = Education::create([
-                    'institution' => (string) Arr::get($item, 'institution', ''),
-                    'url' => Arr::get($item, 'url'),
-                    'area' => (string) Arr::get($item, 'area', ''),
-                    'studyType' => (string) Arr::get($item, 'studyType', ''),
-                    'startDate' => $this->normalizeIsoDate(Arr::get($item, 'startDate')),
-                    'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
-                    'score' => Arr::get($item, 'score'),
-                    'summary' => (string) Arr::get($item, 'summary', ''),
-                    'courses' => Arr::get($item, 'courses', []),
-                ]);
-                $observer->saved($e);
-            }
-
-            foreach (Arr::get($payload, 'awards', []) as $item) {
-                $a = Award::create([
-                    'title' => (string) Arr::get($item, 'title', ''),
-                    'date' => $this->normalizeIsoDate(Arr::get($item, 'date')),
-                    'awarder' => (string) Arr::get($item, 'awarder', ''),
-                    'summary' => (string) Arr::get($item, 'summary', ''),
-                ]);
-                $observer->saved($a);
-            }
-
-            foreach (Arr::get($payload, 'certificates', []) as $item) {
-                $c = Certificate::create([
-                    'name' => (string) Arr::get($item, 'name', ''),
-                    'date' => $this->normalizeIsoDate(Arr::get($item, 'date')),
-                    'issuer' => (string) Arr::get($item, 'issuer', ''),
-                    'url' => (string) Arr::get($item, 'url', ''),
-                ]);
-                $observer->saved($c);
-            }
-
-            foreach (Arr::get($payload, 'publications', []) as $item) {
-                $p = Publication::create([
-                    'name' => (string) Arr::get($item, 'name', ''),
-                    'publisher' => (string) Arr::get($item, 'publisher', ''),
-                    'releaseDate' => $this->normalizeIsoDate(Arr::get($item, 'releaseDate')),
-                    'url' => Arr::get($item, 'url'),
-                    'summary' => (string) Arr::get($item, 'summary', ''),
-                ]);
-                $observer->saved($p);
-            }
-
-            foreach (Arr::get($payload, 'skills', []) as $item) {
-                $s = Skill::create([
-                    'name' => (string) Arr::get($item, 'name', ''),
-                    'level' => (string) Arr::get($item, 'level', ''),
-                    'keywords' => Arr::get($item, 'keywords', []),
-                ]);
-                $observer->saved($s);
-            }
-
-            foreach (Arr::get($payload, 'languages', []) as $item) {
-                $l = Language::create([
-                    'language' => (string) Arr::get($item, 'language', ''),
-                    'fluency' => (string) Arr::get($item, 'fluency', ''),
-                ]);
-                $observer->saved($l);
-            }
-
-            foreach (Arr::get($payload, 'interests', []) as $item) {
-                $i = Interest::create([
-                    'name' => (string) Arr::get($item, 'name', ''),
-                    'keywords' => Arr::get($item, 'keywords', []),
-                ]);
-                $observer->saved($i);
-            }
-
-            foreach (Arr::get($payload, 'references', []) as $item) {
-                $r = Reference::create([
-                    'name' => (string) Arr::get($item, 'name', ''),
-                    'reference' => (string) Arr::get($item, 'reference', ''),
-                ]);
-                $observer->saved($r);
-            }
-
-            foreach (Arr::get($payload, 'projects', []) as $item) {
-                $pr = Project::create([
-                    'name' => (string) Arr::get($item, 'name', ''),
-                    'startDate' => $this->normalizeIsoDate(Arr::get($item, 'startDate')),
-                    'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
-                    'description' => (string) Arr::get($item, 'description', ''),
-                    'highlights' => Arr::get($item, 'highlights', []),
-                    'url' => Arr::get($item, 'url'),
-                ]);
-                $observer->saved($pr);
-            }
+            $this->persistBasicInfo($payload, $observer);
+            $this->persistWorkExperience($payload, $observer);
+            $this->persistVolunteer($payload, $observer);
+            $this->persistEducation($payload, $observer);
+            $this->persistAwards($payload, $observer);
+            $this->persistCertificates($payload, $observer);
+            $this->persistPublications($payload, $observer);
+            $this->persistSkills($payload, $observer);
+            $this->persistLanguages($payload, $observer);
+            $this->persistInterests($payload, $observer);
+            $this->persistReferences($payload, $observer);
+            $this->persistProjects($payload, $observer);
         });
+    }
+
+    protected function persistBasicInfo(array $payload, ResumeModelObserver $observer): void
+    {
+        $basic = $this->createBasic($payload);
+        if ($basic) {
+            $observer->saved($basic);
+        }
+    }
+
+    protected function persistWorkExperience(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'work', []) as $item) {
+            $model = Work::create([
+                'name' => (string) Arr::get($item, 'name', ''),
+                'position' => (string) Arr::get($item, 'position', ''),
+                'url' => Arr::get($item, 'url'),
+                'startDate' => $this->normalizeIsoDate(Arr::get($item, 'startDate')),
+                'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
+                'summary' => (string) Arr::get($item, 'summary', ''),
+                'highlights' => Arr::get($item, 'highlights', []),
+            ]);
+            $observer->saved($model);
+        }
+    }
+
+    protected function persistVolunteer(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'volunteer', []) as $item) {
+            $model = Volunteer::create([
+                'organization' => (string) Arr::get($item, 'organization', ''),
+                'position' => (string) Arr::get($item, 'position', ''),
+                'url' => Arr::get($item, 'url'),
+                'startDate' => $this->normalizeIsoDate(Arr::get($item, 'startDate')),
+                'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
+                'summary' => (string) Arr::get($item, 'summary', ''),
+                'highlights' => Arr::get($item, 'highlights', []),
+            ]);
+            $observer->saved($model);
+        }
+    }
+
+    protected function persistEducation(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'education', []) as $item) {
+            $model = Education::create([
+                'institution' => (string) Arr::get($item, 'institution', ''),
+                'url' => Arr::get($item, 'url'),
+                'area' => (string) Arr::get($item, 'area', ''),
+                'studyType' => (string) Arr::get($item, 'studyType', ''),
+                'startDate' => $this->normalizeIsoDate(Arr::get($item, 'startDate')),
+                'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
+                'score' => Arr::get($item, 'score'),
+                'summary' => (string) Arr::get($item, 'summary', ''),
+                'courses' => Arr::get($item, 'courses', []),
+            ]);
+            $observer->saved($model);
+        }
+    }
+
+    protected function persistAwards(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'awards', []) as $item) {
+            $model = Award::create([
+                'title' => (string) Arr::get($item, 'title', ''),
+                'date' => $this->normalizeIsoDate(Arr::get($item, 'date')),
+                'awarder' => (string) Arr::get($item, 'awarder', ''),
+                'summary' => (string) Arr::get($item, 'summary', ''),
+            ]);
+            $observer->saved($model);
+        }
+    }
+
+    protected function persistCertificates(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'certificates', []) as $item) {
+            $model = Certificate::create([
+                'name' => (string) Arr::get($item, 'name', ''),
+                'date' => $this->normalizeIsoDate(Arr::get($item, 'date')),
+                'issuer' => (string) Arr::get($item, 'issuer', ''),
+                'url' => (string) Arr::get($item, 'url', ''),
+            ]);
+            $observer->saved($model);
+        }
+    }
+
+    protected function persistPublications(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'publications', []) as $item) {
+            $model = Publication::create([
+                'name' => (string) Arr::get($item, 'name', ''),
+                'publisher' => (string) Arr::get($item, 'publisher', ''),
+                'releaseDate' => $this->normalizeIsoDate(Arr::get($item, 'releaseDate')),
+                'url' => Arr::get($item, 'url'),
+                'summary' => (string) Arr::get($item, 'summary', ''),
+            ]);
+            $observer->saved($model);
+        }
+    }
+
+    protected function persistSkills(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'skills', []) as $item) {
+            $model = Skill::create([
+                'name' => (string) Arr::get($item, 'name', ''),
+                'level' => (string) Arr::get($item, 'level', ''),
+                'keywords' => Arr::get($item, 'keywords', []),
+            ]);
+            $observer->saved($model);
+        }
+    }
+
+    protected function persistLanguages(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'languages', []) as $item) {
+            $model = Language::create([
+                'language' => (string) Arr::get($item, 'language', ''),
+                'fluency' => (string) Arr::get($item, 'fluency', ''),
+            ]);
+            $observer->saved($model);
+        }
+    }
+
+    protected function persistInterests(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'interests', []) as $item) {
+            $model = Interest::create([
+                'name' => (string) Arr::get($item, 'name', ''),
+                'keywords' => Arr::get($item, 'keywords', []),
+            ]);
+            $observer->saved($model);
+        }
+    }
+
+    protected function persistReferences(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'references', []) as $item) {
+            $model = Reference::create([
+                'name' => (string) Arr::get($item, 'name', ''),
+                'reference' => (string) Arr::get($item, 'reference', ''),
+            ]);
+            $observer->saved($model);
+        }
+    }
+
+    protected function persistProjects(array $payload, ResumeModelObserver $observer): void
+    {
+        foreach (Arr::get($payload, 'projects', []) as $item) {
+            $model = Project::create([
+                'name' => (string) Arr::get($item, 'name', ''),
+                'startDate' => $this->normalizeIsoDate(Arr::get($item, 'startDate')),
+                'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
+                'description' => (string) Arr::get($item, 'description', ''),
+                'highlights' => Arr::get($item, 'highlights', []),
+                'url' => Arr::get($item, 'url'),
+            ]);
+            $observer->saved($model);
+        }
     }
 
     protected function createBasic(array $payload): ?Basic

@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 class ResumeEmbeddingsContentTest extends TestCase
@@ -41,5 +40,12 @@ class ResumeEmbeddingsContentTest extends TestCase
         $cert = DB::table('resume_embeddings')->where('model_type', 'App\\Models\\Certificate')->first();
         $this->assertNotNull($cert, 'Certificate embedding missing');
         $this->assertStringContainsString('IFCD99', $cert->content);
+
+        // Skill summaries should include technical keywords so semantic retrieval can find stack details.
+        $skill = DB::table('resume_embeddings')->where('model_type', 'App\\Models\\Skill')->first();
+        $this->assertNotNull($skill, 'Skill embedding missing');
+        $this->assertStringContainsString('Backend Development', $skill->content);
+        $this->assertStringContainsString('PHP 8', $skill->content);
+        $this->assertStringContainsString('Laravel', $skill->content);
     }
 }
