@@ -165,16 +165,7 @@ class EmbeddingService
         // Apply throttling to prevent rate limiting when saving multiple models
         $this->applyThrottle();
 
-        $batch = $this->generateEmbeddings([$content]);
-
-        if ($batch === null) {
-            Log::warning('Embedding generation failed, skipping upsert.', [
-                'model_type' => get_class($model),
-                'model_id' => (string) $model->getKey(),
-            ]);
-
-            return;
-        }
+        $batch = $this->generateEmbeddingsWithFallback([$content]);
 
         $vector = null;
         $embeddingModel = null;
@@ -216,7 +207,7 @@ class EmbeddingService
      */
     /**
      * Generate embeddings with automatic fallback to local database vectors
-     * when the configured AI provider fails. Used for read queries only.
+     * when the configured AI provider fails.
      * Returns ['vectors' => array, 'model' => string].
      */
     protected function generateEmbeddingsWithFallback(array $texts): array

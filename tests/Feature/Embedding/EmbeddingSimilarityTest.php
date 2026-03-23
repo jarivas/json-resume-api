@@ -40,7 +40,7 @@ class EmbeddingSimilarityTest extends TestCase
         }
     }
 
-    public function test_upsert_skips_db_write_when_embedding_generation_fails(): void
+    public function test_upsert_writes_local_embedding_when_generation_fails(): void
     {
         config([
             'ai.default_for_embeddings' => 'gemini',
@@ -59,7 +59,11 @@ class EmbeddingSimilarityTest extends TestCase
 
         $svc->upsertEmbeddingForModel($model, 'test content');
 
-        $this->assertDatabaseCount('resume_embeddings', 0);
+        $this->assertDatabaseHas('resume_embeddings', [
+            'model_type' => Work::class,
+            'model_id' => (string) $model->getKey(),
+            'embedding_model' => 'database',
+        ]);
     }
 
     public function test_upsert_stores_embedding_when_real_model_succeeds(): void
