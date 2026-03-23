@@ -16,6 +16,10 @@ class EmbeddingService
 
     protected const int LOCAL_EMBEDDING_DIMENSIONS = 64;
 
+    protected const int RATE_LIMIT_COOLDOWN_SECONDS = 300;
+
+    protected static array $rateLimitedUntil = [];
+
     /**
      * Generate embeddings for text using the configured AI provider.
      * Returns the vector (array) or null on failure.
@@ -88,8 +92,17 @@ class EmbeddingService
             return $this->generateLocalEmbeddings($texts, $model);
         }
 
+        if ($this->isProviderModelRateLimited($provider, $model)) {
+            Log::warning('Skipping embedding provider call due to active rate-limit cooldown.', [
+                'provider' => $provider,
+                'model' => $model,
+            ]);
+
+            return null;
+        }
+
         try {
-            $response = Embeddings::for($texts)->generate($provider, $model);
+            $response = $this->performRemoteEmbeddingsRequest($texts, $provider, $model);
 
             $normalized = [];
 
@@ -130,6 +143,10 @@ class EmbeddingService
                 'model' => $model,
                 'provider' => $provider,
             ]);
+
+            if ($isRateLimit) {
+                $this->markProviderModelRateLimited($provider, $model);
+            }
         }
 
         return null;
@@ -201,11 +218,6 @@ class EmbeddingService
     }
 
     /**
-     * Given a query string, compute its embedding and return the top-N most similar
-     * resume fragments from `resume_embeddings` with their similarity scores.
-     * Returns array of ['record' => ResumeEmbedding, 'score' => float].
-     */
-    /**
      * Generate embeddings with automatic fallback to local database vectors
      * when the configured AI provider fails.
      * Returns ['vectors' => array, 'model' => string].
@@ -218,7 +230,7 @@ class EmbeddingService
             return $result;
         }
 
-        Log::info('Embedding query falling back to local vectors after provider failure.');
+        Log::info('Embedding generation falling back to local vectors after provider failure.');
 
         return $this->generateLocalEmbeddings($texts, 'database');
     }
@@ -257,6 +269,38 @@ class EmbeddingService
         usort($scores, fn ($a, $b) => $b['score'] <=> $a['score']);
 
         return array_slice($scores, 0, $limit);
+    }
+
+    /**
+     * Perform the remote embedding generation call against the configured provider.
+     */
+    protected function performRemoteEmbeddingsRequest(array $texts, string $provider, string $model): mixed
+    {
+        return Embeddings::for($texts)->generate($provider, $model);
+    }
+
+    protected function isProviderModelRateLimited(string $provider, string $model): bool
+    {
+        $key = $this->providerModelKey($provider, $model);
+        $until = self::$rateLimitedUntil[$key] ?? 0;
+
+        return $until > $this->nowTimestamp();
+    }
+
+    protected function markProviderModelRateLimited(string $provider, string $model): void
+    {
+        $key = $this->providerModelKey($provider, $model);
+        self::$rateLimitedUntil[$key] = $this->nowTimestamp() + self::RATE_LIMIT_COOLDOWN_SECONDS;
+    }
+
+    protected function providerModelKey(string $provider, string $model): string
+    {
+        return trim(mb_strtolower($provider)).'|'.trim(mb_strtolower($model));
+    }
+
+    protected function nowTimestamp(): int
+    {
+        return time();
     }
 
     /**

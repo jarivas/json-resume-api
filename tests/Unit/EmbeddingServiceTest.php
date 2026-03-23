@@ -190,4 +190,36 @@ class EmbeddingServiceTest extends TestCase
 
         $this->assertSame($expected, $result);
     }
+
+    public function test_generate_embeddings_with_fallback_skips_repeated_remote_calls_after_rate_limit(): void
+    {
+        config([
+            'ai.default_for_embeddings' => 'cooldown-provider',
+            'ai.providers.cooldown-provider.embedding_deployment' => 'cooldown-model',
+        ]);
+
+        $svc = new class extends EmbeddingService
+        {
+            public int $remoteCalls = 0;
+
+            protected function performRemoteEmbeddingsRequest(array $texts, string $provider, string $model): mixed
+            {
+                $this->remoteCalls++;
+
+                throw new \RuntimeException('Application rate limited by AI provider [gemini].');
+            }
+
+            public function exposeFallback(array $texts): array
+            {
+                return $this->generateEmbeddingsWithFallback($texts);
+            }
+        };
+
+        $first = $svc->exposeFallback(['first text']);
+        $second = $svc->exposeFallback(['second text']);
+
+        $this->assertSame('database', $first['model']);
+        $this->assertSame('database', $second['model']);
+        $this->assertSame(1, $svc->remoteCalls, 'Expected provider call to be skipped while cooldown is active.');
+    }
 }
