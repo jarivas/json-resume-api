@@ -12,6 +12,12 @@ class ResumeEmbeddingsContentTest extends TestCase
 
     public function test_resume_embeddings_content_is_useful_and_sanitized(): void
     {
+        // Ensure deterministic local DB embeddings regardless of provider config
+        config([
+            'ai.default_for_embeddings' => 'openai',
+            'ai.providers.openai.embedding_deployment' => 'database',
+        ]);
+
         // Import the fixture using the command
         $fixturePath = base_path('tests/Feature/Console/Fixtures/cv.json');
 

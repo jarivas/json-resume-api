@@ -167,6 +167,15 @@ class EmbeddingService
 
         $batch = $this->generateEmbeddings([$content]);
 
+        if ($batch === null) {
+            Log::warning('Embedding generation failed, skipping upsert.', [
+                'model_type' => get_class($model),
+                'model_id' => (string) $model->getKey(),
+            ]);
+
+            return;
+        }
+
         $vector = null;
         $embeddingModel = null;
 
@@ -205,9 +214,27 @@ class EmbeddingService
      * resume fragments from `resume_embeddings` with their similarity scores.
      * Returns array of ['record' => ResumeEmbedding, 'score' => float].
      */
+    /**
+     * Generate embeddings with automatic fallback to local database vectors
+     * when the configured AI provider fails. Used for read queries only.
+     * Returns ['vectors' => array, 'model' => string].
+     */
+    protected function generateEmbeddingsWithFallback(array $texts): array
+    {
+        $result = $this->generateEmbeddings($texts);
+
+        if ($result !== null) {
+            return $result;
+        }
+
+        Log::info('Embedding query falling back to local vectors after provider failure.');
+
+        return $this->generateLocalEmbeddings($texts, 'database');
+    }
+
     public function findMostSimilar(string $query, int $limit = 5): array
     {
-        $batch = $this->generateEmbeddings([$query]);
+        $batch = $this->generateEmbeddingsWithFallback([$query]);
         $qVec = $batch['vectors'][0] ?? null;
 
         if (is_array($qVec)) {

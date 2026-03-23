@@ -14,6 +14,12 @@ class SdkLlmClientSemanticTest extends TestCase
 
     public function test_sdk_llm_client_attaches_semantic_context_to_prompt(): void
     {
+        // Ensure deterministic local DB embeddings regardless of provider config
+        config([
+            'ai.default_for_embeddings' => 'openai',
+            'ai.providers.openai.embedding_deployment' => 'database',
+        ]);
+
         // Import fixture so resume_embeddings are populated
         $fixturePath = base_path('tests/Feature/Console/Fixtures/cv.json');
         Storage::fake('local');

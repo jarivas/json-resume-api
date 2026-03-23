@@ -133,4 +133,61 @@ class EmbeddingServiceTest extends TestCase
         $this->assertCount(64, $result['vectors'][0]);
         $this->assertGreaterThan(0.0, array_sum(array_map('abs', $result['vectors'][0])));
     }
+
+    public function test_generate_embeddings_with_fallback_returns_local_when_real_model_fails(): void
+    {
+        config([
+            'ai.default_for_embeddings' => 'gemini',
+            'ai.providers.gemini.embedding_deployment' => 'gemini-embedding-001',
+        ]);
+
+        $svc = new class extends EmbeddingService
+        {
+            public function generateEmbeddings(array $texts): ?array
+            {
+                return null; // Simulate real provider failure
+            }
+
+            public function exposeFallback(array $texts): array
+            {
+                return $this->generateEmbeddingsWithFallback($texts);
+            }
+        };
+
+        $result = $svc->exposeFallback(['query about PHP']);
+
+        $this->assertIsArray($result);
+        $this->assertSame('database', $result['model']);
+        $this->assertCount(1, $result['vectors']);
+        $this->assertCount(64, $result['vectors'][0]);
+    }
+
+    public function test_generate_embeddings_with_fallback_returns_real_model_result_when_available(): void
+    {
+        config([
+            'ai.default_for_embeddings' => 'gemini',
+            'ai.providers.gemini.embedding_deployment' => 'gemini-embedding-001',
+        ]);
+
+        $expected = ['vectors' => [[0.1, 0.2, 0.3]], 'model' => 'gemini-embedding-001'];
+
+        $svc = new class($expected) extends EmbeddingService
+        {
+            public function __construct(private readonly array $fakeResult) {}
+
+            public function generateEmbeddings(array $texts): ?array
+            {
+                return $this->fakeResult;
+            }
+
+            public function exposeFallback(array $texts): array
+            {
+                return $this->generateEmbeddingsWithFallback($texts);
+            }
+        };
+
+        $result = $svc->exposeFallback(['query about PHP']);
+
+        $this->assertSame($expected, $result);
+    }
 }
