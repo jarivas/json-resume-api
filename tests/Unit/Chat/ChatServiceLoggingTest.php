@@ -70,6 +70,51 @@ class ChatServiceLoggingTest extends TestCase
             ->once();
     }
 
+    public function test_it_retries_primary_prompt_three_times_before_fallback(): void
+    {
+        $service = new class extends ChatService
+        {
+            public int $attempts = 0;
+
+            protected function buildContext(string $message, ResumeAgent $agent): string
+            {
+                return 'Summary: Backend engineer profile';
+            }
+
+            protected function createAgent(): ResumeAgent
+            {
+                return new class extends ResumeAgent
+                {
+                    public function __construct()
+                    {
+                        parent::__construct('Test instructions', []);
+                    }
+
+                    public function promptWithModelFallback(string $prompt): mixed
+                    {
+                        return 'fallback-success';
+                    }
+                };
+            }
+
+            protected function promptAttempt(ResumeAgent $agent, string $userPrompt): mixed
+            {
+                $this->attempts++;
+
+                throw new AiException('Primary model failed', 503);
+            }
+
+            protected function logAiRequest(string $context, string $message, string $reply, mixed $response, ?string $sessionId, ?array $metadata): void {}
+
+            protected function storeFailureRequest(string $context, string $message, string $reply, ?string $sessionId, array $metadata): void {}
+        };
+
+        $response = $service->reply('Dime mi experiencia de backend', 'session-retry', []);
+
+        $this->assertSame('fallback-success', $response['reply']);
+        $this->assertSame(3, $service->attempts);
+    }
+
     protected function makeFailureService(Throwable $exception): ChatService
     {
         return new class($exception) extends ChatService

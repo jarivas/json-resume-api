@@ -14,6 +14,8 @@ class EmbeddingService
 
     protected const int MAX_BATCH_SIZE = 5;
 
+    protected const int LOCAL_EMBEDDING_DIMENSIONS = 64;
+
     /**
      * Generate embeddings for text using the configured AI provider.
      * Returns the vector (array) or null on failure.
@@ -79,9 +81,14 @@ class EmbeddingService
 
     protected function generateEmbeddingsWithRetry(array $texts, int $attempt = 1): ?array
     {
+        $provider = $this->resolveEmbeddingsProvider();
+        $model = $this->resolveEmbeddingsModel($provider);
+
+        if ($this->isDatabaseEmbeddingModel($model)) {
+            return $this->generateLocalEmbeddings($texts, $model);
+        }
+
         try {
-            $provider = $this->resolveEmbeddingsProvider();
-            $model = $this->resolveEmbeddingsModel($provider);
             $response = Embeddings::for($texts)->generate($provider, $model);
 
             $normalized = [];
@@ -98,15 +105,21 @@ class EmbeddingService
             $message = mb_strtolower($e->getMessage());
             $isRateLimit = str_contains($message, 'rate') || str_contains($message, 'quota');
             $maxRetryAttempts = app()->runningUnitTests() ? 1 : self::MAX_RETRY_ATTEMPTS;
+            $shouldRetry = $attempt < $maxRetryAttempts;
 
-            if ($isRateLimit && $attempt < $maxRetryAttempts) {
+            if ($shouldRetry) {
                 $delayMs = self::INITIAL_RETRY_DELAY_MS * (2 ** ($attempt - 1));
-                Log::warning("Rate limited. Retrying in {$delayMs}ms (attempt {$attempt}/{$maxRetryAttempts})", [
+                Log::warning("Embedding generation failed. Retrying in {$delayMs}ms (attempt {$attempt}/{$maxRetryAttempts})", [
                     'error' => $e->getMessage(),
+                    'model' => $model,
+                    'provider' => $provider,
+                    'is_rate_limit' => $isRateLimit,
                     'retry_in_ms' => $delayMs,
                 ]);
 
-                usleep($delayMs * 1000);
+                if (! app()->runningUnitTests()) {
+                    usleep($delayMs * 1000);
+                }
 
                 return $this->generateEmbeddingsWithRetry($texts, $attempt + 1);
             }
@@ -114,6 +127,8 @@ class EmbeddingService
             Log::error('Embedding batch generation failed after retries: '.$e->getMessage(), [
                 'attempt' => $attempt,
                 'is_rate_limit' => $isRateLimit,
+                'model' => $model,
+                'provider' => $provider,
             ]);
         }
 
@@ -341,5 +356,43 @@ class EmbeddingService
         if ($delayMs > 0) {
             usleep($delayMs * 1000);
         }
+    }
+
+    protected function isDatabaseEmbeddingModel(string $model): bool
+    {
+        return mb_strtolower(trim($model)) === 'database';
+    }
+
+    protected function generateLocalEmbeddings(array $texts, string $model): array
+    {
+        $vectors = [];
+
+        foreach ($texts as $text) {
+            $vectors[] = $this->generateLocalVector((string) $text);
+        }
+
+        return [
+            'vectors' => $vectors,
+            'model' => $model,
+        ];
+    }
+
+    protected function generateLocalVector(string $text): array
+    {
+        $vector = array_fill(0, self::LOCAL_EMBEDDING_DIMENSIONS, 0.0);
+        $tokens = $this->tokenize($text);
+
+        if ($tokens === []) {
+            $tokens = [mb_strtolower(trim($text))];
+        }
+
+        foreach ($tokens as $token) {
+            $index = abs(crc32($token)) % self::LOCAL_EMBEDDING_DIMENSIONS;
+            $weightSeed = abs(crc32($token.'|w')) % 1000;
+            $weight = 1.0 + ($weightSeed / 1000.0);
+            $vector[$index] += $weight;
+        }
+
+        return $this->normalizeVector($vector);
     }
 }

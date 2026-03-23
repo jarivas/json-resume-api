@@ -117,4 +117,20 @@ class EmbeddingServiceTest extends TestCase
                 && $prompt->inputs === ['Vector check'];
         });
     }
+
+    public function test_generate_embeddings_uses_local_database_mode_when_embedding_model_is_database(): void
+    {
+        config([
+            'ai.default_for_embeddings' => 'gemini',
+            'ai.providers.gemini.embedding_deployment' => 'database',
+        ]);
+
+        $result = (new EmbeddingService)->generateEmbeddings(['Local embedding mode']);
+
+        $this->assertIsArray($result);
+        $this->assertSame('database', $result['model']);
+        $this->assertCount(1, $result['vectors']);
+        $this->assertCount(64, $result['vectors'][0]);
+        $this->assertGreaterThan(0.0, array_sum(array_map('abs', $result['vectors'][0])));
+    }
 }

@@ -15,6 +15,8 @@ class ChatService
 {
     protected const string RATE_LIMIT_REPLY = 'El servicio de chat no esta disponible en este momento. Intenta nuevamente en unos minutos.';
 
+    protected const int MAX_CHAT_PRIMARY_ATTEMPTS = 3;
+
     public function __construct() {}
 
     public function reply(string $message, ?string $sessionId = null, ?array $metadata = null): array
@@ -78,19 +80,40 @@ class ChatService
 
     protected function promptWithRecovery(ResumeAgent $agent, string $userPrompt): mixed
     {
-        try {
-            return $agent->prompt($userPrompt);
-        } catch (Throwable $exception) {
-            Log::warning('Chat primary prompt failed. Trying model fallback.', [
-                'provider' => (string) config('ai.default'),
-                'models' => $this->safeModelCandidates($agent),
-                'exception_class' => $exception::class,
-                'exception_code' => $exception->getCode(),
-                'exception_message' => $exception->getMessage(),
-            ]);
+        $lastException = null;
 
-            return $agent->promptWithModelFallback($userPrompt);
+        for ($attempt = 1; $attempt <= self::MAX_CHAT_PRIMARY_ATTEMPTS; $attempt++) {
+            try {
+                return $this->promptAttempt($agent, $userPrompt);
+            } catch (Throwable $exception) {
+                $lastException = $exception;
+
+                Log::warning('Chat primary prompt attempt failed.', [
+                    'provider' => (string) config('ai.default'),
+                    'attempt' => $attempt,
+                    'max_attempts' => self::MAX_CHAT_PRIMARY_ATTEMPTS,
+                    'models' => $this->safeModelCandidates($agent),
+                    'exception_class' => $exception::class,
+                    'exception_code' => $exception->getCode(),
+                    'exception_message' => $exception->getMessage(),
+                ]);
+            }
         }
+
+        Log::warning('Chat primary prompt exhausted retries. Trying model fallback.', [
+            'provider' => (string) config('ai.default'),
+            'attempts' => self::MAX_CHAT_PRIMARY_ATTEMPTS,
+            'models' => $this->safeModelCandidates($agent),
+            'last_exception_class' => $lastException ? $lastException::class : null,
+            'last_exception_message' => $lastException?->getMessage(),
+        ]);
+
+        return $agent->promptWithModelFallback($userPrompt);
+    }
+
+    protected function promptAttempt(ResumeAgent $agent, string $userPrompt): mixed
+    {
+        return $agent->prompt($userPrompt);
     }
 
     protected function handleRateLimitedFailure(ResumeAgent $agent, string $context, string $message, ?string $sessionId, ?array $metadata, RateLimitedException $exception): array
