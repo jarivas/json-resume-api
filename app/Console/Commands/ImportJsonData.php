@@ -25,9 +25,19 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use RuntimeException;
+use Swaggest\JsonSchema\InvalidValue;
+use Swaggest\JsonSchema\Schema as JsonSchema;
+use Swaggest\JsonSchema\SchemaContract;
+use Throwable;
 
 class ImportJsonData extends Command
 {
+    public const string JSON_RESUME_SCHEMA_URL = 'https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json';
+
+    public const string JSON_RESUME_SCHEMA_CACHE_KEY = 'json_resume_schema_definition';
+
+    protected ?SchemaContract $jsonResumeSchema = null;
+
     protected $signature = 'data:import
         {source : URL o ruta local del archivo JSON}
         {--disk=local : Disco de almacenamiento}
@@ -143,100 +153,54 @@ class ImportJsonData extends Command
 
     protected function validateResumePayload(array $payload): void
     {
-        $iso8601Pattern = '/^([1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]|[1-2][0-9]{3}-[0-1][0-9]|[1-2][0-9]{3})$/';
-
         $validator = Validator::make($payload, [
-            '$schema' => ['sometimes', 'string', 'url'],
-            'basics' => ['sometimes', 'array'],
-            'basics.name' => ['sometimes', 'string'],
-            'basics.label' => ['sometimes', 'string'],
-            'basics.email' => ['sometimes', 'email'],
-            'basics.phone' => ['sometimes', 'string'],
-            'basics.url' => ['sometimes', 'url'],
-            'basics.summary' => ['sometimes', 'string'],
-            'basics.location' => ['sometimes', 'array'],
-            'basics.location.address' => ['sometimes', 'string'],
-            'basics.location.postalCode' => ['sometimes', 'string'],
-            'basics.location.city' => ['sometimes', 'string'],
-            'basics.location.countryCode' => ['sometimes', 'string'],
-            'basics.location.region' => ['sometimes', 'string'],
-            'basics.profiles' => ['sometimes', 'array'],
-            'basics.profiles.*.network' => ['sometimes', 'string'],
-            'basics.profiles.*.username' => ['sometimes', 'string'],
-            'basics.profiles.*.url' => ['sometimes', 'url'],
-            'work' => ['sometimes', 'array'],
-            'work.*.name' => ['sometimes', 'string'],
-            'work.*.position' => ['sometimes', 'string'],
-            'work.*.url' => ['sometimes', 'url'],
-            'work.*.startDate' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'work.*.endDate' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'work.*.summary' => ['sometimes', 'string'],
-            'work.*.highlights' => ['sometimes', 'array'],
-            'work.*.highlights.*' => ['sometimes', 'string'],
-            'volunteer' => ['sometimes', 'array'],
-            'volunteer.*.organization' => ['sometimes', 'string'],
-            'volunteer.*.position' => ['sometimes', 'string'],
-            'volunteer.*.url' => ['sometimes', 'url'],
-            'volunteer.*.startDate' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'volunteer.*.endDate' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'volunteer.*.summary' => ['sometimes', 'string'],
-            'volunteer.*.highlights' => ['sometimes', 'array'],
-            'volunteer.*.highlights.*' => ['sometimes', 'string'],
-            'education' => ['sometimes', 'array'],
-            'education.*.institution' => ['sometimes', 'string'],
-            'education.*.url' => ['sometimes', 'url'],
-            'education.*.area' => ['sometimes', 'string'],
-            'education.*.studyType' => ['sometimes', 'string'],
-            'education.*.startDate' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'education.*.endDate' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'education.*.score' => ['sometimes', 'string'],
-            'education.*.summary' => ['sometimes', 'string'],
-            'education.*.courses' => ['sometimes', 'array'],
-            'education.*.courses.*' => ['sometimes', 'string'],
-            'awards' => ['sometimes', 'array'],
-            'awards.*.title' => ['sometimes', 'string'],
-            'awards.*.date' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'awards.*.awarder' => ['sometimes', 'string'],
-            'awards.*.summary' => ['sometimes', 'string'],
-            'certificates' => ['sometimes', 'array'],
-            'certificates.*.name' => ['sometimes', 'string'],
-            'certificates.*.date' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'certificates.*.issuer' => ['sometimes', 'string'],
-            'certificates.*.url' => ['sometimes', 'url'],
-            'publications' => ['sometimes', 'array'],
-            'publications.*.name' => ['sometimes', 'string'],
-            'publications.*.publisher' => ['sometimes', 'string'],
-            'publications.*.releaseDate' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'publications.*.url' => ['sometimes', 'url'],
-            'publications.*.summary' => ['sometimes', 'string'],
-            'skills' => ['sometimes', 'array'],
-            'skills.*.name' => ['sometimes', 'string'],
-            'skills.*.level' => ['sometimes', 'string'],
-            'skills.*.keywords' => ['sometimes', 'array'],
-            'skills.*.keywords.*' => ['sometimes', 'string'],
-            'languages' => ['sometimes', 'array'],
-            'languages.*.language' => ['sometimes', 'string'],
-            'languages.*.fluency' => ['sometimes', 'string'],
-            'interests' => ['sometimes', 'array'],
-            'interests.*.name' => ['sometimes', 'string'],
-            'interests.*.keywords' => ['sometimes', 'array'],
-            'interests.*.keywords.*' => ['sometimes', 'string'],
-            'references' => ['sometimes', 'array'],
-            'references.*.name' => ['sometimes', 'string'],
-            'references.*.reference' => ['sometimes', 'string'],
-            'projects' => ['sometimes', 'array'],
-            'projects.*.name' => ['sometimes', 'string'],
-            'projects.*.description' => ['sometimes', 'string'],
-            'projects.*.highlights' => ['sometimes', 'array'],
-            'projects.*.highlights.*' => ['sometimes', 'string'],
-            'projects.*.startDate' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'projects.*.endDate' => ['sometimes', 'regex:'.$iso8601Pattern],
-            'projects.*.url' => ['sometimes', 'url'],
+            '$schema' => ['sometimes', 'string', 'url', 'in:'.self::JSON_RESUME_SCHEMA_URL],
         ]);
 
         if ($validator->fails()) {
             throw new RuntimeException('El JSON no cumple el formato JSON Resume: '.$validator->errors()->first());
         }
+
+        $payloadObject = json_decode(json_encode($payload, JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
+
+        try {
+            $this->jsonResumeSchema()->in($payloadObject);
+        } catch (InvalidValue $exception) {
+            throw new RuntimeException('El JSON no cumple el schema oficial de JSON Resume: '.$exception->getMessage());
+        } catch (Throwable $exception) {
+            throw new RuntimeException('No se pudo validar el JSON Resume con JSON Schema: '.$exception->getMessage());
+        }
+    }
+
+    protected function jsonResumeSchema(): SchemaContract
+    {
+        if ($this->jsonResumeSchema instanceof SchemaContract) {
+            return $this->jsonResumeSchema;
+        }
+
+        $schemaDefinition = Cache::rememberForever(self::JSON_RESUME_SCHEMA_CACHE_KEY, function (): object {
+            $response = Http::timeout(30)->acceptJson()->get(self::JSON_RESUME_SCHEMA_URL);
+
+            if ($response->failed()) {
+                throw new RuntimeException('No se pudo descargar el schema oficial de JSON Resume.');
+            }
+
+            $schema = json_decode((string) $response->body(), false, 512, JSON_THROW_ON_ERROR);
+
+            if (! is_object($schema)) {
+                throw new RuntimeException('El schema oficial de JSON Resume no tiene un formato JSON válido.');
+            }
+
+            return $schema;
+        });
+
+        try {
+            $this->jsonResumeSchema = JsonSchema::import($schemaDefinition);
+        } catch (Throwable $exception) {
+            throw new RuntimeException('No se pudo cargar el schema de JSON Resume: '.$exception->getMessage());
+        }
+
+        return $this->jsonResumeSchema;
     }
 
     protected function persistResume(array $payload): void

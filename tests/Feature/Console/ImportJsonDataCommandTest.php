@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Console;
 
+use App\Console\Commands\ImportJsonData;
 use App\Models\Basic;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
@@ -24,6 +25,7 @@ class ImportJsonDataCommandTest extends TestCase
 
         Http::fake([
             'https://example.test/resume.json' => Http::response($fixtureContent, 200),
+            ImportJsonData::JSON_RESUME_SCHEMA_URL => Http::response($this->jsonResumeSchemaFixture(), 200),
         ]);
 
         $storagePath = 'imports/resume-from-url-'.Str::uuid().'.json';
@@ -51,6 +53,9 @@ class ImportJsonDataCommandTest extends TestCase
     {
         Embeddings::fake();
         ['path' => $fixturePath, 'content' => $fixtureContent, 'data' => $fixtureData] = $this->loadCvFixture();
+        Http::fake([
+            ImportJsonData::JSON_RESUME_SCHEMA_URL => Http::response($this->jsonResumeSchemaFixture(), 200),
+        ]);
 
         $storagePath = 'imports/cv-'.Str::uuid().'.json';
 
@@ -79,6 +84,9 @@ class ImportJsonDataCommandTest extends TestCase
     public function test_it_clears_existing_local_embeddings_before_import(): void
     {
         Embeddings::fake();
+        Http::fake([
+            ImportJsonData::JSON_RESUME_SCHEMA_URL => Http::response($this->jsonResumeSchemaFixture(), 200),
+        ]);
         Cache::put('resume_keywords_generic', ['stale']);
         Cache::put('resume_keywords_verbs', ['stale']);
 
@@ -129,6 +137,9 @@ class ImportJsonDataCommandTest extends TestCase
 
     public function test_it_fails_when_json_resume_format_is_invalid(): void
     {
+        Http::fake([
+            ImportJsonData::JSON_RESUME_SCHEMA_URL => Http::response($this->jsonResumeSchemaFixture(), 200),
+        ]);
         $fixturePath = storage_path('app/test-invalid-resume.json');
 
         File::put($fixturePath, json_encode([
@@ -145,7 +156,41 @@ class ImportJsonDataCommandTest extends TestCase
                 'source' => $fixturePath,
             ])->assertExitCode(1);
 
-            Storage::disk('local')->assertMissing('imports/imported-data.json');
+            $this->assertFalse(Storage::disk('local')->exists('imports/imported-data.json'));
+            $this->assertDatabaseCount('basics', 0);
+        } finally {
+            File::delete($fixturePath);
+            Storage::disk('local')->delete('imports/imported-data.json');
+        }
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Cache::forget(ImportJsonData::JSON_RESUME_SCHEMA_CACHE_KEY);
+    }
+
+    public function test_it_fails_when_schema_url_is_not_the_official_json_resume_schema(): void
+    {
+        $fixturePath = storage_path('app/test-invalid-schema-resume.json');
+
+        File::put($fixturePath, json_encode([
+            '$schema' => 'https://example.test/schema.json',
+            'basics' => [
+                'name' => 'Valid User',
+                'email' => 'valid@example.test',
+            ],
+        ], JSON_THROW_ON_ERROR));
+
+        try {
+            Storage::disk('local')->delete('imports/imported-data.json');
+
+            $this->artisan('data:import', [
+                'source' => $fixturePath,
+            ])->assertExitCode(1);
+
+            $this->assertFalse(Storage::disk('local')->exists('imports/imported-data.json'));
             $this->assertDatabaseCount('basics', 0);
         } finally {
             File::delete($fixturePath);
@@ -174,7 +219,7 @@ class ImportJsonDataCommandTest extends TestCase
      */
     private function assertImportedResumeStored(string $storagePath, array $fixtureData): array
     {
-        Storage::disk('local')->assertExists($storagePath);
+        $this->assertTrue(Storage::disk('local')->exists($storagePath));
 
         $saved = json_decode(Storage::disk('local')->get($storagePath), true, 512, JSON_THROW_ON_ERROR);
 
@@ -212,5 +257,10 @@ class ImportJsonDataCommandTest extends TestCase
         $this->assertSame('me@jarivas.work', $basic->email);
         $this->assertSame('Málaga', data_get($basic->location, 'city'));
         $this->assertCount(2, $basic->profiles);
+    }
+
+    private function jsonResumeSchemaFixture(): string
+    {
+        return File::get(base_path('tests/Feature/Console/Fixtures/jsonresume-schema.json'));
     }
 }

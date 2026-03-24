@@ -196,14 +196,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 4da58f4d-6bdd-4fcc-b46d-747cffe8a9d9
+                  error_id: 6a7d9c17-9579-4f46-b978-f17315dfd2d6
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 4da58f4d-6bdd-4fcc-b46d-747cffe8a9d9
+                    example: 6a7d9c17-9579-4f46-b978-f17315dfd2d6
       tags:
         - Endpoints
       security: []
@@ -214,22 +214,22 @@ paths:
       description: ''
       parameters: []
       responses:
-        401:
+        404:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 7a5d9ef3-2d42-42f2-be39-b68157a5a7b9
+                  message: 'Not Found.'
+                  error_id: 961815df-e500-46bf-95d0-5237d77f6a26
                 properties:
                   message:
                     type: string
-                    example: Unauthenticated.
+                    example: 'Not Found.'
                   error_id:
                     type: string
-                    example: 7a5d9ef3-2d42-42f2-be39-b68157a5a7b9
+                    example: 961815df-e500-46bf-95d0-5237d77f6a26
       tags:
         - Endpoints
       security: []
@@ -397,7 +397,7 @@ paths:
         in: path
         name: basic_id
         description: 'The ID of the basic.'
-        example: 01km69fetnjpgkt0ddh5frwkcd
+        example: architecto
         required: true
         schema:
           type: string
@@ -424,7 +424,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:51'
+                  example: '2026-03-25T00:53:33'
                 awarder:
                   type: string
                   description: ''
@@ -453,14 +453,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 97c17934-2d6f-4d48-99fd-cfb8c3f7207b
+                  error_id: 80085209-e45c-4e87-a097-7e85c80b8eb0
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 97c17934-2d6f-4d48-99fd-cfb8c3f7207b
+                    example: 80085209-e45c-4e87-a097-7e85c80b8eb0
       tags:
         - Endpoints
       security: []
@@ -487,7 +487,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:51'
+                  example: '2026-03-25T00:53:34'
                 awarder:
                   type: string
                   description: ''
@@ -538,7 +538,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:51'
+                  example: '2026-03-25T00:53:34'
                 issuer:
                   type: string
                   description: ''
@@ -567,14 +567,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 33ee1bf0-16a9-4f8c-b314-74f9c0de0ea1
+                  error_id: e1e7dc50-0daf-4819-9901-8ee4bd00e607
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 33ee1bf0-16a9-4f8c-b314-74f9c0de0ea1
+                    example: e1e7dc50-0daf-4819-9901-8ee4bd00e607
       tags:
         - Endpoints
       security: []
@@ -601,7 +601,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:51'
+                  example: '2026-03-25T00:53:34'
                 issuer:
                   type: string
                   description: ''
@@ -625,7 +625,7 @@ paths:
         in: path
         name: certificate_id
         description: 'The ID of the certificate.'
-        example: 01km69fetwzeka5a9na2q72fhx
+        example: architecto
         required: true
         schema:
           type: string
@@ -664,11 +664,11 @@ paths:
                 startDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:51'
+                  example: '2026-03-25T00:53:34'
                 endDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:51'
+                  example: '2026-03-25T00:53:34'
                 score:
                   type: string
                   description: ''
@@ -706,14 +706,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 0212abbb-2930-448b-9550-d803d8c7e71a
+                  error_id: e9a82fcb-4ebf-497b-8ff5-fb1a52d0f018
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 0212abbb-2930-448b-9550-d803d8c7e71a
+                    example: e9a82fcb-4ebf-497b-8ff5-fb1a52d0f018
       tags:
         - Endpoints
       security: []
@@ -752,11 +752,11 @@ paths:
                 startDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:51'
+                  example: '2026-03-25T00:53:34'
                 endDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:51'
+                  example: '2026-03-25T00:53:34'
                 score:
                   type: string
                   description: ''
@@ -787,7 +787,7 @@ paths:
         in: path
         name: education_id
         description: 'The ID of the education.'
-        example: 01km69fetv18fwwavpr97a3gpk
+        example: architecto
         required: true
         schema:
           type: string
@@ -836,14 +836,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 37b3b335-536c-4767-a3d5-2f2cef7d9dd5
+                  error_id: 0986694b-3523-40be-855e-63d681467ea1
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 37b3b335-536c-4767-a3d5-2f2cef7d9dd5
+                    example: 0986694b-3523-40be-855e-63d681467ea1
       tags:
         - Endpoints
       security: []
@@ -935,14 +935,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 1baa8b90-4cf0-4304-b5a0-da07c0632797
+                  error_id: 402f58cc-607d-401e-8afd-e08a91954d55
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 1baa8b90-4cf0-4304-b5a0-da07c0632797
+                    example: 402f58cc-607d-401e-8afd-e08a91954d55
       tags:
         - Endpoints
       security: []
@@ -985,7 +985,7 @@ paths:
         in: path
         name: language_id
         description: 'The ID of the language.'
-        example: 01km69fetztb7yp10ntasb8hkg
+        example: architecto
         required: true
         schema:
           type: string
@@ -1012,11 +1012,11 @@ paths:
                 startDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:52'
+                  example: '2026-03-25T00:53:34'
                 endDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:52'
+                  example: '2026-03-25T00:53:34'
                 description:
                   type: string
                   description: ''
@@ -1053,14 +1053,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: bc77c936-c883-4296-abf1-56f30522411b
+                  error_id: 508a2150-d0e5-499c-b7ba-d77380e1c80f
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: bc77c936-c883-4296-abf1-56f30522411b
+                    example: 508a2150-d0e5-499c-b7ba-d77380e1c80f
       tags:
         - Endpoints
       security: []
@@ -1087,11 +1087,11 @@ paths:
                 startDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:52'
+                  example: '2026-03-25T00:53:34'
                 endDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:52'
+                  example: '2026-03-25T00:53:34'
                 description:
                   type: string
                   description: ''
@@ -1155,7 +1155,7 @@ paths:
                 releaseDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:52'
+                  example: '2026-03-25T00:53:35'
                 url:
                   type: string
                   description: 'Must be a valid URL.'
@@ -1184,14 +1184,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: fc296712-63f2-4e4f-8e56-ea65b6ab099f
+                  error_id: 58618ef5-9729-448d-8f1c-93d0ce657a92
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: fc296712-63f2-4e4f-8e56-ea65b6ab099f
+                    example: 58618ef5-9729-448d-8f1c-93d0ce657a92
       tags:
         - Endpoints
       security: []
@@ -1222,7 +1222,7 @@ paths:
                 releaseDate:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-03-20T23:00:52'
+                  example: '2026-03-25T00:53:35'
                 url:
                   type: string
                   description: 'Must be a valid URL.'
@@ -1292,14 +1292,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 5d3267d0-cafe-4f0f-a869-50f6876f2632
+                  error_id: c3f59f99-8992-49b3-9c07-1dd5fed09fdf
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 5d3267d0-cafe-4f0f-a869-50f6876f2632
+                    example: c3f59f99-8992-49b3-9c07-1dd5fed09fdf
       tags:
         - Endpoints
       security: []
@@ -1396,14 +1396,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 2d2c0c5a-f2c2-4ae7-b7ee-83a8c7c7d654
+                  error_id: d21a8e21-f753-4710-81c2-9b62a86a6524
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 2d2c0c5a-f2c2-4ae7-b7ee-83a8c7c7d654
+                    example: d21a8e21-f753-4710-81c2-9b62a86a6524
       tags:
         - Endpoints
       security: []
@@ -1453,7 +1453,7 @@ paths:
         in: path
         name: skill_id
         description: 'The ID of the skill.'
-        example: 01km69fetyq66h0qd96rtwjp32
+        example: architecto
         required: true
         schema:
           type: string
@@ -1526,14 +1526,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: ee2c00bd-f6ac-4dc1-9446-ac5ab6c88b45
+                  error_id: bd235494-a05f-43e1-819c-4ad614da6701
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: ee2c00bd-f6ac-4dc1-9446-ac5ab6c88b45
+                    example: bd235494-a05f-43e1-819c-4ad614da6701
       tags:
         - Endpoints
       security: []
@@ -1672,14 +1672,14 @@ paths:
                 type: object
                 example:
                   message: Unauthenticated.
-                  error_id: 435448cc-57c2-4f70-9f04-f3d1b3cd07a8
+                  error_id: 5ccc3b42-ba82-44b0-b91c-1ff37262ce95
                 properties:
                   message:
                     type: string
                     example: Unauthenticated.
                   error_id:
                     type: string
-                    example: 435448cc-57c2-4f70-9f04-f3d1b3cd07a8
+                    example: 5ccc3b42-ba82-44b0-b91c-1ff37262ce95
       tags:
         - Endpoints
       security: []
@@ -1745,7 +1745,7 @@ paths:
         in: path
         name: work_id
         description: 'The ID of the work.'
-        example: 01km69fetsfk0qah79mn8qmk6p
+        example: architecto
         required: true
         schema:
           type: string
@@ -12604,4 +12604,70 @@ paths:
                   nullable: true
               required:
                 - message
+      security: []
+  /api/import/json:
+    post:
+      summary: ''
+      operationId: postApiImportJson
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 'Must be a file. Must not be greater than 10240 kilobytes.'
+                disk:
+                  type: string
+                  description: 'Must not be greater than 100 characters.'
+                  example: b
+                path:
+                  type: string
+                  description: 'Must not be greater than 2048 characters.'
+                  example: 'n'
+              required:
+                - file
+      security: []
+  /api/import/resume:
+    post:
+      summary: ''
+      operationId: postApiImportResume
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 'Must be a file. Must not be greater than 20480 kilobytes.'
+                disk:
+                  type: string
+                  description: 'Must not be greater than 100 characters.'
+                  example: b
+                path:
+                  type: string
+                  description: 'Must not be greater than 2048 characters.'
+                  example: 'n'
+                keep_json:
+                  type: boolean
+                  description: ''
+                  example: false
+              required:
+                - file
       security: []
