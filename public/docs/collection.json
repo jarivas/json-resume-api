@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "json-resume-api API Documentation",
-        "_postman_id": "ae6440fa-110d-4396-84b1-933e105db296",
+        "_postman_id": "c40a1b58-0bc3-4f86-99b9-b34da7f525f0",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -243,7 +243,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"6a7d9c17-9579-4f46-b978-f17315dfd2d6\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"26e241f7-dbe9-440d-898f-3af26239ddd4\"}",
                             "name": ""
                         }
                     ]
@@ -303,7 +303,7 @@
                                 }
                             ],
                             "code": 404,
-                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"961815df-e500-46bf-95d0-5237d77f6a26\"}",
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"fc4993a6-8629-4d91-94b4-7b3be66d293a\"}",
                             "name": ""
                         }
                     ]
@@ -405,7 +405,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"architecto\",\"date\":\"2026-03-25T00:53:33\",\"awarder\":\"architecto\",\"summary\":\"architecto\"}"
+                            "raw": "{\"title\":\"architecto\",\"date\":\"2026-03-29T14:35:22\",\"awarder\":\"architecto\",\"summary\":\"architecto\"}"
                         },
                         "description": "",
                         "auth": {
@@ -461,7 +461,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"80085209-e45c-4e87-a097-7e85c80b8eb0\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"be0fc69f-320d-478b-a6d5-21b874f3819c\"}",
                             "name": ""
                         }
                     ]
@@ -496,7 +496,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"architecto\",\"date\":\"2026-03-25T00:53:34\",\"awarder\":\"architecto\",\"summary\":\"architecto\"}"
+                            "raw": "{\"title\":\"architecto\",\"date\":\"2026-03-29T14:35:22\",\"awarder\":\"architecto\",\"summary\":\"architecto\"}"
                         },
                         "description": "",
                         "auth": {
@@ -563,7 +563,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"date\":\"2026-03-25T00:53:34\",\"issuer\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"architecto\",\"date\":\"2026-03-29T14:35:22\",\"issuer\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
                         },
                         "description": "",
                         "auth": {
@@ -619,7 +619,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"e1e7dc50-0daf-4819-9901-8ee4bd00e607\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"64f84741-2e4d-4de9-8c45-a362575f1d06\"}",
                             "name": ""
                         }
                     ]
@@ -654,7 +654,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"date\":\"2026-03-25T00:53:34\",\"issuer\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"architecto\",\"date\":\"2026-03-29T14:35:22\",\"issuer\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
                         },
                         "description": "",
                         "auth": {
@@ -721,7 +721,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"institution\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"area\":\"architecto\",\"studyType\":\"architecto\",\"startDate\":\"2026-03-25T00:53:34\",\"endDate\":\"2026-03-25T00:53:34\",\"score\":\"architecto\",\"summary\":\"architecto\",\"courses\":[\"architecto\"]}"
+                            "raw": "{\"institution\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"area\":\"architecto\",\"studyType\":\"architecto\",\"startDate\":\"2026-03-29T14:35:23\",\"endDate\":\"2026-03-29T14:35:23\",\"score\":\"architecto\",\"summary\":\"architecto\",\"courses\":[\"architecto\"]}"
                         },
                         "description": "",
                         "auth": {
@@ -777,7 +777,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"e9a82fcb-4ebf-497b-8ff5-fb1a52d0f018\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"38e29ac2-8abf-4b07-983e-a2ba8991da43\"}",
                             "name": ""
                         }
                     ]
@@ -812,7 +812,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"institution\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"area\":\"architecto\",\"studyType\":\"architecto\",\"startDate\":\"2026-03-25T00:53:34\",\"endDate\":\"2026-03-25T00:53:34\",\"score\":\"architecto\",\"summary\":\"architecto\",\"courses\":[\"architecto\"]}"
+                            "raw": "{\"institution\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"area\":\"architecto\",\"studyType\":\"architecto\",\"startDate\":\"2026-03-29T14:35:23\",\"endDate\":\"2026-03-29T14:35:23\",\"score\":\"architecto\",\"summary\":\"architecto\",\"courses\":[\"architecto\"]}"
                         },
                         "description": "",
                         "auth": {
@@ -935,7 +935,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"0986694b-3523-40be-855e-63d681467ea1\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"168f65a8-1ad4-4c2d-92d2-efd74b52ef85\"}",
                             "name": ""
                         }
                     ]
@@ -1093,7 +1093,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"402f58cc-607d-401e-8afd-e08a91954d55\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"0d6d403f-2405-4f54-b480-7968d390d40f\"}",
                             "name": ""
                         }
                     ]
@@ -1195,7 +1195,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"startDate\":\"2026-03-25T00:53:34\",\"endDate\":\"2026-03-25T00:53:34\",\"description\":\"Eius et animi quos velit et.\",\"highlights\":[\"architecto\"],\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"architecto\",\"startDate\":\"2026-03-29T14:35:23\",\"endDate\":\"2026-03-29T14:35:23\",\"description\":\"Eius et animi quos velit et.\",\"highlights\":[\"architecto\"],\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
                         },
                         "description": "",
                         "auth": {
@@ -1251,7 +1251,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"508a2150-d0e5-499c-b7ba-d77380e1c80f\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"865f3e64-7e58-4c18-b159-52918fa6d86a\"}",
                             "name": ""
                         }
                     ]
@@ -1286,7 +1286,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"startDate\":\"2026-03-25T00:53:34\",\"endDate\":\"2026-03-25T00:53:34\",\"description\":\"Eius et animi quos velit et.\",\"highlights\":[\"architecto\"],\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"architecto\",\"startDate\":\"2026-03-29T14:35:23\",\"endDate\":\"2026-03-29T14:35:23\",\"description\":\"Eius et animi quos velit et.\",\"highlights\":[\"architecto\"],\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
                         },
                         "description": "",
                         "auth": {
@@ -1353,7 +1353,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"publisher\":\"architecto\",\"releaseDate\":\"2026-03-25T00:53:35\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\"}"
+                            "raw": "{\"name\":\"architecto\",\"publisher\":\"architecto\",\"releaseDate\":\"2026-03-29T14:35:23\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\"}"
                         },
                         "description": "",
                         "auth": {
@@ -1409,7 +1409,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"58618ef5-9729-448d-8f1c-93d0ce657a92\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"fca8b612-b550-4a90-93ba-a358e9802444\"}",
                             "name": ""
                         }
                     ]
@@ -1444,7 +1444,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"publisher\":\"architecto\",\"releaseDate\":\"2026-03-25T00:53:35\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\"}"
+                            "raw": "{\"name\":\"architecto\",\"publisher\":\"architecto\",\"releaseDate\":\"2026-03-29T14:35:23\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\"}"
                         },
                         "description": "",
                         "auth": {
@@ -1567,7 +1567,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"c3f59f99-8992-49b3-9c07-1dd5fed09fdf\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"6ff5b393-3d22-4138-81be-f113e0152f9b\"}",
                             "name": ""
                         }
                     ]
@@ -1725,7 +1725,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"d21a8e21-f753-4710-81c2-9b62a86a6524\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"8f45d7f0-7abc-4131-9880-2a70f204ee07\"}",
                             "name": ""
                         }
                     ]
@@ -1883,7 +1883,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"bd235494-a05f-43e1-819c-4ad614da6701\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"c1697bc8-201e-4392-a7c1-6ff23b832da1\"}",
                             "name": ""
                         }
                     ]
@@ -2041,7 +2041,7 @@
                                 }
                             ],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"5ccc3b42-ba82-44b0-b91c-1ff37262ce95\"}",
+                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"da8cb9f4-9b08-415e-8b36-771ff5fc8684\"}",
                             "name": ""
                         }
                     ]
@@ -2394,9 +2394,107 @@
                                 },
                                 {
                                     "key": "keep_json",
-                                    "value": "",
+                                    "value": "1",
                                     "type": "text",
                                     "description": ""
+                                },
+                                {
+                                    "key": "file",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/import\/education",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/import\/education",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/import\/education"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "url",
+                                    "value": "http:\/\/www.bailey.biz\/quos-velit-et-fugiat-sunt-nihil-accusantium-harum.html",
+                                    "type": "text",
+                                    "description": "This field is required when <code>file<\/code> is not present. Must be a valid URL."
+                                },
+                                {
+                                    "key": "education_id",
+                                    "value": "architecto",
+                                    "type": "text",
+                                    "description": "The <code>id<\/code> of an existing record in the educations table."
+                                },
+                                {
+                                    "key": "file",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/import\/certificate",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/import\/certificate",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/import\/certificate"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "url",
+                                    "value": "http:\/\/www.bailey.biz\/quos-velit-et-fugiat-sunt-nihil-accusantium-harum.html",
+                                    "type": "text",
+                                    "description": "This field is required when <code>file<\/code> is not present. Must be a valid URL."
+                                },
+                                {
+                                    "key": "certificate_id",
+                                    "value": "architecto",
+                                    "type": "text",
+                                    "description": "The <code>id<\/code> of an existing record in the certificates table."
                                 },
                                 {
                                     "key": "file",

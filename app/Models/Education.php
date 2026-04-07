@@ -6,6 +6,7 @@ use Database\Factories\EducationFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -44,4 +45,9 @@ class Education extends Model
         'endDate' => 'datetime:Y-m-d',
         'courses' => 'array',
     ];
+
+    public function skills(): BelongsToMany
+    {
+        return $this->belongsToMany(Skill::class, 'education_skill');
+    }
 }

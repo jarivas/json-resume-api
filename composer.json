@@ -28,6 +28,8 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
         "laravel/wayfinder": "^0.1.9",
+        "phpoffice/phpword": "^1.1",
+        "smalot/pdfparser": "^2.12",
         "swaggest/json-schema": "^0.12.43"
     },
     "require-dev": {

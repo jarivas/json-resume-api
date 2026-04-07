@@ -1,0 +1,45 @@
+{
+  "name": "José Antonio Rivas Fernández",
+  "headline": "Team Lead / Head of Development",
+  "email": "me@jarivas.work",
+  "phone": "(+34) 655010958",
+  "website": "https://me.jarivas.work",
+  "summary": "Líder tecnológico y desarrollador Full Stack con amplia experiencia en la creación de arquitecturas escalables y gestión de equipos.",
+  "city": "Málaga",
+  "country_code": "ES",
+  "profiles": [
+    { "network": "GitHub", "url": "https://github.com/jarivas", "username": "jarivas" },
+    { "network": "Credly", "url": "https://www.credly.com/users/jose-antonio-rivas-fernandez", "username": "jose-antonio-rivas-fernandez" }
+  ],
+  "jobs": [
+    { "company": "InOne", "role": "Head of Development", "start": "2025-06-01", "current": true, "description": "Diseño y desarrollo del nuevo CRM basado en APIs REST usando Laravel 12.", "tech": ["PHP 8", "Laravel", "MySQL", "Docker"] },
+    { "company": "Libnova", "role": "Full Stack Developer", "start": "2023-09-01", "end": "2024-06-01", "current": false, "description": "Formé parte de dos equipos. Correcciones al código base y servicio de indexación de archivos." },
+    { "company": "Multisafepay", "role": "Team Leader", "start": "2021-08-01", "end": "2023-09-01", "current": false, "description": "Liderazgo del desarrollo backend de un nuevo producto monolítico." },
+    { "company": "Lineten", "role": "Full Stack Developer", "start": "2019-03-01", "end": "2021-06-01", "current": false, "description": "Dos etapas: front-end y móvil primero, después back-end con servicios de integración." },
+    { "company": "Lionline", "role": "Full Stack Developer", "start": "2015-12-01", "end": "2018-12-01", "current": false, "description": "Mantenimiento y desarrollo de API Rest y back office." },
+    { "company": "Quellwerke", "role": "Full Stack Developer", "start": "2013-07-01", "end": "2015-12-01", "current": false, "description": "Diferentes tareas con distintas tecnologías. Proyectos CMS e internacionales." },
+    { "company": "Keepunto", "role": "Full Stack Developer", "start": "2012-11-01", "end": "2013-06-01", "current": false, "description": "Desarrollo back end, tareas front-end y scripts bash para exportación de datos." },
+    { "company": "Avalon PR Plus", "role": "Full Stack Developer", "start": "2012-02-01", "end": "2012-10-01", "current": false, "description": "Back office para la editorial del medio online y técnicas de marketing online." },
+    { "company": "Digidis", "role": "Front End Developer", "start": "2010-09-01", "end": "2012-02-01", "current": false, "description": "Mantenimiento del front end y herramientas de manejo de datos personales." }
+  ],
+  "schools": [
+    { "school": "Universitat Oberta de Catalunya (UOC)", "degree": "Grado", "field": "Ciencia de Datos Aplicada", "start": "2025-01-01", "current": true },
+    { "school": "IES Jesús Marín", "degree": "Técnico Superior", "field": "Desarrollo de Aplicaciones Informáticas (DAI)", "start": "2005-01-01", "end": "2007-01-01" }
+  ],
+  "certs": [
+    { "name": "IFCD99 - Programación en Inteligencia Artificial y Big Data en entornos 5G", "issuer": "Integra Conocimiento", "date": "2024-01-01" },
+    { "name": "IFCD97 - Programación para soluciones de IoT y Smart City en entornos 5G", "issuer": "Integra Conocimiento", "date": "2025-01-01" },
+    { "name": "Google Data Analytics Professional Certificate", "issuer": "Google", "date": "2025-01-01" },
+    { "name": "Google Cybersecurity Professional Certificate", "issuer": "Google", "date": "2025-01-01" },
+    { "name": "IBM Artificial Intelligence Fundamentals", "issuer": "IBM", "date": "2025-01-01" },
+    { "name": "IBM Web Development with Python", "issuer": "IBM", "date": "2025-01-01" },
+    { "name": "Neo4j Fundamentals", "issuer": "Neo4j", "date": "2024-01-01" },
+    { "name": "SSCE0110 - Docencia de la formación profesional para el empleo", "issuer": "Alce Training Group", "date": "2025-01-01" },
+    { "name": "Sun Certified Programmer for Java Platform, SE 5.0", "issuer": "Sun Microsystems", "date": "2009-01-01" },
+    { "name": "MCTS: .NET Framework 2.0 - Windows-based Client Development (70-526)", "issuer": "Microsoft", "date": "2008-01-01" }
+  ],
+  "languages": [
+    { "language": "Español", "level": "Nativo" },
+    { "language": "Inglés", "level": "Profesional" }
+  ]
+}

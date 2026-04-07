@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\ResumeImport\ResumeDocumentImportService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use RuntimeException;
 
 class ImportResumeDocumentCommand extends Command
@@ -46,6 +47,10 @@ class ImportResumeDocumentCommand extends Command
 
             return self::SUCCESS;
         } catch (RuntimeException $exception) {
+            Log::error('Error en data:import-resume: '.$exception->getMessage(), [
+                'source' => $this->argument('source'),
+                'exception' => $exception,
+            ]);
             $this->error($exception->getMessage());
 
             return self::FAILURE;

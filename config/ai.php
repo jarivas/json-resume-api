@@ -129,10 +129,10 @@ return [
         'ollama' => [
             'driver' => 'ollama',
             'key' => env('OLLAMA_API_KEY', ''),
-            'url' => env('OLLAMA_BASE_URL', 'http://localhost:11434'),
-            'deployment' => env('OLLAMA_DEPLOYMENT', 'ollama-4o'),
+            'url' => env('OLLAMA_URL', 'http://localhost:11434'),
+            'deployment' => env('OLLAMA_DEPLOYMENT', 'llama3.1'),
             'embedding_deployment' => env('OLLAMA_EMBEDDING_DEPLOYMENT', 'database'),
-            'alternative_deployment' => explode(',', env('OLLAMA_ALTERNATIVE_DEPLOYMENTS', 'ollama-alt-1,ollama-alt-2')),
+            'timeout' => env('OLLAMA_TIMEOUT', 120),
         ],
 
         'openai' => [

@@ -9,6 +9,7 @@
 /resources/js/actions
 /resources/js/routes
 /resources/js/wayfinder
+...existing code...
 /vendor
 .DS_Store
 .env

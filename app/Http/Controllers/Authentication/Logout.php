@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use App\Helpers\Http\Controllers\Authentication\Authentication;
+use App\Services\Authentication\AuthenticationService;
 
 class Logout
 {
-    use Authentication;
+    public function __construct(protected AuthenticationService $authenticationService) {}
 
     public function __invoke()
     {
-        $this->logoutHelper();
+        $this->authenticationService->logout();
 
         return response()->noContent();
     }

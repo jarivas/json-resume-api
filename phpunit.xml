@@ -8,8 +8,42 @@
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
         </testsuite>
-        <testsuite name="Feature">
-            <directory>tests/Feature</directory>
+        <testsuite name="Authentication">
+            <directory>tests/Feature/Authentication</directory>
+        </testsuite>
+        <testsuite name="CRUD">
+            <directory>tests/Feature/Award</directory>
+            <directory>tests/Feature/Basic</directory>
+            <directory>tests/Feature/Certificate</directory>
+            <directory>tests/Feature/Education</directory>
+            <directory>tests/Feature/Interest</directory>
+            <directory>tests/Feature/Language</directory>
+            <directory>tests/Feature/Project</directory>
+            <directory>tests/Feature/Publication</directory>
+            <directory>tests/Feature/Reference</directory>
+            <directory>tests/Feature/Skill</directory>
+            <directory>tests/Feature/Volunteer</directory>
+            <directory>tests/Feature/Work</directory>
+        </testsuite>
+        <testsuite name="MCP">
+            <directory>tests/Feature/Mcp</directory>
+        </testsuite>
+        <testsuite name="Import">
+            <directory>tests/Feature/Import</directory>
+            <directory>tests/Feature/Console</directory>
+        </testsuite>
+        <testsuite name="Misc">
+            <directory>tests/Feature/Bootstrap</directory>
+            <directory>tests/Feature/Http</directory>
+            <directory>tests/Feature/Iso</directory>
+            <file>tests/Feature/ResumeModelObserverTest.php</file>
+        </testsuite>
+        <testsuite name="AI">
+            <directory>tests/Feature/Chat</directory>
+            <directory>tests/Feature/Embedding</directory>
+            <directory>tests/Feature/Feature</directory>
+            <file>tests/Feature/ResumeEmbeddingsContentTest.php</file>
+            <file>tests/Feature/ResumeQATest.php</file>
         </testsuite>
     </testsuites>
     <source>

@@ -5,6 +5,7 @@ namespace App\Services\ResumeImport;
 use App\Ai\Agents\ResumeImportAgent;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Ai\Files\Document;
@@ -20,7 +21,11 @@ class ResumeDocumentImportService
     public function import(string $source, string $disk, string $path, bool $keepJson): array
     {
         $resolvedSource = $this->sourceResolver->resolve($source);
-        $temporaryJsonPath = storage_path('app/imports/tmp-import-'.Str::uuid().'.json');
+        $temporaryJsonPath = sprintf(
+            '%s/app/imports/tmp-import-%s.json',
+            storage_path(),
+            Str::uuid()
+        );
 
         try {
             $payload = $this->mapSourceToJsonResume($resolvedSource);
@@ -69,14 +74,44 @@ class ResumeDocumentImportService
         $agent = new ResumeImportAgent;
         $prompt = $this->buildPrompt($source);
         $attachments = $this->buildAttachments($source);
+
+        // Attempt to extract readable text from local files to include in the
+        // prompt. Prefer a robust extractor if available, otherwise fall back
+        // to CLI tools. This helps providers (like Ollama) that don't accept
+        // file attachments in the same way.
+        if (count($attachments) > 0 && is_string($source->localPath) && $source->localPath !== '') {
+            try {
+                $extractor = new DocumentTextExtractor;
+                $extracted = $extractor->extract($source->localPath);
+            } catch (\Throwable $e) {
+                $extracted = '';
+            }
+
+            if ($extracted !== '') {
+                $prompt = $prompt."\n\n".trim(mb_substr($extracted, 0, 20000));
+                $attachments = [];
+            }
+        }
+
         $responseText = $agent->promptWithModelFallback($prompt, $attachments);
-        $decoded = json_decode($this->extractJsonPayload($responseText), true, 512, JSON_THROW_ON_ERROR);
+        Log::debug("Response Text: {$responseText}");
+
+        try {
+            $decoded = json_decode($this->extractJsonPayload($responseText), true, 512, JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            throw new RuntimeException('El agente devolvió JSON malformado o incompleto (posible respuesta truncada): '.$e->getMessage());
+        }
 
         if (! is_array($decoded)) {
             throw new RuntimeException('El agente no devolvió un objeto JSON válido para JSON Resume.');
         }
 
-        return $decoded;
+        $normalizer = new IntermediateToJsonResumeNormalizer;
+        $normalized = $normalizer->normalize($decoded);
+
+        Log::debug('Decoded JSON Resume (decoded):', $normalized);
+
+        return $normalized;
     }
 
     protected function buildPrompt(ResolvedResumeSource $source): string
@@ -112,10 +147,106 @@ class ResumeDocumentImportService
     {
         $trimmed = trim($responseText);
 
+        // 1) If the model returned a fenced JSON block, use that.
         if (preg_match('/```(?:json)?\s*(\{[\s\S]*\}|\[[\s\S]*\])\s*```/i', $trimmed, $matches) === 1) {
             return trim($matches[1]);
         }
 
+        // 2) If the response ends with a JSON object or array, extract that tail.
+        if (preg_match('/(\{[\s\S]*\})\s*$/', $trimmed, $matches) === 1) {
+            return trim($matches[1]);
+        }
+
+        if (preg_match('/(\[[\s\S]*\])\s*$/', $trimmed, $matches) === 1) {
+            return trim($matches[1]);
+        }
+
+        // 3) As a fallback, try to find the first JSON object/array in the text.
+        if (preg_match('/(\{[\s\S]*\})/', $trimmed, $matches) === 1) {
+            return trim($matches[1]);
+        }
+
+        if (preg_match('/(\[[\s\S]*\])/', $trimmed, $matches) === 1) {
+            return trim($matches[1]);
+        }
+
+        // 4) Final fallback: attempt to extract a balanced JSON block (handles nested braces and strings).
+        $balanced = $this->extractBalancedJson($trimmed);
+        if ($balanced !== null) {
+            return $balanced;
+        }
+
+        // 5) Nothing found: return the whole trimmed text (will cause decode error upstream).
         return $trimmed;
+    }
+
+    /**
+     * Attempt to extract the first balanced JSON object or array from the text.
+     * This scans for the first '{' or '[' and walks forward tracking nesting,
+     * taking care to ignore braces that appear inside strings.
+     */
+    protected function extractBalancedJson(string $text): ?string
+    {
+        $len = strlen($text);
+        for ($i = 0; $i < $len; $i++) {
+            $char = $text[$i];
+            if ($char !== '{' && $char !== '[') {
+                continue;
+            }
+
+            $stack = [];
+            $start = $i;
+            $inString = false;
+            $escape = false;
+
+            for ($j = $i; $j < $len; $j++) {
+                $c = $text[$j];
+
+                if ($inString) {
+                    if ($escape) {
+                        $escape = false;
+                    } elseif ($c === '\\') {
+                        $escape = true;
+                    } elseif ($c === '"') {
+                        $inString = false;
+                    }
+
+                    continue;
+                }
+
+                if ($c === '"') {
+                    $inString = true;
+
+                    continue;
+                }
+
+                if ($c === '{' || $c === '[') {
+                    $stack[] = $c;
+
+                    continue;
+                }
+
+                if ($c === '}' || $c === ']') {
+                    if (empty($stack)) {
+                        break;
+                    }
+
+                    $open = array_pop($stack);
+                    if (($open === '{' && $c !== '}') || ($open === '[' && $c !== ']')) {
+                        // mismatched braces; abandon this start
+                        break 2;
+                    }
+
+                    if (empty($stack)) {
+                        // found balanced block
+                        $end = $j;
+
+                        return trim(substr($text, $start, $end - $start + 1));
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }

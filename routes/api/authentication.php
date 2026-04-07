@@ -11,7 +11,8 @@ Route::prefix('authentication')->group(function () {
     Route::post('/login', Login::class);
     Route::post('/recovery', Recovery::class);
     Route::post('/change-password', ChangePassword::class);
-    Route::post('/refresh-token', RefreshToken::class);
+    Route::middleware('auth:sanctum')
+        ->post('/refresh-token', RefreshToken::class);
     Route::middleware('auth:sanctum')
         ->post('/logout', Logout::class);
 });

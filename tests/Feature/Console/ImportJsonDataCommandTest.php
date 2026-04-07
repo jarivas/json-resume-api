@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Laravel\Ai\Embeddings;
 use Tests\TestCase;
 
 class ImportJsonDataCommandTest extends TestCase
@@ -20,7 +19,6 @@ class ImportJsonDataCommandTest extends TestCase
 
     public function test_it_imports_json_from_url(): void
     {
-        Embeddings::fake();
         ['path' => $fixturePath, 'content' => $fixtureContent, 'data' => $fixtureData] = $this->loadCvFixture();
 
         Http::fake([
@@ -51,7 +49,6 @@ class ImportJsonDataCommandTest extends TestCase
 
     public function test_it_imports_json_from_local_file_path(): void
     {
-        Embeddings::fake();
         ['path' => $fixturePath, 'content' => $fixtureContent, 'data' => $fixtureData] = $this->loadCvFixture();
         Http::fake([
             ImportJsonData::JSON_RESUME_SCHEMA_URL => Http::response($this->jsonResumeSchemaFixture(), 200),
@@ -83,7 +80,7 @@ class ImportJsonDataCommandTest extends TestCase
 
     public function test_it_clears_existing_local_embeddings_before_import(): void
     {
-        Embeddings::fake();
+
         Http::fake([
             ImportJsonData::JSON_RESUME_SCHEMA_URL => Http::response($this->jsonResumeSchemaFixture(), 200),
         ]);

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Helpers\Http\Controllers\Authentication;
+namespace App\Services\Authentication;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
-trait Authentication
+class AuthenticationService
 {
-    protected function loginHelper(array $credentials): false|array
+    public function login(array $credentials): false|array
     {
         $email = $credentials['email'];
 
@@ -40,7 +40,7 @@ trait Authentication
         ];
     }
 
-    protected function logoutHelper(): void
+    public function logout(): void
     {
         $user = auth('sanctum')->user();
 
@@ -49,7 +49,7 @@ trait Authentication
         }
     }
 
-    protected function refreshTokenHelper(): false|array
+    public function refreshToken(): false|array
     {
         $user = auth('sanctum')->user();
 
@@ -62,7 +62,7 @@ trait Authentication
         return $this->getToken($user);
     }
 
-    protected function recoveryHelper(): bool
+    public function recovery(): bool
     {
         $user = User::first();
 
@@ -72,8 +72,7 @@ trait Authentication
 
         $data = $this->getToken($user);
 
-        Mail::send('mail.recovery', $data, fn ($message) => $message->to($user->email)->subject('Recovery Instructions')
-        );
+        Mail::send('mail.recovery', $data, fn ($message) => $message->to($user->email)->subject('Recovery Instructions'));
 
         return true;
     }

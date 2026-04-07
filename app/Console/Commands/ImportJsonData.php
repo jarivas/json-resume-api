@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -50,8 +51,6 @@ class ImportJsonData extends Command
         $source = (string) $this->argument('source');
         $disk = (string) $this->option('disk');
         $path = (string) $this->option('path');
-        // Reset local resume embedding state before importing the payload.
-        $this->resetResumeState();
 
         try {
             $content = $this->resolveContent($source);
@@ -69,10 +68,22 @@ class ImportJsonData extends Command
 
             return self::SUCCESS;
         } catch (\JsonException $exception) {
+            $message = $exception->getMessage();
+
+            Log::error("Error al decodificar JSON desde la fuente '{$source}': {$message}", [
+                'source' => $source,
+                'exception' => $exception,
+            ]);
             $this->error('JSON inválido: '.$exception->getMessage());
 
             return self::FAILURE;
         } catch (RuntimeException $exception) {
+            $message = $exception->getMessage();
+            Log::error("Error durante la importación desde '{$source}': {$message}", [
+                'source' => $source,
+                'exception' => $exception,
+            ]);
+
             $this->error($exception->getMessage());
 
             return self::FAILURE;
@@ -205,6 +216,8 @@ class ImportJsonData extends Command
 
     protected function persistResume(array $payload): void
     {
+        $this->resetResumeState();
+
         DB::transaction(function () use ($payload) {
             $observer = new ResumeModelObserver;
 

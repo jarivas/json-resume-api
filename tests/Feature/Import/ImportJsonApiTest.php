@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Laravel\Ai\Embeddings;
 use Tests\TestCase;
 
 class ImportJsonApiTest extends TestCase
@@ -46,7 +45,6 @@ class ImportJsonApiTest extends TestCase
 
     public function test_it_imports_json_resume_via_api_endpoint(): void
     {
-        Embeddings::fake();
         Http::fake([
             ImportJsonData::JSON_RESUME_SCHEMA_URL => Http::response($this->jsonResumeSchemaFixture(), 200),
         ]);

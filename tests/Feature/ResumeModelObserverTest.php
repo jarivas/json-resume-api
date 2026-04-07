@@ -20,9 +20,7 @@ class ResumeModelObserverTest extends TestCase
             'ai.providers.gemini.embedding_deployment' => 'gemini-embedding-001',
         ]);
 
-        Embeddings::fake([
-            [[0.1, 0.2, 0.3]],
-        ]);
+        Embeddings::fake([[[1.0, 2.0, 3.0]]]);
 
         $basic = Basic::factory()->create([
             'summary' => 'Laravel API platform builder with product leadership experience',

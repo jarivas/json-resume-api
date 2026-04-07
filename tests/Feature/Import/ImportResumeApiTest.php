@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Laravel\Ai\Embeddings;
+use Laravel\Ai\Files;
 use Tests\TestCase;
 
 class ImportResumeApiTest extends TestCase
@@ -47,15 +47,17 @@ class ImportResumeApiTest extends TestCase
 
     public function test_it_imports_resume_document_via_api_endpoint(): void
     {
-        Embeddings::fake();
-        ResumeImportAgent::fake([$this->resumeFixtureJson()]);
         Http::fake([
             ImportJsonData::JSON_RESUME_SCHEMA_URL => Http::response($this->jsonResumeSchemaFixture(), 200),
         ]);
 
+        ResumeImportAgent::fake([$this->loadIntermediateFixture()]);
+
         $user = User::factory()->create();
         $path = 'imports/api-resume-'.Str::uuid().'.json';
         $tmpFile = UploadedFile::fake()->createWithContent('resume.pdf', $this->resumePdfFixtureBinary());
+
+        Files::fake();
 
         try {
             Storage::disk('local')->delete($path);
@@ -79,6 +81,11 @@ class ImportResumeApiTest extends TestCase
     private function resumeFixtureJson(): string
     {
         return File::get(base_path('tests/Feature/Console/Fixtures/cv.json'));
+    }
+
+    private function loadIntermediateFixture(): string
+    {
+        return File::get(base_path('tests/Feature/Console/Fixtures/cv-intermediate.json'));
     }
 
     private function jsonResumeSchemaFixture(): string

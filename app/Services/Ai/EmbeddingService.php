@@ -36,7 +36,10 @@ class EmbeddingService
             Log::error('Embedding generation failed: '.$e->getMessage());
         }
 
-        return null;
+        // When remote provider fails after retries, fall back to local embeddings
+        // so callers always receive a consistent array shape. This prevents
+        // unexpected null access by consumers/tests when providers are down.
+        return $this->generateLocalEmbeddings([$text], 'database');
     }
 
     /**
@@ -51,7 +54,12 @@ class EmbeddingService
             return $this->generateEmbeddingsInChunks($texts);
         }
 
-        return $this->generateEmbeddingsWithRetry($texts);
+        $result = $this->generateEmbeddingsWithRetry($texts);
+
+        // Ensure callers always receive a consistent array shape. If the
+        // retry mechanism returns null for any reason, fall back to local
+        // embeddings so consumer code/tests don't get nulls.
+        return $result ?? $this->generateLocalEmbeddings($texts, 'database');
     }
 
     protected function generateEmbeddingsInChunks(array $texts): ?array

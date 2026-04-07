@@ -35,6 +35,7 @@ php artisan migrate
 La especificación/documentación de endpoints está en:
 
 - `.scribe/endpoints/00.yaml`
+- `README_API_REQUESTS.md` — documentación de los campos de las peticiones (validaciones y ejemplos)
 
 Rutas principales:
 
