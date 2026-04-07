@@ -16,6 +16,7 @@ class CertificateImportController
     {
         $data = $request->validated();
 
+        $storagePath = null;
         $fullPath = null;
 
         if (! empty($data['url'])) {
@@ -38,20 +39,24 @@ class CertificateImportController
                 $ext = 'docx';
             }
 
-            $filename = 'imports/url-'.Str::uuid().'.'.$ext;
-            Storage::put($filename, $resp->body());
-            $fullPath = Storage::path($filename);
+            $storagePath = 'imports/url-'.Str::uuid().'.'.$ext;
+            Storage::put($storagePath, $resp->body());
+            $fullPath = Storage::path($storagePath);
         } else {
             /** @var UploadedFile $file */
             $file = $request->file('file');
 
-            $path = $file->store('imports');
-            $fullPath = Storage::path($path);
+            $storagePath = $file->store('imports');
+            $fullPath = Storage::path($storagePath);
         }
 
         $certificate = Certificate::findOrFail($data['certificate_id']);
 
-        $skills = $service->importForCertificate($certificate, $fullPath);
+        try {
+            $skills = $service->importForCertificate($certificate, $fullPath);
+        } finally {
+            Storage::delete($storagePath);
+        }
 
         return response()->json(['ok' => true, 'skills' => $skills]);
     }

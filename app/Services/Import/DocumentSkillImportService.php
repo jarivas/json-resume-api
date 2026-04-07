@@ -6,10 +6,9 @@ use App\Ai\Agents\SkillExtractionAgent;
 use App\Models\Certificate;
 use App\Models\Education;
 use App\Models\Skill;
+use App\Services\ResumeImport\DocumentTextExtractor;
 use Illuminate\Support\Str;
 use Laravel\Ai\Files;
-use Laravel\Ai\Files\Document as AiDocument;
-use Laravel\Ai\Responses\StoredFileResponse;
 
 class DocumentSkillImportService
 {
@@ -18,16 +17,10 @@ class DocumentSkillImportService
      */
     public function importForEducation(Education $education, string $path): array
     {
-        if (Files::isFaked()) {
-            $document = new StoredFileResponse(Files::fakeId(basename($path)));
-        } else {
-            $document = AiDocument::fromPath($path)->put();
-        }
-
         $agent = new SkillExtractionAgent;
-        $prompt = $this->buildPrompt();
+        $prompt = $this->buildPromptWithExtractedText($path);
 
-        $raw = $agent->promptWithModelFallback($prompt, [$document->id]);
+        $raw = $agent->promptWithModelFallback($prompt);
 
         $skills = $this->normalizeAgentResponse($raw);
 
@@ -55,16 +48,10 @@ class DocumentSkillImportService
      */
     public function importForCertificate(Certificate $certificate, string $path): array
     {
-        if (Files::isFaked()) {
-            $document = new StoredFileResponse(Files::fakeId(basename($path)));
-        } else {
-            $document = AiDocument::fromPath($path)->put();
-        }
-
         $agent = new SkillExtractionAgent;
-        $prompt = $this->buildPrompt();
+        $prompt = $this->buildPromptWithExtractedText($path);
 
-        $raw = $agent->promptWithModelFallback($prompt, [$document->id]);
+        $raw = $agent->promptWithModelFallback($prompt);
 
         $skills = $this->normalizeAgentResponse($raw);
 
@@ -85,6 +72,27 @@ class DocumentSkillImportService
         }
 
         return $skills;
+    }
+
+    protected function buildPromptWithExtractedText(string $path): string
+    {
+        $base = $this->buildPrompt();
+
+        if (Files::isFaked()) {
+            return $base;
+        }
+
+        try {
+            $extracted = (new DocumentTextExtractor)->extract($path);
+        } catch (\Throwable) {
+            $extracted = '';
+        }
+
+        if ($extracted !== '') {
+            return $base."\n\nDocument content:\n".mb_substr($extracted, 0, 20000);
+        }
+
+        return $base;
     }
 
     protected function buildPrompt(): string

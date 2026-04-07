@@ -16,6 +16,7 @@ class EducationImportController
     {
         $data = $request->validated();
 
+        $storagePath = null;
         $fullPath = null;
 
         if (! empty($data['url'])) {
@@ -38,20 +39,24 @@ class EducationImportController
                 $ext = 'docx';
             }
 
-            $filename = 'imports/url-'.Str::uuid().'.'.$ext;
-            Storage::put($filename, $resp->body());
-            $fullPath = Storage::path($filename);
+            $storagePath = 'imports/url-'.Str::uuid().'.'.$ext;
+            Storage::put($storagePath, $resp->body());
+            $fullPath = Storage::path($storagePath);
         } else {
             /** @var UploadedFile $file */
             $file = $request->file('file');
 
-            $path = $file->store('imports');
-            $fullPath = Storage::path($path);
+            $storagePath = $file->store('imports');
+            $fullPath = Storage::path($storagePath);
         }
 
         $education = Education::findOrFail($data['education_id']);
 
-        $skills = $service->importForEducation($education, $fullPath);
+        try {
+            $skills = $service->importForEducation($education, $fullPath);
+        } finally {
+            Storage::delete($storagePath);
+        }
 
         return response()->json(['ok' => true, 'skills' => $skills]);
     }
