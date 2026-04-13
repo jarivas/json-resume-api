@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Import;
 
+use App\Ai\Agents\ResumeImportAgent;
 use App\Ai\Agents\SkillExtractionAgent;
 use App\Models\Education;
 use App\Models\User;
@@ -21,7 +22,6 @@ class EducationImportUrlTest extends TestCase
         Files::fake();
 
         $user = User::factory()->create();
-        $education = Education::factory()->create();
 
         $url = 'https://example.com/page-with-skills';
 
@@ -33,9 +33,10 @@ class EducationImportUrlTest extends TestCase
 
         SkillExtractionAgent::fake([$response]);
 
+        // Use fixture/URL content to create Education (no ResumeImportAgent fake)
+
         $res = $this->actingAs($user)->postJson('/api/import/education', [
             'url' => $url,
-            'education_id' => $education->id,
         ]);
 
         $res->assertOk();
@@ -43,6 +44,8 @@ class EducationImportUrlTest extends TestCase
         $res->assertJsonCount(1, 'skills');
 
         $this->assertDatabaseHas('skills', ['name' => 'laravel']);
-        $this->assertDatabaseHas('education_skill', ['education_id' => $education->id]);
+        $created = Education::orderBy('created_at', 'desc')->first();
+        $this->assertNotNull($created);
+        $this->assertDatabaseHas('education_skill', ['education_id' => $created->id]);
     }
 }

@@ -16,7 +16,6 @@ class ImportEducation extends FormRequest
         return [
             'file' => ['sometimes', 'file', 'mimes:pdf,png,jpg,jpeg', 'max:10240', 'required_without:url'],
             'url' => ['sometimes', 'url', 'required_without:file'],
-            'education_id' => ['required', 'string', 'exists:educations,id'],
         ];
     }
 }

@@ -32,6 +32,7 @@ class SkillExtractionAgent implements Agent
                         attachments: $attachments,
                         provider: $provider,
                         model: $candidateModel,
+                        timeout: config('ai.providers.'.$provider.'.timeout', null),
                     );
 
                     return (string) $response;
@@ -55,7 +56,7 @@ class SkillExtractionAgent implements Agent
             throw $lastException;
         }
 
-        return (string) $this->prompt($prompt, attachments: $attachments, provider: $this->providerName(), model: $this->model());
+        return (string) $this->prompt($prompt, attachments: $attachments, provider: $this->providerName(), model: $this->model(), timeout: config('ai.providers.'.$this->providerName().'.timeout', null));
     }
 
     public function model(): string

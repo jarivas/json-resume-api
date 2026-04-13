@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +13,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = new User([
-            'email' => env('USER_EMAIL'),
-            'password' => env('USER_PASSWORD'),
-        ]);
+        $email = config('app.user_email');
+        $password = config('app.user_password');
 
-        $user->save();
+        if (empty($email) || empty($password)) {
+            Log::error('DatabaseSeeder: USER_EMAIL or USER_PASSWORD not set');
+            throw new \RuntimeException('USER_EMAIL and USER_PASSWORD must be set in environment or config.');
+        }
+
+        User::create([
+            'email' => $email,
+            'password' => $password,
+        ]);
     }
 }

@@ -2,17 +2,19 @@
 
 namespace App\Ai\Agents;
 
+use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Ai\Attributes\MaxTokens;
 use Laravel\Ai\Contracts\Agent;
+use Laravel\Ai\Contracts\HasStructuredOutput;
 use Laravel\Ai\Exceptions\AiException;
 use Laravel\Ai\Exceptions\FailoverableException;
 use Laravel\Ai\Promptable;
 use Throwable;
 
 #[MaxTokens(8192)]
-class ResumeImportAgent implements Agent
+class ResumeImportAgent implements Agent, HasStructuredOutput
 {
     use Promptable;
 
@@ -99,6 +101,42 @@ PROMPT;
     }
 
     /**
+     * Define the expected structured JSON schema for resume imports.
+     */
+    public function schema(JsonSchema $schema): array
+    {
+        return [
+            'certs' => $schema->array()->items(
+                $schema->object([
+                    'name' => $schema->string()->required(),
+                    'issuer' => $schema->string()->required(),
+                    'date' => $schema->string()->nullable(),
+                    'url' => $schema->string()->nullable(),
+                ])
+            )->required(),
+
+            'skills' => $schema->array()->items(
+                $schema->object([
+                    'name' => $schema->string()->required(),
+                    'level' => $schema->string()->nullable(),
+                    'keywords' => $schema->array()->items($schema->string()),
+                ])
+            ),
+
+            'education' => $schema->array()->items(
+                $schema->object([
+                    'institution' => $schema->string()->required(),
+                    'url' => $schema->string()->nullable(),
+                    'area' => $schema->string()->nullable(),
+                    'studyType' => $schema->string()->nullable(),
+                    'startDate' => $schema->string()->nullable(),
+                    'endDate' => $schema->string()->nullable(),
+                ])
+            ),
+        ];
+    }
+
+    /**
      * @param  array<int, mixed>  $attachments
      */
     public function promptWithModelFallback(string $prompt, array $attachments = []): string
@@ -108,9 +146,14 @@ PROMPT;
         foreach ($this->providerCandidates() as $provider) {
             foreach ($this->textModelCandidates($provider) as $candidateModel) {
                 try {
-                    $this->logRequestAttempt($provider, $candidateModel, $prompt, $attachments);
+                    // Prepend a strict instruction forcing JSON-only output that
+                    // matches the structured schema to improve adherence.
+                    $strictHeader = 'OUTPUT ONLY a single valid JSON object matching the schema. Do NOT include any explanation or extra text.';
+                    $fullPrompt = $strictHeader."\n\n".$prompt;
+
+                    $this->logRequestAttempt($provider, $candidateModel, $fullPrompt, $attachments);
                     $response = $this->prompt(
-                        $prompt,
+                        $fullPrompt,
                         attachments: $attachments,
                         provider: $provider,
                         model: $candidateModel,
@@ -228,7 +271,62 @@ PROMPT;
     {
         $time = now()->toIsoString();
 
-        Log::debug('AI Request Attempt: '."Provider={$provider}, Model={$model}, Time={$time}, Prompt=".Str::limit(preg_replace('/\\s+/', ' ', trim($prompt)), 1200).', Attachments='.json_encode($attachments));
+        $attachmentsSummary = array_map(function ($a) {
+            if (is_string($a)) {
+                return ['type' => 'string', 'length' => strlen($a)];
+            }
+
+            if (is_array($a)) {
+                return ['type' => 'array', 'count' => count($a)];
+            }
+
+            if (is_object($a)) {
+                $class = get_class($a);
+
+                if (isset($a->path) && is_string($a->path)) {
+                    return ['type' => $class, 'path' => $a->path];
+                }
+
+                if (isset($a->localPath) && is_string($a->localPath)) {
+                    return ['type' => $class, 'path' => $a->localPath];
+                }
+
+                if (method_exists($a, 'path')) {
+                    try {
+                        $p = $a->path();
+                        if (is_string($p)) {
+                            return ['type' => $class, 'path' => $p];
+                        }
+                    } catch (Throwable $e) {
+                        // ignore
+                    }
+                }
+
+                if (method_exists($a, 'getPath')) {
+                    try {
+                        $p = $a->getPath();
+                        if (is_string($p)) {
+                            return ['type' => $class, 'path' => $p];
+                        }
+                    } catch (Throwable $e) {
+                        // ignore
+                    }
+                }
+
+                return ['type' => $class];
+            }
+
+            return ['type' => gettype($a)];
+        }, $attachments);
+
+        $promptClean = preg_replace('/\s+/', ' ', trim($prompt));
+        if (preg_match('/^%PDF-/', $promptClean) || preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F]/', $promptClean)) {
+            $promptForLog = '[binary document omitted]';
+        } else {
+            $promptForLog = Str::limit($promptClean, 1200);
+        }
+
+        Log::debug('AI Request Attempt: '."Provider={$provider}, Model={$model}, Time={$time}, Prompt=".$promptForLog.', Attachments='.json_encode($attachmentsSummary));
     }
 
     /**
@@ -242,6 +340,38 @@ PROMPT;
         $message = $exception->getMessage();
         $trace = Str::limit($exception->getTraceAsString(), 4000);
 
-        Log::error('AI Request Failed: '."Provider={$provider}, Model={$model}, Time={$time}, Message={$message}, Trace={$trace}, Prompt=".Str::limit(preg_replace('/\\s+/', ' ', trim($prompt)), 2000).', Attachments='.json_encode($attachments));
+        $attachmentsSummary = array_map(function ($a) {
+            if (is_string($a)) {
+                return ['type' => 'string', 'length' => strlen($a)];
+            }
+
+            if (is_array($a)) {
+                return ['type' => 'array', 'count' => count($a)];
+            }
+
+            if (is_object($a)) {
+                $class = get_class($a);
+                if (isset($a->path) && is_string($a->path)) {
+                    return ['type' => $class, 'path' => $a->path];
+                }
+
+                if (isset($a->localPath) && is_string($a->localPath)) {
+                    return ['type' => $class, 'path' => $a->localPath];
+                }
+
+                return ['type' => $class];
+            }
+
+            return ['type' => gettype($a)];
+        }, $attachments);
+
+        $promptClean = preg_replace('/\s+/', ' ', trim($prompt));
+        if (preg_match('/^%PDF-/', $promptClean) || preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F]/', $promptClean)) {
+            $promptForLog = '[binary document omitted]';
+        } else {
+            $promptForLog = Str::limit($promptClean, 2000);
+        }
+
+        Log::error('AI Request Failed: '."Provider={$provider}, Model={$model}, Time={$time}, Message={$message}, Trace={$trace}, Prompt=".$promptForLog.', Attachments='.json_encode($attachmentsSummary));
     }
 }

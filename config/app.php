@@ -86,6 +86,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Seeder User (from env)
+    |--------------------------------------------------------------------------
+    |
+    | Optional email and password used by the DatabaseSeeder. These values
+    | are loaded from environment variables and should be referenced via
+    | the config() helper (best practice) instead of calling env() directly
+    | from application code.
+    |
+    */
+    'user_email' => env('USER_EMAIL'),
+    'user_password' => env('USER_PASSWORD'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |

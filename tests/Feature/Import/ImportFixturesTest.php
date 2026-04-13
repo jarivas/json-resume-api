@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Import;
 
+use App\Ai\Agents\ResumeImportAgent;
 use App\Ai\Agents\SkillExtractionAgent;
 use App\Models\Certificate;
 use App\Models\Education;
@@ -9,7 +10,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Ai\Files;
@@ -97,13 +97,9 @@ class ImportFixturesTest extends TestCase
             $isCertificate = Str::startsWith($filename, 'certificate');
 
             if ($isCertificate) {
-                $model = Certificate::factory()->create();
                 $endpoint = '/api/import/certificate';
-                $idField = 'certificate_id';
             } else {
-                $model = Education::factory()->create();
                 $endpoint = '/api/import/education';
-                $idField = 'education_id';
             }
 
             // Use a fake agent response for determinism in tests.
@@ -115,11 +111,12 @@ class ImportFixturesTest extends TestCase
 
             SkillExtractionAgent::fake([json_encode($fakeResponse)]);
 
+            // Use fixture content to derive metadata (no ResumeImportAgent fake)
+
             $uploaded = UploadedFile::fake()->createWithContent($filename, $content);
 
             $res = $this->actingAs($user)->postJson($endpoint, [
                 'file' => $uploaded,
-                $idField => $model->id,
             ]);
 
             $res->assertOk();
@@ -133,7 +130,15 @@ class ImportFixturesTest extends TestCase
             }
 
             $pivotTable = $isCertificate ? 'certificate_skill' : 'education_skill';
-            $this->assertDatabaseHas($pivotTable, [$isCertificate ? 'certificate_id' : 'education_id' => $model->id]);
+            if ($isCertificate) {
+                $created = Certificate::orderBy('created_at', 'desc')->first();
+                $this->assertNotNull($created);
+                $this->assertDatabaseHas($pivotTable, ['certificate_id' => $created->id]);
+            } else {
+                $created = Education::orderBy('created_at', 'desc')->first();
+                $this->assertNotNull($created);
+                $this->assertDatabaseHas($pivotTable, ['education_id' => $created->id]);
+            }
         }
     }
 
@@ -144,7 +149,6 @@ class ImportFixturesTest extends TestCase
         Files::fake();
 
         $user = User::factory()->create();
-        $certificate = Certificate::factory()->create();
 
         $urlsFile = base_path('tests/Feature/Import/Fixtures/certificate - urls.txt');
         $this->assertFileExists($urlsFile);
@@ -153,21 +157,9 @@ class ImportFixturesTest extends TestCase
         // Ensure URLs are valid for the validator (encode spaces)
         $urls = array_map(fn ($u) => str_replace(' ', '%20', $u), $urls);
 
-        // Prepare fake responses for each URL
-        $responses = [];
-        foreach ($urls as $u) {
-            $responses[$u] = Http::response('<html>Example content with Laravel</html>', 200, ['Content-Type' => 'text/html']);
-        }
-
-        Http::fake($responses);
-
-        // Fake agent for deterministic responses in tests.
-        SkillExtractionAgent::fake([json_encode([['name' => 'Laravel', 'level' => 'advanced', 'keywords' => ['Eloquent']]])]);
-
         foreach ($urls as $u) {
             $res = $this->actingAs($user)->postJson('/api/import/certificate', [
                 'url' => $u,
-                'certificate_id' => $certificate->id,
             ]);
 
             $res->assertOk();
@@ -175,7 +167,9 @@ class ImportFixturesTest extends TestCase
         }
 
         $this->assertDatabaseHas('skills', ['name' => Str::lower('Laravel')]);
-        $this->assertDatabaseHas('certificate_skill', ['certificate_id' => $certificate->id]);
+        $created = Certificate::orderBy('created_at', 'desc')->first();
+        $this->assertNotNull($created);
+        $this->assertDatabaseHas('certificate_skill', ['certificate_id' => $created->id]);
     }
 
     public function test_markdown_fenced_agent_response_is_handled_gracefully()
@@ -184,7 +178,6 @@ class ImportFixturesTest extends TestCase
         Files::fake();
 
         $user = User::factory()->create();
-        $certificate = Certificate::factory()->create();
 
         // Simulate an LLM that wraps its JSON output in markdown code fences
         $markdownFencedResponse = "```json\n[{\"name\":\"Docker Containerization\",\"level\":\"intermediate\",\"keywords\":[\"Docker Compose\",\"Kubernetes\"]}]\n```";
@@ -194,13 +187,14 @@ class ImportFixturesTest extends TestCase
 
         $res = $this->actingAs($user)->postJson('/api/import/certificate', [
             'file' => $uploaded,
-            'certificate_id' => $certificate->id,
         ]);
 
         $res->assertOk();
         $res->assertJsonPath('ok', true);
 
         $this->assertDatabaseHas('skills', ['name' => 'docker containerization']);
-        $this->assertDatabaseHas('certificate_skill', ['certificate_id' => $certificate->id]);
+        $created = Certificate::orderBy('created_at', 'desc')->first();
+        $this->assertNotNull($created);
+        $this->assertDatabaseHas('certificate_skill', ['certificate_id' => $created->id]);
     }
 }

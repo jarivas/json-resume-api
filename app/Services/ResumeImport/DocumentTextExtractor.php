@@ -16,7 +16,9 @@ class DocumentTextExtractor
         $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
 
         if ($ext === 'pdf') {
-            // Smalot PDF parser
+            // Prefer the PHP library smalot/pdfparser for extraction. If it's
+            // not available, do not attempt CLI-based extraction or OCR here
+            // — callers should handle the absence of extracted text.
             if (class_exists('Smalot\\PdfParser\\Parser')) {
                 try {
                     $parser = new Parser;
@@ -27,16 +29,7 @@ class DocumentTextExtractor
                         return $text;
                     }
                 } catch (\Throwable $_) {
-                    // fall through to other strategies
-                }
-            }
-
-            // pdftotext CLI
-            $pdftotext = trim((string) shell_exec('which pdftotext 2>/dev/null'));
-            if ($pdftotext !== '') {
-                $out = @shell_exec(escapeshellcmd($pdftotext).' -enc UTF-8 '.escapeshellarg($path).' -');
-                if (is_string($out) && $this->isReadableText($out)) {
-                    return trim($out);
+                    // If parsing fails, return empty — avoid CLI/OCR fallbacks.
                 }
             }
 

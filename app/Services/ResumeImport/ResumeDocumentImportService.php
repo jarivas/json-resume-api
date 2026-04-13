@@ -78,6 +78,12 @@ class ResumeDocumentImportService
             if ($extracted !== '') {
                 $userMessage = trim(mb_substr($extracted, 0, 20000));
                 $attachments = [];
+            } else {
+                // If we couldn't extract readable text, avoid attaching the
+                // raw binary document to the agent prompt — some providers
+                // may end up including the binary content in the prompt.
+                Log::warning('DocumentTextExtractor returned empty text; not attaching raw document to AI prompt.', ['path' => $source->localPath]);
+                $attachments = [];
             }
         }
 

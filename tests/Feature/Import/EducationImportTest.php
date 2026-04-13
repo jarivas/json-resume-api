@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Import;
 
+use App\Ai\Agents\ResumeImportAgent;
 use App\Ai\Agents\SkillExtractionAgent;
 use App\Models\Education;
 use App\Models\User;
@@ -21,7 +22,6 @@ class EducationImportTest extends TestCase
         Files::fake();
 
         $user = User::factory()->create();
-        $education = Education::factory()->create();
 
         // Fake agent response: an array with two skills
         $response = json_encode([
@@ -31,11 +31,12 @@ class EducationImportTest extends TestCase
 
         SkillExtractionAgent::fake([$response]);
 
+        // Use fixture content to create Education (no ResumeImportAgent fake)
+
         $file = UploadedFile::fake()->createWithContent('doc.pdf', 'PDF-BINARY');
 
         $res = $this->actingAs($user)->postJson('/api/import/education', [
             'file' => $file,
-            'education_id' => $education->id,
         ]);
 
         $res->assertOk();
@@ -44,6 +45,9 @@ class EducationImportTest extends TestCase
 
         $this->assertDatabaseHas('skills', ['name' => 'laravel']);
         $this->assertDatabaseHas('skills', ['name' => 'docker']);
-        $this->assertDatabaseHas('education_skill', ['education_id' => $education->id]);
+
+        $created = Education::orderBy('created_at', 'desc')->first();
+        $this->assertNotNull($created);
+        $this->assertDatabaseHas('education_skill', ['education_id' => $created->id]);
     }
 }
