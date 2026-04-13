@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->json('roles')->after('name');
+            $table->json('keywords')->after('highlights');
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->dropColumn('roles');
+            $table->dropColumn('keywords');
         });
     }
 };

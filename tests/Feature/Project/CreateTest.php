@@ -27,6 +27,7 @@ class CreateTest extends TestCase
             ->where('description', $data['description'])
             ->where('url', $data['url'])
             ->has('highlights')
+            ->has('keywords')
             ->etc());
 
         $this->assertDatabaseHas('projects', [

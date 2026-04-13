@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon $endDate
  * @property string $description
  * @property array $highlights
+ * @property array $keywords
  * @property string $url
  */
 class Project extends Model
@@ -30,6 +31,7 @@ class Project extends Model
         'endDate',
         'description',
         'highlights',
+        'keywords',
         'url',
     ];
 
@@ -40,6 +42,7 @@ class Project extends Model
             'endDate' => 'datetime:Y-m-d',
             'roles' => 'array',
             'highlights' => 'array',
+            'keywords' => 'array',
         ];
     }
 }

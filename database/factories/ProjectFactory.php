@@ -18,6 +18,7 @@ class ProjectFactory extends Factory
         return [
             'name' => $this->faker->sentence(3, true),
             'roles' => $this->faker->words($this->faker->numberBetween(2, 6)),
+            'keywords' => $this->faker->words($this->faker->numberBetween(2, 6)),
             'startDate' => $start->format('Y-m-d H:i:s'),
             'endDate' => $end->format('Y-m-d H:i:s'),
             'description' => $this->faker->paragraph(),

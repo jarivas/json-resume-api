@@ -17,6 +17,8 @@ class Update extends FormRequest
             'roles.*' => 'string',
             'highlights' => 'array',
             'highlights.*' => 'string',
+            'keywords' => 'array',
+            'keywords.*' => 'string',
             'url' => 'url',
         ];
     }

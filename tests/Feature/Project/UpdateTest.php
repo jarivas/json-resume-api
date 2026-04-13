@@ -29,10 +29,12 @@ class UpdateTest extends TestCase
             ->where('description', $data['description'])
             ->where('url', $data['url'])
             ->has('highlights')
+            ->has('keywords')
             ->etc());
 
         unset($data['roles']);
         unset($data['highlights']);
+        unset($data['keywords']);
         $dbData = array_merge(['id' => $project->id], $data);
         $this->assertDatabaseHas('projects', $dbData);
     }

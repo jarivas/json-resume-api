@@ -31,6 +31,7 @@ class ReadAllTest extends TestCase
                 ->where('description', $project->description)
                 ->where('url', $project->url)
                 ->has('highlights')
+                ->has('keywords')
                 ->etc())
         );
     }

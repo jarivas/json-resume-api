@@ -17,6 +17,8 @@ class Create extends FormRequest
             'roles.*' => 'required|string',
             'highlights' => 'required|array',
             'highlights.*' => 'required|string',
+            'keywords' => 'required|array',
+            'keywords.*' => 'required|string',
             'url' => 'url',
         ];
     }
