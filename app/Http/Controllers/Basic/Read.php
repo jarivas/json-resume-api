@@ -8,8 +8,8 @@ class Read
 {
     public function __invoke()
     {
-        $items = Basic::all();
+        $basic = Basic::first();
 
-        return response()->json($items);
+        return response()->json($basic);
     }
 }

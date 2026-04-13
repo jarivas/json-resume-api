@@ -13,6 +13,8 @@ class Update extends FormRequest
             'startDate' => 'date:Y-m-d',
             'endDate' => 'date:Y-m-d',
             'description' => 'string',
+            'roles' => 'array',
+            'roles.*' => 'string',
             'highlights' => 'array',
             'highlights.*' => 'string',
             'url' => 'url',

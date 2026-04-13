@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ImportJsonApiTest extends TestCase
@@ -50,24 +49,21 @@ class ImportJsonApiTest extends TestCase
         ]);
 
         $user = User::factory()->create();
-        $path = 'imports/api-json-'.Str::uuid().'.json';
         $tmpFile = UploadedFile::fake()->createWithContent('resume.json', $this->resumeFixtureJson());
 
         try {
-            Storage::disk('local')->delete($path);
+            Storage::disk('local')->delete('imports/imported-data.json');
 
             $response = $this->actingAs($user)->post('/api/import/json', [
                 'file' => $tmpFile,
-                'disk' => 'local',
-                'path' => $path,
             ], ['Accept' => 'application/json']);
 
             $response->assertOk();
             $response->assertJsonPath('ok', true);
-            $this->assertTrue(Storage::disk('local')->exists($path));
+            $this->assertTrue(Storage::disk('local')->exists('imports/imported-data.json'));
             $this->assertDatabaseCount('basics', 1);
         } finally {
-            Storage::disk('local')->delete($path);
+            Storage::disk('local')->delete('imports/imported-data.json');
         }
     }
 

@@ -23,7 +23,7 @@ class SdkLlmClientSemanticTest extends TestCase
         // Import fixture so resume_embeddings are populated
         $fixturePath = base_path('tests/Feature/Console/Fixtures/cv.json');
         Storage::fake('local');
-        $this->artisan('data:import', ['source' => $fixturePath, '--disk' => 'local', '--path' => 'imports/cv.json'])->assertExitCode(0);
+        $this->artisan('data:import', ['source' => $fixturePath])->assertExitCode(0);
 
         // Create a test provider that captures the messages passed to generateText
         $captor = new class

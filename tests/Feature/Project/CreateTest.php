@@ -23,6 +23,7 @@ class CreateTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
+            ->has('roles')
             ->where('description', $data['description'])
             ->where('url', $data['url'])
             ->has('highlights')

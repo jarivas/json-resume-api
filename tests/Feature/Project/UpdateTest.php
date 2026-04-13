@@ -25,10 +25,13 @@ class UpdateTest extends TestCase
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('id')
             ->where('name', $data['name'])
+            ->has('roles')
             ->where('description', $data['description'])
             ->where('url', $data['url'])
+            ->has('highlights')
             ->etc());
 
+        unset($data['roles']);
         unset($data['highlights']);
         $dbData = array_merge(['id' => $project->id], $data);
         $this->assertDatabaseHas('projects', $dbData);

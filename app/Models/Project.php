@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 /**
  * @property string $id
  * @property string $name
+ * @property array $roles
  * @property Carbon $startDate
  * @property Carbon $endDate
  * @property string $description
@@ -24,6 +25,7 @@ class Project extends Model
 
     protected $fillable = [
         'name',
+        'roles',
         'startDate',
         'endDate',
         'description',
@@ -36,6 +38,7 @@ class Project extends Model
         return [
             'startDate' => 'datetime:Y-m-d',
             'endDate' => 'datetime:Y-m-d',
+            'roles' => 'array',
             'highlights' => 'array',
         ];
     }

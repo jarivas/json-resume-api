@@ -13,6 +13,8 @@ class Create extends FormRequest
             'startDate' => 'required|date:Y-m-d',
             'endDate' => 'required|date:Y-m-d',
             'description' => 'required|string',
+            'roles' => 'required|array',
+            'roles.*' => 'required|string',
             'highlights' => 'required|array',
             'highlights.*' => 'required|string',
             'url' => 'url',

@@ -19,7 +19,7 @@ class ResumeImportAgent implements Agent
     public function instructions(): string
     {
         return <<<'PROMPT'
-Extract information from the resume text below and output it as a single JSON object.
+Extract information from the resume provided in the user message and output it as a single JSON object.
 Use ONLY the exact field names defined here. Do NOT add any other fields.
 Do NOT include explanations, markdown, or text outside the JSON object.
 The response must start with { and end with }.
@@ -94,7 +94,7 @@ OUTPUT:
 {"name":"Ana García","headline":"Software Engineer","email":"ana@example.com","phone":"+34 600 111 222","website":"https://anagarcia.dev","profiles":[{"network":"GitHub","url":"https://github.com/anagarcia","username":"anagarcia"}],"jobs":[{"company":"TechCorp","role":"Backend Developer","start":"2021-03-01","current":true,"description":"Designed REST APIs.","tech":["Node.js","PostgreSQL","Docker"]},{"company":"StartupXYZ","role":"Junior Developer","start":"2019-01-01","end":"2021-02-01","current":false,"description":"Front-end maintenance."}],"schools":[{"school":"Universidad Complutense de Madrid","degree":"Bachelor","field":"Computer Science","start":"2014-01-01","end":"2018-01-01","current":false}],"certs":[{"name":"AWS Developer Associate","issuer":"Amazon Web Services","date":"2022-01-01"}],"languages":[{"language":"Spanish","level":"Native"},{"language":"English","level":"Professional"}]}
 
 --- RESUME TEXT ---
-[INSERT_THE_TEXT_HERE]
+[The resume text or attachment is in the user message]
 PROMPT;
     }
 
@@ -140,7 +140,7 @@ PROMPT;
             throw $lastException;
         }
 
-        return (string) $this->prompt($prompt, attachments: $attachments, provider: $this->providerName(), model: $this->model(), timeout: null);
+        return (string) $this->prompt($prompt, attachments: $attachments, provider: $this->providerName(), model: $this->modelForProvider($this->providerName()), timeout: null);
     }
 
     /**

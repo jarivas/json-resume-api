@@ -24,7 +24,7 @@ class EmbeddingSimilarityTest extends TestCase
 
         // Import fixture to populate resume_embeddings
         $fixturePath = base_path('tests/Feature/Console/Fixtures/cv.json');
-        $this->artisan('data:import', ['source' => $fixturePath, '--disk' => 'local', '--path' => 'imports/cv.json'])->assertExitCode(0);
+        $this->artisan('data:import', ['source' => $fixturePath])->assertExitCode(0);
 
         $svc = new EmbeddingService;
 

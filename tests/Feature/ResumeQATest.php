@@ -20,13 +20,11 @@ class ResumeQATest extends TestCase
 
         $this->artisan('data:import', [
             'source' => $fixturePath,
-            '--disk' => 'local',
-            '--path' => 'imports/cv.json',
         ])->assertExitCode(0);
 
-        Storage::disk('local')->assertExists('imports/cv.json');
+        Storage::disk('local')->assertExists('imports/imported-data.json');
 
-        $saved = json_decode(Storage::disk('local')->get('imports/cv.json'), true, 512, JSON_THROW_ON_ERROR);
+        $saved = json_decode(Storage::disk('local')->get('imports/imported-data.json'), true, 512, JSON_THROW_ON_ERROR);
 
         // 1) ¿Tiene experiencia PHP?
         $hasPhp = $this->searchKeyword($saved, 'PHP');

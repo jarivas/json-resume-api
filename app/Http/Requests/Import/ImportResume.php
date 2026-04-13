@@ -15,9 +15,6 @@ class ImportResume extends FormRequest
     {
         return [
             'file' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:20480'],
-            'disk' => ['sometimes', 'string', 'max:100'],
-            'path' => ['sometimes', 'string', 'max:2048'],
-            'keep_json' => ['sometimes', 'boolean'],
         ];
     }
 }

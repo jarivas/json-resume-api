@@ -39,18 +39,20 @@ class ImportJsonData extends Command
 
     protected ?SchemaContract $jsonResumeSchema = null;
 
+    public const string DEFAULT_DISK = 'local';
+
+    public const string DEFAULT_PATH = 'imports/imported-data.json';
+
     protected $signature = 'data:import
-        {source : URL o ruta local del archivo JSON}
-        {--disk=local : Disco de almacenamiento}
-        {--path=imports/imported-data.json : Ruta destino dentro del disco}';
+        {source : URL o ruta local del archivo JSON}';
 
     protected $description = 'Importa datos JSON desde una URL o archivo local y los guarda en storage';
 
     public function handle(): int
     {
         $source = (string) $this->argument('source');
-        $disk = (string) $this->option('disk');
-        $path = (string) $this->option('path');
+        $disk = self::DEFAULT_DISK;
+        $path = self::DEFAULT_PATH;
 
         try {
             $content = $this->resolveContent($source);

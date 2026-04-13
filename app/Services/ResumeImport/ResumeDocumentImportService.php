@@ -6,7 +6,6 @@ use App\Ai\Agents\ResumeImportAgent;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Ai\Files\Document;
 use RuntimeException;
@@ -16,9 +15,9 @@ class ResumeDocumentImportService
     public function __construct(protected ResumeSourceResolver $sourceResolver) {}
 
     /**
-     * @return array{import_output: string, json_kept: bool, disk: string, path: string}
+     * @return array{import_output: string}
      */
-    public function import(string $source, string $disk, string $path, bool $keepJson): array
+    public function import(string $source): array
     {
         $resolvedSource = $this->sourceResolver->resolve($source);
         $temporaryJsonPath = sprintf(
@@ -33,12 +32,9 @@ class ResumeDocumentImportService
 
             File::ensureDirectoryExists(dirname($temporaryJsonPath));
             File::put($temporaryJsonPath, $json);
-            Storage::disk($disk)->put($path, $json);
 
             $exitCode = Artisan::call('data:import', [
                 'source' => $temporaryJsonPath,
-                '--disk' => $disk,
-                '--path' => $path,
             ]);
 
             $output = trim(Artisan::output());
@@ -47,15 +43,8 @@ class ResumeDocumentImportService
                 throw new RuntimeException($output !== '' ? $output : 'data:import falló al procesar el JSON generado.');
             }
 
-            if (! $keepJson) {
-                Storage::disk($disk)->delete($path);
-            }
-
             return [
                 'import_output' => $output,
-                'json_kept' => $keepJson,
-                'disk' => $disk,
-                'path' => $path,
             ];
         } finally {
             File::delete($temporaryJsonPath);
@@ -72,14 +61,13 @@ class ResumeDocumentImportService
     protected function mapSourceToJsonResume(ResolvedResumeSource $source): array
     {
         $agent = new ResumeImportAgent;
-        $prompt = $this->buildPrompt($source);
         $attachments = $this->buildAttachments($source);
+        $userMessage = 'Convert this resume to JSON.';
 
-        // Attempt to extract readable text from local files to include in the
-        // prompt. Prefer a robust extractor if available, otherwise fall back
-        // to CLI tools. This helps providers (like Ollama) that don't accept
-        // file attachments in the same way.
-        if (count($attachments) > 0 && is_string($source->localPath) && $source->localPath !== '') {
+        if ($source->type === 'google-doc') {
+            $userMessage = trim((string) $source->textContent);
+            $attachments = [];
+        } elseif (count($attachments) > 0 && is_string($source->localPath) && $source->localPath !== '') {
             try {
                 $extractor = new DocumentTextExtractor;
                 $extracted = $extractor->extract($source->localPath);
@@ -88,12 +76,12 @@ class ResumeDocumentImportService
             }
 
             if ($extracted !== '') {
-                $prompt = $prompt."\n\n".trim(mb_substr($extracted, 0, 20000));
+                $userMessage = trim(mb_substr($extracted, 0, 20000));
                 $attachments = [];
             }
         }
 
-        $responseText = $agent->promptWithModelFallback($prompt, $attachments);
+        $responseText = $agent->promptWithModelFallback($userMessage, $attachments);
         Log::debug("Response Text: {$responseText}");
 
         try {
@@ -112,15 +100,6 @@ class ResumeDocumentImportService
         Log::debug('Decoded JSON Resume (decoded):', $normalized);
 
         return $normalized;
-    }
-
-    protected function buildPrompt(ResolvedResumeSource $source): string
-    {
-        if ($source->type === 'google-doc') {
-            return "Convierte este contenido de CV a JSON Resume.\n\n".(string) $source->textContent;
-        }
-
-        return 'Convierte el documento adjunto a JSON Resume. Usa solo información del documento.';
     }
 
     /**

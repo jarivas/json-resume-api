@@ -26,15 +26,13 @@ class ImportJsonDataCommandTest extends TestCase
             ImportJsonData::JSON_RESUME_SCHEMA_URL => Http::response($this->jsonResumeSchemaFixture(), 200),
         ]);
 
-        $storagePath = 'imports/resume-from-url-'.Str::uuid().'.json';
+        $storagePath = ImportJsonData::DEFAULT_PATH;
 
         try {
             Storage::disk('local')->delete($storagePath);
 
             $this->artisan('data:import', [
                 'source' => 'https://example.test/resume.json',
-                '--disk' => 'local',
-                '--path' => $storagePath,
             ])->assertExitCode(0);
 
             $saved = $this->assertImportedResumeStored($storagePath, $fixtureData);
@@ -54,15 +52,13 @@ class ImportJsonDataCommandTest extends TestCase
             ImportJsonData::JSON_RESUME_SCHEMA_URL => Http::response($this->jsonResumeSchemaFixture(), 200),
         ]);
 
-        $storagePath = 'imports/cv-'.Str::uuid().'.json';
+        $storagePath = ImportJsonData::DEFAULT_PATH;
 
         try {
             Storage::disk('local')->delete($storagePath);
 
             $this->artisan('data:import', [
                 'source' => $fixturePath,
-                '--disk' => 'local',
-                '--path' => $storagePath,
             ])->assertExitCode(0);
 
             $saved = $this->assertImportedResumeStored($storagePath, $fixtureData);
@@ -107,15 +103,13 @@ class ImportJsonDataCommandTest extends TestCase
         ]);
 
         ['path' => $fixturePath] = $this->loadCvFixture();
-        $storagePath = 'imports/cv-clean-reset-'.Str::uuid().'.json';
+        $storagePath = ImportJsonData::DEFAULT_PATH;
 
         try {
             Storage::disk('local')->delete($storagePath);
 
             $this->artisan('data:import', [
                 'source' => $fixturePath,
-                '--disk' => 'local',
-                '--path' => $storagePath,
             ])->assertExitCode(0);
 
             $this->assertDatabaseCount('resume_embeddings', 25);

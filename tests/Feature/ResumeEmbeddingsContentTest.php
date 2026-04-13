@@ -23,8 +23,6 @@ class ResumeEmbeddingsContentTest extends TestCase
 
         $this->artisan('data:import', [
             'source' => $fixturePath,
-            '--disk' => 'local',
-            '--path' => 'imports/cv.json',
         ])->assertExitCode(0);
 
         $rows = DB::table('resume_embeddings')->get()->keyBy('model_type');

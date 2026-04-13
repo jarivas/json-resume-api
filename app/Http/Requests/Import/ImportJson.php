@@ -15,8 +15,6 @@ class ImportJson extends FormRequest
     {
         return [
             'file' => ['required', 'file', 'mimetypes:application/json,text/plain', 'max:10240'],
-            'disk' => ['sometimes', 'string', 'max:100'],
-            'path' => ['sometimes', 'string', 'max:2048'],
         ];
     }
 }

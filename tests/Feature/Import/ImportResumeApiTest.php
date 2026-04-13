@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Laravel\Ai\Files;
 use Tests\TestCase;
 
@@ -54,33 +53,23 @@ class ImportResumeApiTest extends TestCase
         ResumeImportAgent::fake([$this->loadIntermediateFixture()]);
 
         $user = User::factory()->create();
-        $path = 'imports/api-resume-'.Str::uuid().'.json';
         $tmpFile = UploadedFile::fake()->createWithContent('resume.pdf', $this->resumePdfFixtureBinary());
 
         Files::fake();
 
         try {
-            Storage::disk('local')->delete($path);
+            Storage::disk('local')->delete('imports/imported-data.json');
 
             $response = $this->actingAs($user)->post('/api/import/resume', [
                 'file' => $tmpFile,
-                'disk' => 'local',
-                'path' => $path,
-                'keep_json' => true,
             ], ['Accept' => 'application/json']);
 
             $response->assertOk();
             $response->assertJsonPath('ok', true);
-            $this->assertTrue(Storage::disk('local')->exists($path));
             $this->assertDatabaseCount('basics', 1);
         } finally {
-            Storage::disk('local')->delete($path);
+            Storage::disk('local')->delete('imports/imported-data.json');
         }
-    }
-
-    private function resumeFixtureJson(): string
-    {
-        return File::get(base_path('tests/Feature/Console/Fixtures/cv.json'));
     }
 
     private function loadIntermediateFixture(): string

@@ -10,7 +10,6 @@ class ImportResume
 {
     public function __invoke(Request $request): JsonResponse
     {
-        $data = $request->validated();
         $uploadedFile = $request->file('file');
 
         if ($uploadedFile === null) {
@@ -20,17 +19,9 @@ class ImportResume
             ], 422);
         }
 
-        $parameters = [
+        $exitCode = Artisan::call('data:import-resume', [
             'source' => $uploadedFile->getRealPath(),
-            '--disk' => $data['disk'] ?? 'local',
-            '--path' => $data['path'] ?? 'imports/extracted-data.json',
-        ];
-
-        if (($data['keep_json'] ?? false) === true) {
-            $parameters['--keep-json'] = true;
-        }
-
-        $exitCode = Artisan::call('data:import-resume', $parameters);
+        ]);
         $output = trim(Artisan::output());
 
         if ($exitCode !== 0) {

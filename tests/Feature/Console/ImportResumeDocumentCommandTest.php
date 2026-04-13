@@ -24,21 +24,37 @@ class ImportResumeDocumentCommandTest extends TestCase
     public function test_it_imports_a_local_pdf_document(): void
     {
         $documentPath = base_path('tests/Feature/Console/Fixtures/Curriculum vitae.pdf');
-        $generatedPath = 'imports/extracted-pdf-'.Str::uuid().'.json';
 
         try {
             $this->artisan('data:import-resume', [
                 'source' => $documentPath,
-                '--disk' => 'local',
-                '--path' => $generatedPath,
             ])->assertExitCode(0);
 
-            $this->assertFalse(Storage::disk('local')->exists($generatedPath));
             $this->assertDatabaseCount('basics', 1);
             $this->assertDatabaseHas('basics', ['name' => 'José Antonio Rivas Fernández']);
             $this->assertGreaterThanOrEqual(1, $this->getTableCount('works'));
         } finally {
-            Storage::disk('local')->delete($generatedPath);
+            Storage::disk('local')->delete('imports/imported-data.json');
+        }
+    }
+
+    public function test_it_imports_a_local_pdf_document_with_faked_agent(): void
+    {
+        ResumeImportAgent::fake([$this->loadIntermediateFixture()]);
+
+        $documentPath = base_path('tests/Feature/Console/Fixtures/Curriculum vitae.pdf');
+
+        try {
+            $this->artisan('data:import-resume', [
+                'source' => $documentPath,
+            ])->assertExitCode(0);
+
+            $this->assertDatabaseCount('basics', 1);
+            $this->assertDatabaseHas('basics', ['name' => 'José Antonio Rivas Fernández']);
+            $this->assertDatabaseHas('works', ['name' => 'InOne']);
+            $this->assertGreaterThanOrEqual(1, $this->getTableCount('works'));
+        } finally {
+            Storage::disk('local')->delete('imports/imported-data.json');
         }
     }
 
@@ -57,17 +73,13 @@ class ImportResumeDocumentCommandTest extends TestCase
         ResumeImportAgent::fake([$this->loadIntermediateFixture()]);
 
         $documentPath = storage_path('app/test-resume-'.Str::uuid().'.docx');
-        $generatedPath = 'imports/extracted-docx-'.Str::uuid().'.json';
         File::put($documentPath, 'fake-docx-content');
 
         try {
             $this->artisan('data:import-resume', [
                 'source' => $documentPath,
-                '--disk' => 'local',
-                '--path' => $generatedPath,
             ])->assertExitCode(0);
 
-            $this->assertFalse(Storage::disk('local')->exists($generatedPath));
             $this->assertDatabaseCount('basics', 1);
             $this->assertDatabaseHas('works', [
                 'name' => 'InOne',
@@ -75,7 +87,7 @@ class ImportResumeDocumentCommandTest extends TestCase
             ]);
         } finally {
             File::delete($documentPath);
-            Storage::disk('local')->delete($generatedPath);
+            Storage::disk('local')->delete('imports/imported-data.json');
         }
     }
 
@@ -87,23 +99,19 @@ class ImportResumeDocumentCommandTest extends TestCase
             'https://docs.google.com/document/d/*/export?format=txt' => Http::response('Contenido del CV', 200),
         ]);
 
-        $generatedPath = 'imports/extracted-gdoc-'.Str::uuid().'.json';
         $source = 'https://docs.google.com/document/d/demo-doc-id/edit';
 
         try {
             $this->artisan('data:import-resume', [
                 'source' => $source,
-                '--disk' => 'local',
-                '--path' => $generatedPath,
             ])->assertExitCode(0);
 
-            $this->assertFalse(Storage::disk('local')->exists($generatedPath));
             $this->assertDatabaseCount('basics', 1);
             $this->assertDatabaseHas('languages', [
                 'language' => 'Español',
             ]);
         } finally {
-            Storage::disk('local')->delete($generatedPath);
+            Storage::disk('local')->delete('imports/imported-data.json');
         }
     }
 
@@ -112,25 +120,21 @@ class ImportResumeDocumentCommandTest extends TestCase
         ResumeImportAgent::fake([$this->loadIntermediateFixture()]);
 
         $documentPath = storage_path('app/test-resume-'.Str::uuid().'.pdf');
-        $generatedPath = 'imports/extracted-keep-'.Str::uuid().'.json';
         File::put($documentPath, 'fake-pdf-content');
 
         try {
             $this->artisan('data:import-resume', [
                 'source' => $documentPath,
-                '--disk' => 'local',
-                '--path' => $generatedPath,
-                '--keep-json' => true,
             ])->assertExitCode(0);
 
-            $this->assertTrue(Storage::disk('local')->exists($generatedPath));
-            $saved = json_decode(Storage::disk('local')->get($generatedPath), true, 512, JSON_THROW_ON_ERROR);
+            $this->assertTrue(Storage::disk('local')->exists('imports/imported-data.json'));
+            $saved = json_decode(Storage::disk('local')->get('imports/imported-data.json'), true, 512, JSON_THROW_ON_ERROR);
 
             $this->assertSame('José Antonio Rivas Fernández', data_get($saved, 'basics.name'));
             $this->assertDatabaseCount('basics', 1);
         } finally {
             File::delete($documentPath);
-            Storage::disk('local')->delete($generatedPath);
+            Storage::disk('local')->delete('imports/imported-data.json');
         }
     }
 

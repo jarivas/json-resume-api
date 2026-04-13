@@ -10,7 +10,6 @@ class ImportJson
 {
     public function __invoke(Request $request): JsonResponse
     {
-        $data = $request->validated();
         $uploadedFile = $request->file('file');
 
         if ($uploadedFile === null) {
@@ -22,8 +21,6 @@ class ImportJson
 
         $exitCode = Artisan::call('data:import', [
             'source' => $uploadedFile->getRealPath(),
-            '--disk' => $data['disk'] ?? 'local',
-            '--path' => $data['path'] ?? 'imports/imported-data.json',
         ]);
 
         $output = trim(Artisan::output());
