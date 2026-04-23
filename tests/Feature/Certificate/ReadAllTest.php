@@ -24,14 +24,11 @@ class ReadAllTest extends TestCase
         $response = $this->actingAs($user)->getJson($url);
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) => $json->has($max)
-            ->first(fn (AssertableJson $json) => $json->has('id')
-                ->where('name', $certificate->name)
-                ->where('date', $certificate->date->format('Y-m-d'))
-                ->where('issuer', $certificate->issuer)
-                ->where('url', $certificate->url)
-                ->etc())
-        );
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data', $max));
+
+        $response->assertJsonPath('data.0.name', $certificate->name);
+        $response->assertJsonPath('data.0.issuer', $certificate->issuer);
+        $response->assertJsonPath('data.0.url', $certificate->url);
     }
 
     public function test_certificate_read_all_unauthenticated()

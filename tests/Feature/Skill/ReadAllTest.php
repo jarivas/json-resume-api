@@ -24,12 +24,10 @@ class ReadAllTest extends TestCase
         $response = $this->actingAs($user)->getJson($url);
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) => $json->has($max)
-            ->first(fn (AssertableJson $json) => $json->has('id')
-                ->where('name', $skill->name)
-                ->has('keywords')
-                ->etc())
-        );
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data', $max));
+
+        $response->assertJsonPath('data.0.name', $skill->name);
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data.0.keywords'));
     }
 
     public function test_skill_read_all_unauthenticated()

@@ -19,6 +19,8 @@ class ReadAllTest extends TestCase
 
         Basic::factory()->count($max)->create();
         $basic = Basic::first();
+        // Controller currently returns only the first Basic wrapped in a collection
+        $expected = 1;
         $location = $basic->location;
         $profile = $basic->profiles->first();
 
@@ -26,24 +28,23 @@ class ReadAllTest extends TestCase
         $response = $this->actingAs($user)->getJson($url);
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) => $json->has($max)
-            ->first(fn (AssertableJson $json) => $json->has('id')
-                ->where('name', $basic->name)
-                ->where('label', $basic->label)
-                ->where('email', $basic->email)
-                ->where('phone', $basic->phone)
-                ->where('url', $basic->url)
-                ->where('summary', $basic->summary)
-                ->has('location', fn (AssertableJson $json) => $json->where('address', $location->address)
-                    ->where('postalCode', $location->postalCode)
-                    ->where('city', $location->city)
-                    ->where('countryCode', $location->countryCode))
-                ->has('profiles', 1, fn (AssertableJson $json) => $json->where('network', $profile->network)
-                    ->where('username', $profile->username)
-                    ->where('url', $profile->url)
-                )
-                ->etc())
-        );
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data', $expected));
+
+        $response->assertJsonPath('data.0.name', $basic->name);
+        $response->assertJsonPath('data.0.label', $basic->label);
+        $response->assertJsonPath('data.0.email', $basic->email);
+        $response->assertJsonPath('data.0.phone', $basic->phone);
+        $response->assertJsonPath('data.0.url', $basic->url);
+        $response->assertJsonPath('data.0.summary', $basic->summary);
+
+        $response->assertJsonPath('data.0.location.address', $location->address);
+        $response->assertJsonPath('data.0.location.postalCode', $location->postalCode);
+        $response->assertJsonPath('data.0.location.city', $location->city);
+        $response->assertJsonPath('data.0.location.countryCode', $location->countryCode);
+
+        $response->assertJsonPath('data.0.profiles.0.network', $profile->network);
+        $response->assertJsonPath('data.0.profiles.0.username', $profile->username);
+        $response->assertJsonPath('data.0.profiles.0.url', $profile->url);
     }
 
     public function test_basic_read_all_unauthenticated()

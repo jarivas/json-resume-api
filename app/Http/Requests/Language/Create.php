@@ -3,14 +3,16 @@
 namespace App\Http\Requests\Language;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Traits\ScribeBodyParameters;
 
 class Create extends FormRequest
 {
+    use ScribeBodyParameters;
     public function rules()
     {
         return [
-            'language' => 'required|string',
-            'fluency' => 'required|string',
+            'name' => 'required|string',
+            'code' => 'required|string',
         ];
     }
 }

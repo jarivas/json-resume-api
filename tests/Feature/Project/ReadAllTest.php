@@ -24,16 +24,12 @@ class ReadAllTest extends TestCase
         $response = $this->actingAs($user)->getJson($url);
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) => $json->has($max)
-            ->first(fn (AssertableJson $json) => $json->has('id')
-                ->where('name', $project->name)
-                ->has('roles')
-                ->where('description', $project->description)
-                ->where('url', $project->url)
-                ->has('highlights')
-                ->has('keywords')
-                ->etc())
-        );
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data', $max));
+
+        $response->assertJsonPath('data.0.name', $project->name);
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data.0.roles'));
+        $response->assertJsonPath('data.0.description', $project->description);
+        $response->assertJsonPath('data.0.url', $project->url);
     }
 
     public function test_project_read_all_unauthenticated()

@@ -24,12 +24,10 @@ class ReadAllTest extends TestCase
         $response = $this->actingAs($user)->getJson($url);
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) => $json->has($max)
-            ->first(fn (AssertableJson $json) => $json->has('id')
-                ->where('language', $language->language)
-                ->where('fluency', $language->fluency)
-                ->etc())
-        );
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data', $max));
+
+        $response->assertJsonPath('data.0.language', $language->language);
+        $response->assertJsonPath('data.0.fluency', $language->fluency);
     }
 
     public function test_language_read_all_unauthenticated()

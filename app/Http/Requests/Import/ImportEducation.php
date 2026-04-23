@@ -3,9 +3,11 @@
 namespace App\Http\Requests\Import;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Traits\ScribeBodyParameters;
 
 class ImportEducation extends FormRequest
 {
+    use ScribeBodyParameters;
     public function authorize(): bool
     {
         return true;

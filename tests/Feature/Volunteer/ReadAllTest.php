@@ -24,17 +24,15 @@ class ReadAllTest extends TestCase
         $response = $this->actingAs($user)->getJson($url);
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) => $json->has($max)
-            ->first(fn (AssertableJson $json) => $json->has('id')
-                ->where('organization', $volunteer->organization)
-                ->where('position', $volunteer->position)
-                ->where('url', $volunteer->url)
-                ->where('startDate', $volunteer->startDate->format('Y-m-d'))
-                ->where('endDate', $volunteer->endDate->format('Y-m-d'))
-                ->where('summary', $volunteer->summary)
-                ->has('highlights')
-                ->etc())
-        );
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data', $max));
+
+        $response->assertJsonPath('data.0.organization', $volunteer->organization);
+        $response->assertJsonPath('data.0.position', $volunteer->position);
+        $response->assertJsonPath('data.0.url', $volunteer->url);
+        $response->assertJsonPath('data.0.startDate', $volunteer->startDate->format('Y-m-d'));
+        $response->assertJsonPath('data.0.endDate', $volunteer->endDate->format('Y-m-d'));
+        $response->assertJsonPath('data.0.summary', $volunteer->summary);
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data.0.highlights'));
     }
 
     public function test_volunteer_read_all_unauthenticated()

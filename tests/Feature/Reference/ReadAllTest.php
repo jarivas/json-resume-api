@@ -24,12 +24,10 @@ class ReadAllTest extends TestCase
         $response = $this->actingAs($user)->getJson($url);
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) => $json->has($max)
-            ->first(fn (AssertableJson $json) => $json->has('id')
-                ->where('name', $reference->name)
-                ->where('reference', $reference->reference)
-                ->etc())
-        );
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data', $max));
+
+        $response->assertJsonPath('data.0.name', $reference->name);
+        $response->assertJsonPath('data.0.reference', $reference->reference);
     }
 
     public function test_reference_read_all_unauthenticated()

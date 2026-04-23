@@ -16,9 +16,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -29,9 +30,9 @@ endpoints:
       email:
         custom: []
         name: email
-        description: 'Must be a valid email address.'
+        description: 'Email address. Must be a valid email address.'
         required: true
-        example: gbailey@example.net
+        example: user@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -42,19 +43,32 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: '|]|{+-'
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      email: gbailey@example.net
-      password: '|]|{+-'
+      email: user@example.com
+      password: string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The given data was invalid.","errors":{"password":["The password field must be at least 8 characters.","The password field must contain at least one uppercase and one lowercase letter.","The password field must contain at least one number."]},"error_id":"9b815888-7b18-43d3-b428-cf1e09615bea"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -71,9 +85,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -83,9 +98,21 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: ''
+        headers:
+          cache-control: 'no-cache, private'
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -102,9 +129,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -117,18 +145,31 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: '|]|{+-'
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      password: '|]|{+-'
+      password: string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The given data was invalid.","errors":{"password":["The password field must be at least 8 characters.","The password field must contain at least one uppercase and one lowercase letter.","The password field must contain at least one number."]},"error_id":"52446ad5-a702-4cf7-aa70-b31365aa406b"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -145,9 +186,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -157,9 +199,22 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"token":"18|Awt2RnWCtNPIQ7jdySMUBwBOxN3FkvKnullI6p894a727052","expiresAt":"2026-04-23 13:43:14"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -176,9 +231,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -188,9 +244,21 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: ''
+        headers:
+          cache-control: 'no-cache, private'
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -207,9 +275,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -220,9 +289,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -231,9 +300,9 @@ endpoints:
       label:
         custom: []
         name: label
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -242,9 +311,9 @@ endpoints:
       email:
         custom: []
         name: email
-        description: 'Must be a valid email address.'
+        description: 'Email address. Must be a valid email address.'
         required: true
-        example: zbailey@example.net
+        example: user@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -253,9 +322,9 @@ endpoints:
       phone:
         custom: []
         name: phone
-        description: ''
+        description: 'Phone number.'
         required: true
-        example: architecto
+        example: '+34 600 000 000'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -264,9 +333,9 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -275,9 +344,9 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: false
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -288,7 +357,7 @@ endpoints:
         name: location
         description: ''
         required: false
-        example: null
+        example: []
         type: object
         enumValues: []
         exampleWasSpecified: false
@@ -297,9 +366,9 @@ endpoints:
       location.address:
         custom: []
         name: location.address
-        description: ''
+        description: 'Street address.'
         required: false
-        example: architecto
+        example: '123 Main St'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -308,9 +377,9 @@ endpoints:
       location.postalCode:
         custom: []
         name: location.postalCode
-        description: ''
+        description: 'Postal code / ZIP.'
         required: false
-        example: architecto
+        example: '28001'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -319,9 +388,9 @@ endpoints:
       location.city:
         custom: []
         name: location.city
-        description: ''
+        description: City.
         required: false
-        example: architecto
+        example: Madrid
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -330,9 +399,9 @@ endpoints:
       location.countryCode:
         custom: []
         name: location.countryCode
-        description: ''
+        description: 'ISO 3166-1 alpha-2 country code.'
         required: false
-        example: architecto
+        example: ES
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -343,7 +412,7 @@ endpoints:
         name: location.region
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -352,9 +421,13 @@ endpoints:
       profiles:
         custom: []
         name: profiles
-        description: ''
+        description: 'Array of social profiles.'
         required: false
-        example: null
+        example:
+          -
+            network: github
+            username: janedoe
+            url: 'https://github.com/janedoe'
         type: 'object[]'
         enumValues: []
         exampleWasSpecified: false
@@ -363,9 +436,9 @@ endpoints:
       'profiles[].network':
         custom: []
         name: 'profiles[].network'
-        description: ''
+        description: 'Social network name.'
         required: false
-        example: architecto
+        example: github
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -374,9 +447,9 @@ endpoints:
       'profiles[].username':
         custom: []
         name: 'profiles[].username'
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -385,36 +458,49 @@ endpoints:
       'profiles[].url':
         custom: []
         name: 'profiles[].url'
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      label: architecto
-      email: zbailey@example.net
-      phone: architecto
-      url: 'http://bailey.com/'
-      summary: architecto
+      name: 'Jane Doe'
+      label: 'Jane Doe'
+      email: user@example.com
+      phone: '+34 600 000 000'
+      url: 'https://example.com'
+      summary: 'Experienced developer with ...'
       location:
-        address: architecto
-        postalCode: architecto
-        city: architecto
-        countryCode: architecto
-        region: architecto
+        address: '123 Main St'
+        postalCode: '28001'
+        city: Madrid
+        countryCode: ES
+        region: string
       profiles:
         -
-          network: architecto
-          username: architecto
-          url: 'http://bailey.com/'
+          network: github
+          username: janedoe
+          url: 'https://github.com/janedoe'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"name":"Jane Doe","label":"Jane Doe","email":"user@example.com","phone":"+34 600 000 000","url":"https:\/\/example.com","summary":"Experienced developer with ...","location":{"address":"123 Main St","postalCode":"28001","city":"Madrid","countryCode":"ES","region":"string"},"profiles":[{"network":"github","username":"janedoe","url":"https:\/\/github.com\/janedoe"}],"id":"01kpx24aq2h5js7t4aes7f6npb","updated_at":"2026-04-23T11:38:14.000000Z","created_at":"2026-04-23T11:38:14.000000Z"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -431,9 +517,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -446,8 +533,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"02359495-d725-414f-9206-91e3029e57fb"}'
+        status: 200
+        content: '{"data":[{"id":"01kpwyq0rqnbx7szkb41exxpmp","name":"Jos\u00e9 Antonio Rivas Fern\u00e1ndez","label":"Team Lead \/ Head of Development","email":"me@jarivas.work","phone":"(+34) 655010958","url":"https:\/\/me.jarivas.work","summary":"L\u00edder tecnol\u00f3gico y desarrollador Full Stack con amplia experiencia en la creaci\u00f3n de arquitecturas escalables y gesti\u00f3n de equipos. Especializado en el ecosistema PHP (Laravel, Symfony) y con una s\u00f3lida formaci\u00f3n reciente en Inteligencia Artificial, Big Data, Ciberseguridad y Ciencia de Datos aplicada.","location":{"city":"M\u00e1laga","countryCode":"ES","region":"Andaluc\u00eda"},"profiles":[{"network":"GitHub","username":"jarivas","url":"https:\/\/github.com\/jarivas"},{"network":"Credly","username":"jose-antonio-rivas-fernandez","url":"https:\/\/www.credly.com\/users\/jose-antonio-rivas-fernandez"}],"created_at":"2026-04-23 12:38:32","updated_at":"2026-04-23 12:38:32"}]}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -455,7 +542,10 @@ endpoints:
           access-control-expose-headers: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -472,9 +562,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -483,14 +574,14 @@ endpoints:
         name: basic_id
         description: 'The ID of the basic.'
         required: true
-        example: 01kpvvy803bzkw6h2y7skfvzp0
+        example: 01kpwyq0rqnbx7szkb41exxpmp
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      basic_id: 01kpvvy803bzkw6h2y7skfvzp0
+      basic_id: 01kpwyq0rqnbx7szkb41exxpmp
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -499,8 +590,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"1f933c60-2af4-4dcd-87de-43a79291af1a"}'
+        status: 200
+        content: '{"data":{"id":"01kpwyq0rqnbx7szkb41exxpmp","name":"Jos\u00e9 Antonio Rivas Fern\u00e1ndez","label":"Team Lead \/ Head of Development","email":"me@jarivas.work","phone":"(+34) 655010958","url":"https:\/\/me.jarivas.work","summary":"L\u00edder tecnol\u00f3gico y desarrollador Full Stack con amplia experiencia en la creaci\u00f3n de arquitecturas escalables y gesti\u00f3n de equipos. Especializado en el ecosistema PHP (Laravel, Symfony) y con una s\u00f3lida formaci\u00f3n reciente en Inteligencia Artificial, Big Data, Ciberseguridad y Ciencia de Datos aplicada.","location":{"city":"M\u00e1laga","countryCode":"ES","region":"Andaluc\u00eda"},"profiles":[{"network":"GitHub","username":"jarivas","url":"https:\/\/github.com\/jarivas"},{"network":"Credly","username":"jose-antonio-rivas-fernandez","url":"https:\/\/www.credly.com\/users\/jose-antonio-rivas-fernandez"}],"created_at":"2026-04-23 12:38:32","updated_at":"2026-04-23 12:38:32"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -508,7 +599,10 @@ endpoints:
           access-control-expose-headers: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -525,9 +619,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -536,23 +631,23 @@ endpoints:
         name: basic_id
         description: 'The ID of the basic.'
         required: true
-        example: 01kpvvy803bzkw6h2y7skfvzp0
+        example: 01kpwyq0rqnbx7szkb41exxpmp
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      basic_id: 01kpvvy803bzkw6h2y7skfvzp0
+      basic_id: 01kpwyq0rqnbx7szkb41exxpmp
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -561,9 +656,9 @@ endpoints:
       label:
         custom: []
         name: label
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -572,9 +667,9 @@ endpoints:
       email:
         custom: []
         name: email
-        description: 'Must be a valid email address.'
+        description: 'Email address. Must be a valid email address.'
         required: false
-        example: zbailey@example.net
+        example: user@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -583,9 +678,9 @@ endpoints:
       phone:
         custom: []
         name: phone
-        description: ''
+        description: 'Phone number.'
         required: false
-        example: architecto
+        example: '+34 600 000 000'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -594,9 +689,9 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -605,9 +700,9 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: false
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -618,7 +713,7 @@ endpoints:
         name: location
         description: ''
         required: false
-        example: null
+        example: []
         type: object
         enumValues: []
         exampleWasSpecified: false
@@ -627,9 +722,9 @@ endpoints:
       location.address:
         custom: []
         name: location.address
-        description: ''
+        description: 'Street address.'
         required: false
-        example: architecto
+        example: '123 Main St'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -638,9 +733,9 @@ endpoints:
       location.postalCode:
         custom: []
         name: location.postalCode
-        description: ''
+        description: 'Postal code / ZIP.'
         required: false
-        example: architecto
+        example: '28001'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -649,9 +744,9 @@ endpoints:
       location.city:
         custom: []
         name: location.city
-        description: ''
+        description: City.
         required: false
-        example: architecto
+        example: Madrid
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -660,9 +755,9 @@ endpoints:
       location.countryCode:
         custom: []
         name: location.countryCode
-        description: ''
+        description: 'ISO 3166-1 alpha-2 country code.'
         required: false
-        example: architecto
+        example: ES
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -673,7 +768,7 @@ endpoints:
         name: location.region
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -682,9 +777,13 @@ endpoints:
       profiles:
         custom: []
         name: profiles
-        description: ''
+        description: 'Array of social profiles.'
         required: false
-        example: null
+        example:
+          -
+            network: github
+            username: janedoe
+            url: 'https://github.com/janedoe'
         type: 'object[]'
         enumValues: []
         exampleWasSpecified: false
@@ -695,7 +794,8 @@ endpoints:
         name: awards
         description: 'The <code>id</code> of an existing record in the awards table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -706,7 +806,8 @@ endpoints:
         name: certificates
         description: 'The <code>id</code> of an existing record in the certificates table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -717,7 +818,8 @@ endpoints:
         name: educations
         description: 'The <code>id</code> of an existing record in the educations table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -728,7 +830,8 @@ endpoints:
         name: interests
         description: 'The <code>id</code> of an existing record in the interests table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -739,7 +842,8 @@ endpoints:
         name: languages
         description: 'The <code>id</code> of an existing record in the languages table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -750,7 +854,8 @@ endpoints:
         name: projects
         description: 'The <code>id</code> of an existing record in the projects table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -761,7 +866,8 @@ endpoints:
         name: publications
         description: 'The <code>id</code> of an existing record in the publications table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -772,7 +878,8 @@ endpoints:
         name: references
         description: 'The <code>id</code> of an existing record in the references table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -783,7 +890,8 @@ endpoints:
         name: skills
         description: 'The <code>id</code> of an existing record in the skills table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -794,7 +902,8 @@ endpoints:
         name: volunteer
         description: 'The <code>id</code> of an existing record in the volunteers table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -805,7 +914,8 @@ endpoints:
         name: work
         description: 'The <code>id</code> of an existing record in the works table.'
         required: false
-        example: null
+        example:
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -814,9 +924,9 @@ endpoints:
       'profiles[].network':
         custom: []
         name: 'profiles[].network'
-        description: ''
+        description: 'Social network name.'
         required: false
-        example: architecto
+        example: github
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -825,9 +935,9 @@ endpoints:
       'profiles[].username':
         custom: []
         name: 'profiles[].username'
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -836,36 +946,71 @@ endpoints:
       'profiles[].url':
         custom: []
         name: 'profiles[].url'
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      label: architecto
-      email: zbailey@example.net
-      phone: architecto
-      url: 'http://bailey.com/'
-      summary: architecto
+      name: 'Jane Doe'
+      label: 'Jane Doe'
+      email: user@example.com
+      phone: '+34 600 000 000'
+      url: 'https://example.com'
+      summary: 'Experienced developer with ...'
       location:
-        address: architecto
-        postalCode: architecto
-        city: architecto
-        countryCode: architecto
-        region: architecto
+        address: '123 Main St'
+        postalCode: '28001'
+        city: Madrid
+        countryCode: ES
+        region: string
       profiles:
         -
-          network: architecto
-          username: architecto
-          url: 'http://bailey.com/'
+          network: github
+          username: janedoe
+          url: 'https://github.com/janedoe'
+      awards:
+        - string
+      certificates:
+        - string
+      educations:
+        - string
+      interests:
+        - string
+      languages:
+        - string
+      projects:
+        - string
+      publications:
+        - string
+      references:
+        - string
+      skills:
+        - string
+      volunteer:
+        - string
+      work:
+        - string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The given data was invalid.","errors":{"awards.0":["The awards.0 field must be a valid ULID."],"certificates.0":["The certificates.0 field must be a valid ULID."],"educations.0":["The educations.0 field must be a valid ULID."],"interests.0":["The interests.0 field must be a valid ULID."],"languages.0":["The languages.0 field must be a valid ULID."],"projects.0":["The projects.0 field must be a valid ULID."],"publications.0":["The publications.0 field must be a valid ULID."],"references.0":["The references.0 field must be a valid ULID."],"skills.0":["The skills.0 field must be a valid ULID."],"volunteer.0":["The volunteer.0 field must be a valid ULID."],"work.0":["The work.0 field must be a valid ULID."]},"error_id":"1850b854-cb6f-4440-9336-152ef27279cf"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -882,9 +1027,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -893,22 +1039,34 @@ endpoints:
         name: basic_id
         description: 'The ID of the basic.'
         required: true
-        example: 01kpvvy803bzkw6h2y7skfvzp0
+        example: 01kpwyq0rqnbx7szkb41exxpmp
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      basic_id: 01kpvvy803bzkw6h2y7skfvzp0
+      basic_id: 01kpwyq0rqnbx7szkb41exxpmp
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: ''
+        headers:
+          cache-control: 'no-cache, private'
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -925,9 +1083,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -938,9 +1097,9 @@ endpoints:
       title:
         custom: []
         name: title
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -949,9 +1108,9 @@ endpoints:
       date:
         custom: []
         name: date
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: true
-        example: '2026-04-23T09:45:32'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -962,7 +1121,7 @@ endpoints:
         name: awarder
         description: ''
         required: true
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -971,23 +1130,36 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: true
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      title: architecto
-      date: '2026-04-23T09:45:32'
-      awarder: architecto
-      summary: architecto
+      title: 'Jane Doe'
+      date: '2023-01-01'
+      awarder: string
+      summary: 'Experienced developer with ...'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"title":"Jane Doe","date":"2023-01-01","awarder":"string","summary":"Experienced developer with ...","id":"01kpx24bhrbrya9emwaas1xjhv","updated_at":"2026-04-23T11:38:15.000000Z","created_at":"2026-04-23T11:38:15.000000Z"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1004,9 +1176,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1019,16 +1192,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"173ca39f-5085-408b-ba7d-9afcc6a3e09e"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx24cafrk02zeapaabw86vd","title":"Adipisci quidem nostrum qui.","date":"2022-12-05T23:00:00.000000Z","awarder":"Baumbach Ltd","summary":"Et modi ipsum nostrum omnis autem et consequatur."},{"id":"01kpx24d498xzhdxeqwr8m2qzg","title":"Dolores enim non.","date":"1980-04-04T23:00:00.000000Z","awarder":"Feeney, Leffler and Glover","summary":"Quis adipisci molestias fugit deleniti distinctio eum."}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1045,9 +1217,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1056,23 +1229,23 @@ endpoints:
         name: award_id
         description: 'The ID of the award.'
         required: true
-        example: 01kpvvzppc98nb2hsba9gjwj0k
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      award_id: 01kpvvzppc98nb2hsba9gjwj0k
+      award_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       title:
         custom: []
         name: title
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1081,9 +1254,9 @@ endpoints:
       date:
         custom: []
         name: date
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: false
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1094,7 +1267,7 @@ endpoints:
         name: awarder
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1103,23 +1276,36 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: false
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      title: architecto
-      date: '2026-04-23T09:45:33'
-      awarder: architecto
-      summary: architecto
+      title: 'Jane Doe'
+      date: '2023-01-01'
+      awarder: string
+      summary: 'Experienced developer with ...'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"1e3bcc8d-f788-478b-9621-8a60a4cf0533"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1136,9 +1322,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1147,22 +1334,35 @@ endpoints:
         name: award_id
         description: 'The ID of the award.'
         required: true
-        example: 01kpvvzppc98nb2hsba9gjwj0k
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      award_id: 01kpvvzppc98nb2hsba9gjwj0k
+      award_id: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"4ff39548-bd7f-468f-bed8-78e9772d19e6"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1179,9 +1379,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1192,9 +1393,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1203,9 +1404,9 @@ endpoints:
       date:
         custom: []
         name: date
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: true
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1216,7 +1417,7 @@ endpoints:
         name: issuer
         description: ''
         required: true
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1225,23 +1426,36 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: true
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      date: '2026-04-23T09:45:33'
-      issuer: architecto
-      url: 'http://bailey.com/'
+      name: 'Jane Doe'
+      date: '2023-01-01'
+      issuer: string
+      url: 'https://example.com'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"name":"Jane Doe","date":"2023-01-01","issuer":"string","url":"https:\/\/example.com","id":"01kpx24e4fm3xy5d0285k1b4cc","updated_at":"2026-04-23T11:38:18.000000Z","created_at":"2026-04-23T11:38:18.000000Z"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1258,9 +1472,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1273,16 +1488,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"e21b0ab3-fb2e-46c1-b6d0-6cd2de735ddc"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx24exp7sz88gjt7314v6xs","name":"aut adipisci quidem","date":"2020-05-22T22:00:00.000000Z","issuer":"Dare Group","url":"http:\/\/www.keebler.com\/modi-ipsum-nostrum-omnis-autem-et"},{"id":"01kpx24fq68j38qddayn059wtm","name":"consequatur aut dolores","date":"2020-03-12T23:00:00.000000Z","issuer":"Mitchell-VonRueden","url":"http:\/\/www.glover.biz\/"}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1299,9 +1513,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1310,23 +1525,23 @@ endpoints:
         name: certificate_id
         description: 'The ID of the certificate.'
         required: true
-        example: architecto
+        example: 01kpwyqgb4fbjqwampt9cgwgp5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      certificate_id: architecto
+      certificate_id: 01kpwyqgb4fbjqwampt9cgwgp5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1335,9 +1550,9 @@ endpoints:
       date:
         custom: []
         name: date
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: false
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1348,7 +1563,7 @@ endpoints:
         name: issuer
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1357,23 +1572,36 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      date: '2026-04-23T09:45:33'
-      issuer: architecto
-      url: 'http://bailey.com/'
+      name: 'Jane Doe'
+      date: '2023-01-01'
+      issuer: string
+      url: 'https://example.com'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"id":"01kpwyqgb4fbjqwampt9cgwgp5","name":"Jane Doe","date":"2023-01-01","issuer":"string","url":"https:\/\/example.com","created_at":"2026-04-23T10:38:48.000000Z","updated_at":"2026-04-23T11:38:20.000000Z","deleted_at":null}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1390,9 +1618,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1401,22 +1630,34 @@ endpoints:
         name: certificate_id
         description: 'The ID of the certificate.'
         required: true
-        example: architecto
+        example: 01kpwyqgb4fbjqwampt9cgwgp5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      certificate_id: architecto
+      certificate_id: 01kpwyqgb4fbjqwampt9cgwgp5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: ''
+        headers:
+          cache-control: 'no-cache, private'
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1433,9 +1674,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1448,18 +1690,7 @@ endpoints:
         name: institution
         description: ''
         required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      url:
-        custom: []
-        name: url
-        description: 'Must be a valid URL.'
-        required: false
-        example: 'http://bailey.com/'
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1470,7 +1701,7 @@ endpoints:
         name: area
         description: ''
         required: true
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1481,7 +1712,7 @@ endpoints:
         name: studyType
         description: ''
         required: true
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1490,9 +1721,9 @@ endpoints:
       startDate:
         custom: []
         name: startDate
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: true
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1501,9 +1732,9 @@ endpoints:
       endDate:
         custom: []
         name: endDate
-        description: 'Must be a valid date.'
-        required: true
-        example: '2026-04-23T09:45:33'
+        description: 'Date (Y-m-d). Must be a valid date.'
+        required: false
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1514,7 +1745,18 @@ endpoints:
         name: score
         description: ''
         required: false
-        example: architecto
+        example: string
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      gpa:
+        custom: []
+        name: gpa
+        description: ''
+        required: false
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1523,9 +1765,9 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: true
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1537,27 +1779,40 @@ endpoints:
         description: ''
         required: false
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      institution: architecto
-      url: 'http://bailey.com/'
-      area: architecto
-      studyType: architecto
-      startDate: '2026-04-23T09:45:33'
-      endDate: '2026-04-23T09:45:33'
-      score: architecto
-      summary: architecto
+      institution: string
+      area: string
+      studyType: string
+      startDate: '2023-01-01'
+      endDate: '2023-01-01'
+      score: string
+      gpa: string
+      summary: 'Experienced developer with ...'
       courses:
-        - architecto
+        - string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"institution":"string","area":"string","studyType":"string","startDate":"2023-01-01","endDate":"2023-01-01","score":"string","summary":"Experienced developer with ...","courses":["string"],"id":"01kpx24h4c074k7z9c9jwmkvqa","updated_at":"2026-04-23T11:38:21.000000Z","created_at":"2026-04-23T11:38:21.000000Z"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1574,9 +1829,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1589,16 +1845,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"2c81be6b-a452-494b-bce0-d48f505f4f3f"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx24htkwh4axtdscq277k6d","institution":"Cronin, Dare and Hauck","area":"aut","studyType":"Certificate","startDate":"2019-06-27T02:06:15.000000Z","endDate":"2021-09-03T08:08:22.000000Z","score":"enim","summary":"Facere tempora ex voluptatem laboriosam."},{"id":"01kpx24jmhextkcdepnm5xyzg0","institution":"Emmerich and Sons","area":"recusandae","studyType":"PhD","startDate":"2011-06-23T10:06:25.000000Z","endDate":"2016-06-18T07:52:41.000000Z","score":"rerum","summary":"Repellendus assumenda et tenetur ab reiciendis."}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1615,9 +1870,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1626,14 +1882,14 @@ endpoints:
         name: education_id
         description: 'The ID of the education.'
         required: true
-        example: 01kpvvzhjq46mrm6hdksnqnpp0
+        example: 01kpwyqd0jwd3n95kvbd2hcsc8
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      education_id: 01kpvvzhjq46mrm6hdksnqnpp0
+      education_id: 01kpwyqd0jwd3n95kvbd2hcsc8
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1642,7 +1898,7 @@ endpoints:
         name: institution
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1651,9 +1907,9 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1664,7 +1920,7 @@ endpoints:
         name: area
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1675,7 +1931,7 @@ endpoints:
         name: studyType
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1684,9 +1940,9 @@ endpoints:
       startDate:
         custom: []
         name: startDate
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: false
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1695,9 +1951,9 @@ endpoints:
       endDate:
         custom: []
         name: endDate
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: false
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1708,7 +1964,7 @@ endpoints:
         name: score
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1717,9 +1973,9 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: false
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1731,27 +1987,40 @@ endpoints:
         description: ''
         required: false
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      institution: architecto
-      url: 'http://bailey.com/'
-      area: architecto
-      studyType: architecto
-      startDate: '2026-04-23T09:45:33'
-      endDate: '2026-04-23T09:45:33'
-      score: architecto
-      summary: architecto
+      institution: string
+      url: 'https://example.com'
+      area: string
+      studyType: string
+      startDate: '2023-01-01'
+      endDate: '2023-01-01'
+      score: string
+      summary: 'Experienced developer with ...'
       courses:
-        - architecto
+        - string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"id":"01kpwyqd0jwd3n95kvbd2hcsc8","institution":"string","url":"https:\/\/example.com","area":"string","studyType":"string","startDate":"2023-01-01","endDate":"2023-01-01","score":"string","summary":"Experienced developer with ...","courses":["string"],"created_at":"2026-04-23T10:38:45.000000Z","updated_at":"2026-04-23T11:38:23.000000Z","deleted_at":null}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1768,9 +2037,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1779,22 +2049,34 @@ endpoints:
         name: education_id
         description: 'The ID of the education.'
         required: true
-        example: 01kpvvzhjq46mrm6hdksnqnpp0
+        example: 01kpwyqd0jwd3n95kvbd2hcsc8
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      education_id: 01kpvvzhjq46mrm6hdksnqnpp0
+      education_id: 01kpwyqd0jwd3n95kvbd2hcsc8
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: ''
+        headers:
+          cache-control: 'no-cache, private'
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1811,9 +2093,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1824,9 +2107,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1838,20 +2121,33 @@ endpoints:
         description: ''
         required: true
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
+      name: 'Jane Doe'
       keywords:
-        - architecto
+        - string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"name":"Jane Doe","keywords":["string"],"id":"01kpx24m4tsnsj0nf4wrx69k64","updated_at":"2026-04-23T11:38:24.000000Z","created_at":"2026-04-23T11:38:24.000000Z"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1868,9 +2164,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -1883,16 +2180,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"826e9928-17f2-44d7-9945-25bdbeeb06b5"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx24mtr742xjn8pk86996zr","name":"aut","keywords":["quidem","nostrum","qui","commodi","incidunt","iure","odit"]},{"id":"01kpx24ngsb1nq0wgyyhmfs640","name":"et","keywords":["modi","ipsum","nostrum","omnis","autem","et","consequatur"]}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1909,9 +2205,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -1934,9 +2231,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1948,20 +2245,33 @@ endpoints:
         description: ''
         required: false
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
+      name: 'Jane Doe'
       keywords:
-        - architecto
+        - string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"740df389-e66b-4c65-8c89-e5cf1281f7d1"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -1978,9 +2288,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2002,9 +2313,22 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"70cb715d-c8b5-4077-b99a-862b95927ccc"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2021,9 +2345,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2031,35 +2356,48 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      language:
+      name:
         custom: []
-        name: language
-        description: ''
+        name: name
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      fluency:
+      code:
         custom: []
-        name: fluency
+        name: code
         description: ''
         required: true
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      language: architecto
-      fluency: architecto
+      name: 'Jane Doe'
+      code: string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 500
+        content: '{"message":"Server Error.","error_id":"e827f71d-09e1-4bd0-b55f-813e98df9a37"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2076,9 +2414,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2091,16 +2430,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"25596ccd-1e56-4a6d-9e50-eb3ca6386c1e"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx24p7mtt41xr9mj465j4ms","language":"et","fluency":"native"},{"id":"01kpx24q0t10nwve77r7jgwtqd","language":"sg","fluency":"native"}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2117,9 +2455,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2128,46 +2467,59 @@ endpoints:
         name: language_id
         description: 'The ID of the language.'
         required: true
-        example: architecto
+        example: 01kpwyr7fb6ssc5bbxf9vagyf5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      language_id: architecto
+      language_id: 01kpwyr7fb6ssc5bbxf9vagyf5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      language:
+      name:
         custom: []
-        name: language
-        description: ''
+        name: name
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      fluency:
+      code:
         custom: []
-        name: fluency
+        name: code
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      language: architecto
-      fluency: architecto
+      name: 'Jane Doe'
+      code: string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"id":"01kpwyr7fb6ssc5bbxf9vagyf5","language":"Espa\u00f1ol","fluency":"Nativo","created_at":"2026-04-23T10:39:12.000000Z","updated_at":"2026-04-23T10:39:12.000000Z","deleted_at":null}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2184,9 +2536,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2195,22 +2548,34 @@ endpoints:
         name: language_id
         description: 'The ID of the language.'
         required: true
-        example: architecto
+        example: 01kpwyr7fb6ssc5bbxf9vagyf5
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      language_id: architecto
+      language_id: 01kpwyr7fb6ssc5bbxf9vagyf5
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: ''
+        headers:
+          cache-control: 'no-cache, private'
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2227,9 +2592,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2240,9 +2606,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2251,9 +2617,9 @@ endpoints:
       startDate:
         custom: []
         name: startDate
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: true
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2262,9 +2628,9 @@ endpoints:
       endDate:
         custom: []
         name: endDate
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: true
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2273,9 +2639,9 @@ endpoints:
       description:
         custom: []
         name: description
-        description: ''
+        description: 'Short description.'
         required: true
-        example: 'Eius et animi quos velit et.'
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2287,7 +2653,7 @@ endpoints:
         description: ''
         required: true
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -2299,7 +2665,7 @@ endpoints:
         description: ''
         required: true
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -2311,7 +2677,7 @@ endpoints:
         description: ''
         required: true
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -2320,30 +2686,43 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      startDate: '2026-04-23T09:45:33'
-      endDate: '2026-04-23T09:45:33'
-      description: 'Eius et animi quos velit et.'
+      name: 'Jane Doe'
+      startDate: '2023-01-01'
+      endDate: '2023-01-01'
+      description: 'Experienced developer with ...'
       roles:
-        - architecto
+        - string
       highlights:
-        - architecto
+        - string
       keywords:
-        - architecto
-      url: 'http://bailey.com/'
+        - string
+      url: 'https://example.com'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"name":"Jane Doe","startDate":"2023-01-01","endDate":"2023-01-01","description":"Experienced developer with ...","url":"https:\/\/example.com","roles":["string"],"highlights":["string"],"keywords":["string"],"id":"01kpx24r77cjrwjct0atyvg200","updated_at":"2026-04-23T11:38:28.000000Z","created_at":"2026-04-23T11:38:28.000000Z"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2360,9 +2739,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2375,16 +2755,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"77d86d57-b29b-4749-9436-0b9d0154d87c"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx24rxww59yd7h5pz4b6rwb","name":"Nostrum qui commodi.","startDate":"2025-06-24T02:06:07.000000Z","endDate":"2026-08-07T13:36:42.000000Z","description":"Aut dolores enim non facere tempora ex voluptatem. Praesentium quis adipisci molestias fugit. Distinctio eum doloremque id aut libero aliquam veniam corporis. Mollitia deleniti nemo odit quia officia.","highlights":["Neque blanditiis odio veritatis excepturi doloribus delectus.","Qui repudiandae laboriosam est alias.","Ratione nemo voluptate accusamus ut et recusandae modi rerum.","Repellendus assumenda et tenetur ab reiciendis.","Perspiciatis deserunt ducimus corrupti et dolores quia."],"url":"https:\/\/thiel.com\/repellat-officiis-corporis-nesciunt-ut.html"},{"id":"01kpx24smxajgffjsbabqr0cf1","name":"Molestiae ut rem.","startDate":"2026-02-14T09:17:08.000000Z","endDate":"2027-04-26T18:08:36.000000Z","description":"Error neque recusandae et ipsam dolorem et ut dicta. Assumenda consequatur ut et sunt quisquam. Repellendus ut eaque alias ratione dolores.","highlights":["Ea ut aut deserunt sint quis.","Quod id aspernatur consectetur id a consectetur assumenda.","Neque sit sunt nihil accusantium odit ut perspiciatis.","Dolorem aut quis ut dolores omnis.","Earum consequatur asperiores est vel id aut officiis eos.","Et qui unde et."],"url":"https:\/\/www.barton.com\/iusto-facere-possimus-aliquam-consequatur"}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2401,9 +2780,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2426,9 +2806,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2437,9 +2817,9 @@ endpoints:
       startDate:
         custom: []
         name: startDate
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: false
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2448,9 +2828,9 @@ endpoints:
       endDate:
         custom: []
         name: endDate
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: false
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2459,9 +2839,9 @@ endpoints:
       description:
         custom: []
         name: description
-        description: ''
+        description: 'Short description.'
         required: false
-        example: 'Eius et animi quos velit et.'
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2473,7 +2853,7 @@ endpoints:
         description: ''
         required: false
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -2485,7 +2865,7 @@ endpoints:
         description: ''
         required: false
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -2497,7 +2877,7 @@ endpoints:
         description: ''
         required: false
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
@@ -2506,30 +2886,43 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      startDate: '2026-04-23T09:45:33'
-      endDate: '2026-04-23T09:45:33'
-      description: 'Eius et animi quos velit et.'
+      name: 'Jane Doe'
+      startDate: '2023-01-01'
+      endDate: '2023-01-01'
+      description: 'Experienced developer with ...'
       roles:
-        - architecto
+        - string
       highlights:
-        - architecto
+        - string
       keywords:
-        - architecto
-      url: 'http://bailey.com/'
+        - string
+      url: 'https://example.com'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"c5a310bf-5d7c-4994-88b9-1e7a12929cd1"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2546,9 +2939,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2570,9 +2964,22 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"4cf88830-26d1-429d-8354-9d80b334d3b1"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2589,9 +2996,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2602,9 +3010,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2615,7 +3023,7 @@ endpoints:
         name: publisher
         description: ''
         required: true
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2624,9 +3032,9 @@ endpoints:
       releaseDate:
         custom: []
         name: releaseDate
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: true
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2635,9 +3043,9 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2646,24 +3054,37 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: true
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      publisher: architecto
-      releaseDate: '2026-04-23T09:45:33'
-      url: 'http://bailey.com/'
-      summary: architecto
+      name: 'Jane Doe'
+      publisher: string
+      releaseDate: '2023-01-01'
+      url: 'https://example.com'
+      summary: 'Experienced developer with ...'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"name":"Jane Doe","publisher":"string","releaseDate":"2023-01-01","url":"https:\/\/example.com","summary":"Experienced developer with ...","id":"01kpx24tbc8annhffh88bngk68","updated_at":"2026-04-23T11:38:30.000000Z","created_at":"2026-04-23T11:38:30.000000Z"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2680,9 +3101,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2695,16 +3117,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"7c557a23-6ce6-42f5-9216-57039c8e870c"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx24v49ybmfww4ztqfs089c","name":"Adipisci quidem nostrum qui commodi.","publisher":"Baumbach Ltd","releaseDate":"1977-08-14T22:00:00.000000Z","url":"https:\/\/www.bauch.com\/omnis-autem-et-consequatur","summary":"Enim non facere tempora ex voluptatem laboriosam praesentium. Adipisci molestias fugit deleniti distinctio eum doloremque id. Libero aliquam veniam corporis dolorem mollitia deleniti."},{"id":"01kpx24vv14746r0nw0shkcr90","name":"Odit quia officia est dignissimos neque.","publisher":"O''Connell, Beier and Bradtke","releaseDate":"1976-06-14T22:00:00.000000Z","url":"http:\/\/kuvalis.com\/est-alias-tenetur-ratione","summary":"Accusamus ut et recusandae. Rerum ex repellendus assumenda et. Ab reiciendis quia perspiciatis deserunt ducimus corrupti."}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2721,9 +3142,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2746,9 +3168,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2759,7 +3181,7 @@ endpoints:
         name: publisher
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2768,9 +3190,9 @@ endpoints:
       releaseDate:
         custom: []
         name: releaseDate
-        description: 'Must be a valid date.'
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: false
-        example: '2026-04-23T09:45:33'
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2779,9 +3201,9 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2790,24 +3212,37 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: false
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      publisher: architecto
-      releaseDate: '2026-04-23T09:45:33'
-      url: 'http://bailey.com/'
-      summary: architecto
+      name: 'Jane Doe'
+      publisher: string
+      releaseDate: '2023-01-01'
+      url: 'https://example.com'
+      summary: 'Experienced developer with ...'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"84e868e0-bc10-4b2b-aabc-a95ae31221e6"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2824,9 +3259,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2848,9 +3284,22 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"7b8f9984-392e-4584-9dbf-2282d8fdc75d"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2867,9 +3316,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2880,9 +3330,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -2893,19 +3343,56 @@ endpoints:
         name: reference
         description: ''
         required: true
-        example: architecto
+        example: string
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Email address. Must be a valid email address.'
+        required: false
+        example: user@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Phone number.'
+        required: false
+        example: '+34 600 000 000'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      reference: architecto
+      name: 'Jane Doe'
+      reference: string
+      email: user@example.com
+      phone: '+34 600 000 000'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"name":"Jane Doe","reference":"string","id":"01kpx24wps2ep15ba7a8sgv27b","updated_at":"2026-04-23T11:38:33.000000Z","created_at":"2026-04-23T11:38:33.000000Z"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2922,9 +3409,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -2937,16 +3425,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"6ab61ab8-9717-4182-806c-891ca2e069cd"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx251k6t4hjf03pbk5q6xvf","name":"Morgan Hirthe","reference":"Qui commodi incidunt iure odit."},{"id":"01kpx252dq8t9mmxjtmaknpd5q","name":"Mina Bauch","reference":"Nostrum omnis autem et consequatur aut."}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -2963,9 +3450,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -2988,9 +3476,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3001,19 +3489,56 @@ endpoints:
         name: reference
         description: ''
         required: false
-        example: architecto
+        example: string
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Email address. Must be a valid email address.'
+        required: false
+        example: user@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Phone number.'
+        required: false
+        example: '+34 600 000 000'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      reference: architecto
+      name: 'Jane Doe'
+      reference: string
+      email: user@example.com
+      phone: '+34 600 000 000'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"8307a7a6-e16f-4b82-a15c-f811a128f31b"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3030,9 +3555,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -3054,9 +3580,22 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"9704ecaa-2f12-4515-afaf-867addb7755f"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3073,9 +3612,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -3086,9 +3626,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3099,7 +3639,7 @@ endpoints:
         name: level
         description: ''
         required: true
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3111,21 +3651,34 @@ endpoints:
         description: ''
         required: true
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      level: architecto
+      name: 'Jane Doe'
+      level: string
       keywords:
-        - architecto
+        - string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"name":"Jane Doe","level":"string","keywords":["string"],"id":"01kpx2537k87gd30p6nb2wbsfa","updated_at":"2026-04-23T11:38:39.000000Z","created_at":"2026-04-23T11:38:39.000000Z"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3142,9 +3695,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -3157,16 +3711,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"ce25b2a4-aeed-4369-b2a7-93ea0dd2becc"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx253yca2mppwph8xc27ecg","name":"aut","level":"beginner","keywords":["nostrum","qui","commodi","incidunt","iure","odit","et"]},{"id":"01kpx254m7ejavvhm9cv1j1dt1","name":"et","level":"expert","keywords":["nostrum","omnis","autem","et","consequatur"]}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3183,9 +3736,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -3194,23 +3748,23 @@ endpoints:
         name: skill_id
         description: 'The ID of the skill.'
         required: true
-        example: 01kpvw0x8tpjpnmwrq9kkwwx10
+        example: 01kpwyr1mag9z8tc4jhytjhwvv
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      skill_id: 01kpvw0x8tpjpnmwrq9kkwwx10
+      skill_id: 01kpwyr1mag9z8tc4jhytjhwvv
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3221,7 +3775,7 @@ endpoints:
         name: level
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3233,21 +3787,34 @@ endpoints:
         description: ''
         required: false
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      level: architecto
+      name: 'Jane Doe'
+      level: string
       keywords:
-        - architecto
+        - string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"id":"01kpwyr1mag9z8tc4jhytjhwvv","name":"Jane Doe","level":"string","keywords":["string"],"created_at":"2026-04-23T10:39:06.000000Z","updated_at":"2026-04-23T11:38:41.000000Z","deleted_at":null}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3264,9 +3831,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -3275,22 +3843,34 @@ endpoints:
         name: skill_id
         description: 'The ID of the skill.'
         required: true
-        example: 01kpvw0x8tpjpnmwrq9kkwwx10
+        example: 01kpwyr1mag9z8tc4jhytjhwvv
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      skill_id: 01kpvw0x8tpjpnmwrq9kkwwx10
+      skill_id: 01kpwyr1mag9z8tc4jhytjhwvv
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: ''
+        headers:
+          cache-control: 'no-cache, private'
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3307,9 +3887,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -3322,7 +3903,7 @@ endpoints:
         name: organization
         description: ''
         required: true
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3333,18 +3914,7 @@ endpoints:
         name: position
         description: ''
         required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      url:
-        custom: []
-        name: url
-        description: 'Must be a valid URL.'
-        required: false
-        example: 'http://bailey.com/'
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3353,9 +3923,9 @@ endpoints:
       startDate:
         custom: []
         name: startDate
-        description: ''
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: true
-        example: architecto
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3364,9 +3934,9 @@ endpoints:
       endDate:
         custom: []
         name: endDate
-        description: ''
-        required: true
-        example: architecto
+        description: 'Date (Y-m-d). Must be a valid date.'
+        required: false
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3375,39 +3945,37 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
-        required: true
-        example: architecto
+        description: 'Short description.'
+        required: false
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      highlights:
-        custom: []
-        name: highlights
-        description: ''
-        required: true
-        example:
-          - architecto
-        type: 'string[]'
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
     cleanBodyParameters:
-      organization: architecto
-      position: architecto
-      url: 'http://bailey.com/'
-      startDate: architecto
-      endDate: architecto
-      summary: architecto
-      highlights:
-        - architecto
+      organization: string
+      position: string
+      startDate: '2023-01-01'
+      endDate: '2023-01-01'
+      summary: 'Experienced developer with ...'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 500
+        content: '{"message":"Server Error.","error_id":"c787db88-9aa3-4253-8b01-c86019517f32"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3424,9 +3992,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -3439,16 +4008,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"3bb41dc3-0c65-42ae-a1e3-fb480870a9ff"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx256164br7cdh51jds3jza","organization":"Cronin, Dare and Hauck","position":"Locomotive Engineer","url":"http:\/\/www.keebler.com\/modi-ipsum-nostrum-omnis-autem-et","startDate":"2023-06-28T02:06:33.000000Z","endDate":"2024-11-10T13:42:07.000000Z","summary":"Aut dolores enim non facere tempora ex voluptatem.","highlights":["Quis adipisci molestias fugit deleniti distinctio eum.","Id aut libero aliquam veniam.","Dolorem mollitia deleniti nemo."]},{"id":"01kpx256qrhe8jr19kp8wqwddb","organization":"Doyle, Emard and Wolff","position":"Rotary Drill Operator","url":"https:\/\/beier.com\/delectus-fugit-qui-repudiandae-laboriosam.html","startDate":"2023-02-24T11:42:14.000000Z","endDate":"2026-01-28T08:11:36.000000Z","summary":"Alias tenetur ratione nemo voluptate accusamus ut et.","highlights":["Rerum ex repellendus assumenda et.","Ab reiciendis quia perspiciatis deserunt ducimus corrupti."]}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3465,9 +4033,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -3492,7 +4061,7 @@ endpoints:
         name: organization
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3503,18 +4072,7 @@ endpoints:
         name: position
         description: ''
         required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      url:
-        custom: []
-        name: url
-        description: 'Must be a valid URL.'
-        required: false
-        example: 'http://bailey.com/'
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3523,9 +4081,9 @@ endpoints:
       startDate:
         custom: []
         name: startDate
-        description: ''
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: false
-        example: architecto
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3534,9 +4092,9 @@ endpoints:
       endDate:
         custom: []
         name: endDate
-        description: ''
+        description: 'Date (Y-m-d). Must be a valid date.'
         required: false
-        example: architecto
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3545,9 +4103,9 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: false
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3559,25 +4117,37 @@ endpoints:
         description: ''
         required: false
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      organization: architecto
-      position: architecto
-      url: 'http://bailey.com/'
-      startDate: architecto
-      endDate: architecto
-      summary: architecto
+      organization: string
+      position: string
+      startDate: '2023-01-01'
+      endDate: '2023-01-01'
+      summary: 'Experienced developer with ...'
       highlights:
-        - architecto
+        - string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"162caa4f-fff0-4607-a899-b6066f693438"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3594,9 +4164,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -3618,9 +4189,22 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 404
+        content: '{"message":"Not Found.","error_id":"203fc71a-d0e7-4f02-b00c-0f5be2255e3d"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3637,9 +4221,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -3650,9 +4235,9 @@ endpoints:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: true
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3663,7 +4248,7 @@ endpoints:
         name: position
         description: ''
         required: true
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3672,9 +4257,9 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3683,9 +4268,9 @@ endpoints:
       startDate:
         custom: []
         name: startDate
-        description: ''
+        description: 'Date (Y-m-d).'
         required: true
-        example: architecto
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3694,9 +4279,9 @@ endpoints:
       endDate:
         custom: []
         name: endDate
-        description: ''
+        description: 'Date (Y-m-d).'
         required: true
-        example: architecto
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3705,9 +4290,9 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: true
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3719,25 +4304,38 @@ endpoints:
         description: ''
         required: true
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      position: architecto
-      url: 'http://bailey.com/'
-      startDate: architecto
-      endDate: architecto
-      summary: architecto
+      name: 'Jane Doe'
+      position: string
+      url: 'https://example.com'
+      startDate: '2023-01-01'
+      endDate: '2023-01-01'
+      summary: 'Experienced developer with ...'
       highlights:
-        - architecto
+        - string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"name":"Jane Doe","position":"string","url":"https:\/\/example.com","startDate":"2023-01-01","endDate":"2023-01-01","summary":"Experienced developer with ...","highlights":["string"],"id":"01kpx257ebv5gwtjmt15e0jdkw","updated_at":"2026-04-23T11:38:44.000000Z","created_at":"2026-04-23T11:38:44.000000Z"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3754,9 +4352,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -3769,16 +4368,15 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"ba95802a-281b-4837-95b6-883d5bcbc8dd"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-          access-control-expose-headers: '*'
-        description: null
+        status: 200
+        content: '{"data":[{"id":"01kpx2583k5bm1k3nkayejs862","name":"Cronin, Dare and Hauck","position":"Locomotive Engineer","url":"http:\/\/www.keebler.com\/modi-ipsum-nostrum-omnis-autem-et","startDate":"2021-07-02T02:06:37.000000Z","endDate":"2025-03-30T13:04:17.000000Z","summary":"Dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci. Fugit deleniti distinctio eum doloremque id aut libero. Veniam corporis dolorem mollitia.","highlights":["Odit quia officia est dignissimos neque blanditiis odio."]},{"id":"01kpx2593kja5q2nxe28hhjz61","name":"Emmerich and Sons","position":"User Experience Manager","url":"http:\/\/www.conroy.net\/tenetur-ratione-nemo-voluptate-accusamus-ut-et-recusandae-modi.html","startDate":"2022-06-28T10:06:48.000000Z","endDate":"2022-08-21T05:49:38.000000Z","summary":"Repellendus assumenda et tenetur ab reiciendis. Perspiciatis deserunt ducimus corrupti et dolores quia. Assumenda odit doloribus repellat officiis corporis nesciunt ut. Iure impedit molestiae ut rem est esse sint.","highlights":["Sunt suscipit doloribus fugiat ut aut deserunt et.","Neque recusandae et ipsam dolorem et ut dicta."]}]}'
+        headers: []
+        description: ''
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3795,9 +4393,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -3806,23 +4405,23 @@ endpoints:
         name: work_id
         description: 'The ID of the work.'
         required: true
-        example: 01kpvvyat5tdry5hat3mpb7ahb
+        example: 01kpwyq2bkcem6sybm168m17j6
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      work_id: 01kpvvyat5tdry5hat3mpb7ahb
+      work_id: 01kpwyq2bkcem6sybm168m17j6
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
         custom: []
         name: name
-        description: ''
+        description: 'Name / title.'
         required: false
-        example: architecto
+        example: 'Jane Doe'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3833,7 +4432,7 @@ endpoints:
         name: position
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3842,9 +4441,9 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'Must be a valid URL.'
+        description: 'URL. Must be a valid URL.'
         required: false
-        example: 'http://bailey.com/'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3853,9 +4452,9 @@ endpoints:
       startDate:
         custom: []
         name: startDate
-        description: ''
+        description: 'Date (Y-m-d).'
         required: false
-        example: architecto
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3864,9 +4463,9 @@ endpoints:
       endDate:
         custom: []
         name: endDate
-        description: ''
+        description: 'Date (Y-m-d).'
         required: false
-        example: architecto
+        example: '2023-01-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3875,9 +4474,9 @@ endpoints:
       summary:
         custom: []
         name: summary
-        description: ''
+        description: 'Short description.'
         required: false
-        example: architecto
+        example: 'Experienced developer with ...'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -3889,25 +4488,38 @@ endpoints:
         description: ''
         required: false
         example:
-          - architecto
+          - string
         type: 'string[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      position: architecto
-      url: 'http://bailey.com/'
-      startDate: architecto
-      endDate: architecto
-      summary: architecto
+      name: 'Jane Doe'
+      position: string
+      url: 'https://example.com'
+      startDate: '2023-01-01'
+      endDate: '2023-01-01'
+      summary: 'Experienced developer with ...'
       highlights:
-        - architecto
+        - string
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"id":"01kpwyq2bkcem6sybm168m17j6","name":"Jane Doe","position":"string","url":"https:\/\/example.com","startDate":"2023-01-01","endDate":"2023-01-01","summary":"Experienced developer with ...","highlights":["string"],"created_at":"2026-04-23T10:38:34.000000Z","updated_at":"2026-04-23T11:38:46.000000Z","deleted_at":null}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3924,9 +4536,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -3935,22 +4548,34 @@ endpoints:
         name: work_id
         description: 'The ID of the work.'
         required: true
-        example: 01kpvvyat5tdry5hat3mpb7ahb
+        example: 01kpwyq2bkcem6sybm168m17j6
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      work_id: 01kpvvyat5tdry5hat3mpb7ahb
+      work_id: 01kpwyq2bkcem6sybm168m17j6
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: ''
+        headers:
+          cache-control: 'no-cache, private'
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -3967,9 +4592,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -3991,7 +4617,10 @@ endpoints:
           access-control-expose-headers: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -4008,9 +4637,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -4032,7 +4662,10 @@ endpoints:
           access-control-expose-headers: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -4049,9 +4682,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -4073,7 +4707,10 @@ endpoints:
           access-control-expose-headers: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -4090,9 +4727,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -4105,7 +4743,7 @@ endpoints:
         name: message
         description: ''
         required: true
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4116,7 +4754,7 @@ endpoints:
         name: session_id
         description: ''
         required: false
-        example: architecto
+        example: string
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -4127,19 +4765,33 @@ endpoints:
         name: metadata
         description: ''
         required: false
-        example: null
+        example: []
         type: object
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      message: architecto
-      session_id: architecto
+      message: string
+      session_id: string
+      metadata: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 422
+        content: '{"message":"Solo se permiten consultas relacionadas con el curr\u00edculum.","errors":{"message":["El mensaje debe centrarse en el curr\u00edculum y no incluir instrucciones potencialmente riesgosas."]}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -4156,9 +4808,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: multipart/form-data
       Accept: application/json
     urlParameters: []
@@ -4180,9 +4833,22 @@ endpoints:
     cleanBodyParameters: []
     fileParameters:
       file: null
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The given data was invalid.","errors":{"file":["The file field must be a file of type: application\/json, text\/plain."]},"error_id":"c2edc792-4b10-4103-9503-2ec58d44e512"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -4199,9 +4865,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: multipart/form-data
       Accept: application/json
     urlParameters: []
@@ -4223,9 +4890,22 @@ endpoints:
     cleanBodyParameters: []
     fileParameters:
       file: null
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The given data was invalid.","errors":{"file":["The file field must be a file of type: pdf, doc, docx."]},"error_id":"5c62689d-2cc2-4a8a-953e-08edeb55ca86"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -4242,10 +4922,11 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
-      Content-Type: multipart/form-data
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
@@ -4266,21 +4947,33 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'This field is required when <code>file</code> is not present. Must be a valid URL.'
+        description: 'URL. This field is required when <code>file</code> is not present. Must be a valid URL.'
         required: false
-        example: 'http://www.bailey.biz/quos-velit-et-fugiat-sunt-nihil-accusantium-harum.html'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      url: 'http://www.bailey.biz/quos-velit-et-fugiat-sunt-nihil-accusantium-harum.html'
-    fileParameters:
-      file: null
-    responses: []
+      url: 'https://example.com'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 422
+        content: '{"ok":false,"message":"No se pudo extraer metadata de la educaci\u00f3n."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -4297,10 +4990,11 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
-      Content-Type: multipart/form-data
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
@@ -4321,21 +5015,33 @@ endpoints:
       url:
         custom: []
         name: url
-        description: 'This field is required when <code>file</code> is not present. Must be a valid URL.'
+        description: 'URL. This field is required when <code>file</code> is not present. Must be a valid URL.'
         required: false
-        example: 'http://www.bailey.biz/quos-velit-et-fugiat-sunt-nihil-accusantium-harum.html'
+        example: 'https://example.com'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      url: 'http://www.bailey.biz/quos-velit-et-fugiat-sunt-nihil-accusantium-harum.html'
-    fileParameters:
-      file: null
-    responses: []
+      url: 'https://example.com'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 422
+        content: '{"ok":false,"message":"No se pudo extraer metadata del certificado."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-expose-headers: '*'
+        description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -4352,9 +5058,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -4379,8 +5086,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"920218ec-3494-4712-a418-0ab2b16f58cf"}'
+        status: 200
+        content: '{"current_page":564,"data":[],"first_page_url":"http:\/\/0.0.0.0:8000\/api\/ai-request\/564?page=1","from":null,"last_page":1,"last_page_url":"http:\/\/0.0.0.0:8000\/api\/ai-request\/564?page=1","links":[{"url":"http:\/\/0.0.0.0:8000\/api\/ai-request\/564?page=563","label":"&laquo; Previous","page":563,"active":false},{"url":"http:\/\/0.0.0.0:8000\/api\/ai-request\/564?page=1","label":"1","page":1,"active":false},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"next_page_url":null,"path":"http:\/\/0.0.0.0:8000\/api\/ai-request\/564","per_page":15,"prev_page_url":"http:\/\/0.0.0.0:8000\/api\/ai-request\/564?page=563","to":null,"total":0}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -4388,7 +5095,10 @@ endpoints:
           access-control-expose-headers: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -4405,9 +5115,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -4432,8 +5143,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"50a7e33f-8778-40be-af01-e895f237fc3b"}'
+        status: 200
+        content: '{"current_page":564,"data":[],"first_page_url":"http:\/\/0.0.0.0:8000\/api\/agent-conversation\/564?page=1","from":null,"last_page":1,"last_page_url":"http:\/\/0.0.0.0:8000\/api\/agent-conversation\/564?page=1","links":[{"url":"http:\/\/0.0.0.0:8000\/api\/agent-conversation\/564?page=563","label":"&laquo; Previous","page":563,"active":false},{"url":"http:\/\/0.0.0.0:8000\/api\/agent-conversation\/564?page=1","label":"1","page":1,"active":false},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"next_page_url":null,"path":"http:\/\/0.0.0.0:8000\/api\/agent-conversation\/564","per_page":15,"prev_page_url":"http:\/\/0.0.0.0:8000\/api\/agent-conversation\/564?page=563","to":null,"total":0}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -4441,7 +5152,10 @@ endpoints:
           access-control-expose-headers: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null
@@ -4458,9 +5172,10 @@ endpoints:
       subgroupDescription: ''
       title: ''
       description: ''
-      authenticated: false
+      authenticated: true
       deprecated: false
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -4497,8 +5212,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated.","error_id":"482ef2f7-bfe8-4351-996f-75cfec21a014"}'
+        status: 404
+        content: '{"message":"Not Found.","error_id":"359c819d-e3fd-477c-9c06-e4e59cef4094"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -4506,7 +5221,10 @@ endpoints:
           access-control-expose-headers: '*'
         description: null
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 16|XMSHgRMfFGO65CUzmXOToRKbGFBuDnRR3BYNtISk2b41a3aa'
     controller: null
     method: null
     route: null

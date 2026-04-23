@@ -3,9 +3,11 @@
 namespace App\Http\Requests\AiRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Traits\ScribeBodyParameters;
 
 class Read extends FormRequest
 {
+    use ScribeBodyParameters;
     public function authorize(): bool
     {
         return true;
@@ -14,7 +16,7 @@ class Read extends FormRequest
     public function rules(): array
     {
         return [
-            'per_page' => 'integer|min:1|max:100',
+            'page' => 'integer',
         ];
     }
 }

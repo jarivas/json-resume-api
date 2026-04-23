@@ -10,6 +10,15 @@ tags:
   -
     name: Endpoints
     description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.'
+security:
+  -
+    default: []
 paths:
   /api/authentication/login:
     post:
@@ -17,7 +26,39 @@ paths:
       operationId: postApiAuthenticationLogin
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The given data was invalid.'
+                  errors:
+                    password:
+                      - 'The password field must be at least 8 characters.'
+                      - 'The password field must contain at least one uppercase and one lowercase letter.'
+                      - 'The password field must contain at least one number.'
+                  error_id: 9b815888-7b18-43d3-b428-cf1e09615bea
+                properties:
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  errors:
+                    type: object
+                    properties:
+                      password:
+                        type: array
+                        example:
+                          - 'The password field must be at least 8 characters.'
+                          - 'The password field must contain at least one uppercase and one lowercase letter.'
+                          - 'The password field must contain at least one number.'
+                        items:
+                          type: string
+                  error_id:
+                    type: string
+                    example: 9b815888-7b18-43d3-b428-cf1e09615bea
       tags:
         - Endpoints
       requestBody:
@@ -29,33 +70,70 @@ paths:
               properties:
                 email:
                   type: string
-                  description: 'Must be a valid email address.'
-                  example: gbailey@example.net
+                  description: 'Email address. Must be a valid email address.'
+                  example: user@example.com
                 password:
                   type: string
                   description: ''
-                  example: '|]|{+-'
+                  example: string
               required:
                 - email
                 - password
-      security: []
   /api/authentication/recovery:
     post:
       summary: ''
       operationId: postApiAuthenticationRecovery
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        204:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
       tags:
         - Endpoints
-      security: []
   /api/authentication/change-password:
     post:
       summary: ''
       operationId: postApiAuthenticationChangePassword
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The given data was invalid.'
+                  errors:
+                    password:
+                      - 'The password field must be at least 8 characters.'
+                      - 'The password field must contain at least one uppercase and one lowercase letter.'
+                      - 'The password field must contain at least one number.'
+                  error_id: 52446ad5-a702-4cf7-aa70-b31365aa406b
+                properties:
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  errors:
+                    type: object
+                    properties:
+                      password:
+                        type: array
+                        example:
+                          - 'The password field must be at least 8 characters.'
+                          - 'The password field must contain at least one uppercase and one lowercase letter.'
+                          - 'The password field must contain at least one number.'
+                        items:
+                          type: string
+                  error_id:
+                    type: string
+                    example: 52446ad5-a702-4cf7-aa70-b31365aa406b
       tags:
         - Endpoints
       requestBody:
@@ -68,37 +146,149 @@ paths:
                 password:
                   type: string
                   description: ''
-                  example: '|]|{+-'
+                  example: string
               required:
                 - password
-      security: []
   /api/authentication/refresh-token:
     post:
       summary: ''
       operationId: postApiAuthenticationRefreshToken
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  token: 18|Awt2RnWCtNPIQ7jdySMUBwBOxN3FkvKnullI6p894a727052
+                  expiresAt: '2026-04-23 13:43:14'
+                properties:
+                  token:
+                    type: string
+                    example: 18|Awt2RnWCtNPIQ7jdySMUBwBOxN3FkvKnullI6p894a727052
+                  expiresAt:
+                    type: string
+                    example: '2026-04-23 13:43:14'
       tags:
         - Endpoints
-      security: []
   /api/authentication/logout:
     post:
       summary: ''
       operationId: postApiAuthenticationLogout
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        204:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
       tags:
         - Endpoints
-      security: []
   /api/basic:
     post:
       summary: ''
       operationId: postApiBasic
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: 'Jane Doe'
+                  label: 'Jane Doe'
+                  email: user@example.com
+                  phone: '+34 600 000 000'
+                  url: 'https://example.com'
+                  summary: 'Experienced developer with ...'
+                  location:
+                    address: '123 Main St'
+                    postalCode: '28001'
+                    city: Madrid
+                    countryCode: ES
+                    region: string
+                  profiles:
+                    -
+                      network: github
+                      username: janedoe
+                      url: 'https://github.com/janedoe'
+                  id: 01kpx24aq2h5js7t4aes7f6npb
+                  updated_at: '2026-04-23T11:38:14.000000Z'
+                  created_at: '2026-04-23T11:38:14.000000Z'
+                properties:
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  label:
+                    type: string
+                    example: 'Jane Doe'
+                  email:
+                    type: string
+                    example: user@example.com
+                  phone:
+                    type: string
+                    example: '+34 600 000 000'
+                  url:
+                    type: string
+                    example: 'https://example.com'
+                  summary:
+                    type: string
+                    example: 'Experienced developer with ...'
+                  location:
+                    type: object
+                    properties:
+                      address:
+                        type: string
+                        example: '123 Main St'
+                      postalCode:
+                        type: string
+                        example: '28001'
+                      city:
+                        type: string
+                        example: Madrid
+                      countryCode:
+                        type: string
+                        example: ES
+                      region:
+                        type: string
+                        example: string
+                  profiles:
+                    type: array
+                    example:
+                      -
+                        network: github
+                        username: janedoe
+                        url: 'https://github.com/janedoe'
+                    items:
+                      type: object
+                      properties:
+                        network:
+                          type: string
+                          example: github
+                        username:
+                          type: string
+                          example: janedoe
+                        url:
+                          type: string
+                          example: 'https://github.com/janedoe'
+                  id:
+                    type: string
+                    example: 01kpx24aq2h5js7t4aes7f6npb
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:14.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T11:38:14.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -110,103 +300,212 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 label:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 email:
                   type: string
-                  description: 'Must be a valid email address.'
-                  example: zbailey@example.net
+                  description: 'Email address. Must be a valid email address.'
+                  example: user@example.com
                 phone:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Phone number.'
+                  example: '+34 600 000 000'
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
                 location:
                   type: object
                   description: ''
-                  example: null
+                  example: []
                   properties:
                     address:
                       type: string
-                      description: ''
-                      example: architecto
+                      description: 'Street address.'
+                      example: '123 Main St'
                     postalCode:
                       type: string
-                      description: ''
-                      example: architecto
+                      description: 'Postal code / ZIP.'
+                      example: '28001'
                     city:
                       type: string
-                      description: ''
-                      example: architecto
+                      description: City.
+                      example: Madrid
                     countryCode:
                       type: string
-                      description: ''
-                      example: architecto
+                      description: 'ISO 3166-1 alpha-2 country code.'
+                      example: ES
                     region:
                       type: string
                       description: ''
-                      example: architecto
+                      example: string
                 profiles:
                   type: array
-                  description: ''
-                  example: null
+                  description: 'Array of social profiles.'
+                  example:
+                    -
+                      network: github
+                      username: janedoe
+                      url: 'https://github.com/janedoe'
                   items:
                     type: object
                     properties:
                       network:
                         type: string
-                        description: ''
-                        example: architecto
+                        description: 'Social network name.'
+                        example: github
                       username:
                         type: string
-                        description: ''
-                        example: architecto
+                        description: 'Name / title.'
+                        example: 'Jane Doe'
                       url:
                         type: string
-                        description: 'Must be a valid URL.'
-                        example: 'http://bailey.com/'
+                        description: 'URL. Must be a valid URL.'
+                        example: 'https://example.com'
               required:
                 - name
                 - label
                 - email
                 - phone
-      security: []
     get:
       summary: ''
       operationId: getApiBasic
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 02359495-d725-414f-9206-91e3029e57fb
+                  data:
+                    -
+                      id: 01kpwyq0rqnbx7szkb41exxpmp
+                      name: 'José Antonio Rivas Fernández'
+                      label: 'Team Lead / Head of Development'
+                      email: me@jarivas.work
+                      phone: '(+34) 655010958'
+                      url: 'https://me.jarivas.work'
+                      summary: 'Líder tecnológico y desarrollador Full Stack con amplia experiencia en la creación de arquitecturas escalables y gestión de equipos. Especializado en el ecosistema PHP (Laravel, Symfony) y con una sólida formación reciente en Inteligencia Artificial, Big Data, Ciberseguridad y Ciencia de Datos aplicada.'
+                      location:
+                        city: Málaga
+                        countryCode: ES
+                        region: Andalucía
+                      profiles:
+                        -
+                          network: GitHub
+                          username: jarivas
+                          url: 'https://github.com/jarivas'
+                        -
+                          network: Credly
+                          username: jose-antonio-rivas-fernandez
+                          url: 'https://www.credly.com/users/jose-antonio-rivas-fernandez'
+                      created_at: '2026-04-23 12:38:32'
+                      updated_at: '2026-04-23 12:38:32'
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: 02359495-d725-414f-9206-91e3029e57fb
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpwyq0rqnbx7szkb41exxpmp
+                        name: 'José Antonio Rivas Fernández'
+                        label: 'Team Lead / Head of Development'
+                        email: me@jarivas.work
+                        phone: '(+34) 655010958'
+                        url: 'https://me.jarivas.work'
+                        summary: 'Líder tecnológico y desarrollador Full Stack con amplia experiencia en la creación de arquitecturas escalables y gestión de equipos. Especializado en el ecosistema PHP (Laravel, Symfony) y con una sólida formación reciente en Inteligencia Artificial, Big Data, Ciberseguridad y Ciencia de Datos aplicada.'
+                        location:
+                          city: Málaga
+                          countryCode: ES
+                          region: Andalucía
+                        profiles:
+                          -
+                            network: GitHub
+                            username: jarivas
+                            url: 'https://github.com/jarivas'
+                          -
+                            network: Credly
+                            username: jose-antonio-rivas-fernandez
+                            url: 'https://www.credly.com/users/jose-antonio-rivas-fernandez'
+                        created_at: '2026-04-23 12:38:32'
+                        updated_at: '2026-04-23 12:38:32'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpwyq0rqnbx7szkb41exxpmp
+                        name:
+                          type: string
+                          example: 'José Antonio Rivas Fernández'
+                        label:
+                          type: string
+                          example: 'Team Lead / Head of Development'
+                        email:
+                          type: string
+                          example: me@jarivas.work
+                        phone:
+                          type: string
+                          example: '(+34) 655010958'
+                        url:
+                          type: string
+                          example: 'https://me.jarivas.work'
+                        summary:
+                          type: string
+                          example: 'Líder tecnológico y desarrollador Full Stack con amplia experiencia en la creación de arquitecturas escalables y gestión de equipos. Especializado en el ecosistema PHP (Laravel, Symfony) y con una sólida formación reciente en Inteligencia Artificial, Big Data, Ciberseguridad y Ciencia de Datos aplicada.'
+                        location:
+                          type: object
+                          properties:
+                            city:
+                              type: string
+                              example: Málaga
+                            countryCode:
+                              type: string
+                              example: ES
+                            region:
+                              type: string
+                              example: Andalucía
+                        profiles:
+                          type: array
+                          example:
+                            -
+                              network: GitHub
+                              username: jarivas
+                              url: 'https://github.com/jarivas'
+                            -
+                              network: Credly
+                              username: jose-antonio-rivas-fernandez
+                              url: 'https://www.credly.com/users/jose-antonio-rivas-fernandez'
+                          items:
+                            type: object
+                            properties:
+                              network:
+                                type: string
+                                example: GitHub
+                              username:
+                                type: string
+                                example: jarivas
+                              url:
+                                type: string
+                                example: 'https://github.com/jarivas'
+                        created_at:
+                          type: string
+                          example: '2026-04-23 12:38:32'
+                        updated_at:
+                          type: string
+                          example: '2026-04-23 12:38:32'
       tags:
         - Endpoints
-      security: []
   '/api/basic/{basic_id}':
     get:
       summary: ''
@@ -214,31 +513,218 @@ paths:
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 1f933c60-2af4-4dcd-87de-43a79291af1a
+                  data:
+                    id: 01kpwyq0rqnbx7szkb41exxpmp
+                    name: 'José Antonio Rivas Fernández'
+                    label: 'Team Lead / Head of Development'
+                    email: me@jarivas.work
+                    phone: '(+34) 655010958'
+                    url: 'https://me.jarivas.work'
+                    summary: 'Líder tecnológico y desarrollador Full Stack con amplia experiencia en la creación de arquitecturas escalables y gestión de equipos. Especializado en el ecosistema PHP (Laravel, Symfony) y con una sólida formación reciente en Inteligencia Artificial, Big Data, Ciberseguridad y Ciencia de Datos aplicada.'
+                    location:
+                      city: Málaga
+                      countryCode: ES
+                      region: Andalucía
+                    profiles:
+                      -
+                        network: GitHub
+                        username: jarivas
+                        url: 'https://github.com/jarivas'
+                      -
+                        network: Credly
+                        username: jose-antonio-rivas-fernandez
+                        url: 'https://www.credly.com/users/jose-antonio-rivas-fernandez'
+                    created_at: '2026-04-23 12:38:32'
+                    updated_at: '2026-04-23 12:38:32'
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: 1f933c60-2af4-4dcd-87de-43a79291af1a
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 01kpwyq0rqnbx7szkb41exxpmp
+                      name:
+                        type: string
+                        example: 'José Antonio Rivas Fernández'
+                      label:
+                        type: string
+                        example: 'Team Lead / Head of Development'
+                      email:
+                        type: string
+                        example: me@jarivas.work
+                      phone:
+                        type: string
+                        example: '(+34) 655010958'
+                      url:
+                        type: string
+                        example: 'https://me.jarivas.work'
+                      summary:
+                        type: string
+                        example: 'Líder tecnológico y desarrollador Full Stack con amplia experiencia en la creación de arquitecturas escalables y gestión de equipos. Especializado en el ecosistema PHP (Laravel, Symfony) y con una sólida formación reciente en Inteligencia Artificial, Big Data, Ciberseguridad y Ciencia de Datos aplicada.'
+                      location:
+                        type: object
+                        properties:
+                          city:
+                            type: string
+                            example: Málaga
+                          countryCode:
+                            type: string
+                            example: ES
+                          region:
+                            type: string
+                            example: Andalucía
+                      profiles:
+                        type: array
+                        example:
+                          -
+                            network: GitHub
+                            username: jarivas
+                            url: 'https://github.com/jarivas'
+                          -
+                            network: Credly
+                            username: jose-antonio-rivas-fernandez
+                            url: 'https://www.credly.com/users/jose-antonio-rivas-fernandez'
+                        items:
+                          type: object
+                          properties:
+                            network:
+                              type: string
+                              example: GitHub
+                            username:
+                              type: string
+                              example: jarivas
+                            url:
+                              type: string
+                              example: 'https://github.com/jarivas'
+                      created_at:
+                        type: string
+                        example: '2026-04-23 12:38:32'
+                      updated_at:
+                        type: string
+                        example: '2026-04-23 12:38:32'
       tags:
         - Endpoints
-      security: []
     patch:
       summary: ''
       operationId: patchApiBasicBasic_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The given data was invalid.'
+                  errors:
+                    awards.0:
+                      - 'The awards.0 field must be a valid ULID.'
+                    certificates.0:
+                      - 'The certificates.0 field must be a valid ULID.'
+                    educations.0:
+                      - 'The educations.0 field must be a valid ULID.'
+                    interests.0:
+                      - 'The interests.0 field must be a valid ULID.'
+                    languages.0:
+                      - 'The languages.0 field must be a valid ULID.'
+                    projects.0:
+                      - 'The projects.0 field must be a valid ULID.'
+                    publications.0:
+                      - 'The publications.0 field must be a valid ULID.'
+                    references.0:
+                      - 'The references.0 field must be a valid ULID.'
+                    skills.0:
+                      - 'The skills.0 field must be a valid ULID.'
+                    volunteer.0:
+                      - 'The volunteer.0 field must be a valid ULID.'
+                    work.0:
+                      - 'The work.0 field must be a valid ULID.'
+                  error_id: 1850b854-cb6f-4440-9336-152ef27279cf
+                properties:
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  errors:
+                    type: object
+                    properties:
+                      awards.0:
+                        type: array
+                        example:
+                          - 'The awards.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                      certificates.0:
+                        type: array
+                        example:
+                          - 'The certificates.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                      educations.0:
+                        type: array
+                        example:
+                          - 'The educations.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                      interests.0:
+                        type: array
+                        example:
+                          - 'The interests.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                      languages.0:
+                        type: array
+                        example:
+                          - 'The languages.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                      projects.0:
+                        type: array
+                        example:
+                          - 'The projects.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                      publications.0:
+                        type: array
+                        example:
+                          - 'The publications.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                      references.0:
+                        type: array
+                        example:
+                          - 'The references.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                      skills.0:
+                        type: array
+                        example:
+                          - 'The skills.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                      volunteer.0:
+                        type: array
+                        example:
+                          - 'The volunteer.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                      work.0:
+                        type: array
+                        example:
+                          - 'The work.0 field must be a valid ULID.'
+                        items:
+                          type: string
+                  error_id:
+                    type: string
+                    example: 1850b854-cb6f-4440-9336-152ef27279cf
       tags:
         - Endpoints
       requestBody:
@@ -250,154 +736,174 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 label:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 email:
                   type: string
-                  description: 'Must be a valid email address.'
-                  example: zbailey@example.net
+                  description: 'Email address. Must be a valid email address.'
+                  example: user@example.com
                 phone:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Phone number.'
+                  example: '+34 600 000 000'
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
                 location:
                   type: object
                   description: ''
-                  example: null
+                  example: []
                   properties:
                     address:
                       type: string
-                      description: ''
-                      example: architecto
+                      description: 'Street address.'
+                      example: '123 Main St'
                     postalCode:
                       type: string
-                      description: ''
-                      example: architecto
+                      description: 'Postal code / ZIP.'
+                      example: '28001'
                     city:
                       type: string
-                      description: ''
-                      example: architecto
+                      description: City.
+                      example: Madrid
                     countryCode:
                       type: string
-                      description: ''
-                      example: architecto
+                      description: 'ISO 3166-1 alpha-2 country code.'
+                      example: ES
                     region:
                       type: string
                       description: ''
-                      example: architecto
+                      example: string
                 profiles:
                   type: array
-                  description: ''
-                  example: null
+                  description: 'Array of social profiles.'
+                  example:
+                    -
+                      network: github
+                      username: janedoe
+                      url: 'https://github.com/janedoe'
                   items:
                     type: object
                     properties:
                       network:
                         type: string
-                        description: ''
-                        example: architecto
+                        description: 'Social network name.'
+                        example: github
                       username:
                         type: string
-                        description: ''
-                        example: architecto
+                        description: 'Name / title.'
+                        example: 'Jane Doe'
                       url:
                         type: string
-                        description: 'Must be a valid URL.'
-                        example: 'http://bailey.com/'
+                        description: 'URL. Must be a valid URL.'
+                        example: 'https://example.com'
                 awards:
                   type: array
                   description: 'The <code>id</code> of an existing record in the awards table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
                 certificates:
                   type: array
                   description: 'The <code>id</code> of an existing record in the certificates table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
                 educations:
                   type: array
                   description: 'The <code>id</code> of an existing record in the educations table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
                 interests:
                   type: array
                   description: 'The <code>id</code> of an existing record in the interests table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
                 languages:
                   type: array
                   description: 'The <code>id</code> of an existing record in the languages table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
                 projects:
                   type: array
                   description: 'The <code>id</code> of an existing record in the projects table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
                 publications:
                   type: array
                   description: 'The <code>id</code> of an existing record in the publications table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
                 references:
                   type: array
                   description: 'The <code>id</code> of an existing record in the references table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
                 skills:
                   type: array
                   description: 'The <code>id</code> of an existing record in the skills table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
                 volunteer:
                   type: array
                   description: 'The <code>id</code> of an existing record in the volunteers table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
                 work:
                   type: array
                   description: 'The <code>id</code> of an existing record in the works table.'
-                  example: null
+                  example:
+                    - string
                   items:
                     type: string
-      security: []
     delete:
       summary: ''
       operationId: deleteApiBasicBasic_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        204:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
         name: basic_id
         description: 'The ID of the basic.'
-        example: 01kpvvy803bzkw6h2y7skfvzp0
+        example: 01kpwyq0rqnbx7szkb41exxpmp
         required: true
         schema:
           type: string
@@ -407,7 +913,43 @@ paths:
       operationId: postApiAward
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  title: 'Jane Doe'
+                  date: '2023-01-01'
+                  awarder: string
+                  summary: 'Experienced developer with ...'
+                  id: 01kpx24bhrbrya9emwaas1xjhv
+                  updated_at: '2026-04-23T11:38:15.000000Z'
+                  created_at: '2026-04-23T11:38:15.000000Z'
+                properties:
+                  title:
+                    type: string
+                    example: 'Jane Doe'
+                  date:
+                    type: string
+                    example: '2023-01-01'
+                  awarder:
+                    type: string
+                    example: string
+                  summary:
+                    type: string
+                    example: 'Experienced developer with ...'
+                  id:
+                    type: string
+                    example: 01kpx24bhrbrya9emwaas1xjhv
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:15.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T11:38:15.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -419,58 +961,110 @@ paths:
               properties:
                 title:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 date:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:32'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 awarder:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
               required:
                 - title
                 - date
                 - awarder
                 - summary
-      security: []
     get:
       summary: ''
       operationId: getApiAward
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 173ca39f-5085-408b-ba7d-9afcc6a3e09e
+                  data:
+                    -
+                      id: 01kpx24cafrk02zeapaabw86vd
+                      title: 'Adipisci quidem nostrum qui.'
+                      date: '2022-12-05T23:00:00.000000Z'
+                      awarder: 'Baumbach Ltd'
+                      summary: 'Et modi ipsum nostrum omnis autem et consequatur.'
+                    -
+                      id: 01kpx24d498xzhdxeqwr8m2qzg
+                      title: 'Dolores enim non.'
+                      date: '1980-04-04T23:00:00.000000Z'
+                      awarder: 'Feeney, Leffler and Glover'
+                      summary: 'Quis adipisci molestias fugit deleniti distinctio eum.'
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: 173ca39f-5085-408b-ba7d-9afcc6a3e09e
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx24cafrk02zeapaabw86vd
+                        title: 'Adipisci quidem nostrum qui.'
+                        date: '2022-12-05T23:00:00.000000Z'
+                        awarder: 'Baumbach Ltd'
+                        summary: 'Et modi ipsum nostrum omnis autem et consequatur.'
+                      -
+                        id: 01kpx24d498xzhdxeqwr8m2qzg
+                        title: 'Dolores enim non.'
+                        date: '1980-04-04T23:00:00.000000Z'
+                        awarder: 'Feeney, Leffler and Glover'
+                        summary: 'Quis adipisci molestias fugit deleniti distinctio eum.'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx24cafrk02zeapaabw86vd
+                        title:
+                          type: string
+                          example: 'Adipisci quidem nostrum qui.'
+                        date:
+                          type: string
+                          example: '2022-12-05T23:00:00.000000Z'
+                        awarder:
+                          type: string
+                          example: 'Baumbach Ltd'
+                        summary:
+                          type: string
+                          example: 'Et modi ipsum nostrum omnis autem et consequatur.'
       tags:
         - Endpoints
-      security: []
   '/api/award/{award_id}':
     patch:
       summary: ''
       operationId: patchApiAwardAward_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 1e3bcc8d-f788-478b-9621-8a60a4cf0533
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 1e3bcc8d-f788-478b-9621-8a60a4cf0533
       tags:
         - Endpoints
       requestBody:
@@ -482,36 +1076,50 @@ paths:
               properties:
                 title:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 date:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 awarder:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
-      security: []
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
     delete:
       summary: ''
       operationId: deleteApiAwardAward_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 4ff39548-bd7f-468f-bed8-78e9772d19e6
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 4ff39548-bd7f-468f-bed8-78e9772d19e6
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
         name: award_id
         description: 'The ID of the award.'
-        example: 01kpvvzppc98nb2hsba9gjwj0k
+        example: architecto
         required: true
         schema:
           type: string
@@ -521,7 +1129,43 @@ paths:
       operationId: postApiCertificate
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: 'Jane Doe'
+                  date: '2023-01-01'
+                  issuer: string
+                  url: 'https://example.com'
+                  id: 01kpx24e4fm3xy5d0285k1b4cc
+                  updated_at: '2026-04-23T11:38:18.000000Z'
+                  created_at: '2026-04-23T11:38:18.000000Z'
+                properties:
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  date:
+                    type: string
+                    example: '2023-01-01'
+                  issuer:
+                    type: string
+                    example: string
+                  url:
+                    type: string
+                    example: 'https://example.com'
+                  id:
+                    type: string
+                    example: 01kpx24e4fm3xy5d0285k1b4cc
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:18.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T11:38:18.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -533,58 +1177,135 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 date:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 issuer:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
               required:
                 - name
                 - date
                 - issuer
                 - url
-      security: []
     get:
       summary: ''
       operationId: getApiCertificate
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: e21b0ab3-fb2e-46c1-b6d0-6cd2de735ddc
+                  data:
+                    -
+                      id: 01kpx24exp7sz88gjt7314v6xs
+                      name: 'aut adipisci quidem'
+                      date: '2020-05-22T22:00:00.000000Z'
+                      issuer: 'Dare Group'
+                      url: 'http://www.keebler.com/modi-ipsum-nostrum-omnis-autem-et'
+                    -
+                      id: 01kpx24fq68j38qddayn059wtm
+                      name: 'consequatur aut dolores'
+                      date: '2020-03-12T23:00:00.000000Z'
+                      issuer: Mitchell-VonRueden
+                      url: 'http://www.glover.biz/'
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: e21b0ab3-fb2e-46c1-b6d0-6cd2de735ddc
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx24exp7sz88gjt7314v6xs
+                        name: 'aut adipisci quidem'
+                        date: '2020-05-22T22:00:00.000000Z'
+                        issuer: 'Dare Group'
+                        url: 'http://www.keebler.com/modi-ipsum-nostrum-omnis-autem-et'
+                      -
+                        id: 01kpx24fq68j38qddayn059wtm
+                        name: 'consequatur aut dolores'
+                        date: '2020-03-12T23:00:00.000000Z'
+                        issuer: Mitchell-VonRueden
+                        url: 'http://www.glover.biz/'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx24exp7sz88gjt7314v6xs
+                        name:
+                          type: string
+                          example: 'aut adipisci quidem'
+                        date:
+                          type: string
+                          example: '2020-05-22T22:00:00.000000Z'
+                        issuer:
+                          type: string
+                          example: 'Dare Group'
+                        url:
+                          type: string
+                          example: 'http://www.keebler.com/modi-ipsum-nostrum-omnis-autem-et'
       tags:
         - Endpoints
-      security: []
   '/api/certificate/{certificate_id}':
     patch:
       summary: ''
       operationId: patchApiCertificateCertificate_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 01kpwyqgb4fbjqwampt9cgwgp5
+                  name: 'Jane Doe'
+                  date: '2023-01-01'
+                  issuer: string
+                  url: 'https://example.com'
+                  created_at: '2026-04-23T10:38:48.000000Z'
+                  updated_at: '2026-04-23T11:38:20.000000Z'
+                  deleted_at: null
+                properties:
+                  id:
+                    type: string
+                    example: 01kpwyqgb4fbjqwampt9cgwgp5
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  date:
+                    type: string
+                    example: '2023-01-01'
+                  issuer:
+                    type: string
+                    example: string
+                  url:
+                    type: string
+                    example: 'https://example.com'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T10:38:48.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:20.000000Z'
+                  deleted_at:
+                    type: string
+                    example: null
+                    nullable: true
       tags:
         - Endpoints
       requestBody:
@@ -596,36 +1317,41 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 date:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 issuer:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
-      security: []
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
     delete:
       summary: ''
       operationId: deleteApiCertificateCertificate_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        204:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
         name: certificate_id
         description: 'The ID of the certificate.'
-        example: architecto
+        example: 01kpwyqgb4fbjqwampt9cgwgp5
         required: true
         schema:
           type: string
@@ -635,7 +1361,63 @@ paths:
       operationId: postApiEducation
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  institution: string
+                  area: string
+                  studyType: string
+                  startDate: '2023-01-01'
+                  endDate: '2023-01-01'
+                  score: string
+                  summary: 'Experienced developer with ...'
+                  courses:
+                    - string
+                  id: 01kpx24h4c074k7z9c9jwmkvqa
+                  updated_at: '2026-04-23T11:38:21.000000Z'
+                  created_at: '2026-04-23T11:38:21.000000Z'
+                properties:
+                  institution:
+                    type: string
+                    example: string
+                  area:
+                    type: string
+                    example: string
+                  studyType:
+                    type: string
+                    example: string
+                  startDate:
+                    type: string
+                    example: '2023-01-01'
+                  endDate:
+                    type: string
+                    example: '2023-01-01'
+                  score:
+                    type: string
+                    example: string
+                  summary:
+                    type: string
+                    example: 'Experienced developer with ...'
+                  courses:
+                    type: array
+                    example:
+                      - string
+                    items:
+                      type: string
+                  id:
+                    type: string
+                    example: 01kpx24h4c074k7z9c9jwmkvqa
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:21.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T11:38:21.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -648,40 +1430,40 @@ paths:
                 institution:
                   type: string
                   description: ''
-                  example: architecto
-                url:
-                  type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  example: string
                 area:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 studyType:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 startDate:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 endDate:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 score:
                   type: string
                   description: ''
-                  example: architecto
-                summary:
+                  example: string
+                gpa:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
+                summary:
+                  type: string
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
                 courses:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
               required:
@@ -689,41 +1471,162 @@ paths:
                 - area
                 - studyType
                 - startDate
-                - endDate
                 - summary
-      security: []
     get:
       summary: ''
       operationId: getApiEducation
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 2c81be6b-a452-494b-bce0-d48f505f4f3f
+                  data:
+                    -
+                      id: 01kpx24htkwh4axtdscq277k6d
+                      institution: 'Cronin, Dare and Hauck'
+                      area: aut
+                      studyType: Certificate
+                      startDate: '2019-06-27T02:06:15.000000Z'
+                      endDate: '2021-09-03T08:08:22.000000Z'
+                      score: enim
+                      summary: 'Facere tempora ex voluptatem laboriosam.'
+                    -
+                      id: 01kpx24jmhextkcdepnm5xyzg0
+                      institution: 'Emmerich and Sons'
+                      area: recusandae
+                      studyType: PhD
+                      startDate: '2011-06-23T10:06:25.000000Z'
+                      endDate: '2016-06-18T07:52:41.000000Z'
+                      score: rerum
+                      summary: 'Repellendus assumenda et tenetur ab reiciendis.'
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: 2c81be6b-a452-494b-bce0-d48f505f4f3f
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx24htkwh4axtdscq277k6d
+                        institution: 'Cronin, Dare and Hauck'
+                        area: aut
+                        studyType: Certificate
+                        startDate: '2019-06-27T02:06:15.000000Z'
+                        endDate: '2021-09-03T08:08:22.000000Z'
+                        score: enim
+                        summary: 'Facere tempora ex voluptatem laboriosam.'
+                      -
+                        id: 01kpx24jmhextkcdepnm5xyzg0
+                        institution: 'Emmerich and Sons'
+                        area: recusandae
+                        studyType: PhD
+                        startDate: '2011-06-23T10:06:25.000000Z'
+                        endDate: '2016-06-18T07:52:41.000000Z'
+                        score: rerum
+                        summary: 'Repellendus assumenda et tenetur ab reiciendis.'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx24htkwh4axtdscq277k6d
+                        institution:
+                          type: string
+                          example: 'Cronin, Dare and Hauck'
+                        area:
+                          type: string
+                          example: aut
+                        studyType:
+                          type: string
+                          example: Certificate
+                        startDate:
+                          type: string
+                          example: '2019-06-27T02:06:15.000000Z'
+                        endDate:
+                          type: string
+                          example: '2021-09-03T08:08:22.000000Z'
+                        score:
+                          type: string
+                          example: enim
+                        summary:
+                          type: string
+                          example: 'Facere tempora ex voluptatem laboriosam.'
       tags:
         - Endpoints
-      security: []
   '/api/education/{education_id}':
     patch:
       summary: ''
       operationId: patchApiEducationEducation_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 01kpwyqd0jwd3n95kvbd2hcsc8
+                  institution: string
+                  url: 'https://example.com'
+                  area: string
+                  studyType: string
+                  startDate: '2023-01-01'
+                  endDate: '2023-01-01'
+                  score: string
+                  summary: 'Experienced developer with ...'
+                  courses:
+                    - string
+                  created_at: '2026-04-23T10:38:45.000000Z'
+                  updated_at: '2026-04-23T11:38:23.000000Z'
+                  deleted_at: null
+                properties:
+                  id:
+                    type: string
+                    example: 01kpwyqd0jwd3n95kvbd2hcsc8
+                  institution:
+                    type: string
+                    example: string
+                  url:
+                    type: string
+                    example: 'https://example.com'
+                  area:
+                    type: string
+                    example: string
+                  studyType:
+                    type: string
+                    example: string
+                  startDate:
+                    type: string
+                    example: '2023-01-01'
+                  endDate:
+                    type: string
+                    example: '2023-01-01'
+                  score:
+                    type: string
+                    example: string
+                  summary:
+                    type: string
+                    example: 'Experienced developer with ...'
+                  courses:
+                    type: array
+                    example:
+                      - string
+                    items:
+                      type: string
+                  created_at:
+                    type: string
+                    example: '2026-04-23T10:38:45.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:23.000000Z'
+                  deleted_at:
+                    type: string
+                    example: null
+                    nullable: true
       tags:
         - Endpoints
       requestBody:
@@ -736,58 +1639,63 @@ paths:
                 institution:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
                 area:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 studyType:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 startDate:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 endDate:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 score:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
                 courses:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
-      security: []
     delete:
       summary: ''
       operationId: deleteApiEducationEducation_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        204:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
         name: education_id
         description: 'The ID of the education.'
-        example: 01kpvvzhjq46mrm6hdksnqnpp0
+        example: 01kpwyqd0jwd3n95kvbd2hcsc8
         required: true
         schema:
           type: string
@@ -797,7 +1705,39 @@ paths:
       operationId: postApiInterest
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: 'Jane Doe'
+                  keywords:
+                    - string
+                  id: 01kpx24m4tsnsj0nf4wrx69k64
+                  updated_at: '2026-04-23T11:38:24.000000Z'
+                  created_at: '2026-04-23T11:38:24.000000Z'
+                properties:
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  keywords:
+                    type: array
+                    example:
+                      - string
+                    items:
+                      type: string
+                  id:
+                    type: string
+                    example: 01kpx24m4tsnsj0nf4wrx69k64
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:24.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T11:38:24.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -809,51 +1749,126 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 keywords:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
               required:
                 - name
                 - keywords
-      security: []
     get:
       summary: ''
       operationId: getApiInterest
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 826e9928-17f2-44d7-9945-25bdbeeb06b5
+                  data:
+                    -
+                      id: 01kpx24mtr742xjn8pk86996zr
+                      name: aut
+                      keywords:
+                        - quidem
+                        - nostrum
+                        - qui
+                        - commodi
+                        - incidunt
+                        - iure
+                        - odit
+                    -
+                      id: 01kpx24ngsb1nq0wgyyhmfs640
+                      name: et
+                      keywords:
+                        - modi
+                        - ipsum
+                        - nostrum
+                        - omnis
+                        - autem
+                        - et
+                        - consequatur
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: 826e9928-17f2-44d7-9945-25bdbeeb06b5
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx24mtr742xjn8pk86996zr
+                        name: aut
+                        keywords:
+                          - quidem
+                          - nostrum
+                          - qui
+                          - commodi
+                          - incidunt
+                          - iure
+                          - odit
+                      -
+                        id: 01kpx24ngsb1nq0wgyyhmfs640
+                        name: et
+                        keywords:
+                          - modi
+                          - ipsum
+                          - nostrum
+                          - omnis
+                          - autem
+                          - et
+                          - consequatur
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx24mtr742xjn8pk86996zr
+                        name:
+                          type: string
+                          example: aut
+                        keywords:
+                          type: array
+                          example:
+                            - quidem
+                            - nostrum
+                            - qui
+                            - commodi
+                            - incidunt
+                            - iure
+                            - odit
+                          items:
+                            type: string
       tags:
         - Endpoints
-      security: []
   '/api/interest/{interest_id}':
     patch:
       summary: ''
       operationId: patchApiInterestInterest_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 740df389-e66b-4c65-8c89-e5cf1281f7d1
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 740df389-e66b-4c65-8c89-e5cf1281f7d1
       tags:
         - Endpoints
       requestBody:
@@ -865,25 +1880,39 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 keywords:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
-      security: []
     delete:
       summary: ''
       operationId: deleteApiInterestInterest_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 70cb715d-c8b5-4077-b99a-862b95927ccc
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 70cb715d-c8b5-4077-b99a-862b95927ccc
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
@@ -899,7 +1928,23 @@ paths:
       operationId: postApiLanguage
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error.'
+                  error_id: e827f71d-09e1-4bd0-b55f-813e98df9a37
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error.'
+                  error_id:
+                    type: string
+                    example: e827f71d-09e1-4bd0-b55f-813e98df9a37
       tags:
         - Endpoints
       requestBody:
@@ -909,50 +1954,105 @@ paths:
             schema:
               type: object
               properties:
-                language:
+                name:
+                  type: string
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
+                code:
                   type: string
                   description: ''
-                  example: architecto
-                fluency:
-                  type: string
-                  description: ''
-                  example: architecto
+                  example: string
               required:
-                - language
-                - fluency
-      security: []
+                - name
+                - code
     get:
       summary: ''
       operationId: getApiLanguage
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 25596ccd-1e56-4a6d-9e50-eb3ca6386c1e
+                  data:
+                    -
+                      id: 01kpx24p7mtt41xr9mj465j4ms
+                      language: et
+                      fluency: native
+                    -
+                      id: 01kpx24q0t10nwve77r7jgwtqd
+                      language: sg
+                      fluency: native
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: 25596ccd-1e56-4a6d-9e50-eb3ca6386c1e
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx24p7mtt41xr9mj465j4ms
+                        language: et
+                        fluency: native
+                      -
+                        id: 01kpx24q0t10nwve77r7jgwtqd
+                        language: sg
+                        fluency: native
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx24p7mtt41xr9mj465j4ms
+                        language:
+                          type: string
+                          example: et
+                        fluency:
+                          type: string
+                          example: native
       tags:
         - Endpoints
-      security: []
   '/api/language/{language_id}':
     patch:
       summary: ''
       operationId: patchApiLanguageLanguage_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 01kpwyr7fb6ssc5bbxf9vagyf5
+                  language: Español
+                  fluency: Nativo
+                  created_at: '2026-04-23T10:39:12.000000Z'
+                  updated_at: '2026-04-23T10:39:12.000000Z'
+                  deleted_at: null
+                properties:
+                  id:
+                    type: string
+                    example: 01kpwyr7fb6ssc5bbxf9vagyf5
+                  language:
+                    type: string
+                    example: Español
+                  fluency:
+                    type: string
+                    example: Nativo
+                  created_at:
+                    type: string
+                    example: '2026-04-23T10:39:12.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T10:39:12.000000Z'
+                  deleted_at:
+                    type: string
+                    example: null
+                    nullable: true
       tags:
         - Endpoints
       requestBody:
@@ -962,30 +2062,35 @@ paths:
             schema:
               type: object
               properties:
-                language:
+                name:
+                  type: string
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
+                code:
                   type: string
                   description: ''
-                  example: architecto
-                fluency:
-                  type: string
-                  description: ''
-                  example: architecto
-      security: []
+                  example: string
     delete:
       summary: ''
       operationId: deleteApiLanguageLanguage_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        204:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
         name: language_id
         description: 'The ID of the language.'
-        example: architecto
+        example: 01kpwyr7fb6ssc5bbxf9vagyf5
         required: true
         schema:
           type: string
@@ -995,7 +2100,71 @@ paths:
       operationId: postApiProject
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: 'Jane Doe'
+                  startDate: '2023-01-01'
+                  endDate: '2023-01-01'
+                  description: 'Experienced developer with ...'
+                  url: 'https://example.com'
+                  roles:
+                    - string
+                  highlights:
+                    - string
+                  keywords:
+                    - string
+                  id: 01kpx24r77cjrwjct0atyvg200
+                  updated_at: '2026-04-23T11:38:28.000000Z'
+                  created_at: '2026-04-23T11:38:28.000000Z'
+                properties:
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  startDate:
+                    type: string
+                    example: '2023-01-01'
+                  endDate:
+                    type: string
+                    example: '2023-01-01'
+                  description:
+                    type: string
+                    example: 'Experienced developer with ...'
+                  url:
+                    type: string
+                    example: 'https://example.com'
+                  roles:
+                    type: array
+                    example:
+                      - string
+                    items:
+                      type: string
+                  highlights:
+                    type: array
+                    example:
+                      - string
+                    items:
+                      type: string
+                  keywords:
+                    type: array
+                    example:
+                      - string
+                    items:
+                      type: string
+                  id:
+                    type: string
+                    example: 01kpx24r77cjrwjct0atyvg200
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:28.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T11:38:28.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -1007,45 +2176,45 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 startDate:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 endDate:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 description:
                   type: string
-                  description: ''
-                  example: 'Eius et animi quos velit et.'
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
                 roles:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
                 highlights:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
                 keywords:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
               required:
                 - name
                 - startDate
@@ -1054,39 +2223,134 @@ paths:
                 - roles
                 - highlights
                 - keywords
-      security: []
     get:
       summary: ''
       operationId: getApiProject
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 77d86d57-b29b-4749-9436-0b9d0154d87c
+                  data:
+                    -
+                      id: 01kpx24rxww59yd7h5pz4b6rwb
+                      name: 'Nostrum qui commodi.'
+                      startDate: '2025-06-24T02:06:07.000000Z'
+                      endDate: '2026-08-07T13:36:42.000000Z'
+                      description: 'Aut dolores enim non facere tempora ex voluptatem. Praesentium quis adipisci molestias fugit. Distinctio eum doloremque id aut libero aliquam veniam corporis. Mollitia deleniti nemo odit quia officia.'
+                      highlights:
+                        - 'Neque blanditiis odio veritatis excepturi doloribus delectus.'
+                        - 'Qui repudiandae laboriosam est alias.'
+                        - 'Ratione nemo voluptate accusamus ut et recusandae modi rerum.'
+                        - 'Repellendus assumenda et tenetur ab reiciendis.'
+                        - 'Perspiciatis deserunt ducimus corrupti et dolores quia.'
+                      url: 'https://thiel.com/repellat-officiis-corporis-nesciunt-ut.html'
+                    -
+                      id: 01kpx24smxajgffjsbabqr0cf1
+                      name: 'Molestiae ut rem.'
+                      startDate: '2026-02-14T09:17:08.000000Z'
+                      endDate: '2027-04-26T18:08:36.000000Z'
+                      description: 'Error neque recusandae et ipsam dolorem et ut dicta. Assumenda consequatur ut et sunt quisquam. Repellendus ut eaque alias ratione dolores.'
+                      highlights:
+                        - 'Ea ut aut deserunt sint quis.'
+                        - 'Quod id aspernatur consectetur id a consectetur assumenda.'
+                        - 'Neque sit sunt nihil accusantium odit ut perspiciatis.'
+                        - 'Dolorem aut quis ut dolores omnis.'
+                        - 'Earum consequatur asperiores est vel id aut officiis eos.'
+                        - 'Et qui unde et.'
+                      url: 'https://www.barton.com/iusto-facere-possimus-aliquam-consequatur'
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: 77d86d57-b29b-4749-9436-0b9d0154d87c
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx24rxww59yd7h5pz4b6rwb
+                        name: 'Nostrum qui commodi.'
+                        startDate: '2025-06-24T02:06:07.000000Z'
+                        endDate: '2026-08-07T13:36:42.000000Z'
+                        description: 'Aut dolores enim non facere tempora ex voluptatem. Praesentium quis adipisci molestias fugit. Distinctio eum doloremque id aut libero aliquam veniam corporis. Mollitia deleniti nemo odit quia officia.'
+                        highlights:
+                          - 'Neque blanditiis odio veritatis excepturi doloribus delectus.'
+                          - 'Qui repudiandae laboriosam est alias.'
+                          - 'Ratione nemo voluptate accusamus ut et recusandae modi rerum.'
+                          - 'Repellendus assumenda et tenetur ab reiciendis.'
+                          - 'Perspiciatis deserunt ducimus corrupti et dolores quia.'
+                        url: 'https://thiel.com/repellat-officiis-corporis-nesciunt-ut.html'
+                      -
+                        id: 01kpx24smxajgffjsbabqr0cf1
+                        name: 'Molestiae ut rem.'
+                        startDate: '2026-02-14T09:17:08.000000Z'
+                        endDate: '2027-04-26T18:08:36.000000Z'
+                        description: 'Error neque recusandae et ipsam dolorem et ut dicta. Assumenda consequatur ut et sunt quisquam. Repellendus ut eaque alias ratione dolores.'
+                        highlights:
+                          - 'Ea ut aut deserunt sint quis.'
+                          - 'Quod id aspernatur consectetur id a consectetur assumenda.'
+                          - 'Neque sit sunt nihil accusantium odit ut perspiciatis.'
+                          - 'Dolorem aut quis ut dolores omnis.'
+                          - 'Earum consequatur asperiores est vel id aut officiis eos.'
+                          - 'Et qui unde et.'
+                        url: 'https://www.barton.com/iusto-facere-possimus-aliquam-consequatur'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx24rxww59yd7h5pz4b6rwb
+                        name:
+                          type: string
+                          example: 'Nostrum qui commodi.'
+                        startDate:
+                          type: string
+                          example: '2025-06-24T02:06:07.000000Z'
+                        endDate:
+                          type: string
+                          example: '2026-08-07T13:36:42.000000Z'
+                        description:
+                          type: string
+                          example: 'Aut dolores enim non facere tempora ex voluptatem. Praesentium quis adipisci molestias fugit. Distinctio eum doloremque id aut libero aliquam veniam corporis. Mollitia deleniti nemo odit quia officia.'
+                        highlights:
+                          type: array
+                          example:
+                            - 'Neque blanditiis odio veritatis excepturi doloribus delectus.'
+                            - 'Qui repudiandae laboriosam est alias.'
+                            - 'Ratione nemo voluptate accusamus ut et recusandae modi rerum.'
+                            - 'Repellendus assumenda et tenetur ab reiciendis.'
+                            - 'Perspiciatis deserunt ducimus corrupti et dolores quia.'
+                          items:
+                            type: string
+                        url:
+                          type: string
+                          example: 'https://thiel.com/repellat-officiis-corporis-nesciunt-ut.html'
       tags:
         - Endpoints
-      security: []
   '/api/project/{project_id}':
     patch:
       summary: ''
       operationId: patchApiProjectProject_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: c5a310bf-5d7c-4994-88b9-1e7a12929cd1
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: c5a310bf-5d7c-4994-88b9-1e7a12929cd1
       tags:
         - Endpoints
       requestBody:
@@ -1098,57 +2362,71 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 startDate:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 endDate:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 description:
                   type: string
-                  description: ''
-                  example: 'Eius et animi quos velit et.'
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
                 roles:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
                 highlights:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
                 keywords:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
               required:
                 - name
-      security: []
     delete:
       summary: ''
       operationId: deleteApiProjectProject_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 4cf88830-26d1-429d-8354-9d80b334d3b1
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 4cf88830-26d1-429d-8354-9d80b334d3b1
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
@@ -1164,7 +2442,47 @@ paths:
       operationId: postApiPublication
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: 'Jane Doe'
+                  publisher: string
+                  releaseDate: '2023-01-01'
+                  url: 'https://example.com'
+                  summary: 'Experienced developer with ...'
+                  id: 01kpx24tbc8annhffh88bngk68
+                  updated_at: '2026-04-23T11:38:30.000000Z'
+                  created_at: '2026-04-23T11:38:30.000000Z'
+                properties:
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  publisher:
+                    type: string
+                    example: string
+                  releaseDate:
+                    type: string
+                    example: '2023-01-01'
+                  url:
+                    type: string
+                    example: 'https://example.com'
+                  summary:
+                    type: string
+                    example: 'Experienced developer with ...'
+                  id:
+                    type: string
+                    example: 01kpx24tbc8annhffh88bngk68
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:30.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T11:38:30.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -1176,62 +2494,121 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 publisher:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 releaseDate:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
               required:
                 - name
                 - publisher
                 - releaseDate
                 - summary
-      security: []
     get:
       summary: ''
       operationId: getApiPublication
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 7c557a23-6ce6-42f5-9216-57039c8e870c
+                  data:
+                    -
+                      id: 01kpx24v49ybmfww4ztqfs089c
+                      name: 'Adipisci quidem nostrum qui commodi.'
+                      publisher: 'Baumbach Ltd'
+                      releaseDate: '1977-08-14T22:00:00.000000Z'
+                      url: 'https://www.bauch.com/omnis-autem-et-consequatur'
+                      summary: 'Enim non facere tempora ex voluptatem laboriosam praesentium. Adipisci molestias fugit deleniti distinctio eum doloremque id. Libero aliquam veniam corporis dolorem mollitia deleniti.'
+                    -
+                      id: 01kpx24vv14746r0nw0shkcr90
+                      name: 'Odit quia officia est dignissimos neque.'
+                      publisher: "O'Connell, Beier and Bradtke"
+                      releaseDate: '1976-06-14T22:00:00.000000Z'
+                      url: 'http://kuvalis.com/est-alias-tenetur-ratione'
+                      summary: 'Accusamus ut et recusandae. Rerum ex repellendus assumenda et. Ab reiciendis quia perspiciatis deserunt ducimus corrupti.'
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: 7c557a23-6ce6-42f5-9216-57039c8e870c
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx24v49ybmfww4ztqfs089c
+                        name: 'Adipisci quidem nostrum qui commodi.'
+                        publisher: 'Baumbach Ltd'
+                        releaseDate: '1977-08-14T22:00:00.000000Z'
+                        url: 'https://www.bauch.com/omnis-autem-et-consequatur'
+                        summary: 'Enim non facere tempora ex voluptatem laboriosam praesentium. Adipisci molestias fugit deleniti distinctio eum doloremque id. Libero aliquam veniam corporis dolorem mollitia deleniti.'
+                      -
+                        id: 01kpx24vv14746r0nw0shkcr90
+                        name: 'Odit quia officia est dignissimos neque.'
+                        publisher: "O'Connell, Beier and Bradtke"
+                        releaseDate: '1976-06-14T22:00:00.000000Z'
+                        url: 'http://kuvalis.com/est-alias-tenetur-ratione'
+                        summary: 'Accusamus ut et recusandae. Rerum ex repellendus assumenda et. Ab reiciendis quia perspiciatis deserunt ducimus corrupti.'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx24v49ybmfww4ztqfs089c
+                        name:
+                          type: string
+                          example: 'Adipisci quidem nostrum qui commodi.'
+                        publisher:
+                          type: string
+                          example: 'Baumbach Ltd'
+                        releaseDate:
+                          type: string
+                          example: '1977-08-14T22:00:00.000000Z'
+                        url:
+                          type: string
+                          example: 'https://www.bauch.com/omnis-autem-et-consequatur'
+                        summary:
+                          type: string
+                          example: 'Enim non facere tempora ex voluptatem laboriosam praesentium. Adipisci molestias fugit deleniti distinctio eum doloremque id. Libero aliquam veniam corporis dolorem mollitia deleniti.'
       tags:
         - Endpoints
-      security: []
   '/api/publication/{publication_id}':
     patch:
       summary: ''
       operationId: patchApiPublicationPublication_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 84e868e0-bc10-4b2b-aabc-a95ae31221e6
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 84e868e0-bc10-4b2b-aabc-a95ae31221e6
       tags:
         - Endpoints
       requestBody:
@@ -1243,34 +2620,48 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 publisher:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 releaseDate:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-04-23T09:45:33'
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
-      security: []
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
     delete:
       summary: ''
       operationId: deleteApiPublicationPublication_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 7b8f9984-392e-4584-9dbf-2282d8fdc75d
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 7b8f9984-392e-4584-9dbf-2282d8fdc75d
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
@@ -1286,7 +2677,35 @@ paths:
       operationId: postApiReference
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: 'Jane Doe'
+                  reference: string
+                  id: 01kpx24wps2ep15ba7a8sgv27b
+                  updated_at: '2026-04-23T11:38:33.000000Z'
+                  created_at: '2026-04-23T11:38:33.000000Z'
+                properties:
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  reference:
+                    type: string
+                    example: string
+                  id:
+                    type: string
+                    example: 01kpx24wps2ep15ba7a8sgv27b
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:33.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T11:38:33.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -1298,48 +2717,94 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 reference:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
+                email:
+                  type: string
+                  description: 'Email address. Must be a valid email address.'
+                  example: user@example.com
+                phone:
+                  type: string
+                  description: 'Phone number.'
+                  example: '+34 600 000 000'
               required:
                 - name
                 - reference
-      security: []
     get:
       summary: ''
       operationId: getApiReference
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 6ab61ab8-9717-4182-806c-891ca2e069cd
+                  data:
+                    -
+                      id: 01kpx251k6t4hjf03pbk5q6xvf
+                      name: 'Morgan Hirthe'
+                      reference: 'Qui commodi incidunt iure odit.'
+                    -
+                      id: 01kpx252dq8t9mmxjtmaknpd5q
+                      name: 'Mina Bauch'
+                      reference: 'Nostrum omnis autem et consequatur aut.'
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: 6ab61ab8-9717-4182-806c-891ca2e069cd
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx251k6t4hjf03pbk5q6xvf
+                        name: 'Morgan Hirthe'
+                        reference: 'Qui commodi incidunt iure odit.'
+                      -
+                        id: 01kpx252dq8t9mmxjtmaknpd5q
+                        name: 'Mina Bauch'
+                        reference: 'Nostrum omnis autem et consequatur aut.'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx251k6t4hjf03pbk5q6xvf
+                        name:
+                          type: string
+                          example: 'Morgan Hirthe'
+                        reference:
+                          type: string
+                          example: 'Qui commodi incidunt iure odit.'
       tags:
         - Endpoints
-      security: []
   '/api/reference/{reference_id}':
     patch:
       summary: ''
       operationId: patchApiReferenceReference_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 8307a7a6-e16f-4b82-a15c-f811a128f31b
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 8307a7a6-e16f-4b82-a15c-f811a128f31b
       tags:
         - Endpoints
       requestBody:
@@ -1351,22 +2816,44 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 reference:
                   type: string
                   description: ''
-                  example: architecto
-      security: []
+                  example: string
+                email:
+                  type: string
+                  description: 'Email address. Must be a valid email address.'
+                  example: user@example.com
+                phone:
+                  type: string
+                  description: 'Phone number.'
+                  example: '+34 600 000 000'
     delete:
       summary: ''
       operationId: deleteApiReferenceReference_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 9704ecaa-2f12-4515-afaf-867addb7755f
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 9704ecaa-2f12-4515-afaf-867addb7755f
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
@@ -1382,7 +2869,43 @@ paths:
       operationId: postApiSkill
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: 'Jane Doe'
+                  level: string
+                  keywords:
+                    - string
+                  id: 01kpx2537k87gd30p6nb2wbsfa
+                  updated_at: '2026-04-23T11:38:39.000000Z'
+                  created_at: '2026-04-23T11:38:39.000000Z'
+                properties:
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  level:
+                    type: string
+                    example: string
+                  keywords:
+                    type: array
+                    example:
+                      - string
+                    items:
+                      type: string
+                  id:
+                    type: string
+                    example: 01kpx2537k87gd30p6nb2wbsfa
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:39.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T11:38:39.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -1394,56 +2917,159 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 level:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 keywords:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
               required:
                 - name
                 - level
                 - keywords
-      security: []
     get:
       summary: ''
       operationId: getApiSkill
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: ce25b2a4-aeed-4369-b2a7-93ea0dd2becc
+                  data:
+                    -
+                      id: 01kpx253yca2mppwph8xc27ecg
+                      name: aut
+                      level: beginner
+                      keywords:
+                        - nostrum
+                        - qui
+                        - commodi
+                        - incidunt
+                        - iure
+                        - odit
+                        - et
+                    -
+                      id: 01kpx254m7ejavvhm9cv1j1dt1
+                      name: et
+                      level: expert
+                      keywords:
+                        - nostrum
+                        - omnis
+                        - autem
+                        - et
+                        - consequatur
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: ce25b2a4-aeed-4369-b2a7-93ea0dd2becc
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx253yca2mppwph8xc27ecg
+                        name: aut
+                        level: beginner
+                        keywords:
+                          - nostrum
+                          - qui
+                          - commodi
+                          - incidunt
+                          - iure
+                          - odit
+                          - et
+                      -
+                        id: 01kpx254m7ejavvhm9cv1j1dt1
+                        name: et
+                        level: expert
+                        keywords:
+                          - nostrum
+                          - omnis
+                          - autem
+                          - et
+                          - consequatur
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx253yca2mppwph8xc27ecg
+                        name:
+                          type: string
+                          example: aut
+                        level:
+                          type: string
+                          example: beginner
+                        keywords:
+                          type: array
+                          example:
+                            - nostrum
+                            - qui
+                            - commodi
+                            - incidunt
+                            - iure
+                            - odit
+                            - et
+                          items:
+                            type: string
       tags:
         - Endpoints
-      security: []
   '/api/skill/{skill_id}':
     patch:
       summary: ''
       operationId: patchApiSkillSkill_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 01kpwyr1mag9z8tc4jhytjhwvv
+                  name: 'Jane Doe'
+                  level: string
+                  keywords:
+                    - string
+                  created_at: '2026-04-23T10:39:06.000000Z'
+                  updated_at: '2026-04-23T11:38:41.000000Z'
+                  deleted_at: null
+                properties:
+                  id:
+                    type: string
+                    example: 01kpwyr1mag9z8tc4jhytjhwvv
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  level:
+                    type: string
+                    example: string
+                  keywords:
+                    type: array
+                    example:
+                      - string
+                    items:
+                      type: string
+                  created_at:
+                    type: string
+                    example: '2026-04-23T10:39:06.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:41.000000Z'
+                  deleted_at:
+                    type: string
+                    example: null
+                    nullable: true
       tags:
         - Endpoints
       requestBody:
@@ -1455,35 +3081,40 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 level:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 keywords:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
-      security: []
     delete:
       summary: ''
       operationId: deleteApiSkillSkill_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        204:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
         name: skill_id
         description: 'The ID of the skill.'
-        example: 01kpvw0x8tpjpnmwrq9kkwwx10
+        example: 01kpwyr1mag9z8tc4jhytjhwvv
         required: true
         schema:
           type: string
@@ -1493,7 +3124,23 @@ paths:
       operationId: postApiVolunteer
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error.'
+                  error_id: c787db88-9aa3-4253-8b01-c86019517f32
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error.'
+                  error_id:
+                    type: string
+                    example: c787db88-9aa3-4253-8b01-c86019517f32
       tags:
         - Endpoints
       requestBody:
@@ -1506,74 +3153,148 @@ paths:
                 organization:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 position:
                   type: string
                   description: ''
-                  example: architecto
-                url:
-                  type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  example: string
                 startDate:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 endDate:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
-                highlights:
-                  type: array
-                  description: ''
-                  example:
-                    - architecto
-                  items:
-                    type: string
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
               required:
                 - organization
                 - position
                 - startDate
-                - endDate
-                - summary
-                - highlights
-      security: []
     get:
       summary: ''
       operationId: getApiVolunteer
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 3bb41dc3-0c65-42ae-a1e3-fb480870a9ff
+                  data:
+                    -
+                      id: 01kpx256164br7cdh51jds3jza
+                      organization: 'Cronin, Dare and Hauck'
+                      position: 'Locomotive Engineer'
+                      url: 'http://www.keebler.com/modi-ipsum-nostrum-omnis-autem-et'
+                      startDate: '2023-06-28T02:06:33.000000Z'
+                      endDate: '2024-11-10T13:42:07.000000Z'
+                      summary: 'Aut dolores enim non facere tempora ex voluptatem.'
+                      highlights:
+                        - 'Quis adipisci molestias fugit deleniti distinctio eum.'
+                        - 'Id aut libero aliquam veniam.'
+                        - 'Dolorem mollitia deleniti nemo.'
+                    -
+                      id: 01kpx256qrhe8jr19kp8wqwddb
+                      organization: 'Doyle, Emard and Wolff'
+                      position: 'Rotary Drill Operator'
+                      url: 'https://beier.com/delectus-fugit-qui-repudiandae-laboriosam.html'
+                      startDate: '2023-02-24T11:42:14.000000Z'
+                      endDate: '2026-01-28T08:11:36.000000Z'
+                      summary: 'Alias tenetur ratione nemo voluptate accusamus ut et.'
+                      highlights:
+                        - 'Rerum ex repellendus assumenda et.'
+                        - 'Ab reiciendis quia perspiciatis deserunt ducimus corrupti.'
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: 3bb41dc3-0c65-42ae-a1e3-fb480870a9ff
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx256164br7cdh51jds3jza
+                        organization: 'Cronin, Dare and Hauck'
+                        position: 'Locomotive Engineer'
+                        url: 'http://www.keebler.com/modi-ipsum-nostrum-omnis-autem-et'
+                        startDate: '2023-06-28T02:06:33.000000Z'
+                        endDate: '2024-11-10T13:42:07.000000Z'
+                        summary: 'Aut dolores enim non facere tempora ex voluptatem.'
+                        highlights:
+                          - 'Quis adipisci molestias fugit deleniti distinctio eum.'
+                          - 'Id aut libero aliquam veniam.'
+                          - 'Dolorem mollitia deleniti nemo.'
+                      -
+                        id: 01kpx256qrhe8jr19kp8wqwddb
+                        organization: 'Doyle, Emard and Wolff'
+                        position: 'Rotary Drill Operator'
+                        url: 'https://beier.com/delectus-fugit-qui-repudiandae-laboriosam.html'
+                        startDate: '2023-02-24T11:42:14.000000Z'
+                        endDate: '2026-01-28T08:11:36.000000Z'
+                        summary: 'Alias tenetur ratione nemo voluptate accusamus ut et.'
+                        highlights:
+                          - 'Rerum ex repellendus assumenda et.'
+                          - 'Ab reiciendis quia perspiciatis deserunt ducimus corrupti.'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx256164br7cdh51jds3jza
+                        organization:
+                          type: string
+                          example: 'Cronin, Dare and Hauck'
+                        position:
+                          type: string
+                          example: 'Locomotive Engineer'
+                        url:
+                          type: string
+                          example: 'http://www.keebler.com/modi-ipsum-nostrum-omnis-autem-et'
+                        startDate:
+                          type: string
+                          example: '2023-06-28T02:06:33.000000Z'
+                        endDate:
+                          type: string
+                          example: '2024-11-10T13:42:07.000000Z'
+                        summary:
+                          type: string
+                          example: 'Aut dolores enim non facere tempora ex voluptatem.'
+                        highlights:
+                          type: array
+                          example:
+                            - 'Quis adipisci molestias fugit deleniti distinctio eum.'
+                            - 'Id aut libero aliquam veniam.'
+                            - 'Dolorem mollitia deleniti nemo.'
+                          items:
+                            type: string
       tags:
         - Endpoints
-      security: []
   '/api/volunteer/{volunteer_id}':
     patch:
       summary: ''
       operationId: patchApiVolunteerVolunteer_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 162caa4f-fff0-4607-a899-b6066f693438
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 162caa4f-fff0-4607-a899-b6066f693438
       tags:
         - Endpoints
       requestBody:
@@ -1586,44 +3307,54 @@ paths:
                 organization:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 position:
                   type: string
                   description: ''
-                  example: architecto
-                url:
-                  type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  example: string
                 startDate:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 endDate:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Date (Y-m-d). Must be a valid date.'
+                  example: '2023-01-01'
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
                 highlights:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
-      security: []
     delete:
       summary: ''
       operationId: deleteApiVolunteerVolunteer_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found.'
+                  error_id: 203fc71a-d0e7-4f02-b00c-0f5be2255e3d
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found.'
+                  error_id:
+                    type: string
+                    example: 203fc71a-d0e7-4f02-b00c-0f5be2255e3d
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
@@ -1639,7 +3370,59 @@ paths:
       operationId: postApiWork
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: 'Jane Doe'
+                  position: string
+                  url: 'https://example.com'
+                  startDate: '2023-01-01'
+                  endDate: '2023-01-01'
+                  summary: 'Experienced developer with ...'
+                  highlights:
+                    - string
+                  id: 01kpx257ebv5gwtjmt15e0jdkw
+                  updated_at: '2026-04-23T11:38:44.000000Z'
+                  created_at: '2026-04-23T11:38:44.000000Z'
+                properties:
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  position:
+                    type: string
+                    example: string
+                  url:
+                    type: string
+                    example: 'https://example.com'
+                  startDate:
+                    type: string
+                    example: '2023-01-01'
+                  endDate:
+                    type: string
+                    example: '2023-01-01'
+                  summary:
+                    type: string
+                    example: 'Experienced developer with ...'
+                  highlights:
+                    type: array
+                    example:
+                      - string
+                    items:
+                      type: string
+                  id:
+                    type: string
+                    example: 01kpx257ebv5gwtjmt15e0jdkw
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:44.000000Z'
+                  created_at:
+                    type: string
+                    example: '2026-04-23T11:38:44.000000Z'
       tags:
         - Endpoints
       requestBody:
@@ -1651,33 +3434,33 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 position:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
                 startDate:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Date (Y-m-d).'
+                  example: '2023-01-01'
                 endDate:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Date (Y-m-d).'
+                  example: '2023-01-01'
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
                 highlights:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
               required:
@@ -1687,39 +3470,162 @@ paths:
                 - endDate
                 - summary
                 - highlights
-      security: []
     get:
       summary: ''
       operationId: getApiWork
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: ba95802a-281b-4837-95b6-883d5bcbc8dd
+                  data:
+                    -
+                      id: 01kpx2583k5bm1k3nkayejs862
+                      name: 'Cronin, Dare and Hauck'
+                      position: 'Locomotive Engineer'
+                      url: 'http://www.keebler.com/modi-ipsum-nostrum-omnis-autem-et'
+                      startDate: '2021-07-02T02:06:37.000000Z'
+                      endDate: '2025-03-30T13:04:17.000000Z'
+                      summary: 'Dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci. Fugit deleniti distinctio eum doloremque id aut libero. Veniam corporis dolorem mollitia.'
+                      highlights:
+                        - 'Odit quia officia est dignissimos neque blanditiis odio.'
+                    -
+                      id: 01kpx2593kja5q2nxe28hhjz61
+                      name: 'Emmerich and Sons'
+                      position: 'User Experience Manager'
+                      url: 'http://www.conroy.net/tenetur-ratione-nemo-voluptate-accusamus-ut-et-recusandae-modi.html'
+                      startDate: '2022-06-28T10:06:48.000000Z'
+                      endDate: '2022-08-21T05:49:38.000000Z'
+                      summary: 'Repellendus assumenda et tenetur ab reiciendis. Perspiciatis deserunt ducimus corrupti et dolores quia. Assumenda odit doloribus repellat officiis corporis nesciunt ut. Iure impedit molestiae ut rem est esse sint.'
+                      highlights:
+                        - 'Sunt suscipit doloribus fugiat ut aut deserunt et.'
+                        - 'Neque recusandae et ipsam dolorem et ut dicta.'
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-                  error_id:
-                    type: string
-                    example: ba95802a-281b-4837-95b6-883d5bcbc8dd
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 01kpx2583k5bm1k3nkayejs862
+                        name: 'Cronin, Dare and Hauck'
+                        position: 'Locomotive Engineer'
+                        url: 'http://www.keebler.com/modi-ipsum-nostrum-omnis-autem-et'
+                        startDate: '2021-07-02T02:06:37.000000Z'
+                        endDate: '2025-03-30T13:04:17.000000Z'
+                        summary: 'Dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci. Fugit deleniti distinctio eum doloremque id aut libero. Veniam corporis dolorem mollitia.'
+                        highlights:
+                          - 'Odit quia officia est dignissimos neque blanditiis odio.'
+                      -
+                        id: 01kpx2593kja5q2nxe28hhjz61
+                        name: 'Emmerich and Sons'
+                        position: 'User Experience Manager'
+                        url: 'http://www.conroy.net/tenetur-ratione-nemo-voluptate-accusamus-ut-et-recusandae-modi.html'
+                        startDate: '2022-06-28T10:06:48.000000Z'
+                        endDate: '2022-08-21T05:49:38.000000Z'
+                        summary: 'Repellendus assumenda et tenetur ab reiciendis. Perspiciatis deserunt ducimus corrupti et dolores quia. Assumenda odit doloribus repellat officiis corporis nesciunt ut. Iure impedit molestiae ut rem est esse sint.'
+                        highlights:
+                          - 'Sunt suscipit doloribus fugiat ut aut deserunt et.'
+                          - 'Neque recusandae et ipsam dolorem et ut dicta.'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 01kpx2583k5bm1k3nkayejs862
+                        name:
+                          type: string
+                          example: 'Cronin, Dare and Hauck'
+                        position:
+                          type: string
+                          example: 'Locomotive Engineer'
+                        url:
+                          type: string
+                          example: 'http://www.keebler.com/modi-ipsum-nostrum-omnis-autem-et'
+                        startDate:
+                          type: string
+                          example: '2021-07-02T02:06:37.000000Z'
+                        endDate:
+                          type: string
+                          example: '2025-03-30T13:04:17.000000Z'
+                        summary:
+                          type: string
+                          example: 'Dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci. Fugit deleniti distinctio eum doloremque id aut libero. Veniam corporis dolorem mollitia.'
+                        highlights:
+                          type: array
+                          example:
+                            - 'Odit quia officia est dignissimos neque blanditiis odio.'
+                          items:
+                            type: string
       tags:
         - Endpoints
-      security: []
   '/api/work/{work_id}':
     patch:
       summary: ''
       operationId: patchApiWorkWork_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 01kpwyq2bkcem6sybm168m17j6
+                  name: 'Jane Doe'
+                  position: string
+                  url: 'https://example.com'
+                  startDate: '2023-01-01'
+                  endDate: '2023-01-01'
+                  summary: 'Experienced developer with ...'
+                  highlights:
+                    - string
+                  created_at: '2026-04-23T10:38:34.000000Z'
+                  updated_at: '2026-04-23T11:38:46.000000Z'
+                  deleted_at: null
+                properties:
+                  id:
+                    type: string
+                    example: 01kpwyq2bkcem6sybm168m17j6
+                  name:
+                    type: string
+                    example: 'Jane Doe'
+                  position:
+                    type: string
+                    example: string
+                  url:
+                    type: string
+                    example: 'https://example.com'
+                  startDate:
+                    type: string
+                    example: '2023-01-01'
+                  endDate:
+                    type: string
+                    example: '2023-01-01'
+                  summary:
+                    type: string
+                    example: 'Experienced developer with ...'
+                  highlights:
+                    type: array
+                    example:
+                      - string
+                    items:
+                      type: string
+                  created_at:
+                    type: string
+                    example: '2026-04-23T10:38:34.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2026-04-23T11:38:46.000000Z'
+                  deleted_at:
+                    type: string
+                    example: null
+                    nullable: true
       tags:
         - Endpoints
       requestBody:
@@ -1731,51 +3637,56 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Name / title.'
+                  example: 'Jane Doe'
                 position:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 url:
                   type: string
-                  description: 'Must be a valid URL.'
-                  example: 'http://bailey.com/'
+                  description: 'URL. Must be a valid URL.'
+                  example: 'https://example.com'
                 startDate:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Date (Y-m-d).'
+                  example: '2023-01-01'
                 endDate:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Date (Y-m-d).'
+                  example: '2023-01-01'
                 summary:
                   type: string
-                  description: ''
-                  example: architecto
+                  description: 'Short description.'
+                  example: 'Experienced developer with ...'
                 highlights:
                   type: array
                   description: ''
                   example:
-                    - architecto
+                    - string
                   items:
                     type: string
-      security: []
     delete:
       summary: ''
       operationId: deleteApiWorkWork_id
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        204:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ''
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
         name: work_id
         description: 'The ID of the work.'
-        example: 01kpvvyat5tdry5hat3mpb7ahb
+        example: 01kpwyq2bkcem6sybm168m17j6
         required: true
         schema:
           type: string
@@ -8623,7 +10534,6 @@ paths:
                     start_of_week: monday
       tags:
         - Endpoints
-      security: []
   /api/iso/language:
     get:
       summary: ''
@@ -10882,7 +12792,6 @@ paths:
                     wiki_url: 'https://en.wikipedia.org/wiki/Zulu_language'
       tags:
         - Endpoints
-      security: []
   /api/iso/currency:
     get:
       summary: ''
@@ -12600,14 +14509,37 @@ paths:
                     rounding: 0
       tags:
         - Endpoints
-      security: []
   /api/chat:
     post:
       summary: ''
       operationId: postApiChat
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Solo se permiten consultas relacionadas con el currículum.'
+                  errors:
+                    message:
+                      - 'El mensaje debe centrarse en el currículum y no incluir instrucciones potencialmente riesgosas.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Solo se permiten consultas relacionadas con el currículum.'
+                  errors:
+                    type: object
+                    properties:
+                      message:
+                        type: array
+                        example:
+                          - 'El mensaje debe centrarse en el currículum y no incluir instrucciones potencialmente riesgosas.'
+                        items:
+                          type: string
       tags:
         - Endpoints
       requestBody:
@@ -12620,28 +14552,55 @@ paths:
                 message:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                 session_id:
                   type: string
                   description: ''
-                  example: architecto
+                  example: string
                   nullable: true
                 metadata:
                   type: object
                   description: ''
-                  example: null
+                  example: []
                   properties: {  }
                   nullable: true
               required:
                 - message
-      security: []
   /api/import/json:
     post:
       summary: ''
       operationId: postApiImportJson
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The given data was invalid.'
+                  errors:
+                    file:
+                      - 'The file field must be a file of type: application/json, text/plain.'
+                  error_id: c2edc792-4b10-4103-9503-2ec58d44e512
+                properties:
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  errors:
+                    type: object
+                    properties:
+                      file:
+                        type: array
+                        example:
+                          - 'The file field must be a file of type: application/json, text/plain.'
+                        items:
+                          type: string
+                  error_id:
+                    type: string
+                    example: c2edc792-4b10-4103-9503-2ec58d44e512
       tags:
         - Endpoints
       requestBody:
@@ -12657,14 +14616,41 @@ paths:
                   description: 'Must be a file. Must not be greater than 10240 kilobytes.'
               required:
                 - file
-      security: []
   /api/import/resume:
     post:
       summary: ''
       operationId: postApiImportResume
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The given data was invalid.'
+                  errors:
+                    file:
+                      - 'The file field must be a file of type: pdf, doc, docx.'
+                  error_id: 5c62689d-2cc2-4a8a-953e-08edeb55ca86
+                properties:
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  errors:
+                    type: object
+                    properties:
+                      file:
+                        type: array
+                        example:
+                          - 'The file field must be a file of type: pdf, doc, docx.'
+                        items:
+                          type: string
+                  error_id:
+                    type: string
+                    example: 5c62689d-2cc2-4a8a-953e-08edeb55ca86
       tags:
         - Endpoints
       requestBody:
@@ -12680,14 +14666,29 @@ paths:
                   description: 'Must be a file. Must not be greater than 20480 kilobytes.'
               required:
                 - file
-      security: []
   /api/import/education:
     post:
       summary: ''
       operationId: postApiImportEducation
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  ok: false
+                  message: 'No se pudo extraer metadata de la educación.'
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'No se pudo extraer metadata de la educación.'
       tags:
         - Endpoints
       requestBody:
@@ -12703,16 +14704,31 @@ paths:
                   description: 'This field is required when <code>url</code> is not present. Must be a file. Must not be greater than 10240 kilobytes.'
                 url:
                   type: string
-                  description: 'This field is required when <code>file</code> is not present. Must be a valid URL.'
-                  example: 'http://www.bailey.biz/quos-velit-et-fugiat-sunt-nihil-accusantium-harum.html'
-      security: []
+                  description: 'URL. This field is required when <code>file</code> is not present. Must be a valid URL.'
+                  example: 'https://example.com'
   /api/import/certificate:
     post:
       summary: ''
       operationId: postApiImportCertificate
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  ok: false
+                  message: 'No se pudo extraer metadata del certificado.'
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'No se pudo extraer metadata del certificado.'
       tags:
         - Endpoints
       requestBody:
@@ -12728,9 +14744,8 @@ paths:
                   description: 'This field is required when <code>url</code> is not present. Must be a file. Must not be greater than 10240 kilobytes.'
                 url:
                   type: string
-                  description: 'This field is required when <code>file</code> is not present. Must be a valid URL.'
-                  example: 'http://www.bailey.biz/quos-velit-et-fugiat-sunt-nihil-accusantium-harum.html'
-      security: []
+                  description: 'URL. This field is required when <code>file</code> is not present. Must be a valid URL.'
+                  example: 'https://example.com'
   '/api/ai-request/{page}':
     get:
       summary: ''
@@ -12738,25 +14753,116 @@ paths:
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 920218ec-3494-4712-a418-0ab2b16f58cf
+                  current_page: 564
+                  data: []
+                  first_page_url: 'http://0.0.0.0:8000/api/ai-request/564?page=1'
+                  from: null
+                  last_page: 1
+                  last_page_url: 'http://0.0.0.0:8000/api/ai-request/564?page=1'
+                  links:
+                    -
+                      url: 'http://0.0.0.0:8000/api/ai-request/564?page=563'
+                      label: '&laquo; Previous'
+                      page: 563
+                      active: false
+                    -
+                      url: 'http://0.0.0.0:8000/api/ai-request/564?page=1'
+                      label: '1'
+                      page: 1
+                      active: false
+                    -
+                      url: null
+                      label: 'Next &raquo;'
+                      page: null
+                      active: false
+                  next_page_url: null
+                  path: 'http://0.0.0.0:8000/api/ai-request/564'
+                  per_page: 15
+                  prev_page_url: 'http://0.0.0.0:8000/api/ai-request/564?page=563'
+                  to: null
+                  total: 0
                 properties:
-                  message:
+                  current_page:
+                    type: integer
+                    example: 564
+                  data:
+                    type: array
+                    example: []
+                  first_page_url:
                     type: string
-                    example: Unauthenticated.
-                  error_id:
+                    example: 'http://0.0.0.0:8000/api/ai-request/564?page=1'
+                  from:
                     type: string
-                    example: 920218ec-3494-4712-a418-0ab2b16f58cf
+                    example: null
+                    nullable: true
+                  last_page:
+                    type: integer
+                    example: 1
+                  last_page_url:
+                    type: string
+                    example: 'http://0.0.0.0:8000/api/ai-request/564?page=1'
+                  links:
+                    type: array
+                    example:
+                      -
+                        url: 'http://0.0.0.0:8000/api/ai-request/564?page=563'
+                        label: '&laquo; Previous'
+                        page: 563
+                        active: false
+                      -
+                        url: 'http://0.0.0.0:8000/api/ai-request/564?page=1'
+                        label: '1'
+                        page: 1
+                        active: false
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        page: null
+                        active: false
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          example: 'http://0.0.0.0:8000/api/ai-request/564?page=563'
+                        label:
+                          type: string
+                          example: '&laquo; Previous'
+                        page:
+                          type: integer
+                          example: 563
+                        active:
+                          type: boolean
+                          example: false
+                  next_page_url:
+                    type: string
+                    example: null
+                    nullable: true
+                  path:
+                    type: string
+                    example: 'http://0.0.0.0:8000/api/ai-request/564'
+                  per_page:
+                    type: integer
+                    example: 15
+                  prev_page_url:
+                    type: string
+                    example: 'http://0.0.0.0:8000/api/ai-request/564?page=563'
+                  to:
+                    type: string
+                    example: null
+                    nullable: true
+                  total:
+                    type: integer
+                    example: 0
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
@@ -12779,25 +14885,116 @@ paths:
       description: ''
       parameters: []
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 50a7e33f-8778-40be-af01-e895f237fc3b
+                  current_page: 564
+                  data: []
+                  first_page_url: 'http://0.0.0.0:8000/api/agent-conversation/564?page=1'
+                  from: null
+                  last_page: 1
+                  last_page_url: 'http://0.0.0.0:8000/api/agent-conversation/564?page=1'
+                  links:
+                    -
+                      url: 'http://0.0.0.0:8000/api/agent-conversation/564?page=563'
+                      label: '&laquo; Previous'
+                      page: 563
+                      active: false
+                    -
+                      url: 'http://0.0.0.0:8000/api/agent-conversation/564?page=1'
+                      label: '1'
+                      page: 1
+                      active: false
+                    -
+                      url: null
+                      label: 'Next &raquo;'
+                      page: null
+                      active: false
+                  next_page_url: null
+                  path: 'http://0.0.0.0:8000/api/agent-conversation/564'
+                  per_page: 15
+                  prev_page_url: 'http://0.0.0.0:8000/api/agent-conversation/564?page=563'
+                  to: null
+                  total: 0
                 properties:
-                  message:
+                  current_page:
+                    type: integer
+                    example: 564
+                  data:
+                    type: array
+                    example: []
+                  first_page_url:
                     type: string
-                    example: Unauthenticated.
-                  error_id:
+                    example: 'http://0.0.0.0:8000/api/agent-conversation/564?page=1'
+                  from:
                     type: string
-                    example: 50a7e33f-8778-40be-af01-e895f237fc3b
+                    example: null
+                    nullable: true
+                  last_page:
+                    type: integer
+                    example: 1
+                  last_page_url:
+                    type: string
+                    example: 'http://0.0.0.0:8000/api/agent-conversation/564?page=1'
+                  links:
+                    type: array
+                    example:
+                      -
+                        url: 'http://0.0.0.0:8000/api/agent-conversation/564?page=563'
+                        label: '&laquo; Previous'
+                        page: 563
+                        active: false
+                      -
+                        url: 'http://0.0.0.0:8000/api/agent-conversation/564?page=1'
+                        label: '1'
+                        page: 1
+                        active: false
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        page: null
+                        active: false
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          example: 'http://0.0.0.0:8000/api/agent-conversation/564?page=563'
+                        label:
+                          type: string
+                          example: '&laquo; Previous'
+                        page:
+                          type: integer
+                          example: 563
+                        active:
+                          type: boolean
+                          example: false
+                  next_page_url:
+                    type: string
+                    example: null
+                    nullable: true
+                  path:
+                    type: string
+                    example: 'http://0.0.0.0:8000/api/agent-conversation/564'
+                  per_page:
+                    type: integer
+                    example: 15
+                  prev_page_url:
+                    type: string
+                    example: 'http://0.0.0.0:8000/api/agent-conversation/564?page=563'
+                  to:
+                    type: string
+                    example: null
+                    nullable: true
+                  total:
+                    type: integer
+                    example: 0
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path
@@ -12820,25 +15017,24 @@ paths:
       description: ''
       parameters: []
       responses:
-        401:
+        404:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
-                  error_id: 482ef2f7-bfe8-4351-996f-75cfec21a014
+                  message: 'Not Found.'
+                  error_id: 359c819d-e3fd-477c-9c06-e4e59cef4094
                 properties:
                   message:
                     type: string
-                    example: Unauthenticated.
+                    example: 'Not Found.'
                   error_id:
                     type: string
-                    example: 482ef2f7-bfe8-4351-996f-75cfec21a014
+                    example: 359c819d-e3fd-477c-9c06-e4e59cef4094
       tags:
         - Endpoints
-      security: []
     parameters:
       -
         in: path

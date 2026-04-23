@@ -6,9 +6,11 @@ use App\Enums\ConditionOperator;
 use App\Enums\RelationOperator;
 use App\Enums\SearchOperator;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Traits\ScribeBodyParameters;
 
 class BaseSearch extends FormRequest
 {
+    use ScribeBodyParameters;
     public function rules()
     {
         $searchOperatorValues = implode(',', SearchOperator::values());

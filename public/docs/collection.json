@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "json-resume-api API Documentation",
-        "_postman_id": "43363073-1493-4fe1-ac7a-9e050514e07f",
+        "_postman_id": "82a13497-aac0-4aec-8506-91867c33e833",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -41,14 +41,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"email\":\"gbailey@example.net\",\"password\":\"|]|{+-\"}"
+                            "raw": "{\"email\":\"user@example.com\",\"password\":\"string\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 422,
+                            "body": "{\"message\":\"The given data was invalid.\",\"errors\":{\"password\":[\"The password field must be at least 8 characters.\",\"The password field must contain at least one uppercase and one lowercase letter.\",\"The password field must contain at least one number.\"]},\"error_id\":\"9b815888-7b18-43d3-b428-cf1e09615bea\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/authentication\/recovery",
@@ -71,12 +92,29 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 204,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/authentication\/change-password",
@@ -100,14 +138,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"password\":\"|]|{+-\"}"
+                            "raw": "{\"password\":\"string\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 422,
+                            "body": "{\"message\":\"The given data was invalid.\",\"errors\":{\"password\":[\"The password field must be at least 8 characters.\",\"The password field must contain at least one uppercase and one lowercase letter.\",\"The password field must contain at least one number.\"]},\"error_id\":\"52446ad5-a702-4cf7-aa70-b31365aa406b\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/authentication\/refresh-token",
@@ -130,12 +189,33 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"token\":\"18|Awt2RnWCtNPIQ7jdySMUBwBOxN3FkvKnullI6p894a727052\",\"expiresAt\":\"2026-04-23 13:43:14\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/authentication\/logout",
@@ -158,12 +238,29 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 204,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/basic",
@@ -187,14 +284,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"label\":\"architecto\",\"email\":\"zbailey@example.net\",\"phone\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\",\"location\":{\"address\":\"architecto\",\"postalCode\":\"architecto\",\"city\":\"architecto\",\"countryCode\":\"architecto\",\"region\":\"architecto\"},\"profiles\":[{\"network\":\"architecto\",\"username\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}]}"
+                            "raw": "{\"name\":\"Jane Doe\",\"label\":\"Jane Doe\",\"email\":\"user@example.com\",\"phone\":\"+34 600 000 000\",\"url\":\"https:\\\/\\\/example.com\",\"summary\":\"Experienced developer with ...\",\"location\":{\"address\":\"123 Main St\",\"postalCode\":\"28001\",\"city\":\"Madrid\",\"countryCode\":\"ES\",\"region\":\"string\"},\"profiles\":[{\"network\":\"github\",\"username\":\"janedoe\",\"url\":\"https:\\\/\\\/github.com\\\/janedoe\"}]}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"name\":\"Jane Doe\",\"label\":\"Jane Doe\",\"email\":\"user@example.com\",\"phone\":\"+34 600 000 000\",\"url\":\"https:\\\/\\\/example.com\",\"summary\":\"Experienced developer with ...\",\"location\":{\"address\":\"123 Main St\",\"postalCode\":\"28001\",\"city\":\"Madrid\",\"countryCode\":\"ES\",\"region\":\"string\"},\"profiles\":[{\"network\":\"github\",\"username\":\"janedoe\",\"url\":\"https:\\\/\\\/github.com\\\/janedoe\"}],\"id\":\"01kpx24aq2h5js7t4aes7f6npb\",\"updated_at\":\"2026-04-23T11:38:14.000000Z\",\"created_at\":\"2026-04-23T11:38:14.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/basic",
@@ -217,10 +335,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
@@ -242,8 +357,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"02359495-d725-414f-9206-91e3029e57fb\"}",
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpwyq0rqnbx7szkb41exxpmp\",\"name\":\"Jos\\u00e9 Antonio Rivas Fern\\u00e1ndez\",\"label\":\"Team Lead \\\/ Head of Development\",\"email\":\"me@jarivas.work\",\"phone\":\"(+34) 655010958\",\"url\":\"https:\\\/\\\/me.jarivas.work\",\"summary\":\"L\\u00edder tecnol\\u00f3gico y desarrollador Full Stack con amplia experiencia en la creaci\\u00f3n de arquitecturas escalables y gesti\\u00f3n de equipos. Especializado en el ecosistema PHP (Laravel, Symfony) y con una s\\u00f3lida formaci\\u00f3n reciente en Inteligencia Artificial, Big Data, Ciberseguridad y Ciencia de Datos aplicada.\",\"location\":{\"city\":\"M\\u00e1laga\",\"countryCode\":\"ES\",\"region\":\"Andaluc\\u00eda\"},\"profiles\":[{\"network\":\"GitHub\",\"username\":\"jarivas\",\"url\":\"https:\\\/\\\/github.com\\\/jarivas\"},{\"network\":\"Credly\",\"username\":\"jose-antonio-rivas-fernandez\",\"url\":\"https:\\\/\\\/www.credly.com\\\/users\\\/jose-antonio-rivas-fernandez\"}],\"created_at\":\"2026-04-23 12:38:32\",\"updated_at\":\"2026-04-23 12:38:32\"}]}",
                             "name": ""
                         }
                     ]
@@ -260,7 +375,7 @@
                                 {
                                     "id": "basic_id",
                                     "key": "basic_id",
-                                    "value": "01kpvvy803bzkw6h2y7skfvzp0",
+                                    "value": "01kpwyq0rqnbx7szkb41exxpmp",
                                     "description": "The ID of the basic."
                                 }
                             ]
@@ -277,10 +392,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
@@ -302,8 +414,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"1f933c60-2af4-4dcd-87de-43a79291af1a\"}",
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":\"01kpwyq0rqnbx7szkb41exxpmp\",\"name\":\"Jos\\u00e9 Antonio Rivas Fern\\u00e1ndez\",\"label\":\"Team Lead \\\/ Head of Development\",\"email\":\"me@jarivas.work\",\"phone\":\"(+34) 655010958\",\"url\":\"https:\\\/\\\/me.jarivas.work\",\"summary\":\"L\\u00edder tecnol\\u00f3gico y desarrollador Full Stack con amplia experiencia en la creaci\\u00f3n de arquitecturas escalables y gesti\\u00f3n de equipos. Especializado en el ecosistema PHP (Laravel, Symfony) y con una s\\u00f3lida formaci\\u00f3n reciente en Inteligencia Artificial, Big Data, Ciberseguridad y Ciencia de Datos aplicada.\",\"location\":{\"city\":\"M\\u00e1laga\",\"countryCode\":\"ES\",\"region\":\"Andaluc\\u00eda\"},\"profiles\":[{\"network\":\"GitHub\",\"username\":\"jarivas\",\"url\":\"https:\\\/\\\/github.com\\\/jarivas\"},{\"network\":\"Credly\",\"username\":\"jose-antonio-rivas-fernandez\",\"url\":\"https:\\\/\\\/www.credly.com\\\/users\\\/jose-antonio-rivas-fernandez\"}],\"created_at\":\"2026-04-23 12:38:32\",\"updated_at\":\"2026-04-23 12:38:32\"}}",
                             "name": ""
                         }
                     ]
@@ -320,7 +432,7 @@
                                 {
                                     "id": "basic_id",
                                     "key": "basic_id",
-                                    "value": "01kpvvy803bzkw6h2y7skfvzp0",
+                                    "value": "01kpwyq0rqnbx7szkb41exxpmp",
                                     "description": "The ID of the basic."
                                 }
                             ]
@@ -338,14 +450,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"label\":\"architecto\",\"email\":\"zbailey@example.net\",\"phone\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\",\"location\":{\"address\":\"architecto\",\"postalCode\":\"architecto\",\"city\":\"architecto\",\"countryCode\":\"architecto\",\"region\":\"architecto\"},\"profiles\":[{\"network\":\"architecto\",\"username\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}]}"
+                            "raw": "{\"name\":\"Jane Doe\",\"label\":\"Jane Doe\",\"email\":\"user@example.com\",\"phone\":\"+34 600 000 000\",\"url\":\"https:\\\/\\\/example.com\",\"summary\":\"Experienced developer with ...\",\"location\":{\"address\":\"123 Main St\",\"postalCode\":\"28001\",\"city\":\"Madrid\",\"countryCode\":\"ES\",\"region\":\"string\"},\"profiles\":[{\"network\":\"github\",\"username\":\"janedoe\",\"url\":\"https:\\\/\\\/github.com\\\/janedoe\"}],\"awards\":[\"string\"],\"certificates\":[\"string\"],\"educations\":[\"string\"],\"interests\":[\"string\"],\"languages\":[\"string\"],\"projects\":[\"string\"],\"publications\":[\"string\"],\"references\":[\"string\"],\"skills\":[\"string\"],\"volunteer\":[\"string\"],\"work\":[\"string\"]}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 422,
+                            "body": "{\"message\":\"The given data was invalid.\",\"errors\":{\"awards.0\":[\"The awards.0 field must be a valid ULID.\"],\"certificates.0\":[\"The certificates.0 field must be a valid ULID.\"],\"educations.0\":[\"The educations.0 field must be a valid ULID.\"],\"interests.0\":[\"The interests.0 field must be a valid ULID.\"],\"languages.0\":[\"The languages.0 field must be a valid ULID.\"],\"projects.0\":[\"The projects.0 field must be a valid ULID.\"],\"publications.0\":[\"The publications.0 field must be a valid ULID.\"],\"references.0\":[\"The references.0 field must be a valid ULID.\"],\"skills.0\":[\"The skills.0 field must be a valid ULID.\"],\"volunteer.0\":[\"The volunteer.0 field must be a valid ULID.\"],\"work.0\":[\"The work.0 field must be a valid ULID.\"]},\"error_id\":\"1850b854-cb6f-4440-9336-152ef27279cf\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "DELETE api\/basic\/{basic_id}",
@@ -359,7 +492,7 @@
                                 {
                                     "id": "basic_id",
                                     "key": "basic_id",
-                                    "value": "01kpvvy803bzkw6h2y7skfvzp0",
+                                    "value": "01kpwyq0rqnbx7szkb41exxpmp",
                                     "description": "The ID of the basic."
                                 }
                             ]
@@ -376,12 +509,29 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 204,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/award",
@@ -405,14 +555,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"architecto\",\"date\":\"2026-04-23T09:45:32\",\"awarder\":\"architecto\",\"summary\":\"architecto\"}"
+                            "raw": "{\"title\":\"Jane Doe\",\"date\":\"2023-01-01\",\"awarder\":\"string\",\"summary\":\"Experienced developer with ...\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"title\":\"Jane Doe\",\"date\":\"2023-01-01\",\"awarder\":\"string\",\"summary\":\"Experienced developer with ...\",\"id\":\"01kpx24bhrbrya9emwaas1xjhv\",\"updated_at\":\"2026-04-23T11:38:15.000000Z\",\"created_at\":\"2026-04-23T11:38:15.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/award",
@@ -435,10 +606,50 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx24cafrk02zeapaabw86vd\",\"title\":\"Adipisci quidem nostrum qui.\",\"date\":\"2022-12-05T23:00:00.000000Z\",\"awarder\":\"Baumbach Ltd\",\"summary\":\"Et modi ipsum nostrum omnis autem et consequatur.\"},{\"id\":\"01kpx24d498xzhdxeqwr8m2qzg\",\"title\":\"Dolores enim non.\",\"date\":\"1980-04-04T23:00:00.000000Z\",\"awarder\":\"Feeney, Leffler and Glover\",\"summary\":\"Quis adipisci molestias fugit deleniti distinctio eum.\"}]}",
+                            "name": ""
                         }
+                    ]
+                },
+                {
+                    "name": "PATCH api\/award\/{award_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/award\/:award_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/award\/:award_id",
+                            "variable": [
+                                {
+                                    "id": "award_id",
+                                    "key": "award_id",
+                                    "value": "architecto",
+                                    "description": "The ID of the award."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"title\":\"Jane Doe\",\"date\":\"2023-01-01\",\"awarder\":\"string\",\"summary\":\"Experienced developer with ...\"}"
+                        },
+                        "description": ""
                     },
                     "response": [
                         {
@@ -460,50 +671,11 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"173ca39f-5085-408b-ba7d-9afcc6a3e09e\"}",
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"1e3bcc8d-f788-478b-9621-8a60a4cf0533\"}",
                             "name": ""
                         }
                     ]
-                },
-                {
-                    "name": "PATCH api\/award\/{award_id}",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/award\/:award_id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/award\/:award_id",
-                            "variable": [
-                                {
-                                    "id": "award_id",
-                                    "key": "award_id",
-                                    "value": "01kpvvzppc98nb2hsba9gjwj0k",
-                                    "description": "The ID of the award."
-                                }
-                            ]
-                        },
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"title\":\"architecto\",\"date\":\"2026-04-23T09:45:33\",\"awarder\":\"architecto\",\"summary\":\"architecto\"}"
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
                 },
                 {
                     "name": "DELETE api\/award\/{award_id}",
@@ -517,7 +689,7 @@
                                 {
                                     "id": "award_id",
                                     "key": "award_id",
-                                    "value": "01kpvvzppc98nb2hsba9gjwj0k",
+                                    "value": "architecto",
                                     "description": "The ID of the award."
                                 }
                             ]
@@ -534,12 +706,33 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"4ff39548-bd7f-468f-bed8-78e9772d19e6\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/certificate",
@@ -563,14 +756,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"date\":\"2026-04-23T09:45:33\",\"issuer\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"Jane Doe\",\"date\":\"2023-01-01\",\"issuer\":\"string\",\"url\":\"https:\\\/\\\/example.com\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"name\":\"Jane Doe\",\"date\":\"2023-01-01\",\"issuer\":\"string\",\"url\":\"https:\\\/\\\/example.com\",\"id\":\"01kpx24e4fm3xy5d0285k1b4cc\",\"updated_at\":\"2026-04-23T11:38:18.000000Z\",\"created_at\":\"2026-04-23T11:38:18.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/certificate",
@@ -593,10 +807,50 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx24exp7sz88gjt7314v6xs\",\"name\":\"aut adipisci quidem\",\"date\":\"2020-05-22T22:00:00.000000Z\",\"issuer\":\"Dare Group\",\"url\":\"http:\\\/\\\/www.keebler.com\\\/modi-ipsum-nostrum-omnis-autem-et\"},{\"id\":\"01kpx24fq68j38qddayn059wtm\",\"name\":\"consequatur aut dolores\",\"date\":\"2020-03-12T23:00:00.000000Z\",\"issuer\":\"Mitchell-VonRueden\",\"url\":\"http:\\\/\\\/www.glover.biz\\\/\"}]}",
+                            "name": ""
                         }
+                    ]
+                },
+                {
+                    "name": "PATCH api\/certificate\/{certificate_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/certificate\/:certificate_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/certificate\/:certificate_id",
+                            "variable": [
+                                {
+                                    "id": "certificate_id",
+                                    "key": "certificate_id",
+                                    "value": "01kpwyqgb4fbjqwampt9cgwgp5",
+                                    "description": "The ID of the certificate."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Jane Doe\",\"date\":\"2023-01-01\",\"issuer\":\"string\",\"url\":\"https:\\\/\\\/example.com\"}"
+                        },
+                        "description": ""
                     },
                     "response": [
                         {
@@ -618,50 +872,11 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"e21b0ab3-fb2e-46c1-b6d0-6cd2de735ddc\"}",
+                            "code": 200,
+                            "body": "{\"id\":\"01kpwyqgb4fbjqwampt9cgwgp5\",\"name\":\"Jane Doe\",\"date\":\"2023-01-01\",\"issuer\":\"string\",\"url\":\"https:\\\/\\\/example.com\",\"created_at\":\"2026-04-23T10:38:48.000000Z\",\"updated_at\":\"2026-04-23T11:38:20.000000Z\",\"deleted_at\":null}",
                             "name": ""
                         }
                     ]
-                },
-                {
-                    "name": "PATCH api\/certificate\/{certificate_id}",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/certificate\/:certificate_id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/certificate\/:certificate_id",
-                            "variable": [
-                                {
-                                    "id": "certificate_id",
-                                    "key": "certificate_id",
-                                    "value": "architecto",
-                                    "description": "The ID of the certificate."
-                                }
-                            ]
-                        },
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"date\":\"2026-04-23T09:45:33\",\"issuer\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
                 },
                 {
                     "name": "DELETE api\/certificate\/{certificate_id}",
@@ -675,7 +890,7 @@
                                 {
                                     "id": "certificate_id",
                                     "key": "certificate_id",
-                                    "value": "architecto",
+                                    "value": "01kpwyqgb4fbjqwampt9cgwgp5",
                                     "description": "The ID of the certificate."
                                 }
                             ]
@@ -692,12 +907,29 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 204,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/education",
@@ -721,14 +953,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"institution\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"area\":\"architecto\",\"studyType\":\"architecto\",\"startDate\":\"2026-04-23T09:45:33\",\"endDate\":\"2026-04-23T09:45:33\",\"score\":\"architecto\",\"summary\":\"architecto\",\"courses\":[\"architecto\"]}"
+                            "raw": "{\"institution\":\"string\",\"area\":\"string\",\"studyType\":\"string\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"score\":\"string\",\"gpa\":\"string\",\"summary\":\"Experienced developer with ...\",\"courses\":[\"string\"]}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"institution\":\"string\",\"area\":\"string\",\"studyType\":\"string\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"score\":\"string\",\"summary\":\"Experienced developer with ...\",\"courses\":[\"string\"],\"id\":\"01kpx24h4c074k7z9c9jwmkvqa\",\"updated_at\":\"2026-04-23T11:38:21.000000Z\",\"created_at\":\"2026-04-23T11:38:21.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/education",
@@ -751,10 +1004,50 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx24htkwh4axtdscq277k6d\",\"institution\":\"Cronin, Dare and Hauck\",\"area\":\"aut\",\"studyType\":\"Certificate\",\"startDate\":\"2019-06-27T02:06:15.000000Z\",\"endDate\":\"2021-09-03T08:08:22.000000Z\",\"score\":\"enim\",\"summary\":\"Facere tempora ex voluptatem laboriosam.\"},{\"id\":\"01kpx24jmhextkcdepnm5xyzg0\",\"institution\":\"Emmerich and Sons\",\"area\":\"recusandae\",\"studyType\":\"PhD\",\"startDate\":\"2011-06-23T10:06:25.000000Z\",\"endDate\":\"2016-06-18T07:52:41.000000Z\",\"score\":\"rerum\",\"summary\":\"Repellendus assumenda et tenetur ab reiciendis.\"}]}",
+                            "name": ""
                         }
+                    ]
+                },
+                {
+                    "name": "PATCH api\/education\/{education_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/education\/:education_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/education\/:education_id",
+                            "variable": [
+                                {
+                                    "id": "education_id",
+                                    "key": "education_id",
+                                    "value": "01kpwyqd0jwd3n95kvbd2hcsc8",
+                                    "description": "The ID of the education."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"institution\":\"string\",\"url\":\"https:\\\/\\\/example.com\",\"area\":\"string\",\"studyType\":\"string\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"score\":\"string\",\"summary\":\"Experienced developer with ...\",\"courses\":[\"string\"]}"
+                        },
+                        "description": ""
                     },
                     "response": [
                         {
@@ -776,50 +1069,11 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"2c81be6b-a452-494b-bce0-d48f505f4f3f\"}",
+                            "code": 200,
+                            "body": "{\"id\":\"01kpwyqd0jwd3n95kvbd2hcsc8\",\"institution\":\"string\",\"url\":\"https:\\\/\\\/example.com\",\"area\":\"string\",\"studyType\":\"string\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"score\":\"string\",\"summary\":\"Experienced developer with ...\",\"courses\":[\"string\"],\"created_at\":\"2026-04-23T10:38:45.000000Z\",\"updated_at\":\"2026-04-23T11:38:23.000000Z\",\"deleted_at\":null}",
                             "name": ""
                         }
                     ]
-                },
-                {
-                    "name": "PATCH api\/education\/{education_id}",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/education\/:education_id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/education\/:education_id",
-                            "variable": [
-                                {
-                                    "id": "education_id",
-                                    "key": "education_id",
-                                    "value": "01kpvvzhjq46mrm6hdksnqnpp0",
-                                    "description": "The ID of the education."
-                                }
-                            ]
-                        },
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"institution\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"area\":\"architecto\",\"studyType\":\"architecto\",\"startDate\":\"2026-04-23T09:45:33\",\"endDate\":\"2026-04-23T09:45:33\",\"score\":\"architecto\",\"summary\":\"architecto\",\"courses\":[\"architecto\"]}"
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
                 },
                 {
                     "name": "DELETE api\/education\/{education_id}",
@@ -833,7 +1087,7 @@
                                 {
                                     "id": "education_id",
                                     "key": "education_id",
-                                    "value": "01kpvvzhjq46mrm6hdksnqnpp0",
+                                    "value": "01kpwyqd0jwd3n95kvbd2hcsc8",
                                     "description": "The ID of the education."
                                 }
                             ]
@@ -850,12 +1104,29 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 204,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/interest",
@@ -879,14 +1150,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"keywords\":[\"architecto\"]}"
+                            "raw": "{\"name\":\"Jane Doe\",\"keywords\":[\"string\"]}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"name\":\"Jane Doe\",\"keywords\":[\"string\"],\"id\":\"01kpx24m4tsnsj0nf4wrx69k64\",\"updated_at\":\"2026-04-23T11:38:24.000000Z\",\"created_at\":\"2026-04-23T11:38:24.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/interest",
@@ -909,33 +1201,13 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                },
-                                {
-                                    "key": "access-control-expose-headers",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"826e9928-17f2-44d7-9945-25bdbeeb06b5\"}",
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx24mtr742xjn8pk86996zr\",\"name\":\"aut\",\"keywords\":[\"quidem\",\"nostrum\",\"qui\",\"commodi\",\"incidunt\",\"iure\",\"odit\"]},{\"id\":\"01kpx24ngsb1nq0wgyyhmfs640\",\"name\":\"et\",\"keywords\":[\"modi\",\"ipsum\",\"nostrum\",\"omnis\",\"autem\",\"et\",\"consequatur\"]}]}",
                             "name": ""
                         }
                     ]
@@ -970,14 +1242,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"keywords\":[\"architecto\"]}"
+                            "raw": "{\"name\":\"Jane Doe\",\"keywords\":[\"string\"]}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"740df389-e66b-4c65-8c89-e5cf1281f7d1\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "DELETE api\/interest\/{interest_id}",
@@ -1008,12 +1301,33 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"70cb715d-c8b5-4077-b99a-862b95927ccc\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/language",
@@ -1037,14 +1351,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"language\":\"architecto\",\"fluency\":\"architecto\"}"
+                            "raw": "{\"name\":\"Jane Doe\",\"code\":\"string\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 500,
+                            "body": "{\"message\":\"Server Error.\",\"error_id\":\"e827f71d-09e1-4bd0-b55f-813e98df9a37\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/language",
@@ -1067,10 +1402,50 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx24p7mtt41xr9mj465j4ms\",\"language\":\"et\",\"fluency\":\"native\"},{\"id\":\"01kpx24q0t10nwve77r7jgwtqd\",\"language\":\"sg\",\"fluency\":\"native\"}]}",
+                            "name": ""
                         }
+                    ]
+                },
+                {
+                    "name": "PATCH api\/language\/{language_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/language\/:language_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/language\/:language_id",
+                            "variable": [
+                                {
+                                    "id": "language_id",
+                                    "key": "language_id",
+                                    "value": "01kpwyr7fb6ssc5bbxf9vagyf5",
+                                    "description": "The ID of the language."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Jane Doe\",\"code\":\"string\"}"
+                        },
+                        "description": ""
                     },
                     "response": [
                         {
@@ -1092,50 +1467,11 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"25596ccd-1e56-4a6d-9e50-eb3ca6386c1e\"}",
+                            "code": 200,
+                            "body": "{\"id\":\"01kpwyr7fb6ssc5bbxf9vagyf5\",\"language\":\"Espa\\u00f1ol\",\"fluency\":\"Nativo\",\"created_at\":\"2026-04-23T10:39:12.000000Z\",\"updated_at\":\"2026-04-23T10:39:12.000000Z\",\"deleted_at\":null}",
                             "name": ""
                         }
                     ]
-                },
-                {
-                    "name": "PATCH api\/language\/{language_id}",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/language\/:language_id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/language\/:language_id",
-                            "variable": [
-                                {
-                                    "id": "language_id",
-                                    "key": "language_id",
-                                    "value": "architecto",
-                                    "description": "The ID of the language."
-                                }
-                            ]
-                        },
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"language\":\"architecto\",\"fluency\":\"architecto\"}"
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
                 },
                 {
                     "name": "DELETE api\/language\/{language_id}",
@@ -1149,7 +1485,7 @@
                                 {
                                     "id": "language_id",
                                     "key": "language_id",
-                                    "value": "architecto",
+                                    "value": "01kpwyr7fb6ssc5bbxf9vagyf5",
                                     "description": "The ID of the language."
                                 }
                             ]
@@ -1166,12 +1502,29 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 204,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/project",
@@ -1195,14 +1548,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"startDate\":\"2026-04-23T09:45:33\",\"endDate\":\"2026-04-23T09:45:33\",\"description\":\"Eius et animi quos velit et.\",\"roles\":[\"architecto\"],\"highlights\":[\"architecto\"],\"keywords\":[\"architecto\"],\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"Jane Doe\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"description\":\"Experienced developer with ...\",\"roles\":[\"string\"],\"highlights\":[\"string\"],\"keywords\":[\"string\"],\"url\":\"https:\\\/\\\/example.com\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"name\":\"Jane Doe\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"description\":\"Experienced developer with ...\",\"url\":\"https:\\\/\\\/example.com\",\"roles\":[\"string\"],\"highlights\":[\"string\"],\"keywords\":[\"string\"],\"id\":\"01kpx24r77cjrwjct0atyvg200\",\"updated_at\":\"2026-04-23T11:38:28.000000Z\",\"created_at\":\"2026-04-23T11:38:28.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/project",
@@ -1225,33 +1599,13 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                },
-                                {
-                                    "key": "access-control-expose-headers",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"77d86d57-b29b-4749-9436-0b9d0154d87c\"}",
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx24rxww59yd7h5pz4b6rwb\",\"name\":\"Nostrum qui commodi.\",\"startDate\":\"2025-06-24T02:06:07.000000Z\",\"endDate\":\"2026-08-07T13:36:42.000000Z\",\"description\":\"Aut dolores enim non facere tempora ex voluptatem. Praesentium quis adipisci molestias fugit. Distinctio eum doloremque id aut libero aliquam veniam corporis. Mollitia deleniti nemo odit quia officia.\",\"highlights\":[\"Neque blanditiis odio veritatis excepturi doloribus delectus.\",\"Qui repudiandae laboriosam est alias.\",\"Ratione nemo voluptate accusamus ut et recusandae modi rerum.\",\"Repellendus assumenda et tenetur ab reiciendis.\",\"Perspiciatis deserunt ducimus corrupti et dolores quia.\"],\"url\":\"https:\\\/\\\/thiel.com\\\/repellat-officiis-corporis-nesciunt-ut.html\"},{\"id\":\"01kpx24smxajgffjsbabqr0cf1\",\"name\":\"Molestiae ut rem.\",\"startDate\":\"2026-02-14T09:17:08.000000Z\",\"endDate\":\"2027-04-26T18:08:36.000000Z\",\"description\":\"Error neque recusandae et ipsam dolorem et ut dicta. Assumenda consequatur ut et sunt quisquam. Repellendus ut eaque alias ratione dolores.\",\"highlights\":[\"Ea ut aut deserunt sint quis.\",\"Quod id aspernatur consectetur id a consectetur assumenda.\",\"Neque sit sunt nihil accusantium odit ut perspiciatis.\",\"Dolorem aut quis ut dolores omnis.\",\"Earum consequatur asperiores est vel id aut officiis eos.\",\"Et qui unde et.\"],\"url\":\"https:\\\/\\\/www.barton.com\\\/iusto-facere-possimus-aliquam-consequatur\"}]}",
                             "name": ""
                         }
                     ]
@@ -1286,14 +1640,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"startDate\":\"2026-04-23T09:45:33\",\"endDate\":\"2026-04-23T09:45:33\",\"description\":\"Eius et animi quos velit et.\",\"roles\":[\"architecto\"],\"highlights\":[\"architecto\"],\"keywords\":[\"architecto\"],\"url\":\"http:\\\/\\\/bailey.com\\\/\"}"
+                            "raw": "{\"name\":\"Jane Doe\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"description\":\"Experienced developer with ...\",\"roles\":[\"string\"],\"highlights\":[\"string\"],\"keywords\":[\"string\"],\"url\":\"https:\\\/\\\/example.com\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"c5a310bf-5d7c-4994-88b9-1e7a12929cd1\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "DELETE api\/project\/{project_id}",
@@ -1324,12 +1699,33 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"4cf88830-26d1-429d-8354-9d80b334d3b1\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/publication",
@@ -1353,14 +1749,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"publisher\":\"architecto\",\"releaseDate\":\"2026-04-23T09:45:33\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\"}"
+                            "raw": "{\"name\":\"Jane Doe\",\"publisher\":\"string\",\"releaseDate\":\"2023-01-01\",\"url\":\"https:\\\/\\\/example.com\",\"summary\":\"Experienced developer with ...\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"name\":\"Jane Doe\",\"publisher\":\"string\",\"releaseDate\":\"2023-01-01\",\"url\":\"https:\\\/\\\/example.com\",\"summary\":\"Experienced developer with ...\",\"id\":\"01kpx24tbc8annhffh88bngk68\",\"updated_at\":\"2026-04-23T11:38:30.000000Z\",\"created_at\":\"2026-04-23T11:38:30.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/publication",
@@ -1383,33 +1800,13 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                },
-                                {
-                                    "key": "access-control-expose-headers",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"7c557a23-6ce6-42f5-9216-57039c8e870c\"}",
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx24v49ybmfww4ztqfs089c\",\"name\":\"Adipisci quidem nostrum qui commodi.\",\"publisher\":\"Baumbach Ltd\",\"releaseDate\":\"1977-08-14T22:00:00.000000Z\",\"url\":\"https:\\\/\\\/www.bauch.com\\\/omnis-autem-et-consequatur\",\"summary\":\"Enim non facere tempora ex voluptatem laboriosam praesentium. Adipisci molestias fugit deleniti distinctio eum doloremque id. Libero aliquam veniam corporis dolorem mollitia deleniti.\"},{\"id\":\"01kpx24vv14746r0nw0shkcr90\",\"name\":\"Odit quia officia est dignissimos neque.\",\"publisher\":\"O'Connell, Beier and Bradtke\",\"releaseDate\":\"1976-06-14T22:00:00.000000Z\",\"url\":\"http:\\\/\\\/kuvalis.com\\\/est-alias-tenetur-ratione\",\"summary\":\"Accusamus ut et recusandae. Rerum ex repellendus assumenda et. Ab reiciendis quia perspiciatis deserunt ducimus corrupti.\"}]}",
                             "name": ""
                         }
                     ]
@@ -1444,14 +1841,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"publisher\":\"architecto\",\"releaseDate\":\"2026-04-23T09:45:33\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"summary\":\"architecto\"}"
+                            "raw": "{\"name\":\"Jane Doe\",\"publisher\":\"string\",\"releaseDate\":\"2023-01-01\",\"url\":\"https:\\\/\\\/example.com\",\"summary\":\"Experienced developer with ...\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"84e868e0-bc10-4b2b-aabc-a95ae31221e6\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "DELETE api\/publication\/{publication_id}",
@@ -1482,12 +1900,33 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"7b8f9984-392e-4584-9dbf-2282d8fdc75d\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/reference",
@@ -1511,14 +1950,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"reference\":\"architecto\"}"
+                            "raw": "{\"name\":\"Jane Doe\",\"reference\":\"string\",\"email\":\"user@example.com\",\"phone\":\"+34 600 000 000\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"name\":\"Jane Doe\",\"reference\":\"string\",\"id\":\"01kpx24wps2ep15ba7a8sgv27b\",\"updated_at\":\"2026-04-23T11:38:33.000000Z\",\"created_at\":\"2026-04-23T11:38:33.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/reference",
@@ -1541,33 +2001,13 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                },
-                                {
-                                    "key": "access-control-expose-headers",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"6ab61ab8-9717-4182-806c-891ca2e069cd\"}",
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx251k6t4hjf03pbk5q6xvf\",\"name\":\"Morgan Hirthe\",\"reference\":\"Qui commodi incidunt iure odit.\"},{\"id\":\"01kpx252dq8t9mmxjtmaknpd5q\",\"name\":\"Mina Bauch\",\"reference\":\"Nostrum omnis autem et consequatur aut.\"}]}",
                             "name": ""
                         }
                     ]
@@ -1602,14 +2042,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"reference\":\"architecto\"}"
+                            "raw": "{\"name\":\"Jane Doe\",\"reference\":\"string\",\"email\":\"user@example.com\",\"phone\":\"+34 600 000 000\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"8307a7a6-e16f-4b82-a15c-f811a128f31b\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "DELETE api\/reference\/{reference_id}",
@@ -1640,12 +2101,33 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"9704ecaa-2f12-4515-afaf-867addb7755f\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/skill",
@@ -1669,14 +2151,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"level\":\"architecto\",\"keywords\":[\"architecto\"]}"
+                            "raw": "{\"name\":\"Jane Doe\",\"level\":\"string\",\"keywords\":[\"string\"]}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"name\":\"Jane Doe\",\"level\":\"string\",\"keywords\":[\"string\"],\"id\":\"01kpx2537k87gd30p6nb2wbsfa\",\"updated_at\":\"2026-04-23T11:38:39.000000Z\",\"created_at\":\"2026-04-23T11:38:39.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/skill",
@@ -1699,10 +2202,50 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx253yca2mppwph8xc27ecg\",\"name\":\"aut\",\"level\":\"beginner\",\"keywords\":[\"nostrum\",\"qui\",\"commodi\",\"incidunt\",\"iure\",\"odit\",\"et\"]},{\"id\":\"01kpx254m7ejavvhm9cv1j1dt1\",\"name\":\"et\",\"level\":\"expert\",\"keywords\":[\"nostrum\",\"omnis\",\"autem\",\"et\",\"consequatur\"]}]}",
+                            "name": ""
                         }
+                    ]
+                },
+                {
+                    "name": "PATCH api\/skill\/{skill_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/skill\/:skill_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/skill\/:skill_id",
+                            "variable": [
+                                {
+                                    "id": "skill_id",
+                                    "key": "skill_id",
+                                    "value": "01kpwyr1mag9z8tc4jhytjhwvv",
+                                    "description": "The ID of the skill."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Jane Doe\",\"level\":\"string\",\"keywords\":[\"string\"]}"
+                        },
+                        "description": ""
                     },
                     "response": [
                         {
@@ -1724,50 +2267,11 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"ce25b2a4-aeed-4369-b2a7-93ea0dd2becc\"}",
+                            "code": 200,
+                            "body": "{\"id\":\"01kpwyr1mag9z8tc4jhytjhwvv\",\"name\":\"Jane Doe\",\"level\":\"string\",\"keywords\":[\"string\"],\"created_at\":\"2026-04-23T10:39:06.000000Z\",\"updated_at\":\"2026-04-23T11:38:41.000000Z\",\"deleted_at\":null}",
                             "name": ""
                         }
                     ]
-                },
-                {
-                    "name": "PATCH api\/skill\/{skill_id}",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/skill\/:skill_id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/skill\/:skill_id",
-                            "variable": [
-                                {
-                                    "id": "skill_id",
-                                    "key": "skill_id",
-                                    "value": "01kpvw0x8tpjpnmwrq9kkwwx10",
-                                    "description": "The ID of the skill."
-                                }
-                            ]
-                        },
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"level\":\"architecto\",\"keywords\":[\"architecto\"]}"
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
                 },
                 {
                     "name": "DELETE api\/skill\/{skill_id}",
@@ -1781,7 +2285,7 @@
                                 {
                                     "id": "skill_id",
                                     "key": "skill_id",
-                                    "value": "01kpvw0x8tpjpnmwrq9kkwwx10",
+                                    "value": "01kpwyr1mag9z8tc4jhytjhwvv",
                                     "description": "The ID of the skill."
                                 }
                             ]
@@ -1798,12 +2302,29 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 204,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/volunteer",
@@ -1827,14 +2348,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"organization\":\"architecto\",\"position\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"startDate\":\"architecto\",\"endDate\":\"architecto\",\"summary\":\"architecto\",\"highlights\":[\"architecto\"]}"
+                            "raw": "{\"organization\":\"string\",\"position\":\"string\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"summary\":\"Experienced developer with ...\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 500,
+                            "body": "{\"message\":\"Server Error.\",\"error_id\":\"c787db88-9aa3-4253-8b01-c86019517f32\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/volunteer",
@@ -1857,33 +2399,13 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                },
-                                {
-                                    "key": "access-control-expose-headers",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"3bb41dc3-0c65-42ae-a1e3-fb480870a9ff\"}",
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx256164br7cdh51jds3jza\",\"organization\":\"Cronin, Dare and Hauck\",\"position\":\"Locomotive Engineer\",\"url\":\"http:\\\/\\\/www.keebler.com\\\/modi-ipsum-nostrum-omnis-autem-et\",\"startDate\":\"2023-06-28T02:06:33.000000Z\",\"endDate\":\"2024-11-10T13:42:07.000000Z\",\"summary\":\"Aut dolores enim non facere tempora ex voluptatem.\",\"highlights\":[\"Quis adipisci molestias fugit deleniti distinctio eum.\",\"Id aut libero aliquam veniam.\",\"Dolorem mollitia deleniti nemo.\"]},{\"id\":\"01kpx256qrhe8jr19kp8wqwddb\",\"organization\":\"Doyle, Emard and Wolff\",\"position\":\"Rotary Drill Operator\",\"url\":\"https:\\\/\\\/beier.com\\\/delectus-fugit-qui-repudiandae-laboriosam.html\",\"startDate\":\"2023-02-24T11:42:14.000000Z\",\"endDate\":\"2026-01-28T08:11:36.000000Z\",\"summary\":\"Alias tenetur ratione nemo voluptate accusamus ut et.\",\"highlights\":[\"Rerum ex repellendus assumenda et.\",\"Ab reiciendis quia perspiciatis deserunt ducimus corrupti.\"]}]}",
                             "name": ""
                         }
                     ]
@@ -1918,14 +2440,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"organization\":\"architecto\",\"position\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"startDate\":\"architecto\",\"endDate\":\"architecto\",\"summary\":\"architecto\",\"highlights\":[\"architecto\"]}"
+                            "raw": "{\"organization\":\"string\",\"position\":\"string\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"summary\":\"Experienced developer with ...\",\"highlights\":[\"string\"]}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"162caa4f-fff0-4607-a899-b6066f693438\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "DELETE api\/volunteer\/{volunteer_id}",
@@ -1956,12 +2499,33 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"203fc71a-d0e7-4f02-b00c-0f5be2255e3d\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/work",
@@ -1985,14 +2549,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"position\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"startDate\":\"architecto\",\"endDate\":\"architecto\",\"summary\":\"architecto\",\"highlights\":[\"architecto\"]}"
+                            "raw": "{\"name\":\"Jane Doe\",\"position\":\"string\",\"url\":\"https:\\\/\\\/example.com\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"summary\":\"Experienced developer with ...\",\"highlights\":[\"string\"]}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 201,
+                            "body": "{\"name\":\"Jane Doe\",\"position\":\"string\",\"url\":\"https:\\\/\\\/example.com\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"summary\":\"Experienced developer with ...\",\"highlights\":[\"string\"],\"id\":\"01kpx257ebv5gwtjmt15e0jdkw\",\"updated_at\":\"2026-04-23T11:38:44.000000Z\",\"created_at\":\"2026-04-23T11:38:44.000000Z\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/work",
@@ -2015,10 +2600,50 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":\"01kpx2583k5bm1k3nkayejs862\",\"name\":\"Cronin, Dare and Hauck\",\"position\":\"Locomotive Engineer\",\"url\":\"http:\\\/\\\/www.keebler.com\\\/modi-ipsum-nostrum-omnis-autem-et\",\"startDate\":\"2021-07-02T02:06:37.000000Z\",\"endDate\":\"2025-03-30T13:04:17.000000Z\",\"summary\":\"Dolores enim non facere tempora. Voluptatem laboriosam praesentium quis adipisci. Fugit deleniti distinctio eum doloremque id aut libero. Veniam corporis dolorem mollitia.\",\"highlights\":[\"Odit quia officia est dignissimos neque blanditiis odio.\"]},{\"id\":\"01kpx2593kja5q2nxe28hhjz61\",\"name\":\"Emmerich and Sons\",\"position\":\"User Experience Manager\",\"url\":\"http:\\\/\\\/www.conroy.net\\\/tenetur-ratione-nemo-voluptate-accusamus-ut-et-recusandae-modi.html\",\"startDate\":\"2022-06-28T10:06:48.000000Z\",\"endDate\":\"2022-08-21T05:49:38.000000Z\",\"summary\":\"Repellendus assumenda et tenetur ab reiciendis. Perspiciatis deserunt ducimus corrupti et dolores quia. Assumenda odit doloribus repellat officiis corporis nesciunt ut. Iure impedit molestiae ut rem est esse sint.\",\"highlights\":[\"Sunt suscipit doloribus fugiat ut aut deserunt et.\",\"Neque recusandae et ipsam dolorem et ut dicta.\"]}]}",
+                            "name": ""
                         }
+                    ]
+                },
+                {
+                    "name": "PATCH api\/work\/{work_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/work\/:work_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/work\/:work_id",
+                            "variable": [
+                                {
+                                    "id": "work_id",
+                                    "key": "work_id",
+                                    "value": "01kpwyq2bkcem6sybm168m17j6",
+                                    "description": "The ID of the work."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Jane Doe\",\"position\":\"string\",\"url\":\"https:\\\/\\\/example.com\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"summary\":\"Experienced developer with ...\",\"highlights\":[\"string\"]}"
+                        },
+                        "description": ""
                     },
                     "response": [
                         {
@@ -2040,50 +2665,11 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"ba95802a-281b-4837-95b6-883d5bcbc8dd\"}",
+                            "code": 200,
+                            "body": "{\"id\":\"01kpwyq2bkcem6sybm168m17j6\",\"name\":\"Jane Doe\",\"position\":\"string\",\"url\":\"https:\\\/\\\/example.com\",\"startDate\":\"2023-01-01\",\"endDate\":\"2023-01-01\",\"summary\":\"Experienced developer with ...\",\"highlights\":[\"string\"],\"created_at\":\"2026-04-23T10:38:34.000000Z\",\"updated_at\":\"2026-04-23T11:38:46.000000Z\",\"deleted_at\":null}",
                             "name": ""
                         }
                     ]
-                },
-                {
-                    "name": "PATCH api\/work\/{work_id}",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/work\/:work_id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/work\/:work_id",
-                            "variable": [
-                                {
-                                    "id": "work_id",
-                                    "key": "work_id",
-                                    "value": "01kpvvyat5tdry5hat3mpb7ahb",
-                                    "description": "The ID of the work."
-                                }
-                            ]
-                        },
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"name\":\"architecto\",\"position\":\"architecto\",\"url\":\"http:\\\/\\\/bailey.com\\\/\",\"startDate\":\"architecto\",\"endDate\":\"architecto\",\"summary\":\"architecto\",\"highlights\":[\"architecto\"]}"
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
                 },
                 {
                     "name": "DELETE api\/work\/{work_id}",
@@ -2097,7 +2683,7 @@
                                 {
                                     "id": "work_id",
                                     "key": "work_id",
-                                    "value": "01kpvvyat5tdry5hat3mpb7ahb",
+                                    "value": "01kpwyq2bkcem6sybm168m17j6",
                                     "description": "The ID of the work."
                                 }
                             ]
@@ -2114,12 +2700,29 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 204,
+                            "body": "",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/iso\/country",
@@ -2142,10 +2745,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
@@ -2194,10 +2794,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
@@ -2246,10 +2843,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
@@ -2299,14 +2893,35 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"message\":\"architecto\",\"session_id\":\"architecto\"}"
+                            "raw": "{\"message\":\"string\",\"session_id\":\"string\",\"metadata\":[]}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 422,
+                            "body": "{\"message\":\"Solo se permiten consultas relacionadas con el curr\\u00edculum.\",\"errors\":{\"message\":[\"El mensaje debe centrarse en el curr\\u00edculum y no incluir instrucciones potencialmente riesgosas.\"]}}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/import\/json",
@@ -2338,12 +2953,33 @@
                                 }
                             ]
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 422,
+                            "body": "{\"message\":\"The given data was invalid.\",\"errors\":{\"file\":[\"The file field must be a file of type: application\\\/json, text\\\/plain.\"]},\"error_id\":\"c2edc792-4b10-4103-9503-2ec58d44e512\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/import\/resume",
@@ -2375,12 +3011,33 @@
                                 }
                             ]
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 422,
+                            "body": "{\"message\":\"The given data was invalid.\",\"errors\":{\"file\":[\"The file field must be a file of type: pdf, doc, docx.\"]},\"error_id\":\"5c62689d-2cc2-4a8a-953e-08edeb55ca86\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/import\/education",
@@ -2395,7 +3052,7 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "multipart\/form-data"
+                                "value": "application\/json"
                             },
                             {
                                 "key": "Accept",
@@ -2403,27 +3060,36 @@
                             }
                         ],
                         "body": {
-                            "mode": "formdata",
-                            "formdata": [
+                            "mode": "raw",
+                            "raw": "{\"url\":\"https:\\\/\\\/example.com\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
                                 {
-                                    "key": "url",
-                                    "value": "http:\/\/www.bailey.biz\/quos-velit-et-fugiat-sunt-nihil-accusantium-harum.html",
-                                    "type": "text",
-                                    "description": "This field is required when <code>file<\/code> is not present. Must be a valid URL."
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
                                 },
                                 {
-                                    "key": "file",
-                                    "src": [],
-                                    "type": "file"
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
                                 }
-                            ]
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                            ],
+                            "code": 422,
+                            "body": "{\"ok\":false,\"message\":\"No se pudo extraer metadata de la educaci\\u00f3n.\"}",
+                            "name": ""
                         }
-                    },
-                    "response": []
+                    ]
                 },
                 {
                     "name": "POST api\/import\/certificate",
@@ -2438,7 +3104,7 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "multipart\/form-data"
+                                "value": "application\/json"
                             },
                             {
                                 "key": "Accept",
@@ -2446,27 +3112,36 @@
                             }
                         ],
                         "body": {
-                            "mode": "formdata",
-                            "formdata": [
+                            "mode": "raw",
+                            "raw": "{\"url\":\"https:\\\/\\\/example.com\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
                                 {
-                                    "key": "url",
-                                    "value": "http:\/\/www.bailey.biz\/quos-velit-et-fugiat-sunt-nihil-accusantium-harum.html",
-                                    "type": "text",
-                                    "description": "This field is required when <code>file<\/code> is not present. Must be a valid URL."
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
                                 },
                                 {
-                                    "key": "file",
-                                    "src": [],
-                                    "type": "file"
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "access-control-expose-headers",
+                                    "value": "*"
                                 }
-                            ]
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                            ],
+                            "code": 422,
+                            "body": "{\"ok\":false,\"message\":\"No se pudo extraer metadata del certificado.\"}",
+                            "name": ""
                         }
-                    },
-                    "response": []
+                    ]
                 },
                 {
                     "name": "GET api\/ai-request\/{page?}",
@@ -2497,10 +3172,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
@@ -2522,8 +3194,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"920218ec-3494-4712-a418-0ab2b16f58cf\"}",
+                            "code": 200,
+                            "body": "{\"current_page\":564,\"data\":[],\"first_page_url\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/ai-request\\\/564?page=1\",\"from\":null,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/ai-request\\\/564?page=1\",\"links\":[{\"url\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/ai-request\\\/564?page=563\",\"label\":\"&laquo; Previous\",\"page\":563,\"active\":false},{\"url\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/ai-request\\\/564?page=1\",\"label\":\"1\",\"page\":1,\"active\":false},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/ai-request\\\/564\",\"per_page\":15,\"prev_page_url\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/ai-request\\\/564?page=563\",\"to\":null,\"total\":0}",
                             "name": ""
                         }
                     ]
@@ -2557,10 +3229,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
@@ -2582,8 +3251,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"50a7e33f-8778-40be-af01-e895f237fc3b\"}",
+                            "code": 200,
+                            "body": "{\"current_page\":564,\"data\":[],\"first_page_url\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/agent-conversation\\\/564?page=1\",\"from\":null,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/agent-conversation\\\/564?page=1\",\"links\":[{\"url\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/agent-conversation\\\/564?page=563\",\"label\":\"&laquo; Previous\",\"page\":563,\"active\":false},{\"url\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/agent-conversation\\\/564?page=1\",\"label\":\"1\",\"page\":1,\"active\":false},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/agent-conversation\\\/564\",\"per_page\":15,\"prev_page_url\":\"http:\\\/\\\/0.0.0.0:8000\\\/api\\\/agent-conversation\\\/564?page=563\",\"to\":null,\"total\":0}",
                             "name": ""
                         }
                     ]
@@ -2623,10 +3292,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
@@ -2648,8 +3314,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\",\"error_id\":\"482ef2f7-bfe8-4351-996f-75cfec21a014\"}",
+                            "code": 404,
+                            "body": "{\"message\":\"Not Found.\",\"error_id\":\"359c819d-e3fd-477c-9c06-e4e59cef4094\"}",
                             "name": ""
                         }
                     ]
@@ -2658,6 +3324,12 @@
         }
     ],
     "auth": {
-        "type": "noauth"
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "key",
+                "type": "string"
+            }
+        ]
     }
 }

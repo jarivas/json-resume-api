@@ -23,23 +23,24 @@ class ReadOneTest extends TestCase
         $response = $this->actingAs($user)->getJson($url);
         $response->assertOk();
 
-        $response->assertJson(fn (AssertableJson $json) => $json->has('id')
-            ->where('name', $basic->name)
-            ->where('label', $basic->label)
-            ->where('email', $basic->email)
-            ->where('phone', $basic->phone)
-            ->where('url', $basic->url)
-            ->where('summary', $basic->summary)
-            ->has('location', fn (AssertableJson $json) => $json->where('address', $location->address)
-                ->where('postalCode', $location->postalCode)
-                ->where('city', $location->city)
-                ->where('countryCode', $location->countryCode))
-            ->has('profiles', 1, fn (AssertableJson $json) => $json->where('network', $profile->network)
-                ->where('username', $profile->username)
-                ->where('url', $profile->url)
-            )
-            ->etc()
-        );
+        $response->assertJson(fn (AssertableJson $json) => $json->has('data') );
+
+        $response->assertJsonPath('data.id', $basic->id);
+        $response->assertJsonPath('data.name', $basic->name);
+        $response->assertJsonPath('data.label', $basic->label);
+        $response->assertJsonPath('data.email', $basic->email);
+        $response->assertJsonPath('data.phone', $basic->phone);
+        $response->assertJsonPath('data.url', $basic->url);
+        $response->assertJsonPath('data.summary', $basic->summary);
+
+        $response->assertJsonPath('data.location.address', $location->address);
+        $response->assertJsonPath('data.location.postalCode', $location->postalCode);
+        $response->assertJsonPath('data.location.city', $location->city);
+        $response->assertJsonPath('data.location.countryCode', $location->countryCode);
+
+        $response->assertJsonPath('data.profiles.0.network', $profile->network);
+        $response->assertJsonPath('data.profiles.0.username', $profile->username);
+        $response->assertJsonPath('data.profiles.0.url', $profile->url);
     }
 
     public function test_basic_read_one_not_found()
