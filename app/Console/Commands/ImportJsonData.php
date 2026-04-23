@@ -390,6 +390,8 @@ class ImportJsonData extends Command
                 'endDate' => $this->normalizeIsoDate(Arr::get($item, 'endDate', Arr::get($item, 'startDate'))),
                 'description' => (string) Arr::get($item, 'description', ''),
                 'highlights' => Arr::get($item, 'highlights', []),
+                'roles' => Arr::get($item, 'roles', []),
+                'keywords' => Arr::get($item, 'keywords', []),
                 'url' => Arr::get($item, 'url'),
             ]);
             $observer->saved($model);
