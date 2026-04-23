@@ -85,16 +85,25 @@ class ResumeDocumentImportService
             }
 
             if ($extracted !== '') {
-                $userMessage = $this->getJsonResumePrompt(trim(mb_substr($extracted, 0, 20000)));
-                $attachments = [];
+                $clean = $this->sanitizeExtractedText($extracted);
+
+                if ($clean !== '') {
+                    $userMessage = $this->getJsonResumePrompt(trim(mb_substr($clean, 0, 20000)));
+                    $attachments = [];
+                } else {
+                    // Sanitization stripped too much content — the extracted text
+                    // was predominantly binary. Fall back to document attachment.
+                    Log::warning('Extracted text was stripped entirely by sanitization; falling back to document attachment.', ['path' => $source->localPath]);
+                    $userMessage = $this->getJsonResumePrompt();
+                    $attachments = $this->buildAttachments($source);
+                }
             } else {
-                // If we couldn't extract readable text, prefer using the
-                // structured JSON Resume instructions rather than the short
-                // generic prompt. Do not attach the raw binary to the prompt
-                // to avoid providers echoing binary content.
-                Log::warning('DocumentTextExtractor returned empty text; not attaching raw document to AI prompt.', ['path' => $source->localPath]);
+                // Text extraction failed or yielded unreadable content.
+                // Attach the file as a Document so the multimodal AI can
+                // read it directly instead of receiving empty content.
+                Log::warning('DocumentTextExtractor returned empty text; falling back to document attachment.', ['path' => $source->localPath]);
                 $userMessage = $this->getJsonResumePrompt();
-                $attachments = [];
+                $attachments = $this->buildAttachments($source);
             }
         }
 
@@ -115,6 +124,37 @@ class ResumeDocumentImportService
         return $normalizer->normalize($decoded);
     }
 
+    /**
+     * Strip non-printable control characters from extracted text.
+     * Keeps tabs (\t), newlines (\n), and carriage returns (\r).
+     * Returns empty string if sanitation removed more than 10% of the original bytes,
+     * indicating the source was predominantly binary/corrupt.
+     */
+    protected function sanitizeExtractedText(string $text): string
+    {
+        // Compressed binary streams (e.g. FlateDecode PDF content) are never
+        // valid UTF-8. Reject immediately so we fall back to document attachment.
+        if (! mb_check_encoding($text, 'UTF-8')) {
+            return '';
+        }
+
+        // Reject raw PDF structural content that somehow passed the extractor.
+        if (str_starts_with(ltrim($text), '%PDF-') || preg_match('/\d+ \d+ obj\s*<</s', substr($text, 0, 500))) {
+            return '';
+        }
+
+        $clean = (string) preg_replace('/[\x01-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', $text);
+
+        $originalLen = strlen($text);
+        $cleanLen = strlen($clean);
+
+        if ($originalLen > 0 && ($originalLen - $cleanLen) / $originalLen > 0.10) {
+            return '';
+        }
+
+        return $clean;
+    }
+
     protected function getJsonResumePrompt(?string $extractedText = null): string
     {
         $instructions = <<<'TXT'
@@ -124,6 +164,12 @@ Convert the provided resume into a valid JSON Resume following https://jsonresum
 - Preserve sections like `basics`, `work`, `volunteer`, `education`, `awards`, `certifications`, `skills`, `languages`, `projects`, `publications`, `references` when present.
 - Use ISO 8601 dates (YYYY-MM-DD) when possible and include start/end dates when available.
 - If a field is not present, omit it rather than setting it to null.
+
+CRITICAL — STRICT EXTRACTION ONLY:
+- Extract ONLY information that is explicitly and clearly written in the resume text above.
+- Do NOT invent, fabricate, guess, or infer ANY data (names, emails, phone numbers, companies, dates, skills, URLs, etc.) that is not present verbatim in the document.
+- If the text is unreadable, garbled, or insufficient to populate a field, omit that field entirely.
+- Do NOT use knowledge from training data about any person, company, or role to fill in missing details.
 TXT;
 
         if ($extractedText !== null && $extractedText !== '') {

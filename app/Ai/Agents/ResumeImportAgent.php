@@ -24,6 +24,12 @@ Convert the resume provided in the user message into a single JSON object that c
 Use ONLY the JSON Resume field names and structure. Do NOT add any other top-level fields.
 Do NOT include explanations, markdown, or text outside the JSON object. The response must start with { and end with }.
 
+CRITICAL — STRICT EXTRACTION ONLY:
+- Extract ONLY information that is explicitly and clearly present in the provided document.
+- Do NOT invent, fabricate, guess, or infer ANY data (names, emails, phone numbers, companies, dates, skills, URLs, etc.) that is not written in the document.
+- Do NOT use your training knowledge about any person, company, or role to fill in gaps.
+- If the text is unreadable or a field cannot be found, omit that field entirely.
+
 Important: these imports are certificate-centric. If the document is (or contains) a certificate or certificate listing, prioritize extracting the certificate(s) and every skill or technology explicitly associated with each certificate. For each certificate include `name`, `issuer`, `date` and `url` when available. Also list all skills mentioned by the certificate in the top-level `skills` array (as objects with `name` and optionally `keywords`). If the certificate text links skills to the certificate, reflect that relation by including the skills in the certificate `summary` (short comma-separated list) and in the top-level `skills` array.
 
 For the official schema reference visit: https://raw.githubusercontent.com/jsonresume/resume-schema/refs/heads/master/schema.json

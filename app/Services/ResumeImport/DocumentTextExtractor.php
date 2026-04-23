@@ -99,6 +99,25 @@ class DocumentTextExtractor
             return false;
         }
 
+        // Compressed binary streams are never valid UTF-8. Reject before any
+        // further sampling — this catches FlateDecode PDF content reliably.
+        if (! mb_check_encoding($text, 'UTF-8')) {
+            return false;
+        }
+
+        // Also reject raw PDF structural content that slips past the prefix
+        // check (e.g. when smalot prefixes extracted text with PDF metadata).
+        if (preg_match('/\d+ \d+ obj\s*<</s', substr($text, 0, 500))) {
+            return false;
+        }
+
+        // Reject text that contains non-printable control characters anywhere
+        // in the first 8000 bytes — these indicate binary or corrupt content
+        // that AI providers cannot reliably interpret.
+        if (preg_match('/[\x01-\x08\x0B\x0C\x0E-\x1F]/', substr($text, 0, 8000))) {
+            return false;
+        }
+
         $sample = substr($text, 0, 500);
         $len = strlen($sample);
         $printable = 0;
