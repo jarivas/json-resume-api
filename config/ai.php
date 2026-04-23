@@ -100,6 +100,10 @@ return [
             'embedding_deployment' => env('GEMINI_EMBEDDING_DEPLOYMENT', 'database'),
             'alternative_deployment' => explode(',', env('GEMINI_ALTERNATIVE_DEPLOYMENTS', '')),
             'fallback_providers' => explode(',', env('GEMINI_FALLBACK_PROVIDERS', '')),
+            // Timeouts (seconds) used by the Prism gateway. Increase if responses
+            // are long or you observe truncated JSON from providers.
+            'timeout' => env('GEMINI_TIMEOUT', 120),
+            'connect_timeout' => env('GEMINI_CONNECT_TIMEOUT', 30),
         ],
 
         'groq' => [

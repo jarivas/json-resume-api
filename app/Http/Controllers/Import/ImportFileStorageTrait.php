@@ -33,9 +33,9 @@ trait ImportFileStorageTrait
         }
 
         $storagePath = 'imports/url-'.Str::uuid().'.'.$ext;
-        Storage::put($storagePath, $resp->body());
+        Storage::disk('local')->put($storagePath, $resp->body());
 
-        return [$storagePath, Storage::path($storagePath)];
+        return [$storagePath, Storage::disk('local')->path($storagePath)];
     }
 
     /**
@@ -63,8 +63,8 @@ trait ImportFileStorageTrait
         $ext = $ext !== '' ? '.'.$ext : '';
 
         $filename = 'upload-'.Str::uuid().$ext;
-        $storagePath = $file->storeAs('imports', $filename);
+        $storagePath = $file->storeAs('imports', $filename, 'local');
 
-        return [$storagePath, Storage::path($storagePath)];
+        return [$storagePath, Storage::disk('local')->path($storagePath)];
     }
 }

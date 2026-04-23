@@ -16,3 +16,5 @@ require 'api/work.php';
 require 'api/iso.php';
 require 'api/chat.php';
 require 'api/import.php';
+require 'api/ai-request.php';
+require 'api/agent-conversation.php';

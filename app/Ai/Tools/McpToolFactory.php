@@ -331,10 +331,10 @@ class CertificatesTool implements Tool
         return [];
     }
 
-    private function formatCertificates(array $certs): string
+    private function formatCertificates(array $certificates): string
     {
         $lines = ['Certifications:'];
-        foreach ($certs as $cert) {
+        foreach ($certificates as $cert) {
             if (! empty($cert['name'])) {
                 $lines[] = "• {$cert['name']}";
             }

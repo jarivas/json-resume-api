@@ -183,7 +183,11 @@ class ImportFixturesTest extends TestCase
         $markdownFencedResponse = "```json\n[{\"name\":\"Docker Containerization\",\"level\":\"intermediate\",\"keywords\":[\"Docker Compose\",\"Kubernetes\"]}]\n```";
         SkillExtractionAgent::fake([$markdownFencedResponse]);
 
-        $uploaded = UploadedFile::fake()->create('certificate.pdf', 100, 'application/pdf');
+        // Use a real certificate fixture to exercise the extractor
+        $fixture = base_path('tests/Feature/Import/Fixtures/certificate - IFCD99.pdf');
+        $this->assertFileExists($fixture);
+
+        $uploaded = new UploadedFile($fixture, basename($fixture), null, null, true);
 
         $res = $this->actingAs($user)->postJson('/api/import/certificate', [
             'file' => $uploaded,

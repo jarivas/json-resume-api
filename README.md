@@ -24,11 +24,6 @@ php artisan key:generate
 php artisan migrate
 ```
 
-## Variables relevantes en `.env`
-
-- `AI_PROVIDER` — proveedor por defecto (ej. `openai`).
-- `OPENAI_API_KEY` — clave API si usas OpenAI.
-- `OPENAI_MODEL` — modelo por defecto (ej. `gpt-3.5-turbo`).
 
 ## Endpoints
 
@@ -56,6 +51,16 @@ Rutas principales:
 ```json
 { "reply": "...", "sources": [], "session_id": null }
 ```
+
+## Inteligencia Artificial (IA)
+
+- **Resumen:** La aplicación integra capacidades de IA para enriquecer, analizar y transformar currículums JSON (JSON Resume). Soporta generación y edición de texto (resúmenes, cartas), extracción estructurada, embeddings para búsqueda semántica y conversaciones asistidas mediante agentes.
+- **Capacidades principales:** agentes de texto (clases en `app/Ai/Agents`), `Embeddings` y búsqueda semántica (tabla `resume_embeddings`), salida estructurada con `HasStructuredOutput`, transcripción/audio y generación de recursos enriquecidos.
+- **Endpoints y flujo:** `POST /api/chat` es el punto de entrada conversacional; los agentes pueden orquestar embeddings, herramientas proveedor (`web search`, `web fetch`, `file search`) y devolver respuestas con fuentes y metadata.
+- **Configuración (.env):** variables relevantes: `AI_DEFAULT_PROVIDER` / `AI_PROVIDER`, `OLLAMA_URL`, `OLLAMA_DEPLOYMENT`, `OLLAMA_EMBEDDING_DEPLOYMENT`, `OLLAMA_TIMEOUT`, así como `OPENAI_API_KEY` / `OPENAI_MODEL` si se usan proveedores externos.
+- **Rendimiento y costes:** cache de embeddings, control de tokens/temperatura, atributos PHP para seleccionar modelos (`#[Temperature]`, `#[Provider]`), colas y streaming para operaciones largas y procesamiento asíncrono.
+- **Testing y seguridad:** soporta fakes para tests (`Agents::fake()`, `Embeddings::fake()`), validación de salidas con esquemas JSON, registro/auditoría de solicitudes IA en `ai_requests` y control de acceso a herramientas externas.
+- **Casos de uso:** generar un resumen optimizado para una oferta, extraer y normalizar competencias del CV, mapear candidatos a ofertas por similaridad semántica, o mantener conversaciones guiadas para mejorar contenido.
 
 ## MCP
 

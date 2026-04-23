@@ -54,7 +54,7 @@ class DocumentSkillImportServiceTest extends TestCase
         $this->assertCount(1, $skills);
         $this->assertEquals('IFCD99 - Programación en Inteligencia Artificial y Big Data en entornos 5G', $cert->name);
         $this->assertEquals('Integra Conocimiento', $cert->issuer);
-        $this->assertEquals('2024-01-01', (string) $cert->date);
+        $this->assertEquals('2024-01-01', $cert->date->format('Y-m-d'));
 
         $this->assertEquals('Web Development', $skills[0]['name']);
         $this->assertEquals('Master', $skills[0]['level']);

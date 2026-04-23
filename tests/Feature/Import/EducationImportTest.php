@@ -3,7 +3,6 @@
 namespace Tests\Feature\Import;
 
 use App\Ai\Agents\ResumeImportAgent;
-use App\Ai\Agents\SkillExtractionAgent;
 use App\Models\Education;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,17 +22,24 @@ class EducationImportTest extends TestCase
 
         $user = User::factory()->create();
 
-        // Fake agent response: an array with two skills
-        $response = json_encode([
-            ['name' => 'Laravel', 'confidence' => 0.98, 'keywords' => ['Eloquent', 'Artisan']],
-            ['name' => 'Docker', 'confidence' => 0.75],
+        // Fake ResumeImportAgent response: one education and two structured skills
+        $resumeResponse = json_encode([
+            'educations' => [
+                ['institution' => 'Example University', 'area' => 'Test', 'studyType' => 'Course', 'startDate' => '2020-01-01', 'endDate' => '2020-06-01'],
+            ],
+            'skills' => [
+                ['name' => 'Laravel', 'confidence' => 0.98, 'keywords' => ['Eloquent', 'Artisan']],
+                ['name' => 'Docker', 'confidence' => 0.75],
+            ],
         ]);
 
-        SkillExtractionAgent::fake([$response]);
+        ResumeImportAgent::fake([$resumeResponse]);
 
-        // Use fixture content to create Education (no ResumeImportAgent fake)
+        // Use a real fixture PDF file to exercise the extractor
+        $fixture = base_path('tests/Feature/Import/Fixtures/education - desarrollo-de-aplicaciones-informaticas-ingles.pdf');
+        $this->assertFileExists($fixture);
 
-        $file = UploadedFile::fake()->createWithContent('doc.pdf', 'PDF-BINARY');
+        $file = new UploadedFile($fixture, basename($fixture), null, null, true);
 
         $res = $this->actingAs($user)->postJson('/api/import/education', [
             'file' => $file,

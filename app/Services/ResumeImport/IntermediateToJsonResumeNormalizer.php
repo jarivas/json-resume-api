@@ -11,7 +11,7 @@ namespace App\Services\ResumeImport;
  *   profiles[]{network, url, username},
  *   jobs[]{company, role, start, end, current, description, highlights[], tech[]},
  *   schools[]{school|institution, degree|studyType, field|area, start, end, current},
- *   certs|certifications[]{name, issuer, date},
+ *   certificates|certifications[]{name, issuer, date},
  *   languages[]{language, level|fluency},
  *   skills[]   (flat list of technology strings)
  *
@@ -27,6 +27,14 @@ class IntermediateToJsonResumeNormalizer
      */
     public function normalize(array $data): array
     {
+        // If the AI already returned a JSON Resume-like structure, accept
+        // it and perform light normalization (accept alternate field names
+        // and normalize languages/skills formats). Otherwise convert the
+        // intermediate extraction format into JSON Resume.
+        if ($this->looksLikeJsonResume($data)) {
+            return $this->normalizeJsonResumeInput($data);
+        }
+
         $resume = [];
 
         $basics = $this->buildBasics($data);
@@ -49,7 +57,19 @@ class IntermediateToJsonResumeNormalizer
             $resume['certificates'] = $certificates;
         }
 
+        // Extract skills referenced by certificates and merge into top-level skills
+        $certificateSkills = $this->extractSkillsFromCertificates($certificates);
+
         $skills = $this->buildSkills($data);
+
+        // Merge certificate-derived skills into the top-level skills array,
+        // avoiding duplicates.
+        foreach ($certificateSkills as $certSkill) {
+            if (! $this->skillExists($skills, $certSkill)) {
+                $skills[] = ['name' => $certSkill];
+            }
+        }
+
         if ($skills !== []) {
             $resume['skills'] = $skills;
         }
@@ -60,6 +80,111 @@ class IntermediateToJsonResumeNormalizer
         }
 
         return $resume;
+    }
+
+    protected function looksLikeJsonResume(array $data): bool
+    {
+        return isset($data['basics']) || isset($data['work']) || isset($data['education']) || isset($data['$schema']);
+    }
+
+    /**
+     * Perform light normalization on input that already follows JSON Resume
+     * (or a close variant). This accepts alternate names (e.g. 'level' →
+     * 'fluency' in languages) and converts flat skill arrays to objects.
+     *
+     * @param  array<mixed>  $data
+     * @return array<mixed>
+     */
+    protected function normalizeJsonResumeInput(array $data): array
+    {
+        $out = $data;
+
+        // Languages: accept 'level' as alias for 'fluency'.
+        if (isset($out['languages']) && is_array($out['languages'])) {
+            foreach ($out['languages'] as $i => $lang) {
+                if (! is_array($lang)) {
+                    continue;
+                }
+
+                if (isset($lang['level']) && ! isset($lang['fluency'])) {
+                    $out['languages'][$i]['fluency'] = $lang['level'];
+                    unset($out['languages'][$i]['level']);
+                }
+            }
+        }
+
+        // Education: accept alternate keys from older intermediate format.
+        if (isset($out['education']) && is_array($out['education'])) {
+            foreach ($out['education'] as $i => $edu) {
+                if (! is_array($edu)) {
+                    continue;
+                }
+
+                if (isset($edu['school']) && ! isset($edu['institution'])) {
+                    $out['education'][$i]['institution'] = $edu['school'];
+                    unset($out['education'][$i]['school']);
+                }
+
+                if (isset($edu['degree']) && ! isset($out['education'][$i]['studyType'])) {
+                    $out['education'][$i]['studyType'] = $edu['degree'];
+                }
+
+                if (isset($edu['field']) && ! isset($out['education'][$i]['area'])) {
+                    $out['education'][$i]['area'] = $edu['field'];
+                }
+
+                if (isset($edu['start']) && ! isset($out['education'][$i]['startDate'])) {
+                    $out['education'][$i]['startDate'] = $edu['start'];
+                    unset($out['education'][$i]['start']);
+                }
+
+                if (isset($edu['end']) && ! isset($out['education'][$i]['endDate'])) {
+                    $out['education'][$i]['endDate'] = $edu['end'];
+                    unset($out['education'][$i]['end']);
+                }
+            }
+        }
+
+        // Work entries: accept alternate keys and normalize dates/role/company names.
+        if (isset($out['work']) && is_array($out['work'])) {
+            foreach ($out['work'] as $i => $job) {
+                if (! is_array($job)) {
+                    continue;
+                }
+
+                if (isset($job['company']) && ! isset($out['work'][$i]['name'])) {
+                    $out['work'][$i]['name'] = $job['company'];
+                    unset($out['work'][$i]['company']);
+                }
+
+                if (isset($job['role']) && ! isset($out['work'][$i]['position'])) {
+                    $out['work'][$i]['position'] = $job['role'];
+                    unset($out['work'][$i]['role']);
+                }
+
+                if (isset($job['start']) && ! isset($out['work'][$i]['startDate'])) {
+                    $out['work'][$i]['startDate'] = $job['start'];
+                    unset($out['work'][$i]['start']);
+                }
+
+                if (isset($job['end']) && ! isset($out['work'][$i]['endDate'])) {
+                    $out['work'][$i]['endDate'] = $job['end'];
+                    unset($out['work'][$i]['end']);
+                }
+            }
+        }
+
+        // Skills: if provided as flat string array convert to objects with name.
+        if (isset($out['skills']) && is_array($out['skills'])) {
+            $first = reset($out['skills']);
+            if (is_string($first)) {
+                $out['skills'] = array_values(array_map(function ($s) {
+                    return ['name' => trim((string) $s)];
+                }, $out['skills']));
+            }
+        }
+
+        return $out;
     }
 
     /**
@@ -245,9 +370,9 @@ class IntermediateToJsonResumeNormalizer
     {
         $certificates = [];
 
-        // Accept 'certs' (intermediate format) and 'certifications' / 'certificates' (model aliases)
+        // Accept 'certificates' (intermediate format) and 'certifications' / 'certificates' (model aliases)
         $entries = array_merge(
-            $this->arrayOf($data, 'certs'),
+            $this->arrayOf($data, 'certificates'),
             $this->arrayOf($data, 'certifications'),
             $this->arrayOf($data, 'certificates'),
         );
@@ -353,8 +478,44 @@ class IntermediateToJsonResumeNormalizer
         $value = $this->stringOf($source, $sourceKey);
 
         if ($value !== '') {
+            if ($targetKey === 'url') {
+                $value = $this->normalizeUrl($value);
+            }
+
             $target[$targetKey] = $value;
         }
+    }
+
+    /**
+     * Ensure URLs include a scheme. If missing, prepend https:// when it
+     * looks like a domain or host (basic heuristic).
+     */
+    protected function normalizeUrl(string $url): string
+    {
+        $trimmed = trim($url);
+
+        // If it already has a scheme (e.g., http:, https:, mailto:, ftp:), leave it.
+        if (preg_match('/^[a-z][a-z0-9+.-]*:/i', $trimmed) === 1) {
+            return $trimmed;
+        }
+
+        // If it looks like an email address, return as-is (not a URI scheme issue).
+        if (filter_var($trimmed, FILTER_VALIDATE_EMAIL)) {
+            return $trimmed;
+        }
+
+        // If it contains whitespace or is clearly not a hostname, leave it untouched.
+        if (preg_match('/\s/', $trimmed)) {
+            return $trimmed;
+        }
+
+        // If it contains at least one dot (e.g. example.com or www.example.com)
+        // assume it's a URL missing scheme and prepend https://
+        if (strpos($trimmed, '.') !== false) {
+            return 'https://'.$trimmed;
+        }
+
+        return $trimmed;
     }
 
     /**
@@ -412,5 +573,91 @@ class IntermediateToJsonResumeNormalizer
     protected function isValidIso8601(string $value): bool
     {
         return (bool) preg_match('/^[1-2][0-9]{3}(-[0-1][0-9](-[0-3][0-9])?)?$/', $value);
+    }
+
+    /**
+     * Extract skill strings from certificate entries.
+     * Looks for explicit arrays (`skills`, `keywords`) or parses a
+     * comma-separated `summary` section when present.
+     *
+     * @param  array<mixed>  $certificates
+     * @return array<string>
+     */
+    protected function extractSkillsFromCertificates(array $certificates): array
+    {
+        $result = [];
+
+        foreach ($certificates as $cert) {
+            if (! is_array($cert)) {
+                continue;
+            }
+
+            // Explicit 'skills' or 'keywords' arrays
+            if (isset($cert['skills']) && is_array($cert['skills'])) {
+                foreach ($cert['skills'] as $s) {
+                    if (is_string($s) && trim($s) !== '') {
+                        $result[] = trim($s);
+                    }
+                }
+            }
+
+            if (isset($cert['keywords']) && is_array($cert['keywords'])) {
+                foreach ($cert['keywords'] as $k) {
+                    if (is_string($k) && trim($k) !== '') {
+                        $result[] = trim($k);
+                    }
+                }
+            }
+
+            // Parse comma-separated list in 'summary' (agent may include skills here)
+            if (isset($cert['summary']) && is_string($cert['summary'])) {
+                $parts = array_map('trim', explode(',', $cert['summary']));
+                foreach ($parts as $p) {
+                    if ($p === '') {
+                        continue;
+                    }
+
+                    // Heuristic: skip very long fragments
+                    if (strlen($p) > 60) {
+                        continue;
+                    }
+
+                    $result[] = $p;
+                }
+            }
+        }
+
+        return array_values(array_unique($result));
+    }
+
+    /**
+     * Check whether a skill string already exists in the skills array.
+     * Matches against `name` and `keywords` entries.
+     *
+     * @param  array<mixed>  $skills
+     */
+    protected function skillExists(array $skills, string $name): bool
+    {
+        $needle = mb_strtolower($name);
+
+        foreach ($skills as $s) {
+            if (! is_array($s)) {
+                continue;
+            }
+
+            if (isset($s['name']) && mb_strtolower((string) $s['name']) === $needle) {
+                return true;
+            }
+
+            if (isset($s['keywords']) && is_array($s['keywords'])) {
+                foreach ($s['keywords'] as $k) {
+                    if (is_string($k) && mb_strtolower($k) === $needle) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

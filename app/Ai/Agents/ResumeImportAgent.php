@@ -7,93 +7,195 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Ai\Attributes\MaxTokens;
 use Laravel\Ai\Contracts\Agent;
-use Laravel\Ai\Contracts\HasStructuredOutput;
 use Laravel\Ai\Exceptions\AiException;
 use Laravel\Ai\Exceptions\FailoverableException;
 use Laravel\Ai\Promptable;
 use Throwable;
 
-#[MaxTokens(8192)]
-class ResumeImportAgent implements Agent, HasStructuredOutput
+#[MaxTokens(16384)]
+class ResumeImportAgent implements Agent
 {
     use Promptable;
 
     public function instructions(): string
     {
         return <<<'PROMPT'
-Extract information from the resume provided in the user message and output it as a single JSON object.
-Use ONLY the exact field names defined here. Do NOT add any other fields.
-Do NOT include explanations, markdown, or text outside the JSON object.
-The response must start with { and end with }.
+Convert the resume provided in the user message into a single JSON object that conforms to the JSON Resume schema.
+Use ONLY the JSON Resume field names and structure. Do NOT add any other top-level fields.
+Do NOT include explanations, markdown, or text outside the JSON object. The response must start with { and end with }.
 
---- OUTPUT FORMAT ---
+Important: these imports are certificate-centric. If the document is (or contains) a certificate or certificate listing, prioritize extracting the certificate(s) and every skill or technology explicitly associated with each certificate. For each certificate include `name`, `issuer`, `date` and `url` when available. Also list all skills mentioned by the certificate in the top-level `skills` array (as objects with `name` and optionally `keywords`). If the certificate text links skills to the certificate, reflect that relation by including the skills in the certificate `summary` (short comma-separated list) and in the top-level `skills` array.
+
+For the official schema reference visit: https://raw.githubusercontent.com/jsonresume/resume-schema/refs/heads/master/schema.json
+
+--- OUTPUT EXAMPLE (JSON Resume v1.0.0) ---
 
 {
-  "name": "Full legal name",
-  "headline": "Professional title or headline",
-  "email": "email address",
-  "phone": "phone number",
-  "website": "personal website URL (must start with http:// or https://)",
-  "summary": "short professional bio",
-  "city": "city of residence",
-  "country_code": "2-letter ISO country code e.g. ES, US",
-  "profiles": [
-    { "network": "GitHub", "url": "https://...", "username": "handle (optional)" }
-  ],
-  "jobs": [
-    {
-      "company": "Company name",
-      "role": "Job title",
-      "start": "YYYY-MM-DD",
-      "end": "YYYY-MM-DD",
-      "current": false,
-      "description": "Summary of responsibilities",
-      "highlights": ["Achievement 1", "Achievement 2"],
-      "tech": ["PHP", "Docker", "MySQL"]
+    "basics": {
+        "name": "Richard Hendriks",
+        "label": "Programmer",
+        "image": "",
+        "email": "richard.hendriks@mail.com",
+        "phone": "(912) 555-4321",
+        "url": "http://richardhendricks.example.com",
+        "summary": "Richard hails from Tulsa. He has earned degrees from the University of Oklahoma and Stanford. (Go Sooners and Cardinal!) Before starting Pied Piper, he worked for Hooli as a part time software developer. While his work focuses on applied information theory, mostly optimizing lossless compression schema of both the length-limited and adaptive variants, his non-work interests range widely, everything from quantum computing to chaos theory. He could tell you about it, but THAT would NOT be a “length-limited” conversation!",
+        "location": {
+            "address": "2712 Broadway St",
+            "postalCode": "CA 94115",
+            "city": "San Francisco",
+            "countryCode": "US",
+            "region": "California"
+        },
+        "profiles": [
+            {
+                "network": "Twitter",
+                "username": "neutralthoughts",
+                "url": "https://www.twitter.com"
+            },
+            {
+                "network": "SoundCloud",
+                "username": "dandymusicnl",
+                "url": "https://soundcloud.example.com/dandymusicnl"
+            }
+        ]
+    },
+    "work": [
+        {
+            "name": "Pied Piper",
+            "location": "Palo Alto, CA",
+            "description": "Awesome compression company",
+            "position": "CEO/President",
+            "url": "http://piedpiper.example.com",
+            "startDate": "2013-12-01",
+            "endDate": "2014-12-01",
+            "summary": "Pied Piper is a multi-platform technology based on a proprietary universal compression algorithm that has consistently fielded high Weisman Scores™ that are not merely competitive, but approach the theoretical limit of lossless compression.",
+            "highlights": [
+                "Build an algorithm for artist to detect if their music was violating copy right infringement laws",
+                "Successfully won Techcrunch Disrupt",
+                "Optimized an algorithm that holds the current world record for Weisman Scores"
+            ]
+        }
+    ],
+    "volunteer": [
+        {
+            "organization": "CoderDojo",
+            "position": "Teacher",
+            "url": "http://coderdojo.example.com/",
+            "startDate": "2012-01-01",
+            "endDate": "2013-01-01",
+            "summary": "Global movement of free coding clubs for young people.",
+            "highlights": [
+                "Awarded 'Teacher of the Month'"
+            ]
+        }
+    ],
+    "education": [
+        {
+            "institution": "University of Oklahoma",
+            "url": "https://www.ou.edu/",
+            "area": "Information Technology",
+            "studyType": "Bachelor",
+            "startDate": "2011-06-01",
+            "endDate": "2014-01-01",
+            "score": "4.0",
+            "courses": [
+                "DB1101 - Basic SQL",
+                "CS2011 - Java Introduction"
+            ]
+        }
+    ],
+    "awards": [
+        {
+            "title": "Digital Compression Pioneer Award",
+            "date": "2014-11-01",
+            "awarder": "Techcrunch",
+            "summary": "There is no spoon."
+        }
+    ],
+    "publications": [
+        {
+            "name": "Video compression for 3d media",
+            "publisher": "Hooli",
+            "releaseDate": "2014-10-01",
+            "url": "http://en.wikipedia.org/wiki/Silicon_Valley_(TV_series)",
+            "summary": "Innovative middle-out compression algorithm that changes the way we store data."
+        }
+    ],
+    "skills": [
+        {
+            "name": "Web Development",
+            "level": "Master",
+            "keywords": [
+                "HTML",
+                "CSS",
+                "Javascript"
+            ]
+        },
+        {
+            "name": "Compression",
+            "level": "Master",
+            "keywords": [
+                "Mpeg",
+                "MP4",
+                "GIF"
+            ]
+        }
+    ],
+    "languages": [
+        {
+            "language": "English",
+            "fluency": "Native speaker"
+        }
+    ],
+    "interests": [
+        {
+            "name": "Wildlife",
+            "keywords": [
+                "Ferrets",
+                "Unicorns"
+            ]
+        }
+    ],
+    "references": [
+        {
+            "name": "Erlich Bachman",
+            "reference": "It is my pleasure to recommend Richard, his performance working as a consultant for Main St. Company proved that he will be a valuable addition to any company."
+        }
+    ],
+    "projects": [
+        {
+            "name": "Miss Direction",
+            "description": "A mapping engine that misguides you",
+            "highlights": [
+                "Won award at AIHacks 2016",
+                "Built by all women team of newbie programmers",
+                "Using modern technologies such as GoogleMaps, Chrome Extension and Javascript"
+            ],
+            "keywords": [
+                "GoogleMaps", "Chrome Extension", "Javascript"
+            ],
+            "startDate": "2016-08-24",
+            "endDate": "2016-08-24",
+            "url": "http://missdirection.example.com",
+            "roles": [
+                "Team lead", "Designer"
+            ],
+            "entity": "Smoogle",
+            "type": "application"
+        }
+    ],
+    "meta": {
+        "canonical": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/sample.resume.json",
+        "version": "v1.0.0",
+        "lastModified": "2017-12-24T15:53:00"
     }
-  ],
-  "schools": [
-    {
-      "school": "Institution name",
-      "degree": "Bachelor / Master / Técnico Superior / etc.",
-      "field": "Field of study",
-      "start": "YYYY-MM-DD",
-      "end": "YYYY-MM-DD",
-      "current": false
-    }
-  ],
-  "certs": [
-    { "name": "Certificate name", "issuer": "Issuing organization", "date": "YYYY-MM-DD" }
-  ],
-  "languages": [
-    { "language": "Spanish", "level": "Native" }
-  ],
-  "skills": ["Skill 1", "Skill 2"]
 }
 
 --- RULES ---
-- Omit any field you have no data for. Do NOT use null, "", [], or {}.
-- Dates: use YYYY-MM-DD. Year only → YYYY-01-01. Month+year → YYYY-MM-01.
-- If a job or school is still ongoing (present / actual / en la actualidad / actualmente), set "current": true and omit "end".
-- "website" must be a full URL starting with http:// or https://. If no URL is available, omit the field.
-- "country_code" must be exactly 2 uppercase letters (ISO 3166-1 alpha-2). If unknown, omit it.
-- "tech" inside "jobs": list every technology mentioned for that job.
-- "skills": top-level general skills not tied to a specific job.
-- "profiles": social/professional network profiles (GitHub, LinkedIn, etc.).
-
---- EXAMPLE ---
-
-INPUT:
-Ana García | Software Engineer | ana@example.com | +34 600 111 222 | https://anagarcia.dev
-GitHub: https://github.com/anagarcia
-TechCorp — Backend Developer (March 2021 – Present). Designed REST APIs. Tech: Node.js, PostgreSQL, Docker.
-StartupXYZ — Junior Developer (Jan 2019 – Feb 2021). Front-end maintenance.
-Education: Universidad Complutense de Madrid, Computer Science Bachelor, 2014–2018.
-Certs: AWS Developer Associate, Amazon Web Services, 2022.
-Languages: Spanish (native), English (professional).
-
-OUTPUT:
-{"name":"Ana García","headline":"Software Engineer","email":"ana@example.com","phone":"+34 600 111 222","website":"https://anagarcia.dev","profiles":[{"network":"GitHub","url":"https://github.com/anagarcia","username":"anagarcia"}],"jobs":[{"company":"TechCorp","role":"Backend Developer","start":"2021-03-01","current":true,"description":"Designed REST APIs.","tech":["Node.js","PostgreSQL","Docker"]},{"company":"StartupXYZ","role":"Junior Developer","start":"2019-01-01","end":"2021-02-01","current":false,"description":"Front-end maintenance."}],"schools":[{"school":"Universidad Complutense de Madrid","degree":"Bachelor","field":"Computer Science","start":"2014-01-01","end":"2018-01-01","current":false}],"certs":[{"name":"AWS Developer Associate","issuer":"Amazon Web Services","date":"2022-01-01"}],"languages":[{"language":"Spanish","level":"Native"},{"language":"English","level":"Professional"}]}
+- Output must conform to the JSON Resume schema linked above.
+- Omit any field that has no data; do not output null, empty strings, empty arrays, or empty objects.
+- Dates: prefer full ISO dates YYYY-MM-DD. If only year is present output YYYY-01-01; if month and year output YYYY-MM-01.
+- For ongoing roles or studies use the appropriate fields (e.g. omit endDate when present).
 
 --- RESUME TEXT ---
 [The resume text or attachment is in the user message]
@@ -106,14 +208,12 @@ PROMPT;
     public function schema(JsonSchema $schema): array
     {
         return [
-            'certs' => $schema->array()->items(
-                $schema->object([
-                    'name' => $schema->string()->required(),
-                    'issuer' => $schema->string()->required(),
-                    'date' => $schema->string()->nullable(),
-                    'url' => $schema->string()->nullable(),
-                ])
-            )->required(),
+            'certificate' => $schema->object([
+                'name' => $schema->string()->required(),
+                'issuer' => $schema->string()->required(),
+                'date' => $schema->string()->nullable(),
+                'url' => $schema->string()->nullable(),
+            ])->required(),
 
             'skills' => $schema->array()->items(
                 $schema->object([

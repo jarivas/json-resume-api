@@ -38,11 +38,11 @@ class CertificateImportController
 
             $certificate = $result['certificate'];
             $skills = $result['skills'];
-            $resumeFragment = $service->resumeFragmentForCertificate($certificate);
         } finally {
             Storage::delete($storagePath);
         }
 
-        return response()->json(['ok' => true, 'skills' => $skills, 'resume' => $resumeFragment]);
+        return response()->json(['ok' => true, 'certificate' => $certificate, 'skills' => $skills]);
+
     }
 }

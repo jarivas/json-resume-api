@@ -30,20 +30,19 @@ class EducationImportController
             [$storagePath, $fullPath] = $this->storeUploadedFile($file);
         }
 
-        $education = $service->createEducationFromDocument($fullPath, $data['url'] ?? null);
-        if ($education === null) {
-            Storage::delete($storagePath);
-
-            return response()->json(['ok' => false, 'message' => 'No se pudo extraer metadata de la educación.'], 422);
-        }
-
         try {
-            $skills = $service->importForEducation($education, $fullPath);
-            $resumeFragment = $service->resumeFragmentForEducation($education);
+            $result = $service->extractEducationAndSkills($fullPath, $data['url'] ?? null);
+
+            if ($result === null) {
+                return response()->json(['ok' => false, 'message' => 'No se pudo extraer metadata de la educación.'], 422);
+            }
+
+            $education = $result['education'];
+            $skills = $result['skills'];
         } finally {
             Storage::delete($storagePath);
         }
 
-        return response()->json(['ok' => true, 'skills' => $skills, 'resume' => $resumeFragment]);
+        return response()->json(['ok' => true, 'education' => $education, 'skills' => $skills]);
     }
 }

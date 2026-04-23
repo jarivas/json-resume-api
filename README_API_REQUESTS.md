@@ -57,16 +57,19 @@
    -d '{"message":"Hola"}'
  ```
 
- Dónde encontrar las reglas de validación
+IA / Inteligencia Artificial
+
+- Resumen: La API integra capacidades de IA para enriquecer y transformar currículums JSON. Permite generación y edición de texto, extracción estructurada, embeddings para búsqueda semántica y conversaciones asistidas.
+- Endpoints y agentes: El endpoint `POST /api/chat` sirve como punto de entrada para interacciones conversacionales y puede delegar a agentes internos que usan modelos configurables.
+- Capacidades principales: agentes de texto (generación/edición), `Embeddings` para búsqueda semántica y emparejamiento de habilidades, `HasStructuredOutput` para respuestas JSON validadas, transcripción/audio y generación de recursos enriquecidos.
+- Herramientas y extensibilidad: Soporte para herramientas proveedor (`web search`, `web fetch`, `file search`) y la interfaz `HasTools` para ampliar funcionalidades con fuentes externas.
+- Configuración: Variables en el entorno para proveedores y modelos — por ejemplo `AI_DEFAULT_PROVIDER`, `OLLAMA_URL`, `OLLAMA_DEPLOYMENT`, `OLLAMA_EMBEDDING_DEPLOYMENT` y `OLLAMA_TIMEOUT`.
+- Rendimiento y seguridad: cache de embeddings, control de tokens/temperatura, colas/streaming para operaciones largas, y fakes para testing (`Agents::fake()`, `Embeddings::fake()`).
+
+Dónde encontrar las reglas de validación
 
  - Las reglas para cada endpoint suelen estar en `FormRequest` dentro de `app/Http/Requests`.
 
  Generación automática de campos
 
  - El proyecto incluye una sección auto-generada (a partir de `FormRequest`) que sirve como referencia rápida por recurso (create/update) y muestra los endpoints REST asociados. Puedo regenerar y enlazar esa sección para incluir los endpoints nuevos si lo deseas.
-
- Siguientes pasos
-
- - ¿Quieres que actualice la sección auto-generada ahora para que incluya todos los endpoints y enlaces a las `FormRequest` y controladores?
- - ¿Prefieres que sólo añada ejemplos curl detallados por recurso concreto? 
-
